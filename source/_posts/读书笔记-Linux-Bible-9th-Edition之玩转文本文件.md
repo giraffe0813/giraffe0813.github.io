@@ -11,7 +11,7 @@ tags:
  [Linux Bible 9th Edition之使用shell](http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/)
  [Linux Bible 9th Edition之文件系统](http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/)
  
-![妞妞](/images/niuniu.jpg)
+![李光珠](/images/liguangzhu.gif)
 
 
 
