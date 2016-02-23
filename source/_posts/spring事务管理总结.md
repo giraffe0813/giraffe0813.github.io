@@ -1,13 +1,12 @@
 layout: post
 title: spring事务管理总结
 date: 2015-09-12 14:44:29
+thumbnail: /images/thumbnail3.jpg
+banner: /images/thumbnail3.jpg
 comments: true 
-toc: true  
-tags:
-  - spring
-  - java
-  - transaction
-  - spring-aop
+toc: true 
+categories: spring
+tags: [java, spring , transaction,spring-aop] 
 ---
 
 以前写在segmentFault上的一篇文章 搬移到这里。
@@ -17,8 +16,7 @@ tags:
 
 <!-- more -->
 
-```
-   xml
+```xml
    <!-- 读取配置文件 -->
    <bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -49,7 +47,7 @@ tags:
 ### 基于AspectJ的XML方式的配置
 这是我觉得最好的方式，基于aop配置，当新增的方法要使用事务管理时，无需修改代码。
 首先在配置文件xml中引入aop和tx的命名空间
-```
+```xml
 xmlns:tx="http://www.springframework.org/schema/tx" 
 xmlns:aop="http://www.springframework.org/schema/aop"
 xsi:schemaLocation="http://www.springframework.org/schema/tx
@@ -59,7 +57,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
 ```
 然后在xml中加入aop的配置,下面的配置就是在services的切入点上应用txAdvice的增强，services的切入点就是ymy.com.service.impl包下的所有方法应用txAdvice的增强。然后txAdvice是在所有以create,add,delete,update,change开头的方法上加上事务管理。
 
-```
+```xml
     <!-- 定义事务通知 （事务的增强）-->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 	    <!-- 定义方法的过滤规则 -->
@@ -94,13 +92,13 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
 ### 基于注解
 这种方式是我觉得最简单的，第二推荐。要采用注解的方式，需要在配置文件中开启注解事务。
 
-```
+```xml
 <!-- 开启注解事务 -->
 <tx:annotation-driven transaction-manager="transactionManager"/>
 ```
 在使用时只需在对应的类上添加注解@Transactional即可
 
-```
+```java
 @Service
 @Transactional
 public class TaskService implements ITaskService {
@@ -109,13 +107,13 @@ public class TaskService implements ITaskService {
 ```
 也可在使用注解时定义事物的传播级别 隔离行为等。。
 
-```
+```java
 @Transactional(propagation=Propagation.REQUIRED)
 ```
 ### 基于TransactionProxyFactoryBean
 这种方式配置比较麻烦，需要为每一个需要事务管理的类配置一个代理类，不推荐使用。例如我要对taskService进行事务管理，需要如下配置，用代理类对目标类进行增强。
 
-```
+```xml
 	<!-- 配置service层的代理 -->
 	<bean id = "taskServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<!-- 配置目标对象 -->
@@ -132,14 +130,14 @@ public class TaskService implements ITaskService {
 ```
 之后在注入service类时，就要注入它的代理类。
 
-```
+```java
 @Resource(name = "taskServiceProxy")
 private ITaskService taskSerivce;
 ```
 ## 编程式事务管理
 超级不推荐，需要为每个类注入事务模板，然后在需要事务管理的方法中使用事务模板。
 
-```
+```java
 private TransactionTemplate transactionTemplate;
 public void test(){
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {

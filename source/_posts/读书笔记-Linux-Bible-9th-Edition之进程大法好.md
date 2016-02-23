@@ -1,14 +1,18 @@
 title: 读书笔记-Linux Bible 9th Edition之进程大法好
 date: 2015-12-24 17:56:03
 toc: true
-tags:
-  - linux
-  - 读书笔记
+categories: linux
+tags: [linux, 读书笔记]
 
 ---
 >根据Linux Bible第九版第六章整理的读书笔记，记录linux系统下如何管理进程。
 
 Linux是一个支持多用户和多任务的操作系统，多任务是指可以同时运行多个程序，而每个运行程序的一个实例被称作一个进程。Linux系统提供了可以让我们列出正运行进程，杀死进程，监听系统使用情况的工具。
+
+相关博客:
+[Linux Bible 9th Edition之使用shell](http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/)
+[Linux Bible 9th Edition之玩转文本文件](http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/)
+[Linux Bible 9th Edition之文件系统](http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/)
 
 ![Merry Christmas](/images/merry-chrismas.jpg)
 
@@ -29,7 +33,7 @@ Linux是一个支持多用户和多任务的操作系统，多任务是指可以
 
 最常用的查看正在运行进程的工具就是ps命令，通过ps命令，我们可以查看正在运行的进程，它们使用的资源以及运行它们的用户。下面是ps命令的一个例子:
 
-```
+```bash
  $ ps u
  USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND 
  jake 2147 0.0 0.7 1836 1020 tty1 S+ 14:50 0:00 -bash 
@@ -45,23 +49,23 @@ Linux是一个支持多用户和多任务的操作系统，多任务是指可以
 
 分页查看与当前用户有关的所有运行进程
 
-```
+```bash
  $ ps ux | less
 ```
 分页查看所有用户的运行的进程
 
-```
+```bash
  $ ps aux | less
 ```
 管道符("|")会将第一个命令的输出当做第二个命令的输入，上面的例子中ps命令的输出会当做less命令的输入，这样就可以分页查看信息了。按空格键换页，按q退出。
 我们还可以自定义ps命令展示的信息，并按其中一列排序。使用-o选项，可以通过关键字指定想要展示的列。下面的例子就是指定ps展示进程Id(pid),用户名(username),用户Id(uid),用户组(group),组Id(gid),分配的虚拟内存(vsz),实际使用内存(rss),运行的命令(comm),默认情况下按进程Id排序。
-```
+```bash
 $ ps -eo pid,user,uid,group,gid,vsz,rss,comm | less  PID USER GROUP GID VSZ   RSS   COMMAND
   1   root  root  0  19324 1320   init 
   2   root  root  0  0       0    kthreadd
 ```
 如果想要按其他列排序可以使用sort=选项。例如，想查看那个进程占用了最多的内存，可以按rss排列，会按rss从低到高展示进程，如果想从高到底可以在前面加连字符。下面是例子：
-```
+```bash
 $ ps -eo pid,user,group,gid,vsz,rss,comm --sort=-rss | less
 PID     USER     GROUP     GID     VSZ       RSS       COMMAND
 12005   cnegus   cnegus   13597   1271008    522192    firefox

@@ -2,9 +2,8 @@ title: '【译】以生产者消费者为例阐述如何使用wait，notify和no
 date: 2015-10-29 14:34:55
 comments: true
 toc: true
-tags:
- - java
- - multi-threading
+categories: [java, thread]
+tags: [java, 翻译]
  	
 ---
 > 原文来自一个java大牛的技术博客 地址[http://javarevisited.blogspot.com/2015/07/how-to-use-wait-notify-and-notifyall-in.html](http://javarevisited.blogspot.com/2015/07/how-to-use-wait-notify-and-notifyall-in.html) 博客以生产者和消费者为例 讲解了如何使用wait,notify,notifyAll进行多个线程之间的通信。下面是原文的翻译。
@@ -24,7 +23,7 @@ tags:
 
 在你已经了解需要在一个共享的对象上调用wait方法后，接下来就是学会避免许多java开发者犯的错---在If代码块中调用wait而不是while循环中。因为需要在一定的条件下调用wait，比如Producer线程要在队列满了的情况下调用wait，所以第一反应都是使用If语句。但是，在If代码块中调用wait会产生`bug`，因为线程存在一定的可能在等待条件没有改变的情况下`假唤醒(spurious wake up)`。所以如果没有使用循环在线程唤醒后检查等待条件，可能会造成尝试在已经满了的队列中插入元素或者在空了的队列中取元素。这就是为什么我们要在while循环中调用wait而不是if。
 
-```
+```java
 
  // The standard idiom for calling the wait method in Java
   synchronized (sharedObject) {
@@ -40,7 +39,7 @@ tags:
 
 下面是在Java中使用wait(),notify(),notifyAll()的例子。在这个程序中，有两个线程(PRODUCTOR和CONSUMER)，用继承了Thread类的Producer和Consumer类实现。Prodcuer和Consumer的业务逻辑写在他们各自的run()方法中。并且实现一个LinkedList，当做共享队列。Producer在一个死循环中不断在队列中插入随机数，直到队列满了。我们会检查while(queue.size == maxSize),需要注意的是在检查之前需要给队列加上同步锁以保证在检查时没有另一个线程修改队列。如果队列满了，PRODUCER线程就会休眠，直到CONSUMER消费了队列中的元素并且调用notify()方法通知PRODUCER线程。`wait和notify都是在共享的对象(我们的例子中是队列)上调用的`。
 
-```
+```java
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;

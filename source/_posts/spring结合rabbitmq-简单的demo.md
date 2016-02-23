@@ -2,9 +2,8 @@ title: spring结合rabbitmq---简单的demo
 date: 2015-09-19 14:55:43
 comments: true 
 toc: true
-tags:
-  - spring
-  - rabbitMq
+categories: spring
+tags: [java, spring , rabbitMq]
 
 ---
 
@@ -55,7 +54,7 @@ rabbitmq-server
 ### 添加maven依赖
 在pom文件中添加rabbitmq相关的依赖
 
-```
+```xml
 <dependency>
 	<groupId>com.rabbitmq</groupId>
 	<artifactId>amqp-client</artifactId>
@@ -69,7 +68,7 @@ rabbitmq-server
 ```
 ### 添加配置文件
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
@@ -107,7 +106,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.spri
 ```
 ### 生产者开发（插入消息）
 
-```
+```java
 package ymy.com.rabbitmq.demo.service.impl;
 
 import org.springframework.amqp.core.AmqpAdmin;
@@ -138,7 +137,7 @@ public class MessageProductorService {
 有两种方式从消息队列中获取消息，一种是自己调用receive方法获得，一种是为队列配置监听类，每当监听的队列中有消息产生，就会被监听的类去除。
 第一种方式：
 
-```
+```java
 package ymy.com.rabbitmq.demo.service.impl;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
@@ -158,7 +157,7 @@ public class MessageConsumerService {
 ```
 junit test
 
-```
+```java
 	@Test
 	public void testMessageQueueManager(){
         messageProductor.pushToMessageQueue("rabbit_queue_one", "hello giraffe");
@@ -169,7 +168,7 @@ junit test
 第二种方式
 配置中添加监听
 
-```
+```xml
 	<!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 taskExecutor这个需要自己实现一个连接池 按照官方说法 除非特别大的数据量 一般不需要连接池-->
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" >
         <rabbit:listener queues="rabbit_queue_one" ref="messageConsumerService"/>
@@ -177,7 +176,7 @@ junit test
 ```
 消费者类需要实现MessageListener 并实现onMessage方法，当监听的队列中有消息进入时，onMessage方法会被调用
 
-```
+```java
 package ymy.com.rabbitmq.demo.service.impl;
 
 import org.springframework.amqp.core.Message;

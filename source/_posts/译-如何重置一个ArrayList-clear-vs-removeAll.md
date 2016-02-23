@@ -1,9 +1,11 @@
 title: '【译】如何重置一个ArrayList--clear vs removeAll'
 date: 2015-10-26 23:20:04
 comments: true
+thumbnail: /images/金泰妍.jpg
+banner: /images/金泰妍.jpg
 toc: true
-tags:
- - java
+categories: [java, list]
+tags: [java, 翻译]
 ---
 > 安利一个APP--开发者头条，在上面发现一个不错的英文技术类博客，地址http://javarevisited.blogspot.com/，  会不定期的翻译一些 翻译不好见谅啊😼
 
@@ -16,7 +18,7 @@ tags:
 
 为了更好的比较这两个方法，阅读他们源码是很重要的。可以在`java.utils.ArrayList`类中找到clear()方法，不过为了方便我将它引入到了这里。下面的代码来自JDK 1.7.0_40版本。如果你想要学习更多的有关性能监控和调优的知识，我强烈建议阅读`Scott Oaks`写的`Java Performance the Definitive Guide`,它包含了java 7和一点java 8。下面是clear()的代码片段:
 
-```
+```java
 /** 
  * Removes all of the elements from this list.The list will 
  * be empty after this call returns. 
@@ -31,7 +33,7 @@ tags:
 ```
 大家可以看出，clear()在循环遍历ArrayList，并且将每一个元素都置为null，使它们在没有被外部引用的情况下可以被垃圾回收。相似的，我们可以在`java.util.AbstractCollection`类中查看removeAll(Collention c)的代码，下面是代码片段:
 
-```
+```java
 	 public boolean removeAll(Collection<?> c) {
 	 	//判断对象是否为null
         Objects.requireNonNull(c);
@@ -53,7 +55,7 @@ tags:
 
 我本来想在例子中尝试重置一个包含10M个元素的列表，不过在超过半个小时等待removeAll()结束后，我决定将元素的数量降为100K。在这种情况下，两个方法的差距也是很明显的。removeAll()比clear()多花费了10000倍的时间。事实上，在API中clear()和removeAll(Collection c)这两个方法的目的是不同的。clear()方法是为了通过删除所有元素而重置列表，而removeAll(Collection c)是为了从集合中删除某些存在于另一个提供的集合中的元素，并不是为了从集合中移除所有元素。所以如果你的目的是删除所有元素，用clear(),如果你的目的是删除某些存在于另一集合的元素，那么选择removeAll(Collection c)方法。
 
-```
+```java
 	import java.util.ArrayList; 
 	/**
 	 * Java Program to remove all elements from list in Java and comparing 

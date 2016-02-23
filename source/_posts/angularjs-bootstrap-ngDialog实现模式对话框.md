@@ -1,10 +1,11 @@
 title: angularjs+bootstrap+ngDialog实现模式对话框
 date: 2015-09-08 14:07:54
 toc: true
-tags:
- - angularJs
- - ngDialog
- - bootstrap
+thumbnail: /images/runningman.jpg
+banner: /images/runningman.jpg
+categories: angularJs
+tags: [angularJs, ngDialog,bootstrap]
+
 ---
 
 以前写在segmentFault上的一篇文章 搬移到这里。[segmentFault地址](http://segmentfault.com/a/1190000003721467)
@@ -28,7 +29,7 @@ ngDialog Demo : http://likeastore.github.io/ngDialog/
 首先引入需要的ngdialog的js和css文件。
 可通过CDN引入
 
-```
+```javascript
 //cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog.min.css  
 //cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-default.min.css  
 //cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-plain.min.css  
@@ -36,7 +37,7 @@ ngDialog Demo : http://likeastore.github.io/ngDialog/
 ```
 在user.js里的controller中注入依赖
 
-```
+```javascript
 var userControllers = angular.module('userControllers',['ngDialog']);  
   
 userControllers.controller('userController',['$scope','$http','ngDialog',function($scope,$http, ngDialog){  
@@ -62,7 +63,7 @@ userControllers.controller('userController',['$scope','$http','ngDialog',functio
 test.html(读取scope中的address并显示，表格样式采用bootstrap)
 
 
-```
+```html
 <table class="table">  
     <thead>  
     <tr>  
@@ -96,7 +97,7 @@ test.html(读取scope中的address并显示，表格样式采用bootstrap)
 
 user.html (显示用户的信息，当地址不为空时，显示详细地址按钮，并点击按钮时，调用controller中的clickToAddress函数)
 
-```
+```html
 <div>  
     <div class="panel panel-warning">  
         <div class="panel-heading">  

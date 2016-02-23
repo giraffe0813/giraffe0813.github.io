@@ -2,15 +2,15 @@ title: 读书笔记-Linux Bible 9th Edition之文件系统
 date: 2015-11-26 16:28:15
 toc: true
 comment: true
-tags:
-  - linux
-  - 读书笔记
+categories: linux
+tags: [linux, 读书笔记]
 ---
 >跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻
 
  相关博客:
  [Linux Bible 9th Edition之使用shell](http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/)
  [Linux Bible 9th Edition之玩转文本文件](http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/)
+ [Linux Bible 9th Edition之进程大法好](http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/)
  
 
 ![霸气的喵喵](/images/霸气的喵喵.jpg)
@@ -35,7 +35,7 @@ tags:
 cd命令是其中最常用的   
 eg：
 
-```
+```bash
  # 进入根目录下的usr目录下的share目录 以"/"开头，代表在根目录下
  $ cd /usr/share
  # 只输入cd 回到home目录
@@ -47,7 +47,7 @@ eg：
 ```
 - 创建目录并查看权限
 
-```
+```bash
  # 创建目录test
  $ mkdir test
  # 查看目录权限
@@ -61,7 +61,7 @@ eg：
   "*"代表任意数量的字符 "?"代表任意一个字符 "[...]"匹配任意一个包含在括号中的字符,也可以用连字符表示一个范围  
   eg：
   
-```
+```bash
    # 创建5个空文件
    $ touch apple banana grape grapefruit watermelon
    $ ls a*
@@ -91,7 +91,7 @@ eg：
   
  通过使用大括号"{}",可以在文件名后扩展一组元素。
  eg:
- ```
+ ```bash
   $ touch {a,b,c}-{1,2,3}
   $ ls
   a-1 a-2 a-3 b-1 b-2 b-3 c-1 c-2 c-3
@@ -104,7 +104,7 @@ eg：
 在linux系统中,*ls*命令用来列出文件和目录的有关信息，*ls*命令有许多option。在默认情况下，输入*ls*，会输出当前目录下所有的非隐藏的文件和目录。如果在命令后在上选项"-l"会输出详细的信息(如下)，其中total代表了目录中的内容占用了多少磁盘空间;第一列第一个字符代表了文件的类型，"-"代表普通文件，"d"代表是目录，"l"代表是一个符号链接,剩下的9个字符代表了文件的权限(下面会讲);第二列展示了文件硬链接数或目录子目录数;第三列显示了文件或目录的拥有者;第四列代表文件拥有者所在的组;第五列是文件的大小;第六列是文件最后的修改时间;最后一列展示了文件或目录的名字;
 eg：
 
-```
+```bash
 $ ls -l
 total 4-rw-rw-r--. 1 joe joe 0 Dec 18 13:38 applelrwxrwxrwx. 1 joe joe 5 Dec 18 13:46 pointer_to_apple -> apple -rwxr-xr-x. 1 joe joe 0 Dec 18 13:37 scriptx.shdrwxrwxr-x. 2 joe joe 4096 Dec 18 13:38 Stuff
 ```
@@ -130,7 +130,7 @@ total 4-rw-rw-r--. 1 joe joe 0 Dec 18 13:38 applelrwxrwxrwx. 1 joe joe 5 Dec 1
 >文件的拥有者可以改变文件的权限，每种权限都对应了一个数字，读权限r对应4，写权限w对应2，执行权限x对应1。可以通过设置数值来建立权限。
 eg:
 
-```
+```bash
  # 设置权限 rwxrwxrwx
  # chmod 777 filename
  # 设置权限 rwxr-xr-x
@@ -144,7 +144,7 @@ eg:
 > 在linux中，还有另一种改变权限的方式。在这种方式中，"+"和"-"分别代表权限的开和关。字母"u","g","o"和"a"分别代表拥有者,组，其他用户和全部用户。和上一种方式一样"r","w","x"分别代表读、写和执行权限。
 eg：
 
-```
+```bash
  # 设置权限 将权限rwxrwxrwx改为r-xr-xr-x
  # chmod a-w filename
  # 设置权限 将权限rwxrwxrwx改为rwxrwxrw-
@@ -159,7 +159,7 @@ eg：
 - 使用umask设置默认权限
 >普通用户创建文件 默认权限是rw-rw-r--，创建目录 默认权限是rwxrwxr-x。root用户创建文件和目录权限分别是rw-r--r--和rwxr-xr-x。这些默认值由*umask*的值决定，可通过命令*umask*查看它的值。与*chmod*效果刚好相反，*umask*设置的是权限的补码，*umask*的值有三位分别对应拥有者，同组用户和其他用户的权限。对于文件来说，每一位的最大值是6，因为系统不允许在创建一个文件时就赋予执行权限，需通过*chmod*设置；对于目录来说每一位的最大值是7。例如*umask*值002所对应的文件和目录的创建权限是664和775。可通过*umask*命令改变默认值。
 eg：
-```
+```bash
  # 查看默认值
  $ umask
  # 改变默认值
@@ -169,7 +169,7 @@ eg：
 >作为普通用户，是不能更改文件或目录的拥有者的，只有root user(管理员才可以)。
 eg:
 
-```
+```bash
  # 修改文件的拥有者
  # chown giraffe filename.text
  # 同时修改拥有者和组
@@ -186,7 +186,7 @@ eg:
 - 移动文件
 eg：
 
-```
+```bash
  # 将文件abc移到home目录
  $ mv abc ~
  # 将目录mydemo的全部内容移到目录document中
@@ -196,7 +196,7 @@ eg：
 - 复制文件
 eg：
 
-```
+```bash
  # 将文件abc复制到home目录下
  $ cp abc ~
  # 将目录bash-completion*下的内容复制到tmp/a下
@@ -207,7 +207,7 @@ eg：
 - 删除文件
 eg：
 
-```
+```bash
  # 删除文件abc
  $ rm abc
  # 删除当前目录下所有文件

@@ -2,11 +2,11 @@ layout: post
 title: 使代码更简洁(一)---List相关
 date: 2015-09-10 14:07:54
 comments: true 
+thumbnail: /images/thumbnail1.jpg
+banner: /images/thumbnail1.jpg
 toc: true
-tags:
-  - java
-  - Stream
-  - List
+categories: java
+tags: [java, stream,list]
 
 ---
 
@@ -27,7 +27,7 @@ Stream 就如同一个迭代器（Iterator），单向，不可往复，数据�
 打印list中的元素
 --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -47,7 +47,7 @@ public class ListUtils {
 从list中删除指定的元素
 --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -74,7 +74,7 @@ public class ListUtils {
  list排序
  --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -107,7 +107,7 @@ public class ListUtils {
  判读list中的元素是不是全部满足 指定条件
  --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -137,7 +137,7 @@ public class ListUtils {
  判断list中是不是有一个元素满足predicate的条件
  --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -166,7 +166,7 @@ public class ListUtils {
  判断list中是不是没有一个元素满足predicate的条件
  --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -195,7 +195,7 @@ public class ListUtils {
  list去重
  --
 
-```
+```java
 /**
  * 
  * @author yemengying
@@ -222,20 +222,20 @@ public class ListUtils {
 
 在开发时经常遇到要调用一个接口，接口的参数是list。例如在开发通知中心时发送消息的接口定义如下,其中messageForm是要发送的内容，userList是接受者的用户id
 
-```
+```java
 public int pushMessage(MessageForm messageForm,List<Integer> userList);
 ```
 这样，在给一个人发送消息的时候也需要构造一个list
 一般的做法,如下:
 
-```
+```java
 List<Integer> list = new ArrayList<Integer>();
 list.add(8808);
 pushService.pushMessage(messageForm,list);
 ```
 比较麻烦，所以同事封装了一个工具方法：
 
-```
+```java
 public class ListUtils {
      /**
 	 * 构造list
@@ -259,7 +259,7 @@ public class ListUtils {
 
 这样在调用时，比较简洁:
 
-```
+```java
 //给id 8808和8809发消息
 pushService.pushMessage(messageForm,ListUtils.toList(8808,8809));
 ```
@@ -269,7 +269,7 @@ pushService.pushMessage(messageForm,ListUtils.toList(8808,8809));
 
 获得多个list的笛卡尔积，代码参考stackoverflow
 
-```
+```java
 	
 	/**
 	 * 递归获得多个list的笛卡尔积
@@ -301,7 +301,7 @@ pushService.pushMessage(messageForm,ListUtils.toList(8808,8809));
 
 使用时将需要获得笛卡尔积的多个list放到一个list里，调用上面的方法即可，调用示例如下：
 
-```
+```java
 List<Integer> list1 = Arrays.asList(1,2,3);
 List<Integer> list2 = Arrays.asList(8808,8809,8810);
 List<Integer> list3 = Arrays.asList(4);

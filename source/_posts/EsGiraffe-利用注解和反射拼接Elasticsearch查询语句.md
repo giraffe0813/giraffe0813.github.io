@@ -1,14 +1,18 @@
 title: EsGiraffe-利用注解和反射拼接Elasticsearch查询语句
-date: 2015-11-19 13:56:54
+date: 2015-11-19 13:56:50
+thumbnail: /images/hope.jpg
+banner: /images/hope.jpg
+comment: true
 toc: true
-tags:
-  - Elasticsearch
-  - java
-  - annotation
-  - reflect
+categories: elasticsearch
+tags: [elasticsearch, java,annotation,reflect]
+
 ---
 
 ### EsGiraffe
+
+
+
 
 > 封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，git 地址：[https://github.com/giraffe0813/EsGiraffe](https://github.com/giraffe0813/EsGiraffe)。生成的大致的样子如下:
 > 
@@ -39,7 +43,7 @@ tags:
 假设有一个和订单有关的索引，需要对订单的一系列属性进行查询 其中userName和orderMode是should查询 其余都是must
 查询model：
 
-```
+```java
 public class OrderModel {
 
   private String userName;
@@ -67,7 +71,7 @@ public class OrderModel {
 ```
 查询方法：
 
-```
+```java
 public SearchService implements ISearchService{
 
 		public String searchOrder(SearchOrderModel search) throws IllegalAccessException{
@@ -116,7 +120,7 @@ public SearchService implements ISearchService{
 
 下面是针对餐厅名称，用户名和来源同时查询时，打印出来的拼接的查询语句:
 
-```
+```json
 {   "bool" : {     
 		"must" : [ {       
 			"term" : {         
@@ -149,7 +153,7 @@ EsGiraffe主要是自定义了一些注解，将一些诸如model属性对应的
 
 例子:
 
-```
+```java
 @Index("index")
 @DocumentType("document1")
 public class model{
@@ -163,7 +167,7 @@ public class model{
 
 例子:
 
-```
+```java
 @Index("index")
 @DocumentType("document1")
 public class model{
@@ -182,7 +186,7 @@ public class model{
 
 例子：
 
-```
+```java
 @Index("index")
 @DocumentType("document1")
 public class model{
@@ -199,7 +203,7 @@ public class model{
 ```
 上面的注解代表的查询语句是
 
-```
+```json
 {   "bool" : {    
 		 "must" : [ {       
 		 	"term" : {         
@@ -236,7 +240,7 @@ public class model{
 查询model类
 
 
-```
+```java
 @Index("index1")
 @DocumentType("type1")
 public class OrderModel {
@@ -286,7 +290,7 @@ public class OrderModel {
 
 接口类，也无需写大量的业务逻辑，只需要调用两个工具方法即可
 
-```
+```java
     public String searchOrder(SearchOrderModel search) throws IllegalAccessException {
         log.info("查询参数:{}", search.toString());     
         
@@ -308,7 +312,7 @@ public class OrderModel {
 使用了EsGiraffe之后，大大简化了查询接口的代码，无需挨个属性判断是否为null。而且在model类上使用注解，使得程序变得更加可读，每个属性对应搜索引擎中哪个字段，采用哪种查询方式一目了然。下面是使用EsGiraffe之后，对餐厅名称，用户名和来源查询时打印的查询语句，和不用注解生成的是一样的。
 
 
-```
+```json
 {   "bool" : {     
 		"must" : [ {       
 			"term" : {         

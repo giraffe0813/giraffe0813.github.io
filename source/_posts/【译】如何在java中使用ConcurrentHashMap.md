@@ -2,9 +2,9 @@ title: 【译】如何在java中使用ConcurrentHashMap
 date: 2015-11-06 13:20:37
 comment: true
 toc: true
-tags:
- - java
- - 翻译
+categories: [java, hashmap]
+tags: [java, 翻译]
+
 ---
 > 原文来自一个java大牛的技术博客 地址[http://javarevisited.blogspot.com/2013/02/concurrenthashmap-in-java-example-tutorial-working.html](http://javarevisited.blogspot.com/2013/02/concurrenthashmap-in-java-example-tutorial-working.html) 博客讲解了如何在java中使用ConcurrentHashMap。马上要封闭开发10天，连上15天班，真酸爽。下面是原文的翻译：
 
@@ -31,7 +31,7 @@ CHM默认的并发级别是16，但可以在创建CHM时通过构造函数改变
 
 很多时候我们希望在元素不存在时插入元素，我们一般会像下面那样写代码
 
-```
+```java
 synchronized(map){
   if (map.get(key) == null){
       return map.put(key, value);

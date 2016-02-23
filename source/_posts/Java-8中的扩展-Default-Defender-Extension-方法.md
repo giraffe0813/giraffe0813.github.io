@@ -1,9 +1,11 @@
 title: 【译】Java8中的扩展(default/extension)方法
 date: 2015-11-01 22:11:06
+thumbnail: /images/shaonvshidai.jpg
+banner: /images/shaonvshidai.jpg
 toc: true
-tags:
- - java
- - interface
+categories: java
+tags: [java, interface , 翻译]
+
 ---
 
 > 原文来自一个java大牛的技术博客 地址[http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results](http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results) 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。
@@ -16,7 +18,7 @@ Java 8允许开发者使用`default`和`static`两个关键字在接口中加入
 
 Java 8让我们可以通过default关键字为接口添加非抽象的方法。这一特性也被称作Extension(扩展)方法。下面是第一个例子：
 
-```
+```java
 interface Multiplication{ 
     
     int multiply(int a, int b); 
@@ -29,7 +31,7 @@ interface Multiplication{
 ```
 除了抽象方法multiply()之外，接口Multiplication还包含一个default方法square()。任何实现Multiplication接口的类只需实现抽象方法multiply，default方法square()可以直接使用。
 
-```
+```java
 Multiplication product = new Multiplication(){
 
     @Override
@@ -44,7 +46,7 @@ Multiplication product = new Multiplication(){
 ```
 product是个匿名类。这段代码有点啰嗦了，用了6行实现一个简单地乘法的功能。我们可以利用lambda表达式来简化一下代码，lambda表达式也是Java 8中新引入的。因为我们的接口只包含一个抽象方法，而且lambda表达式也是SAM(Single Abstract method单一抽象方法)类型的。我们可以用lambda表达式来替代匿名类将代码简化成下面的样子。
 
-```
+```java
 Multiplication lambda = (x, y) -> x*y; 
 int product = lambda.multiply(3, 4); 
 int square = lambda.square(4);
@@ -53,7 +55,7 @@ int square = lambda.square(4);
 
 以上就是在接口中使用default方法的例子。现在，你可以毫无顾虑的在旧的接口中扩展新的方法，只要这些方法是default或static的就不用担心会破坏接口的实现类。
 
-```
+```java
 /**Java Program to demonstrate use of default method in Java 8. 
  * You can define non-abstract method by using default keyword, and more 
  * than one default method is permitted, which allows you to ship default skeletal 

@@ -2,9 +2,8 @@ title: 读书笔记-Linux Bible 9th Edition之使用shell
 date: 2015-11-23 16:23:32
 comments: true
 toc: true
-tags:
-  - linux
-  - 读书笔记
+categories: linux
+tags: [linux, 读书笔记]
 ---
 > 其实也不算读书笔记 主要是想整理一下常用的一些linux命令 
 > 
@@ -12,6 +11,7 @@ tags:
  相关博客:
  [Linux Bible 9th Edition之玩转文本文件](http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/)
  [Linux Bible 9th Edition之文件系统](http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/)
+ [Linux Bible 9th Edition之进程大法好](http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/)
 
 
 ![doge](/images/doge.jpg)
@@ -22,35 +22,35 @@ tags:
 
 #### 获得当前登录会话的一些信息
 
-```
+```bash
  $ who 
  $ who am i 
  $ who -uH
 ```
 #### 查看服务器上的时间
 
-```
+``` bash
  $ date
  $ date +'%d/%m/%y'(以10/12/14的格式输出)
 ```
 #### 当前的目录
 
-```
+```bash
  $ pwd 
 ```
 #### 获得hostname
-```
+```bash
  $ hostname
 ```
 #### 列出当前目录下的文件和目录
 
-```
+```bash
  $ ls
  $ ls -l(列出详细信息) -a(列出包括.开头的隐含文件在内的所有文件) -t(按时间排序)
 ```
 #### 查看uid gid
 
-```
+```bash
  $ id
 ```
 
@@ -58,7 +58,7 @@ tags:
 
 >可通过*echo $PATH*命令查看PATH环境变量的值，如果命令存放的目录包含在PATH中，可直接输入命令运行。如果不包含则需给出命令的位置(eg:绝对位置:/home/chris/scriptx.sh,相对位置:./scriptx.sh) shell检查输入命令的顺序：1.Aliases(别名) 2.Reserved word(保留的关键字) 3.Function 4.Build-in command(eg:cd/echo/exit/type..) 5.Filesystem
 
-```
+```bash
  #查看一个命令的位置
  $ type bash
  #打印PATH环境变量的值
@@ -67,7 +67,7 @@ tags:
 
 #### 在文件系统中查找
 
-```
+```bash
  $ locate ymy
 ```
 
@@ -104,33 +104,33 @@ tags:
 - 管道符号 "|"
 将前一个命令的输出作为下一个命令的输入   
 eg:
-```
+```bash
  $ cat /etc/passwd | sort |less
 ```
 - 命令分隔符 ";"
 在一行语句中 顺次执行各个命令
 eg: 
 
-```
+```bash
  #可获得troff命令的执行时间
  $ date; troff -me verylargedocument|lpr ; date 
 ```
 - 后台进程符 "&"
 如果不希望shell一直被一个命令占用着，可以使用"&"让命令在后台运行
 eg:
-```
+```bash
  $ troff -me verylargedocument | lpr &
 ```
 - 使用数学表达式/命令的结果 "$[]"/"$()"
 可以在一个命令中使用数学表达式或另一个命令的结果   
 eg:
-```
+```bash
  $ echo "I am $[2015 - 1993] years old"
  $ echo "there are $(ls | wc -w) files in this directory"
 ```
 - 变量调用符号 "$"
 eg:
-```
+```bash
  $ echo $USER
 ```
 
@@ -138,7 +138,7 @@ eg:
 使用*alias*命令，可以给任何的命令及选项取一个别名     
 eg:
  
-```
+```bash
  #为命令pwd取别名ymy
  $ alias ymy='pwd'
  #查看所有的别名
@@ -149,7 +149,7 @@ eg:
 ```
 #### 退出shell
 
-```
+```bash
  $ exit
 ```
 

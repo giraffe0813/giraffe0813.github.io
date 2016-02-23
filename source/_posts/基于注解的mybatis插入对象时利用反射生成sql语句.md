@@ -2,11 +2,8 @@ title: 使用基于注解的mybatis时,利用反射和注解生成sql语句
 date: 2015-10-28 13:21:29
 comments: true
 toc: true
-tags:
- - java
- - mybatis
- - reflection
- - annotation
+categories: java
+tags: [java, mybatis, reflection, anntation]
  
 ---
 >在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的[问题](http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on)截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法
@@ -17,7 +14,7 @@ git地址：https://github.com/giraffe0813/spring-mybatis-utils
 下面是之前的代码片段:
 
 
-```
+```java
 @Insert("insert into poi_shop(name,brand,tags,status,phone,mobile,business_time,address,city,lng,lat,business_type,attribute_json) values(#{name},#{brand},#{tags},#{status},#{phone},#{mobile},#{business_time},#{address},#{city},#{lng},#{lat},#{business_type},#{attribute_json})")
 @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 public Long insertPoiInfo(PoiBo poiBo);
@@ -31,14 +28,14 @@ public Long insertPoiInfo(PoiBo poiBo);
 首先想到的是可以利用反射获得对象的所有属性，然后拼接成sql语句。所以写了一个基于反射拼装sql语句的方法，然后基于mybatis动态获得sql语句的方式 获得完整的sql 具体的代码如下:
 接口层改为下面的样子，sql语句的生成放到PoiSqlProvider的insertPoiBo方法中
 
-```
+```java
 @InsertProvider(type = PoiSqlProvider.class, method = "insertPoiBo")
 public Long insertPoiInfo(@Param("poiBo")PoiBo poiBo);
 
 ```
 PoiSqlProvider.class
 
-```
+```java
    public String insertPoiBo(Map<String,Object> map){
         PoiBo poiBo = (PoiBo)map.get("poiBo");
         StringBuilder sql = new StringBuilder("insert into poi_shop ");
@@ -82,7 +79,7 @@ PoiSqlProvider.class
 
 下面是基于反射生成的两部分sq语句和最后拼接的语句
 
-```
+```java
 database filed sql:
  
 (id,name,brand,tags,status,phone,mobile,business_time,address,city,lng,lat,business_type,attribute_json,updated_at,created_at)
@@ -100,7 +97,7 @@ insert into poi_shop (id,name,brand,tags,status,phone,mobile,business_time,addre
 
 上面的getAllPropertiesForSql方法有个缺点，如果数据库的字段名和类的属性名不一致，就不能依靠反射获得sql了。所以借鉴老大的ORM框架也写了一个注解Column，用于model类的属性上，表明属性所对应数据库字段。下面是Column注解的snippet。
 
-```
+```java
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -124,7 +121,7 @@ public @interface Column {
 
 之后在model类属性上加入对应的注解,省略getter和setter。Column的name为空时，代表属性名和字段名一致。
 
-```
+```java
 
 public class PoiBo {
 
@@ -166,7 +163,7 @@ public class PoiBo {
 ```
 修改getAllPropertiesForSql方法，通过获取类属性上的注解获得数据库字段名。
 
-```
+```java
 
 private  Map<String,String> getAllPropertiesForSql(Object obj, String objName){
 
@@ -209,7 +206,7 @@ private  Map<String,String> getAllPropertiesForSql(Object obj, String objName){
 ````
 利用反射+注解之后的输出结果，可以看到sql语句正确按照name的Column注解的输出了name属性对应的数据库字段是poi_name.
 
-```
+```java
 database filed sql: 
 
 (id,poi_name,poi_brand,tags,status,phone,mobile,business_time,average_price,address,city,lng,lat,business_type,attribute_json,updated_at,created_at) 

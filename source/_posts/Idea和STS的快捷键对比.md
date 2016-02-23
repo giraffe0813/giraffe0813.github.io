@@ -1,10 +1,9 @@
 title: Mac系统下Idea和STS的快捷键对比
 date: 2015-10-23 16:15:42
 toc: true
-tags:
- - java
- - Idea
- - STS
+categories: java
+tags: [java, STS,Idea]
+
 ---
 
 > 又被朋友安利了一遍Idea 所以决定尝试着把IDE由STS切换成Idea。不过发现好多快捷键都不一致，所以在熟悉Idea的过程中顺便记录一下两者的常用快捷键对比
