@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>使代码更简洁(二)---集合转换相关 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="以前在segmentFault上的一篇文章 搬移到这里。
+
+记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和集合转换相关的吧。。。。。会持续记录。。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使代码更简洁(二)---集合转换相关">
+<meta property="og:url" content="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="以前在segmentFault上的一篇文章 搬移到这里。
+
+记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和集合转换相关的吧。。。。。会持续记录。。。。">
+<meta property="og:image" content="http://yemengying.com/images/thumbnail2.jpg">
+<meta property="og:updated_time" content="2016-02-03T07:37:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使代码更简洁(二)---集合转换相关">
+<meta name="twitter:description" content="以前在segmentFault上的一篇文章 搬移到这里。
+
+记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和集合转换相关的吧。。。。。会持续记录。。。。">
+<meta name="twitter:image" content="http://yemengying.com/images/thumbnail2.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-使代码更简洁-二-集合转换相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/thumbnail2.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            使代码更简洁(二)---集合转换相关
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/09/11/使代码更简洁-二-集合转换相关/">
+            <time datetime="2015-09-11T06:34:33.000Z" itemprop="datePublished">2015-09-11</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/list/">list</a>, <a class="tag-link" href="/tags/map/">map</a>, <a class="tag-link" href="/tags/stream/">stream</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#list转map"><span class="toc-number">1.</span> <span class="toc-text">list转map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-lt-T-gt-转map-lt-K-List-lt-V-gt-gt"><span class="toc-number">2.</span> <span class="toc-text">list< T >转map< K,List< V>></span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-利用stream"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.利用stream</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-普通方法"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.普通方法</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
+            <p>以前在segmentFault上的一篇文章 搬移到这里。</p>
+<blockquote>
+<p>记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和集合转换相关的吧。。。。。会持续记录。。。。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="list转map"><a href="#list转map" class="headerlink" title="list转map"></a>list转map</h2><p>   开发过程中经常会碰到需要将list转为map的情况，例如有一个User类，有id,name,age等属性。有一个User的list，为了很方便的获取指定id的User，这时就需要将List&lt; User&gt;转换为Map<integer,user>，其中map的key是User的id。<br>一般的做法，是通过for循环将list中的元素put到map中，代码如下：</integer,user></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, User&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, User&gt;();</span><br><span class="line"><span class="keyword">for</span>(User user : userList)&#123;</span><br><span class="line">	map.put(user.getId(), user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样做，在每个需要将list转为map的地方，都要写一遍for循环，代码不够简洁，所以利用stream和泛型封装了一个通用的工具方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransFormUtils</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 将list转为map</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> predicate1  key</span><br><span class="line">	 * <span class="doctag">@param</span> predicate2  value</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span>&lt;K,V,T&gt;  Map&lt;K, V&gt; <span class="title">transformToMap</span><span class="params">(List&lt;T&gt; list,Function&lt;T, K&gt; predicate1, Function&lt;T,V&gt; predicate2)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> list.stream().collect(Collectors.toMap(predicate1, predicate2));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样如果需要将List&lt; User&gt;转为Map<integer,user>代码如下</integer,user></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//省略list构造过程</span></span><br><span class="line">Map&lt;Integer, User&gt; map = TransFormUtils.transformToMap(userList, p-&gt;p.getId(), p-&gt;p);</span><br></pre></td></tr></table></figure>
+<p>如果需要将List&lt; User&gt;转为Map<integer,string(用户名)>代码如下</integer,string(用户名)></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//省略list构造过程</span></span><br><span class="line">Map&lt;Integer, String&gt; map2 = TransFormUtils.transformToMap(userList, p-&gt;p.getId(), p-&gt;p.getName());</span><br></pre></td></tr></table></figure>
+<p>应用封装好的工具类 只需要一行代码就可以完成list到map的转换，程序简单了许多~~</p>
+<h2 id="list-lt-T-gt-转map-lt-K-List-lt-V-gt-gt"><a href="#list-lt-T-gt-转map-lt-K-List-lt-V-gt-gt" class="headerlink" title="list&lt; T &gt;转map&lt; K,List&lt; V&gt;&gt;"></a>list&lt; T &gt;转map&lt; K,List&lt; V&gt;&gt;</h2><p>将开发中经常需要根据list中的某个属性将list分类。举个例子，在开发通知中心时需要给用户推送消息，安卓和ios是调用的不同的第三方库，所以要根据设备的类型调用不同的方法。首先根据要推送的用户Id列表获得List&lt; DeviceUser&gt;,DeviceUser类的属性包括devicetype,deviceId,userId,userName,createAt等。接着要获得deviceType是ios的deviceId列表，deviceType是安卓的deviceId列表。即将List&lt; DeviceUser&gt;转为Map&lt; Integer,List&lt; String&gt;&gt;，其中map的key是deviceType，value是deviceId的list。<br>为了解决这个问题，写了一个通用的工具类。</p>
+<h4 id="1-利用stream"><a href="#1-利用stream" class="headerlink" title="1.利用stream"></a>1.利用stream</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransFormUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 将list&lt;T&gt;转为Map&lt;K,List&lt;V&gt;&gt;</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> predicate1 map中的key</span><br><span class="line">	 * <span class="doctag">@param</span> predicate2 map中的list的元素</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;K,V,T&gt; Map&lt;K, List&lt;V&gt;&gt; transformToMapList(List&lt;T&gt; list, Function&lt;T, K&gt; predicate1, Function&lt;T,V&gt; predicate2)&#123;</span><br><span class="line">		<span class="keyword">return</span> list.stream().collect(</span><br><span class="line">				Collectors.groupingBy(predicate1, </span><br><span class="line">                Collectors.mapping(predicate2, </span><br><span class="line">                        Collectors.toList())));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;DeviceUser&gt; list = <span class="keyword">new</span> ArrayList&lt;DeviceUser&gt;();</span><br><span class="line"><span class="comment">//省略list的构造</span></span><br><span class="line">Map&lt;Integer, List&lt;String&gt;&gt; deviceMap = TransFormUtils.transformToMapList(list, p-&gt;p.getDeviceType(), p-&gt;p.getDeviceId());</span><br></pre></td></tr></table></figure>
+<h4 id="2-普通方法"><a href="#2-普通方法" class="headerlink" title="2.普通方法"></a>2.普通方法</h4><p>同事也写了一个另一个工具类,这种方法定义了一个新的数据结构，直接使用MapList代替Map</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Map&amp;List组合数据结构</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> jianming.zhou</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> &lt;K&gt;</span><br><span class="line"> * <span class="doctag">@param</span> &lt;V&gt;</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapList</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Map&lt;K, List&lt;V&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;K, List&lt;V&gt;&gt;();</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> List&lt;V&gt; <span class="title">get</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> map.get(k);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(K k, V v)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (map.containsKey(k)) &#123;</span><br><span class="line">			map.get(k).add(v);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			List&lt;V&gt; list = <span class="keyword">new</span> ArrayList&lt;V&gt;();</span><br><span class="line">			list.add(v);</span><br><span class="line">			map.put(k, list);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> map.keySet();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;DeviceUser&gt; list = <span class="keyword">new</span> ArrayList&lt;DeviceUser&gt;();</span><br><span class="line"><span class="comment">//省略list的构造</span></span><br><span class="line">MapList&lt;Integer, String&gt; deviceMap = <span class="keyword">new</span> MapList&lt;Integer,String&gt;();</span><br><span class="line"><span class="keyword">for</span>(DeviceUser device : list)&#123;</span><br><span class="line"> deviceMap.put(device.getDeviceType(),device.getDeviceId());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还是喜欢第一种哈哈哈哈哈哈~~<br>题外话：既然对现状不满意 就尝试改变吧 虽然有可能进入另一个坑~~</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/" data-id="cilyhezj2000ty3tlleqjl9nb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/#comments" class="article-comment-link ds-thread-count" data-thread-key="使代码更简洁-二-集合转换相关">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/09/12/spring事务管理总结/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    spring事务管理总结
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/09/10/使代码更简洁-一-List相关/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">使代码更简洁(一)---List相关</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="使代码更简洁-二-集合转换相关" data-title="使代码更简洁(二)---集合转换相关" data-url="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

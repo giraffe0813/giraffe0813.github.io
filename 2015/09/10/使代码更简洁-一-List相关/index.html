@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>使代码更简洁(一)---List相关 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="以前写在segmentFault上的一篇文章 搬移到这里。
+
+记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和list相关的吧。。。。。会持续记录。。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使代码更简洁(一)---List相关">
+<meta property="og:url" content="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="以前写在segmentFault上的一篇文章 搬移到这里。
+
+记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和list相关的吧。。。。。会持续记录。。。。">
+<meta property="og:image" content="http://yemengying.com/images/thumbnail1.jpg">
+<meta property="og:updated_time" content="2016-02-03T07:34:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使代码更简洁(一)---List相关">
+<meta name="twitter:description" content="以前写在segmentFault上的一篇文章 搬移到这里。
+
+记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和list相关的吧。。。。。会持续记录。。。。">
+<meta name="twitter:image" content="http://yemengying.com/images/thumbnail1.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-使代码更简洁-一-List相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/thumbnail1.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            使代码更简洁(一)---List相关
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/09/10/使代码更简洁-一-List相关/">
+            <time datetime="2015-09-10T06:07:54.000Z" itemprop="datePublished">2015-09-10</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/list/">list</a>, <a class="tag-link" href="/tags/stream/">stream</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#利用stream代替for循环"><span class="toc-number">1.</span> <span class="toc-text">利用stream代替for循环</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#打印list中的元素"><span class="toc-number">1.1.</span> <span class="toc-text">打印list中的元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从list中删除指定的元素"><span class="toc-number">1.2.</span> <span class="toc-text">从list中删除指定的元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list排序"><span class="toc-number">1.3.</span> <span class="toc-text"> list排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判读list中的元素是不是全部满足-指定条件"><span class="toc-number">1.4.</span> <span class="toc-text"> 判读list中的元素是不是全部满足 指定条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断list中是不是有一个元素满足predicate的条件"><span class="toc-number">1.5.</span> <span class="toc-text"> 判断list中是不是有一个元素满足predicate的条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断list中是不是没有一个元素满足predicate的条件"><span class="toc-number">1.6.</span> <span class="toc-text"> 判断list中是不是没有一个元素满足predicate的条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list去重"><span class="toc-number">1.7.</span> <span class="toc-text"> list去重</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2利用泛型编写一些通用的方法"><span class="toc-number">2.</span> <span class="toc-text">2利用泛型编写一些通用的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#方便的构造一个list"><span class="toc-number">2.1.</span> <span class="toc-text">方便的构造一个list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用递归获得多个list的笛卡尔积"><span class="toc-number">2.2.</span> <span class="toc-text">利用递归获得多个list的笛卡尔积</span></a></li></ol></li></ol>
+                </div>
+            
+            <p>以前写在segmentFault上的一篇文章 搬移到这里。</p>
+<blockquote>
+<p>记录一下在工作开发中封装的一些工具类，使代码看起来更加的简洁。这篇就记录下和list相关的吧。。。。。会持续记录。。。。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="利用stream代替for循环"><a href="#利用stream代替for循环" class="headerlink" title="利用stream代替for循环"></a>利用stream代替for循环</h1><p>   在对list的操作中常常需要for循环来遍历整个list，代码看起来不够简洁。所以利用java8的新特性Stream来代替for循环，提高程序的可读性。<br>从网上coyp了一些stream的介绍：Stream 不是集合元素，它不是数据结构并不保存数据，它是有关算法和计算的，它更像一个高级版本的 Iterator。原始版本的 Iterator，用户只能显式地一个一个遍历元素并对其执行某些操作；高级版本的 Stream，用户只要给出需要对其包含的元素执行什么操作，比如 “过滤掉长度大于 10 的字符串”、“获取每个字符串的首字母”等，Stream 会隐式地在内部进行遍历，做出相应的数据转换。<br>Stream 就如同一个迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了，就好比流水从面前流过，一去不复返。<br>而和迭代器又不同的是，Stream 可以并行化操作，迭代器只能命令式地、串行化操作。顾名思义，当使用串行方式去遍历时，每个 item 读完后再读下一个 item。而使用并行去遍历时，数据会被分成多个段，其中每一个都在不同的线程中处理，然后将结果一起输出。Stream 的并行操作依赖于 Java7 中引入的 Fork/Join 框架（JSR166y）来拆分任务和加速处理过程。<br>下面是一些利用stream写的工具类</p>
+<h2 id="打印list中的元素"><a href="#打印list中的元素" class="headerlink" title="打印list中的元素"></a>打印list中的元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 打印list中的元素</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">printList</span><span class="params">(List&lt;T&gt; list)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list) list = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">		list.stream().forEach(n -&gt; System.out.println(n.toString()));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="从list中删除指定的元素"><a href="#从list中删除指定的元素" class="headerlink" title="从list中删除指定的元素"></a>从list中删除指定的元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 从list中删除指定的元素 其他类需重写equals方法</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> arg 要删除的元素</span><br><span class="line">	 * <span class="doctag">@return</span> 返回删除了指定元素的list</span><br><span class="line">	 * eg:list:[1,2,3,1]---removeElementFromList(list,1)---return list:[2,3]</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">removeElementFromList</span><span class="params">(List&lt;T&gt; list, T arg)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list || list.isEmpty()) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">		<span class="keyword">if</span>(arg == <span class="keyword">null</span>) <span class="keyword">return</span> list;</span><br><span class="line">		<span class="keyword">return</span> list.stream().filter(n -&gt; &#123;</span><br><span class="line">	        <span class="keyword">return</span> !n.equals(arg);</span><br><span class="line">	    &#125;).collect(Collectors.toList());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="list排序"><a href="#list排序" class="headerlink" title=" list排序"></a> list排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * list排序</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> comparator</span><br><span class="line">	 * <span class="doctag">@return</span> 返回按comparator排好序的list</span><br><span class="line">	 * eg:User:id name两个属性 </span><br><span class="line">	 *  List&lt;User&gt; userList = new ArrayList&lt;User&gt;();</span><br><span class="line">	 *	userList.add(new User(1,"abc"));</span><br><span class="line">	 *	userList.add(new User(3, "ccd"));</span><br><span class="line">	 *	userList.add(new User(2, "bde"));</span><br><span class="line">	 *	1.按user名字排序</span><br><span class="line">	 *	userList = ListUtils.sortList(userList, (p1, p2) -&gt; p1.getName().compareTo(p2.getName()));</span><br><span class="line">	 *	2.按user Id排序</span><br><span class="line">	 *  userList = ListUtils.sortList(userList, (p1, p2) -&gt; p1.getId()-p2.getId());</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">sortList</span><span class="params">(List&lt;T&gt; list, Comparator&lt;? <span class="keyword">super</span> T&gt; comparator)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list || list.isEmpty()) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == comparator) <span class="keyword">return</span> list;</span><br><span class="line">		<span class="keyword">return</span> list.stream().sorted(comparator).collect(Collectors.toList());</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判读list中的元素是不是全部满足-指定条件"><a href="#判读list中的元素是不是全部满足-指定条件" class="headerlink" title=" 判读list中的元素是不是全部满足 指定条件"></a> 判读list中的元素是不是全部满足 指定条件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 判读list中的元素是不是全部满足 predicate的条件 </span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> predicate</span><br><span class="line">	 * <span class="doctag">@return</span> 全部满足 true 有不满足的 false</span><br><span class="line">	 * eg：判断list中的user的id是不是均小于4</span><br><span class="line">	 * List&lt;User&gt; userList = new ArrayList&lt;User&gt;();</span><br><span class="line">	 *	userList.add(new User(1,"abc"));</span><br><span class="line">	 *	userList.add(new User(3, "ccd"));</span><br><span class="line">	 *	userList.add(new User(2, "bde"));</span><br><span class="line">	 *	System.out.println(ListUtils.isAllMatch(userList, u -&gt; u.getId()&lt;4));</span><br><span class="line">	 *  输出 true</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">isAllMatch</span><span class="params">(List&lt;T&gt; list, Predicate&lt;? <span class="keyword">super</span> T&gt; predicate)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list || list.isEmpty()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == predicate) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> list.stream().allMatch(predicate);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断list中是不是有一个元素满足predicate的条件"><a href="#判断list中是不是有一个元素满足predicate的条件" class="headerlink" title=" 判断list中是不是有一个元素满足predicate的条件"></a> 判断list中是不是有一个元素满足predicate的条件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 只要有一个元素满足predicate的条件 返回true</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> predicate</span><br><span class="line">	 * <span class="doctag">@return</span> </span><br><span class="line">	 * eg：判断list中的user的id是不是有一个大于4</span><br><span class="line">	 * List&lt;User&gt; userList = new ArrayList&lt;User&gt;();</span><br><span class="line">	 *	userList.add(new User(1,"abc"));</span><br><span class="line">	 *	userList.add(new User(3, "ccd"));</span><br><span class="line">	 *	userList.add(new User(2, "bde"));</span><br><span class="line">	 *	System.out.println(ListUtils.isAllMatch(userList, u -&gt; u.getId()&gt;4));  return false</span><br><span class="line">	 */</span> </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">isAnyMatch</span><span class="params">(List&lt;T&gt; list, Predicate&lt;? <span class="keyword">super</span> T&gt; predicate)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list || list.isEmpty()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == predicate) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> list.stream().anyMatch(predicate);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断list中是不是没有一个元素满足predicate的条件"><a href="#判断list中是不是没有一个元素满足predicate的条件" class="headerlink" title=" 判断list中是不是没有一个元素满足predicate的条件"></a> 判断list中是不是没有一个元素满足predicate的条件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 没有一个元素满足predicate的条件 返回true</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@param</span> predicate</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 * eg：判断list中的user的id是不是有一个大于4</span><br><span class="line">	 * List&lt;User&gt; userList = new ArrayList&lt;User&gt;();</span><br><span class="line">	 *	userList.add(new User(1,"abc"));</span><br><span class="line">	 *	userList.add(new User(3, "ccd"));</span><br><span class="line">	 *	userList.add(new User(2, "bde"));</span><br><span class="line">	 *	System.out.println(ListUtils.isAllMatch(userList, u -&gt; u.getId()&gt;4));  return true</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">isNoneMatch</span><span class="params">(List&lt;T&gt; list, Predicate&lt;? <span class="keyword">super</span> T&gt; predicate)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list || list.isEmpty()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == predicate) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> list.stream().noneMatch(predicate);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="list去重"><a href="#list去重" class="headerlink" title=" list去重"></a> list去重</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> yemengying</span><br><span class="line"> *  </span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * list去重</span><br><span class="line">	 * <span class="doctag">@param</span> list</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 * eg:</span><br><span class="line">	 * list[1,2,2]---distinctList(list)---list[1,2]</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">distinctList</span><span class="params">(List&lt;T&gt; list)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">null</span> == list || list.isEmpty()) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">		<span class="keyword">return</span> list.stream().distinct().collect(Collectors.toList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2利用泛型编写一些通用的方法"><a href="#2利用泛型编写一些通用的方法" class="headerlink" title="2利用泛型编写一些通用的方法"></a>2利用泛型编写一些通用的方法</h1><h2 id="方便的构造一个list"><a href="#方便的构造一个list" class="headerlink" title="方便的构造一个list"></a>方便的构造一个list</h2><p>在开发时经常遇到要调用一个接口，接口的参数是list。例如在开发通知中心时发送消息的接口定义如下,其中messageForm是要发送的内容，userList是接受者的用户id</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pushMessage</span><span class="params">(MessageForm messageForm,List&lt;Integer&gt; userList)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这样，在给一个人发送消息的时候也需要构造一个list<br>一般的做法,如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">list.add(<span class="number">8808</span>);</span><br><span class="line">pushService.pushMessage(messageForm,list);</span><br></pre></td></tr></table></figure>
+<p>比较麻烦，所以同事封装了一个工具方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtils</span> </span>&#123;</span><br><span class="line">     <span class="comment">/**</span><br><span class="line">	 * 构造list</span><br><span class="line">	 * <span class="doctag">@param</span> args</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 * <span class="doctag">@author</span> zhoujianming</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">toList</span><span class="params">(T...args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == args) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">		&#125;</span><br><span class="line">		List&lt;T&gt; list = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">		<span class="keyword">for</span> (T t : args) &#123;</span><br><span class="line">			list.add(t);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> list;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样在调用时，比较简洁:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//给id 8808和8809发消息</span></span><br><span class="line">pushService.pushMessage(messageForm,ListUtils.toList(<span class="number">8808</span>,<span class="number">8809</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="利用递归获得多个list的笛卡尔积"><a href="#利用递归获得多个list的笛卡尔积" class="headerlink" title="利用递归获得多个list的笛卡尔积"></a>利用递归获得多个list的笛卡尔积</h2><p>获得多个list的笛卡尔积，代码参考stackoverflow</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 递归获得多个list的笛卡尔积</span><br><span class="line"> * eg[1],[8808],[1,2,3]--&gt;[[1,8808,1],[1,8808,2]]</span><br><span class="line"> * 参考：http://stackoverflow.com/questions/714108/cartesian-product-of-arbitrary-sets-in-java</span><br><span class="line"> * <span class="doctag">@param</span> lists</span><br><span class="line"> * <span class="doctag">@return</span></span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt;  List&lt;List&lt;T&gt;&gt; cartesianProduct(List&lt;List&lt;T&gt;&gt; lists) &#123;</span><br><span class="line">    List&lt;List&lt;T&gt;&gt; resultLists = <span class="keyword">new</span> ArrayList&lt;List&lt;T&gt;&gt;();</span><br><span class="line">    <span class="keyword">if</span> (lists.size() == <span class="number">0</span>) &#123;</span><br><span class="line">        resultLists.add(<span class="keyword">new</span> ArrayList&lt;T&gt;());</span><br><span class="line">        <span class="keyword">return</span> resultLists;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        List&lt;T&gt; firstList = lists.get(<span class="number">0</span>);</span><br><span class="line">        List&lt;List&lt;T&gt;&gt; remainingLists = cartesianProduct(lists.subList(<span class="number">1</span>, lists.size()));</span><br><span class="line">        <span class="keyword">for</span> (T condition : firstList) &#123;</span><br><span class="line">            <span class="keyword">for</span> (List&lt;T&gt; remainingList : remainingLists) &#123;</span><br><span class="line">                ArrayList&lt;T&gt; resultList = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">                resultList.add(condition);</span><br><span class="line">                resultList.addAll(remainingList);</span><br><span class="line">                resultLists.add(resultList);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resultLists;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用时将需要获得笛卡尔积的多个list放到一个list里，调用上面的方法即可，调用示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list1 = Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">List&lt;Integer&gt; list2 = Arrays.asList(<span class="number">8808</span>,<span class="number">8809</span>,<span class="number">8810</span>);</span><br><span class="line">List&lt;Integer&gt; list3 = Arrays.asList(<span class="number">4</span>);</span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; lists = Arrays.asList(list1,list2,list3);</span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; resultLists = ListUtils.cartesianProduct(lists);</span><br></pre></td></tr></table></figure>
+<p>[1,2,3],[8808,8809,8810],[4]——&gt;[[1, 8808, 4], [1, 8809, 4], [1, 8810, 4], [2, 8808, 4], [2, 8809, 4], [2, 8810, 4], [3, 8808, 4], [3, 8809, 4], [3, 8810, 4]]</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cilyheziy000oy3tlkg9lz918" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/#comments" class="article-comment-link ds-thread-count" data-thread-key="使代码更简洁-一-List相关">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/09/11/使代码更简洁-二-集合转换相关/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    使代码更简洁(二)---集合转换相关
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/09/08/angularjs-bootstrap-ngDialog实现模式对话框/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">angularjs+bootstrap+ngDialog实现模式对话框</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="使代码更简洁-一-List相关" data-title="使代码更简洁(一)---List相关" data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

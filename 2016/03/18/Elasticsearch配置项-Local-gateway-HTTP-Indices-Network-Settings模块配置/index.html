@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置">
+<meta property="og:url" content="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看">
+<meta property="og:image" content="http://yemengying.com/images/trim.jpg">
+<meta property="og:updated_time" content="2016-03-18T12:25:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置">
+<meta name="twitter:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看">
+<meta name="twitter:image" content="http://yemengying.com/images/trim.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/trim.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            [Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/">
+            <time datetime="2016-03-18T09:48:10.000Z" itemprop="datePublished">2016-03-18</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料-万分感谢-："><span class="toc-number">1.</span> <span class="toc-text">参考资料(万分感谢)：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Local-gateway模块"><span class="toc-number">2.</span> <span class="toc-text">Local gateway模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP模块"><span class="toc-number">3.</span> <span class="toc-text">HTTP模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">3.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#禁用HTTP"><span class="toc-number">3.2.</span> <span class="toc-text">禁用HTTP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Indices-索引模块"><span class="toc-number">4.</span> <span class="toc-text">Indices(索引模块)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Circuit-breaker-断路器"><span class="toc-number">4.1.</span> <span class="toc-text">Circuit breaker(断路器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fielddata-cache-字段数据缓存"><span class="toc-number">4.2.</span> <span class="toc-text">Fielddata cache(字段数据缓存)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Node-query-cache-查询缓存"><span class="toc-number">4.3.</span> <span class="toc-text">Node query cache(查询缓存)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Indexing-buffer-索引缓冲"><span class="toc-number">4.4.</span> <span class="toc-text">Indexing buffer(索引缓冲)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shard-request-cache-分片请求缓存"><span class="toc-number">4.5.</span> <span class="toc-text">Shard request cache(分片请求缓存)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Indices-Recovery-索引恢复"><span class="toc-number">4.6.</span> <span class="toc-text">Indices Recovery(索引恢复)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TTL-interval"><span class="toc-number">4.7.</span> <span class="toc-text">TTL interval</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NetWork-Settings-网络设置"><span class="toc-number">5.</span> <span class="toc-text">NetWork Settings(网络设置)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的网络设置"><span class="toc-number">5.1.</span> <span class="toc-text">常用的网络设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#network-host可使用的一些特殊值"><span class="toc-number">5.2.</span> <span class="toc-text">network.host可使用的一些特殊值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级网络设置"><span class="toc-number">5.3.</span> <span class="toc-text">高级网络设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级TCP设置"><span class="toc-number">5.4.</span> <span class="toc-text">高级TCP设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transport和HTTP协议"><span class="toc-number">5.5.</span> <span class="toc-text">Transport和HTTP协议</span></a></li></ol></li></ol>
+                </div>
+            
+            <p>近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。<br><img src="/images/baobao.jpg" alt="哇咔咔咔"></p>
+<a id="more"></a>
+<h3 id="参考资料-万分感谢-："><a href="#参考资料-万分感谢-：" class="headerlink" title="参考资料(万分感谢)："></a>参考资料(万分感谢)：</h3><ul>
+<li><a href="http://donlianli.iteye.com/blog/2115979" target="_blank" rel="external">http://donlianli.iteye.com/blog/2115979</a></li>
+<li><a href="http://aoyouzi.iteye.com/blog/2164820" target="_blank" rel="external">http://aoyouzi.iteye.com/blog/2164820</a></li>
+<li><a href="http://blog.csdn.net/jingkyks/article/details/41081261" target="_blank" rel="external">http://blog.csdn.net/jingkyks/article/details/41081261</a></li>
+<li><a href="http://m.oschina.net/blog/387512" target="_blank" rel="external">http://m.oschina.net/blog/387512</a></li>
+<li><a href="http://my.oschina.net/secisland/blog/618702?fromerr=ZGR1hlby#OSC_h4_5" target="_blank" rel="external">http://my.oschina.net/secisland/blog/618702?fromerr=ZGR1hlby#OSC_h4_5</a></li>
+<li><a href="https://github.com/chenryn/ELKstack-guide-cn/blob/master/elasticsearch/performance/cache.md" target="_blank" rel="external">https://github.com/chenryn/ELKstack-guide-cn/blob/master/elasticsearch/performance/cache.md</a></li>
+</ul>
+<h3 id="Local-gateway模块"><a href="#Local-gateway模块" class="headerlink" title="Local gateway模块"></a>Local gateway模块</h3><p>官网对应链接：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html" target="_blank" rel="external">Local gateway</a><br>该模块用于存储集群信息和分片数据，以便整个集群重启后可以恢复。<br>以下的一些静态配置，需要在集群的每一个节点上设置，用来控制节点需要等待多长时间之后再尝试恢复存储在本地的数据。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">gateway.expected_nodes</td>
+<td style="text-align:left">期望的集群中节点的数量，当集群中的节点数达到设定值时立即开始启动恢复本地数据的进程(会忽略recover_after_time配置)，默认为0</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway.expected_master_nodes</td>
+<td style="text-align:left">期望的集群中master节点的数量，当集群中的节点数达到设定值时立即开始启动恢复本地数据的进程(会忽略recover_after_time配置)，默认为0</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway.expected_data_nodes</td>
+<td style="text-align:left">期望的集群中master节点的数量，当集群中的节点数达到设定值时立即开始启动恢复本地数据的进程(会忽略recover_after_time配置)，默认为0</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway.recover_after_time</td>
+<td style="text-align:left">当没有达到期望的节点数时，恢复进程会在等待配置时间之后尝试启动。当期望的节点数设置为1时，等待时间默认为5m</td>
+</tr>
+</tbody>
+</table>
+<p>一旦到达了recover_after_time设置的时间，还要满足以下的配置条件，恢复进程才会启动。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">gateway.recover_after_nodes</td>
+<td style="text-align:left">需要多少个节点加入集群</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway.recover_after_master_nodes</td>
+<td style="text-align:left">需要多少个master节点加入集群</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway.recover_after_data_nodes</td>
+<td style="text-align:left">需要多少个data节点加入集群</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：这些配置只有在整个集群重启时才会有用。</p>
+</blockquote>
+<h3 id="HTTP模块"><a href="#HTTP模块" class="headerlink" title="HTTP模块"></a>HTTP模块</h3><p>官网对应链接：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html" target="_blank" rel="external">HTTP</a><br>HTTP模块用来通过HTTP暴露Es的API。因为HTTP机制是完全异步的，这意味着等待响应时不会阻塞线程。使用异步的通信可以解决<a href="http://en.wikipedia.org/wiki/C10k_problem" target="_blank" rel="external">C10k</a>的问题。<br>如果可以，可考虑使用<a href="https://en.wikipedia.org/wiki/Keepalive#HTTP_Keepalive" target="_blank" rel="external">HTTP keep alive</a>来连接以便提升性能。并且不要在客户端使用<a href="https://en.wikipedia.org/wiki/Chunked_transfer_encoding" target="_blank" rel="external">HTTP chunking</a>。</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>下面表中是关于HTTP模块的一些配置。需要注意的是，它们都不能动态更新，必须配置在<code>elasticsearch.yml</code>文件中。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">http.port</td>
+<td style="text-align:left">绑定端口的范围 默认9200-9300</td>
+</tr>
+<tr>
+<td style="text-align:left">http.publish_port</td>
+<td style="text-align:left">客户端与节点交互时需要使用的端口。这一配置在集群节点处于防火墙后时很有用，默认和<code>http.port</code>中分配的端口一致。</td>
+</tr>
+<tr>
+<td style="text-align:left">http.bind_host</td>
+<td style="text-align:left">绑定http服务的host地址，默认和<code>http.host</code>(如果设置了)或者<code>network.bind_host</code>一致</td>
+</tr>
+<tr>
+<td style="text-align:left">http.publish_host</td>
+<td style="text-align:left">客户端访问的host地址，默认和<code>http.host</code>(如果设置了)或者<code>network.public_host</code>一致</td>
+</tr>
+<tr>
+<td style="text-align:left">http.host</td>
+<td style="text-align:left">用来设置<code>http.bind_host</code>和<code>http.publish_host</code>,默认为<code>http.host</code>或者<code>network.host</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.max_content_length</td>
+<td style="text-align:left">设置请求内容的最大大小。默认<code>100mb</code>。如果设置的数值超过了<code>Integer.MAX_VALUE</code>,会被重置为100mb。</td>
+</tr>
+<tr>
+<td style="text-align:left">http.max_initial_line_length</td>
+<td style="text-align:left">HTTP请求URL的最大长度，默认<code>4kb</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.max_header_size</td>
+<td style="text-align:left">请求头的最大大小，默认<code>8kb</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.compression</td>
+<td style="text-align:left">是否支持压缩(使用Accept-Encoding)，默认<code>false</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.compression_level</td>
+<td style="text-align:left">定义使用的压缩级别，默认为6</td>
+</tr>
+<tr>
+<td style="text-align:left">http.cors.enabled</td>
+<td style="text-align:left">是否允许跨域请求。默认为<code>false</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.cors.allow-origin</td>
+<td style="text-align:left">定义允许哪些源请求。可以使用正则表达式，例如<code>/https?:\/\/localhost(:[0-9]+)?/</code>可设置支持本地HTTP和HTTPS请求。也可以设置为<code>*</code>,但是会存在安全隐患，因为任何来源都可访问Elasticsearch(以下简称为Es)实例。</td>
+</tr>
+<tr>
+<td style="text-align:left">http.cors.max-age</td>
+<td style="text-align:left">浏览器会发送一个“预检”的OPTIONS请求，来检查CORS设置。<code>max-age</code>定义应该缓存多长时间的结果。默认为<code>1728000</code>（20天）</td>
+</tr>
+<tr>
+<td style="text-align:left">http.cors.allow-methods</td>
+<td style="text-align:left">定义了允许的请求方式，默认允许<code>OPTIONS</code>, <code>HEAD</code>, <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.cors.allow-headers</td>
+<td style="text-align:left">定义了允许的请求头信息。默认允许<code>X-Requested-With</code>, <code>Content-Type</code>, <code>Content-Length</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.cors.allow-credentials</td>
+<td style="text-align:left">是否返回设置的<code>Access-Control-Allow-Credentials</code>头信息。默认为false</td>
+</tr>
+<tr>
+<td style="text-align:left">http.detailed_errors.enabled</td>
+<td style="text-align:left">是否输出详细的错误信息和堆栈。默认为<code>true</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.pipelining</td>
+<td style="text-align:left">是否启用HTTP管道支持, 默认为true</td>
+</tr>
+<tr>
+<td style="text-align:left">http.pipelining.max_events</td>
+<td style="text-align:left">在一个HTTP连接被关闭之前内存队列中允许的最大的事件数量，默认为<code>10000</code></td>
+</tr>
+</tbody>
+</table>
+<p>该模块也可使用一些公共的网络配置(见网络设置一节)。</p>
+<h4 id="禁用HTTP"><a href="#禁用HTTP" class="headerlink" title="禁用HTTP"></a>禁用HTTP</h4><p>HTTP模块可以通过将<code>http.enable</code>设置为false来禁用。Es节点(和Java客户端)的内部通信使用transport接口，而非HTTP。这意味着我们可以将不接受直接REST请求的节点的HTTP禁用。比如，可以将数据节点的http禁用，创建非数据节点用来处理所有的REST请求。需要注意的是，不能向一个已经禁用了HTTP的节点直接发送任何REST请求。</p>
+<h3 id="Indices-索引模块"><a href="#Indices-索引模块" class="headerlink" title="Indices(索引模块)"></a>Indices(索引模块)</h3><p>官网对应链接：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-indices.html" target="_blank" rel="external">Indices</a><br>这一模块可以对所有索引的索引相关配置进行全局控制。<br>相关的配置如下：</p>
+<h4 id="Circuit-breaker-断路器"><a href="#Circuit-breaker-断路器" class="headerlink" title="Circuit breaker(断路器)"></a>Circuit breaker(断路器)</h4><p>官网对应链接：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/circuit-breaker.html" target="_blank" rel="external">Circuit breaker</a><br>该模块用来限制内存的使用，避免出现内存溢出。<br>Es中包含多个Circuit breaker(断路器)用来阻止可能造成OutOfMemoryError异常的操作。此外，还有一个父级别断路器限制了可以使用的总内存。<br>这些配置都可通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-update-settings.html" target="_blank" rel="external">Cluster-update-settings</a>动态更新。<br><strong>父断路器</strong><br>父级别的断路器可以通过<code>indices.breaker.total.limit</code>来设置，默认是JVM堆的70%</p>
+<p><strong>Filed data断路器</strong><br>允许Es提前估计加载一个字段需要的内存，然后检查加载需要的fielddata会不会导致总的内存大小超过设置的百分比。这样可以预防在加载的过程中产生异常。默认的限制是60%的JVM堆，可以通过以下参数配置。<br><code>indices.breaker.fielddata.limit</code>：限制fielddata所能占用的最大内存，默认为JVM堆的60%<br><code>indices.breaker.fielddata.overhead</code>:一个常量。es将使用这个值乘以field实际的大小作Field估算值，默认为1.03<br><strong>请求断路器</strong><br>允许Es阻止使用内存超过限制的请求。<br><code>indices.breaker.request.limit</code>:默认JVM堆的40%<br><code>indices.breaker.request.overhead</code>:一个常量。所有请求的预估内存乘以这个常量就是最终的估计值。默认为1</p>
+<h4 id="Fielddata-cache-字段数据缓存"><a href="#Fielddata-cache-字段数据缓存" class="headerlink" title="Fielddata cache(字段数据缓存)"></a>Fielddata cache(字段数据缓存)</h4><p>限制内存中的数据缓存可以使用多大的堆内存<br>field data缓存主要用于针对一个字段排序和做聚合计算。为了快速的访问某些值，Es会将这些字段值加载到内存中。需要注意的是将字段加载到内存很耗费资源，所以官方建议保证有足够的内存，并且保持所有字段被加载。<br>field data内存的大小可通过<code>indices.fielddata.cache.size</code>配置项控制。要注意的是，当这个缓存不够用时，为了腾出空间给新的缓存，原来缓存的字段会被挤出来，这会导致系统性能下降。<br><code>indices.fielddata.cache.size</code>:field data缓存的最大值。可以设为节点堆空间的30%，也可设置为一个确定的值，比如12GB。默认无限大，生产环境要注意设置这个值。</p>
+<blockquote>
+<p>注意：这些静态配置需要在集群的每一个节点上设置。</p>
+</blockquote>
+<p><strong>监控field data</strong><br>可以通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html" target="_blank" rel="external">Node Stats API</a>监控内存使用情况。</p>
+<h4 id="Node-query-cache-查询缓存"><a href="#Node-query-cache-查询缓存" class="headerlink" title="Node query cache(查询缓存)"></a>Node query cache(查询缓存)</h4><p>配置缓存查询结果可以使用多少堆内存<br>查询缓存负责对查询结果进行缓存。每一个节点都有一个查询缓存，由所有分片共享。缓存采用LRU机制，将最近最少使用的内容替换成新数据。查询缓存只会缓存filter的内容。<br>下面的配置需要在集群的每一个节点上配置。<br><code>indices.queries.cache.size</code>: 控制过滤结果缓存的大小。默认是10%。也可设置为一个确定的值，如<code>512mb</code>。</p>
+<h4 id="Indexing-buffer-索引缓冲"><a href="#Indexing-buffer-索引缓冲" class="headerlink" title="Indexing buffer(索引缓冲)"></a>Indexing buffer(索引缓冲)</h4><p>控制分配多少内存给索引进程<br>索引缓冲用来存储新索引的文档。当缓冲区满了时，缓冲的文档会被写到磁盘的一个段，会被划分到该节点的所有分片上。<br>这些静态配置需要在集群的每一个节点上设置。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">indices.memory.index_buffer_size</td>
+<td style="text-align:left">设置索引缓冲区的大小。可设置一个百分比或者字节大小。默认为10%，意味着节点的10%的</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.memory.min_index_buffer_size</td>
+<td style="text-align:left">如果indices.memory.index_buffer_size被设置成了一个百分比，本配置项可以用来代表缓冲区的最小值，默认为48mb。</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.memory.max_index_buffer_size</td>
+<td style="text-align:left">如果indices.memory.index_buffer_size被设置成了一个百分比，本配置项可以用来代表缓冲区的最大值，默认无限大。</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.memory.min_shard_index_buffer_size</td>
+<td style="text-align:left">为每个分片自己的索引缓冲区设置最小值。默认4mb</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Shard-request-cache-分片请求缓存"><a href="#Shard-request-cache-分片请求缓存" class="headerlink" title="Shard request cache(分片请求缓存)"></a>Shard request cache(分片请求缓存)</h4><p>控制分片级别的查询缓存的行为。<br>当一个搜索请求是针对一个索引或者多个索引的时候，每一个涉及到的分片都会在本地进行搜索，然后把结果返回到协调节点，在由协调节点把这些结果合并到一起。由于分片缓存模块会将本地的查询结果缓存，所以频率高的搜索请求会立刻返回结果。</p>
+<blockquote>
+<p>注意：目前，请求缓存只缓存查询条件size=0的搜索，缓存的内容有hits.total, aggregations,suggestions，而不缓存原始的hits。并且通过now查询的结果也不缓存。</p>
+</blockquote>
+<p>只缓存查询条件size=0的搜索原因如下(引用自<a href="https://github.com/chenryn/ELKstack-guide-cn/blob/master/elasticsearch/performance/cache.md" target="_blank" rel="external">ELKstack-guide-cn</a>):ES对请求的处理过程是有不同类型的，默认的叫 query_then_fetch。在这种情况下，各数据节点处理检索请求后，返回的是只包含文档id和相关性分值的结果，这一段处理，叫做query阶段；汇聚到这份结果后，按照分值排序，得到一个全集群最终需要的文档id，再向对应节点发送一次文档获取请求，拿到文档内容，这一段处理，叫做 fetch阶段。两段都结束后才返回响应。<br>此外，还有DFS_query_then_fetch类型，提高小数据量时的精确度;query_and_fetch类型，在有明确routing时可以省略一个数据来回;count类型，不关心文档内容只需要计数时省略 fetch阶段;scan类型，批量获取数据省略query阶段，在reindex时就是使用这种类型。<br>回到query cache，这里这个query，就是处理过程中query阶段的意思。各个节点上的数据分片，会在处理完query阶段时，将得到的本分片有关该请求的计数值，缓存起来。<br>根据上面的请求类型介绍，显然,只有当?search_type=count的时候，这个query cache才能起到作用。<br><strong>缓存失效</strong><br>在分片数据真正发生变化时刷新索引分片，缓存的结果会自动失效。刷新间隔越长缓存的数据越多。当缓存满了的时候，会将最少使用的数据删除。<br>缓存可以通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html" target="_blank" rel="external">clear-cache API</a>手动设置过期。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST <span class="string">'localhost:9200/kimchy,elasticsearch/_cache/clear?request_cache=true'</span></span><br></pre></td></tr></table></figure>
+<p><strong>默认启动缓存</strong><br>分片请求缓存默认是不启动的，但可以在创建新的索引时通过下面的方式启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT localhost:9200/my_index <span class="_">-d</span><span class="string">'</span><br><span class="line">&#123;</span><br><span class="line">  "settings": &#123;</span><br><span class="line">    "index.requests.cache.enable": true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>也可以通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html" target="_blank" rel="external">update-settings API</a>为就索引动态的启动和关闭缓存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT localhost:9200/my_index/_settings <span class="_">-d</span><span class="string">'</span><br><span class="line">&#123; "index.requests.cache.enable": true &#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>为每个请求启动缓存</strong><br>可以在请求时通过请求参数<code>request_cache</code>来为每个请求启动和关闭缓存。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">'localhost:9200/my_index/_search?request_cache=true'</span> <span class="_">-d</span><span class="string">'</span><br><span class="line">&#123;</span><br><span class="line">  "size": 0,</span><br><span class="line">  "aggs": &#123;</span><br><span class="line">    "popular_colors": &#123;</span><br><span class="line">      "terms": &#123;</span><br><span class="line">        "field": "colors"</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>缓存设置</strong><br>缓存是在节点级别管理，默认JVM堆内存的<code>1%</code>。可在<code>config/elasticsearch.yml</code>文件中更改。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">indices.requests.cache.size: 2%</span><br></pre></td></tr></table></figure></p>
+<p>也可以通过<code>indices.requests.cache.expire</code>设置缓存过期时间，但是没有必要，因为旧的结果会在索引刷新时自动失效。</p>
+<p><strong>检测缓存使用</strong><br>可通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html" target="_blank" rel="external">indices-stats API</a>检测索引中缓存的使用情况<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">'localhost:9200/_stats/request_cache?pretty&amp;human'</span></span><br></pre></td></tr></table></figure></p>
+<p>或通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html" target="_blank" rel="external">nodes-stats API</a>查看节点的使用情况。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">'localhost:9200/_nodes/stats/indices/request_cache?pretty&amp;human'</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="Indices-Recovery-索引恢复"><a href="#Indices-Recovery-索引恢复" class="headerlink" title="Indices Recovery(索引恢复)"></a>Indices Recovery(索引恢复)</h4><p>限制分片恢复进程的资源<br>以下的配置用来管理恢复策略：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">indices.recovery.concurrent_streams</td>
+<td style="text-align:left">默认是3</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.recovery.concurrent_small_file_streams</td>
+<td style="text-align:left">默认2</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.recovery.file_chunk_size</td>
+<td style="text-align:left">默认512kb</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.recovery.translog_ops</td>
+<td style="text-align:left">默认1000</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.recovery.translog_size</td>
+<td style="text-align:left">默认512kb</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.recovery.compress</td>
+<td style="text-align:left">默认true</td>
+</tr>
+<tr>
+<td style="text-align:left">indices.recovery.max_bytes_per_sec</td>
+<td style="text-align:left">默认40mb</td>
+</tr>
+</tbody>
+</table>
+<p>这些配置都可通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-update-settings.html" target="_blank" rel="external">Cluster-update-settings</a>动态更新。</p>
+<h4 id="TTL-interval"><a href="#TTL-interval" class="headerlink" title="TTL interval"></a>TTL interval</h4><p>控制过期文档的删除<br>设有ttl值的文档会在过期之后被删除。以下动态配置控制了删除文档的检查间隔，和批量删除的大小。<br><code>indices.ttl.interval</code>：删除进程启动间隔。默认60s<br><code>indices.ttl.bulk_size</code>：删除进程的数量。默认为1000</p>
+<h3 id="NetWork-Settings-网络设置"><a href="#NetWork-Settings-网络设置" class="headerlink" title="NetWork Settings(网络设置)"></a>NetWork Settings(网络设置)</h3><p>Es默认只和localhost绑定。如果想要在多个服务器上启动生产环境的集群需要配置一些基本的网络设置。</p>
+<blockquote>
+<p>注意：要小心使用网络配置，不要将不受保护的节点暴露在公共网络中。</p>
+</blockquote>
+<h4 id="常用的网络设置"><a href="#常用的网络设置" class="headerlink" title="常用的网络设置"></a>常用的网络设置</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">network.host</td>
+<td style="text-align:left">将节点绑定到设置的hostname或ip地址，并通知集群中的其他节点。该配置项接受IP地址，主机名，一些特定值(见下一个表)和由上面几项组成的数组。默认为<code>_local_</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left">discovery.zen.ping.unicast.hosts</td>
+<td style="text-align:left">如果一个节点加入一个集群，需要知道集群中其他节点hostname和ip地址。本配置项为节点提供了其他节点的初始列表。默认<code>[&quot;127.0.0.1&quot;,&quot;[::1]&quot;]</code></td>
+</tr>
+<tr>
+<td style="text-align:left">http.port</td>
+<td style="text-align:left">为HTTP请求绑定端口，可设置单个端口，也可设置一个范围。如果设定了一个范围，节点会绑定在范围中第一个可用的端口。默认<code>9200-9300</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left">transport.tcp.port</td>
+<td style="text-align:left">节点间内部通信绑定的端口，可设置单个端口，也可设置一个范围。如果设定了一个范围，节点会绑定在范围中第一个可用的端口。默认<code>9300-9400</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="network-host可使用的一些特殊值"><a href="#network-host可使用的一些特殊值" class="headerlink" title="network.host可使用的一些特殊值"></a><code>network.host</code>可使用的一些特殊值</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">特殊值</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">_[networkInterface]_</td>
+<td style="text-align:left">指定网卡的IP地址，如_en0_</td>
+</tr>
+<tr>
+<td style="text-align:left">_local_</td>
+<td style="text-align:left">本机ip地址，如127.0.0.1</td>
+</tr>
+<tr>
+<td style="text-align:left">_site_</td>
+<td style="text-align:left">任意一个site-local地址，如192.168.0.1</td>
+</tr>
+<tr>
+<td style="text-align:left">_global_</td>
+<td style="text-align:left">任意一个globally-scoped地址，如8.8.8.8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IPv4 vs IPv6</strong><br>以上特殊值默认在IPV4和IPv6下均可使用，可以通过:ipv4和:ipv6标识符来做限制。例如,<code>_en0:ipv4_</code>。</p>
+<h4 id="高级网络设置"><a href="#高级网络设置" class="headerlink" title="高级网络设置"></a>高级网络设置</h4><p>常用网络设置一节中提到的<code>network.host</code>配置项只是一个为了同时设置<code>band_host</code>和<code>publish_host</code>的快捷设置。为了一下更复杂的情况，比如在一个代理服务器后运行节点，可能需要一些不同的配置。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">network.bind_host</td>
+<td style="text-align:left">设置节点绑定的ip地址，用来监听请求。默认<code>network.host</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left">network.publish_host</td>
+<td style="text-align:left">配置其他节点与本节点通信的地址，默认为<code>network.bind_host</code>中的最佳地址。</td>
+</tr>
+</tbody>
+</table>
+<p>以上配置都和<code>network.host</code>一样，可配置ip地址，hostname和某些特殊值。</p>
+<h4 id="高级TCP设置"><a href="#高级TCP设置" class="headerlink" title="高级TCP设置"></a>高级TCP设置</h4><p>任何使用TCP的模块（如HTTP和Transport）共享以下的配置。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">network.tcp.no_delay</td>
+<td style="text-align:left">是否启用<a href="https://en.wikipedia.org/wiki/Nagle%27s_algorithm" target="_blank" rel="external">TCP no delay</a>。默认为<code>true</code></td>
+</tr>
+<tr>
+<td style="text-align:left">network.tcp.keep_alive</td>
+<td style="text-align:left">是否启用<a href="https://en.wikipedia.org/wiki/Keepalive" target="_blank" rel="external">TCP keep alive</a>。默认为<code>true</code></td>
+</tr>
+<tr>
+<td style="text-align:left">network.tcp.reuse_address</td>
+<td style="text-align:left">一个地址是否可以重复使用</td>
+</tr>
+<tr>
+<td style="text-align:left">network.tcp.send_buffer_size</td>
+<td style="text-align:left">TCP发送缓冲区的大小，默认不设置</td>
+</tr>
+<tr>
+<td style="text-align:left">network.tcp.receive_buffer_size</td>
+<td style="text-align:left">TCP接收缓冲区的大小，默认不设置</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Transport和HTTP协议"><a href="#Transport和HTTP协议" class="headerlink" title="Transport和HTTP协议"></a>Transport和HTTP协议</h4><p>Es会基于上面的配置暴露两种网络协议，它们也可以进一步独立配置。<br><strong>TCP transport</strong> 用于节点之间通信 具体可见Transport模块一节。<br><strong>HTTP</strong> 用于暴露基于JSON的http接口。具体可见HTTP模块一节。</p>
+<p>都看到这了，听首歌再走吧。分享首适合抖腿的歌，写博客时听这种歌真是分分钟都要把键盘按穿。。。</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=26095964&auto=0&height=66"></iframe>
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cilyhezhm0001y3tlfimlqpl9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/#comments" class="article-comment-link ds-thread-count" data-thread-key="Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/03/15/zootopia/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">疯狂动物城</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置" data-title="[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置" data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

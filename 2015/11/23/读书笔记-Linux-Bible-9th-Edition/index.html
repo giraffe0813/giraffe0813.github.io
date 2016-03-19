@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>读书笔记-Linux Bible 9th Edition之使用shell | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="其实也不算读书笔记 主要是想整理一下常用的一些linux命令 
+
+ 相关博客: Linux Bible 9th Edition之玩转文本文件 Linux Bible 9th Edition之文件系统 Linux Bible 9th Edition之进程大法好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-Linux Bible 9th Edition之使用shell">
+<meta property="og:url" content="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="其实也不算读书笔记 主要是想整理一下常用的一些linux命令 
+
+ 相关博客: Linux Bible 9th Edition之玩转文本文件 Linux Bible 9th Edition之文件系统 Linux Bible 9th Edition之进程大法好">
+<meta property="og:image" content="http://yemengying.com/images/doge.jpg">
+<meta property="og:updated_time" content="2016-02-23T03:47:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="读书笔记-Linux Bible 9th Edition之使用shell">
+<meta name="twitter:description" content="其实也不算读书笔记 主要是想整理一下常用的一些linux命令 
+
+ 相关博客: Linux Bible 9th Edition之玩转文本文件 Linux Bible 9th Edition之文件系统 Linux Bible 9th Edition之进程大法好">
+<meta name="twitter:image" content="http://yemengying.com/images/doge.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-读书笔记-Linux-Bible-9th-Edition" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            读书笔记-Linux Bible 9th Edition之使用shell
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/23/读书笔记-Linux-Bible-9th-Edition/">
+            <time datetime="2015-11-23T08:23:32.000Z" itemprop="datePublished">2015-11-23</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/linux/">linux</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/linux/">linux</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#linux命令的一些语法"><span class="toc-number">1.</span> <span class="toc-text">linux命令的一些语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获得当前登录会话的一些信息"><span class="toc-number">2.</span> <span class="toc-text">获得当前登录会话的一些信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看服务器上的时间"><span class="toc-number">3.</span> <span class="toc-text">查看服务器上的时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#当前的目录"><span class="toc-number">4.</span> <span class="toc-text">当前的目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获得hostname"><span class="toc-number">5.</span> <span class="toc-text">获得hostname</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列出当前目录下的文件和目录"><span class="toc-number">6.</span> <span class="toc-text">列出当前目录下的文件和目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看uid-gid"><span class="toc-number">7.</span> <span class="toc-text">查看uid gid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LINUX如何定位命令"><span class="toc-number">8.</span> <span class="toc-text">LINUX如何定位命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在文件系统中查找"><span class="toc-number">9.</span> <span class="toc-text">在文件系统中查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看历史输入的命令-修改命令"><span class="toc-number">10.</span> <span class="toc-text">查看历史输入的命令,修改命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接和扩展命令"><span class="toc-number">11.</span> <span class="toc-text">连接和扩展命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建和使用别名"><span class="toc-number">12.</span> <span class="toc-text">创建和使用别名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#退出shell"><span class="toc-number">13.</span> <span class="toc-text">退出shell</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p>其实也不算读书笔记 主要是想整理一下常用的一些linux命令 </p>
+</blockquote>
+<p> 相关博客:<br> <a href="http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/">Linux Bible 9th Edition之玩转文本文件</a><br> <a href="http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">Linux Bible 9th Edition之文件系统</a><br> <a href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/">Linux Bible 9th Edition之进程大法好</a></p>
+<p><img src="/images/doge.jpg" alt="doge"><br><a id="more"></a></p>
+<h4 id="linux命令的一些语法"><a href="#linux命令的一些语法" class="headerlink" title="linux命令的一些语法"></a>linux命令的一些语法</h4><blockquote>
+<p><em>$</em>提示符代表普通用户 <em>#</em>提示符代表root用户。 大多数命令都有许多选项 选项通常由单一字符和连字符组成(eg:ls -a),还有选项是由一个单词代表,需在单词前加双连字符(eg:date - -help)</p>
+</blockquote>
+<h4 id="获得当前登录会话的一些信息"><a href="#获得当前登录会话的一些信息" class="headerlink" title="获得当前登录会话的一些信息"></a>获得当前登录会话的一些信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ who </span><br><span class="line">$ who am i </span><br><span class="line">$ who -uH</span><br></pre></td></tr></table></figure>
+<h4 id="查看服务器上的时间"><a href="#查看服务器上的时间" class="headerlink" title="查看服务器上的时间"></a>查看服务器上的时间</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ date</span><br><span class="line">$ date +<span class="string">'%d/%m/%y'</span>(以10/12/14的格式输出)</span><br></pre></td></tr></table></figure>
+<h4 id="当前的目录"><a href="#当前的目录" class="headerlink" title="当前的目录"></a>当前的目录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br></pre></td></tr></table></figure>
+<h4 id="获得hostname"><a href="#获得hostname" class="headerlink" title="获得hostname"></a>获得hostname</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hostname</span><br></pre></td></tr></table></figure>
+<h4 id="列出当前目录下的文件和目录"><a href="#列出当前目录下的文件和目录" class="headerlink" title="列出当前目录下的文件和目录"></a>列出当前目录下的文件和目录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">$ ls <span class="_">-l</span>(列出详细信息) <span class="_">-a</span>(列出包括.开头的隐含文件在内的所有文件) -t(按时间排序)</span><br></pre></td></tr></table></figure>
+<h4 id="查看uid-gid"><a href="#查看uid-gid" class="headerlink" title="查看uid gid"></a>查看uid gid</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ id</span><br></pre></td></tr></table></figure>
+<h4 id="LINUX如何定位命令"><a href="#LINUX如何定位命令" class="headerlink" title="LINUX如何定位命令"></a>LINUX如何定位命令</h4><blockquote>
+<p>可通过<em>echo $PATH</em>命令查看PATH环境变量的值，如果命令存放的目录包含在PATH中，可直接输入命令运行。如果不包含则需给出命令的位置(eg:绝对位置:/home/chris/scriptx.sh,相对位置:./scriptx.sh) shell检查输入命令的顺序：1.Aliases(别名) 2.Reserved word(保留的关键字) 3.Function 4.Build-in command(eg:cd/echo/exit/type..) 5.Filesystem</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看一个命令的位置</span></span><br><span class="line">$ <span class="built_in">type</span> bash</span><br><span class="line"><span class="comment">#打印PATH环境变量的值</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<h4 id="在文件系统中查找"><a href="#在文件系统中查找" class="headerlink" title="在文件系统中查找"></a>在文件系统中查找</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ locate ymy</span><br></pre></td></tr></table></figure>
+<h4 id="查看历史输入的命令-修改命令"><a href="#查看历史输入的命令-修改命令" class="headerlink" title="查看历史输入的命令,修改命令"></a>查看历史输入的命令,修改命令</h4><blockquote>
+<p>可以用<em>history</em>命令查看之前输入过的所有命令,之后可以通过!+行号 运行指定一行的命令。向上箭头(↑)可查看最近一条命令,下面是修改命令的一些快捷按键。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ctrl+A</td>
+<td style="text-align:left">将光标定位到命令的最前面</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+E</td>
+<td style="text-align:left">将光标定位到命令的最后面</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+L</td>
+<td style="text-align:left">清空屏幕，将命令置为最上面</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+F或 →</td>
+<td style="text-align:left">将光标后移</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+B或 ←</td>
+<td style="text-align:left">将光标前移</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+F</td>
+<td style="text-align:left">将光标后移一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+B</td>
+<td style="text-align:left">将光标前移一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+D</td>
+<td style="text-align:left">删除当前字符</td>
+</tr>
+<tr>
+<td style="text-align:left">backspace</td>
+<td style="text-align:left">删除前一个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+T</td>
+<td style="text-align:left">将当前字符和前一个字符对换</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+T</td>
+<td style="text-align:left">将当前单词和前一个单词对换</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+U</td>
+<td style="text-align:left">将当前单词变成大写</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+L</td>
+<td style="text-align:left">将当前单词变成小写</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+K</td>
+<td style="text-align:left">剪切从光标位置到最后</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+U</td>
+<td style="text-align:left">剪切从光标位置到最前</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+W</td>
+<td style="text-align:left">剪切前一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+D</td>
+<td style="text-align:left">剪切后一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+Y</td>
+<td style="text-align:left">粘贴最近复制的内容</td>
+</tr>
+<tr>
+<td style="text-align:left">alt+Y</td>
+<td style="text-align:left">粘贴最前复制的内容</td>
+</tr>
+<tr>
+<td style="text-align:left">tab</td>
+<td style="text-align:left">补全命令</td>
+</tr>
+</tbody>
+</table>
+<h4 id="连接和扩展命令"><a href="#连接和扩展命令" class="headerlink" title="连接和扩展命令"></a>连接和扩展命令</h4><ul>
+<li><p>管道符号 “|”<br>将前一个命令的输出作为下一个命令的输入<br>eg:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/passwd | sort |less</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命令分隔符 “;”<br>在一行语句中 顺次执行各个命令<br>eg: </p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可获得troff命令的执行时间</span></span><br><span class="line">$ date; troff -me verylargedocument|lpr ; date</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>后台进程符 “&amp;”<br>如果不希望shell一直被一个命令占用着，可以使用”&amp;”让命令在后台运行<br>eg:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ troff -me verylargedocument | lpr &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用数学表达式/命令的结果 “$[]”/“$()”<br>可以在一个命令中使用数学表达式或另一个命令的结果<br>eg:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"I am $[2015 - 1993] years old"</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"there are <span class="variable">$(ls | wc -w)</span> files in this directory"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量调用符号 “$”<br>eg:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$USER</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="创建和使用别名"><a href="#创建和使用别名" class="headerlink" title="创建和使用别名"></a>创建和使用别名</h4><p>使用<em>alias</em>命令，可以给任何的命令及选项取一个别名<br>eg:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#为命令pwd取别名ymy</span></span><br><span class="line">$ <span class="built_in">alias</span> ymy=<span class="string">'pwd'</span></span><br><span class="line"><span class="comment">#查看所有的别名</span></span><br><span class="line">$ <span class="built_in">alias</span></span><br><span class="line"><span class="comment">#删除别名</span></span><br><span class="line">$ <span class="built_in">unalias</span> ymy</span><br></pre></td></tr></table></figure>
+<h4 id="退出shell"><a href="#退出shell" class="headerlink" title="退出shell"></a>退出shell</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" data-id="cilyhezjq001ly3tlhkml1zhu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/#comments" class="article-comment-link ds-thread-count" data-thread-key="读书笔记-Linux-Bible-9th-Edition">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    读书笔记-Linux Bible 9th Edition之文件系统
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">EsGiraffe-利用注解和反射拼接Elasticsearch查询语句</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="读书笔记-Linux-Bible-9th-Edition" data-title="读书笔记-Linux Bible 9th Edition之使用shell" data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

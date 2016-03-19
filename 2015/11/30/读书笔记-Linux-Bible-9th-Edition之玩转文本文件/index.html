@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>读书笔记-Linux Bible 9th Edition之玩转文本文件 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼
+
+相关博客: Linux Bible 9th Edition之使用shell Linux Bible 9th Edition之文件系统 Linux Bible 9th Edition之进程大法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-Linux Bible 9th Edition之玩转文本文件">
+<meta property="og:url" content="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼
+
+相关博客: Linux Bible 9th Edition之使用shell Linux Bible 9th Edition之文件系统 Linux Bible 9th Edition之进程大法">
+<meta property="og:image" content="http://yemengying.com/images/thumbnail9.jpg">
+<meta property="og:updated_time" content="2016-02-26T10:38:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="读书笔记-Linux Bible 9th Edition之玩转文本文件">
+<meta name="twitter:description" content="根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼
+
+相关博客: Linux Bible 9th Edition之使用shell Linux Bible 9th Edition之文件系统 Linux Bible 9th Edition之进程大法">
+<meta name="twitter:image" content="http://yemengying.com/images/thumbnail9.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-读书笔记-Linux-Bible-9th-Edition之玩转文本文件" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/thumbnail9.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            读书笔记-Linux Bible 9th Edition之玩转文本文件
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/">
+            <time datetime="2015-11-30T07:04:46.000Z" itemprop="datePublished">2015-11-30</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/linux/">linux</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/linux/">linux</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用vim和vi编辑文件"><span class="toc-number">1.</span> <span class="toc-text">使用vim和vi编辑文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加文件内容"><span class="toc-number">1.1.</span> <span class="toc-text">添加文件内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在文本中移动"><span class="toc-number">1.2.</span> <span class="toc-text">在文本中移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除，复制，更改文本"><span class="toc-number">1.3.</span> <span class="toc-text">删除，复制，更改文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#粘贴"><span class="toc-number">1.4.</span> <span class="toc-text">粘贴</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在文件中跳跃"><span class="toc-number">1.5.</span> <span class="toc-text">在文件中跳跃</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查找文本"><span class="toc-number">1.6.</span> <span class="toc-text">查找文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用ex模式"><span class="toc-number">1.7.</span> <span class="toc-text">使用ex模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#退出vi"><span class="toc-number">1.8.</span> <span class="toc-text">退出vi</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查找文件"><span class="toc-number">2.</span> <span class="toc-text">查找文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用localte命令查找文件"><span class="toc-number">2.1.</span> <span class="toc-text">使用localte命令查找文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用find命令查找文件"><span class="toc-number">2.2.</span> <span class="toc-text">使用find命令查找文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用grep命令在文件中查找"><span class="toc-number">2.3.</span> <span class="toc-text">使用grep命令在文件中查找</span></a></li></ol></li></ol>
+                </div>
+            
+            <blockquote>
+<p>根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼</p>
+</blockquote>
+<p>相关博客:<br> <a href="http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/">Linux Bible 9th Edition之使用shell</a><br> <a href="http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">Linux Bible 9th Edition之文件系统</a><br> <a href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/">Linux Bible 9th Edition之进程大法好</a></p>
+<a id="more"></a>
+<h3 id="使用vim和vi编辑文件"><a href="#使用vim和vi编辑文件" class="headerlink" title="使用vim和vi编辑文件"></a>使用vim和vi编辑文件</h3><blockquote>
+<p>刚接触vi编辑器可能会觉得有点难，不过当你熟悉了之后可以只用键盘就能快速高效的编辑文件，无需使用鼠标或功能键。(如果觉得vi不适合你，可以选择其它的文本编辑器，比如:nano,gedit,jed,kate,kedit,mcedit,nedit…等等)</p>
+</blockquote>
+<p>从最常见的打开文件的开始了解vi<br>打开文件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>如果这是一个空的文件，你会看到类似下图的东东。最上面闪烁的东东代表了光标的当前位置，最下面的一行显示了关于文件的一些信息,中间的”~”符号代表没有内容。<br><img src="/images/vi1.jpg" alt="使用vi打开一个空文件"><br>当你看到这个界面可能会感觉不知所措，因为没有任何菜单，提示和图标来告诉你该做什么。更恐怖的是，你不能直接输入，否则会听见”嘟嘟”的声音。</p>
+<h4 id="添加文件内容"><a href="#添加文件内容" class="headerlink" title="添加文件内容"></a>添加文件内容</h4><p>不要怕,首先,需要了解两种主要的模式:命令模式(command)和编辑模式(input)。vi编辑器以命令模式启动，在添加或改变文本内容之前需输入命令来告诉vi你想要做什么(大小写敏感)。输入下面的命令就可以进入编辑模式，当编辑结束后，按<em>Esc</em>键就可以回到命令模式。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">可以在光标右侧开始插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">A</td>
+<td style="text-align:left">可以在当前行的最后开始插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">i</td>
+<td style="text-align:left">可以在光标左侧开始插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">I</td>
+<td style="text-align:left">可以在当前行的最前面开始插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">o</td>
+<td style="text-align:left">在当前行下面 插入新的一行 </td>
+</tr>
+<tr>
+<td style="text-align:left">O</td>
+<td style="text-align:left">在当前行上面 插入新的一行</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><img src="/images/tips.jpg" alt="提示"> 当进入编辑模式时，屏幕下方会出现– INSERT –；编辑结束后，按<em>Esc</em>键就可以回到命令模式。不过如果输入了”:”符号，需要按两下<em>Esc</em>键</p>
+</blockquote>
+<h4 id="在文本中移动"><a href="#在文本中移动" class="headerlink" title="在文本中移动"></a>在文本中移动</h4><p>可以使用方向键可以在文本中移动光标，但还有一些小技巧可以让我们更方便的在文本中移动</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">w</td>
+<td style="text-align:left">光标移到下一个单词的开头(单词以spaces,tabs,标点界定)</td>
+</tr>
+<tr>
+<td style="text-align:left">W</td>
+<td style="text-align:left">光标移到下一个单词的开头(单词以spaces,tabs界定)</td>
+</tr>
+<tr>
+<td style="text-align:left">b</td>
+<td style="text-align:left">光标移到前一个单词的开头(单词以spaces,tabs,标点界定)</td>
+</tr>
+<tr>
+<td style="text-align:left">B</td>
+<td style="text-align:left">光标移到前一个单词的开头(单词以spaces,tabs界定)</td>
+</tr>
+<tr>
+<td style="text-align:left">0(zero)</td>
+<td style="text-align:left">光标移到当前行的最前面</td>
+</tr>
+<tr>
+<td style="text-align:left">$</td>
+<td style="text-align:left">光标移到当前行的最后</td>
+</tr>
+<tr>
+<td style="text-align:left">H</td>
+<td style="text-align:left">光标移到屏幕的左上角</td>
+</tr>
+<tr>
+<td style="text-align:left">M</td>
+<td style="text-align:left">移到中间行第一个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">L</td>
+<td style="text-align:left">光标移到屏幕的左下角</td>
+</tr>
+</tbody>
+</table>
+<h4 id="删除，复制，更改文本"><a href="#删除，复制，更改文本" class="headerlink" title="删除，复制，更改文本"></a>删除，复制，更改文本</h4><p>了解了如何添加文本和移动光标是远远不够的，还需要知道如何删除，复制和更改文本。命令x,d,y,c等可以帮助我们删除和修改文本，这些命令也可以和移动光标的命令(上一个表格中提到的)或者数字配合使用来告诉编辑器确切的操作是什么。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">x</td>
+<td style="text-align:left">删除光标所在位置的字符</td>
+</tr>
+<tr>
+<td style="text-align:left">X</td>
+<td style="text-align:left">删除光标所在位置的前一个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">d?</td>
+<td style="text-align:left">删除一些文本</td>
+</tr>
+<tr>
+<td style="text-align:left">c?</td>
+<td style="text-align:left">更改一些文本</td>
+</tr>
+<tr>
+<td style="text-align:left">y?</td>
+<td style="text-align:left">复制一些文本</td>
+</tr>
+</tbody>
+</table>
+<p>?代表这些命令要和移动光标的命令配合着使用，下面是一些例子</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dw</td>
+<td style="text-align:left">删除当前光标位置的后一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">db</td>
+<td style="text-align:left">删除当前光标位置的前一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">dd</td>
+<td style="text-align:left">删除当前一整行</td>
+</tr>
+<tr>
+<td style="text-align:left">c$</td>
+<td style="text-align:left">更改(实际上是擦除)从当前位置到当前行最后的内容，并进入编辑模式</td>
+</tr>
+<tr>
+<td style="text-align:left">c0</td>
+<td style="text-align:left">更改(实际上是擦除)从当前位置到当前行最前面的内容，并进入编辑模式</td>
+</tr>
+<tr>
+<td style="text-align:left">yy</td>
+<td style="text-align:left">将当前行复制到buffer中</td>
+</tr>
+</tbody>
+</table>
+<p>上面这些命令也可以和数字配合使用,下面是栗子🌰</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">3dd</td>
+<td style="text-align:left">删除当前行往下的三行</td>
+</tr>
+<tr>
+<td style="text-align:left">3dw</td>
+<td style="text-align:left">删除接下来的三个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">5cl</td>
+<td style="text-align:left">删除接下来的5个字符，并进入编辑模式</td>
+</tr>
+</tbody>
+</table>
+<h4 id="粘贴"><a href="#粘贴" class="headerlink" title="粘贴"></a>粘贴</h4><p>可以使用命令p和P，将复制到buffer中的内容粘贴到文本中。p是将缓存区的内容粘贴到当前光标所在位置的下方，P是将缓存区的内容粘贴到当前光标所在位置的上方</p>
+<h4 id="在文件中跳跃"><a href="#在文件中跳跃" class="headerlink" title="在文件中跳跃"></a>在文件中跳跃</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ctrl+f</td>
+<td style="text-align:left">向下一页</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+b</td>
+<td style="text-align:left">向上一页</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+d</td>
+<td style="text-align:left">向下一页半</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+u</td>
+<td style="text-align:left">向上一页半</td>
+</tr>
+<tr>
+<td style="text-align:left">G</td>
+<td style="text-align:left">跳到最后一行</td>
+</tr>
+<tr>
+<td style="text-align:left">1G</td>
+<td style="text-align:left">跳到第一行</td>
+</tr>
+<tr>
+<td style="text-align:left">35G</td>
+<td style="text-align:left">跳到第35行</td>
+</tr>
+</tbody>
+</table>
+<h4 id="查找文本"><a href="#查找文本" class="headerlink" title="查找文本"></a>查找文本</h4><p>查找文本时,”/“和”?”分别对应向前和向后查找,也可以使用一些通配符，比如/The.*foot,<br>?[pP]rint,查找之后可以按n和N来重复查找和按相反方向查找</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/hello</td>
+<td style="text-align:left">向前查找单词”hello”</td>
+</tr>
+<tr>
+<td style="text-align:left">?goodbye</td>
+<td style="text-align:left">向后查找单词”goodbye”</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用ex模式"><a href="#使用ex模式" class="headerlink" title="使用ex模式"></a>使用ex模式</h4><p>当输入冒号,并且光标在最下方时就进入了ex模式，下面是一些在ex模式下查找，修改文本的栗子🌰</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">:g/local</td>
+<td style="text-align:left">查找local 并打印</td>
+</tr>
+<tr>
+<td style="text-align:left">:s/local/r</td>
+<td style="text-align:left">将local第一次出现的位置替换为r</td>
+</tr>
+</tbody>
+</table>
+<h4 id="退出vi"><a href="#退出vi" class="headerlink" title="退出vi"></a>退出vi</h4><p>以下的命令用来保存和退出文件</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ZZ</td>
+<td style="text-align:left">保存修改 并退出vi</td>
+</tr>
+<tr>
+<td style="text-align:left">:w</td>
+<td style="text-align:left">保存修改 但不退出vi</td>
+</tr>
+<tr>
+<td style="text-align:left">:wq</td>
+<td style="text-align:left">与ZZ命令一样</td>
+</tr>
+<tr>
+<td style="text-align:left">:q</td>
+<td style="text-align:left">退出文件，该命令只有在没有未保存的修改下才起效</td>
+</tr>
+<tr>
+<td style="text-align:left">:q!</td>
+<td style="text-align:left">退出文件 不保存对文件的修改</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h3><blockquote>
+<p>为了帮助用户更有效的查找他们的文件，linux系统提供了locate,find,grep三个命令，依次来看看他们的作用。</p>
+</blockquote>
+<h4 id="使用localte命令查找文件"><a href="#使用localte命令查找文件" class="headerlink" title="使用localte命令查找文件"></a>使用localte命令查找文件</h4><blockquote>
+<p>大多数linux系统中，updatedb命令会每天执行一次，将系统中文件的名字存到数据库中。通过locate命令，我们可以查找存在在数据库中的文件的位置。相较于find命令，locate命令效率更高，因为它搜索数据库而不是整个文件系统。不过locate命令也有它的缺点，它并不能找到所有存放在系统的文件，因为并不是所有的文件都会存储于数据库中，/etc/updatedb.conf文件决定了哪些文件将存在于数据库中。另外，普通用户无法通过数据库查找那些他们在文件系统中没有权利查看的文件，比如，普通用户无法在/root目录下执行ls命令，那么他们也无法通过locate查找这个目录下的文件。如果用locate命令查找一个字符串，那么这个字符串可能出现在返回文件的路径的任意位置。举个栗子，查找passwd，结果可能为/etc/passwd,/usr/bin/passwd和其它路径包含passwd的文件。还需要注意的是，如果创建一个文件之后，希望立刻通过locate查找它，最好执行命令updatedb更新下数据库。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ locate .bashrc</span><br><span class="line">/etc/skel/.bashrc </span><br><span class="line">/home/cnegus/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># locate ./bashrc (身份不同 查找结果不同)</span></span><br><span class="line">/etc/skel/.bashrc </span><br><span class="line">/home/bill/.bashrc </span><br><span class="line">/home/joe/.bashrc </span><br><span class="line">/root/.bashrc</span><br><span class="line"></span><br><span class="line">$ locate -i muttrc（-i 忽略大小写）/etc/Muttrc/etc/Muttrc.local /usr/share/doc/mutt-1.5.20/sample.muttrc</span><br><span class="line">$ locate services (查找的字符串可能出现在文件路径中)/etc/services/usr/share/services/bmp.kmgio /usr/share/services/data.kmgio</span><br></pre></td></tr></table></figure>
+<p>中场休息，看看我家光洙<br><img src="/images/liguangzhu.gif" alt="李光珠"></p>
+<h4 id="使用find命令查找文件"><a href="#使用find命令查找文件" class="headerlink" title="使用find命令查找文件"></a>使用find命令查找文件</h4><blockquote>
+<p>由于有许多不同的属性，find命令是查找文件的利器。当执行find命令时，它会搜索整个文件系统，这会造成find命令比locate命令耗时长，但同时也能让用户查找到系统中最新的文件。find命令最大的优点在于所有你能想到的文件的属性，都可以通过它查找，例如名字，拥有者，权限，大小，修改时间等等，也可以进行组合查找。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ find (列出当前目录下所有的文件和目录)</span><br><span class="line">$ find /etc (列出/etc目录下所有的文件和目录，权限不足时会报错)</span><br><span class="line">$ find -ls (列出文件的拥有者，权限，大小等信息)</span><br><span class="line">$ find /etc -name passwd（根据名字查找）</span><br><span class="line">$ find /etc -iname <span class="string">'*passwd*'</span> （可以使用通配符）</span><br><span class="line">$ find /bigdata -size +10G （查找大小大于10G的文件）</span><br><span class="line">$ find /smalldata -size -5M (查找大小小于5M的文件)</span><br><span class="line">$ find /home -user chris -ls (输出/home目录下拥有者是chris的文件的详细信息)</span><br><span class="line">$ find /home -user chris -or -user joe -ls (输出/home目录下拥有者是chris或joe的文件的详细信息)</span><br><span class="line">$ find /home -not -user root -ls (输出/home目录下拥有者不是root的文件的详细信息)</span><br><span class="line">$ find /bin -perm 755 -ls（通过权限查找）</span><br><span class="line">$ find . -perm -002 -type f -ls （通过类型查找）</span><br></pre></td></tr></table></figure>
+<p>find命令还有一个很棒的特性，可以使用-excute和-ok选项可以在查找到的任何文件上执行命令。excute选项会直接在每个找到的文件上执行命令，不会询问是否执行。而ok选项会在每个文件执行命令前询问是否执行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ find /etc -iname iptables -exec <span class="built_in">echo</span> <span class="string">"I found &#123;&#125;"</span> \; </span><br><span class="line">I found /etc/bash_completion.d/iptablesI found /etc/sysconfig/iptables</span><br><span class="line"><span class="comment"># find /var/allusers/ -user joe -ok mv &#123;&#125; /tmp/joe/ \;</span></span><br><span class="line">mv ... /var/allusers/dict.dat &gt; ? ymv ... /var/allusers/five &gt; ? y</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><img src="/images/tips.jpg" alt="提示"> 想了解更多关于find命令的信息，可以执行命令 man find</p>
+</blockquote>
+<h4 id="使用grep命令在文件中查找"><a href="#使用grep命令在文件中查找" class="headerlink" title="使用grep命令在文件中查找"></a>使用grep命令在文件中查找</h4><blockquote>
+<p>如果希望查找包含特定内容的文件，可以使用grep命令。通过grep命令，可以搜索单个文件，也可以递归搜索整个目录。默认情况下，grep命令是大小写敏感的</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ grep desktop /etc/services </span><br><span class="line">desktop-dna 2763/tcp <span class="comment"># Desktop DNA </span></span><br><span class="line">desktop-dna 2763/udp <span class="comment"># Desktop DNA</span>$ grep -i desktop /etc/servicessco-dtmgr 617/tcp <span class="comment"># SCO Desktop Administration Server</span></span><br><span class="line">sco-dtmgr 617/udp <span class="comment"># SCO Desktop Administration Server</span></span><br><span class="line">airsync 2175/tcp  <span class="comment"># Microsoft Desktop AirSync Protocol</span></span><br></pre></td></tr></table></figure>
+<p>第一个例子，是在/etc/services文件中查找字符串desktop.第二个例子通过选项-i,在查找时大小写不敏感<br>-v 是查找不包含指定内容的行，-r是在目录中递归查找，-l是列出文件名 而不是包含内容的具体行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ grep -v desktop /etc/services</span><br><span class="line">$ grep -rli peerdns /usr/share/doc/ </span><br><span class="line">/usr/share/doc/dnsmasq-2.66/setup.html </span><br><span class="line">/usr/share/doc/initscripts-9.49.17/sysconfig.txt</span><br></pre></td></tr></table></figure>
+<p>以我大谢耳朵结尾吧，主要看气质，哈哈~~<br><img src="/images/sheldon.jpg" alt="sheldon"></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/" data-id="cilyhezju001py3tlt5y2x6e4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/#comments" class="article-comment-link ds-thread-count" data-thread-key="读书笔记-Linux-Bible-9th-Edition之玩转文本文件">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    读书笔记-Linux Bible 9th Edition之进程大法好
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">读书笔记-Linux Bible 9th Edition之文件系统</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="读书笔记-Linux-Bible-9th-Edition之玩转文本文件" data-title="读书笔记-Linux Bible 9th Edition之玩转文本文件" data-url="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

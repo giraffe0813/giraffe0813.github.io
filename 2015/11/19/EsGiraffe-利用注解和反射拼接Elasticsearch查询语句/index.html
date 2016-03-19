@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>EsGiraffe-利用注解和反射拼接Elasticsearch查询语句 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="EsGiraffe
+封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EsGiraffe-利用注解和反射拼接Elasticsearch查询语句">
+<meta property="og:url" content="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="EsGiraffe
+封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询">
+<meta property="og:image" content="http://yemengying.com/images/hope.jpg">
+<meta property="og:updated_time" content="2016-03-18T11:13:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EsGiraffe-利用注解和反射拼接Elasticsearch查询语句">
+<meta name="twitter:description" content="EsGiraffe
+封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询">
+<meta name="twitter:image" content="http://yemengying.com/images/hope.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-EsGiraffe-利用注解和反射拼接Elasticsearch查询语句" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/hope.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            EsGiraffe-利用注解和反射拼接Elasticsearch查询语句
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/">
+            <time datetime="2015-11-19T05:56:50.000Z" itemprop="datePublished">2015-11-19</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/annotation/">annotation</a>, <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>, <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/reflect/">reflect</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#EsGiraffe"><span class="toc-number">1.</span> <span class="toc-text">EsGiraffe</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常见的工作需求"><span class="toc-number">1.1.</span> <span class="toc-text">常见的工作需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#未使用工具类的代码Demo"><span class="toc-number">1.2.</span> <span class="toc-text">未使用工具类的代码Demo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EsGiraffe的主要内容"><span class="toc-number">1.3.</span> <span class="toc-text">EsGiraffe的主要内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用EsGiraffe简化代码"><span class="toc-number">1.4.</span> <span class="toc-text">使用EsGiraffe简化代码</span></a></li></ol></li></ol>
+                </div>
+            
+            <h3 id="EsGiraffe"><a href="#EsGiraffe" class="headerlink" title="EsGiraffe"></a>EsGiraffe</h3><blockquote>
+<p>封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，git 地址：<a href="https://github.com/giraffe0813/EsGiraffe" target="_blank" rel="external">https://github.com/giraffe0813/EsGiraffe</a>。生成的大致的样子如下:</p>
+<pre><code>&quot;query&quot;: {
+     &quot;bool&quot;: {
+              &quot;must&quot;: [
+                      ...
+              ],
+              &quot;must_not&quot;: [
+                      ...
+              ],
+              &quot;should&quot;: [
+                      ...
+              ]
+          }
+      }
+</code></pre></blockquote>
+<a id="more"></a>
+<h4 id="常见的工作需求"><a href="#常见的工作需求" class="headerlink" title="常见的工作需求"></a>常见的工作需求</h4><p>在我工作比较常见的搜索需求就是对外提供搜索的接口。会按照搜索引擎中的字段定义一个对应的model，然后这些字段的值如果为Null，就代表调用方不想对这个字段进行查询，如果不为Null代表需要对这个字段进行查询。而且还会提前在API文档中定义好查询的类型是must、must_not还是should</p>
+<h4 id="未使用工具类的代码Demo"><a href="#未使用工具类的代码Demo" class="headerlink" title="未使用工具类的代码Demo"></a>未使用工具类的代码Demo</h4><p>假设有一个和订单有关的索引，需要对订单的一系列属性进行查询 其中userName和orderMode是should查询 其余都是must<br>查询model：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderModel</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String userName;</span><br><span class="line">	</span><br><span class="line">  <span class="keyword">private</span> Integer restaurantId;</span><br><span class="line">	</span><br><span class="line">  <span class="keyword">private</span> Integer orderMode;</span><br><span class="line">	</span><br><span class="line">  <span class="keyword">private</span> String userPhone;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Integer comeFrom;</span><br><span class="line">	</span><br><span class="line">  <span class="keyword">private</span> String restaurantName;</span><br><span class="line">	</span><br><span class="line">  <span class="keyword">private</span> String createdAtBegin;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">private</span> String createdAtEnd;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Integer offset = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Integer limit = <span class="number">10</span>;</span><br><span class="line">  <span class="comment">//省略getter和setter</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>查询方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> SearchService implements ISearchService&#123;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> String <span class="title">searchOrder</span><span class="params">(SearchOrderModel search)</span> <span class="keyword">throws</span> IllegalAccessException</span>&#123;</span><br><span class="line">		</span><br><span class="line">		BoolQueryBuilder baseQuery = QueryBuilders.boolQuery();</span><br><span class="line">		<span class="keyword">if</span>(search.getUserName() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.should(QueryBuilders.termQuery(<span class="string">"user_name"</span>, search.getUserName()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getRestaurantId() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.must(QueryBuilders.termQuery(<span class="string">"restaurant_id"</span>, search.getRestaurantId()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getOrderMode() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.should(QueryBuilders.termQuery(<span class="string">"order_mode"</span>, search.getOrderMode()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getUserPhone() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.must(QueryBuilders.termQuery(<span class="string">"user_phone"</span>, search.getUserPhone()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getComeFrom() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.must(QueryBuilders.termQuery(<span class="string">"come_from"</span>, search.getComeFrom()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getRestaurantName() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.must(QueryBuilders.queryStringQuery(search.getRestaurantName()).defaultField(<span class="string">"restaurant_name"</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getCreatedAtBegin() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.must(QueryBuilders.rangeQuery(<span class="string">"created_at"</span>).gte(search.getCreatedAtBegin()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(search.getCreatedAtEnd() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			baseQuery.must(QueryBuilders.rangeQuery(<span class="string">"created_at"</span>).lte(search.getCreatedAtBegin()));</span><br><span class="line">		&#125;</span><br><span class="line">		log.info(<span class="string">"查询语句:&#123;&#125;"</span>,baseQuery.toString());</span><br><span class="line">		SearchResponse response = client.prepareSearch(<span class="string">"index1"</span>)</span><br><span class="line">				.setTypes(<span class="string">"type1"</span>)</span><br><span class="line">				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)</span><br><span class="line">				.setQuery(baseQuery)</span><br><span class="line">				.setFrom(search.getOffset()).setSize(search.getLimit()).setExplain(<span class="keyword">true</span>)</span><br><span class="line">				.execute()</span><br><span class="line">				.actionGet();</span><br><span class="line">		<span class="keyword">return</span> response.toString();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是针对餐厅名称，用户名和来源同时查询时，打印出来的拼接的查询语句:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;   <span class="attr">"bool"</span> : &#123;     </span><br><span class="line">		<span class="attr">"must"</span> : [ &#123;       </span><br><span class="line">			<span class="attr">"term"</span> : &#123;         </span><br><span class="line">				<span class="attr">"come_from"</span> : <span class="number">1</span>       </span><br><span class="line">				&#125;     </span><br><span class="line">			&#125;, &#123;       </span><br><span class="line">			<span class="attr">"query_string"</span> : &#123;         </span><br><span class="line">				<span class="attr">"query"</span> : <span class="string">"测试餐厅"</span>,         </span><br><span class="line">				<span class="attr">"default_field"</span> : <span class="string">"restaurant_name"</span>       </span><br><span class="line">				&#125;    </span><br><span class="line">		 &#125; ],     </span><br><span class="line">		 <span class="attr">"should"</span> : &#123;       </span><br><span class="line">		 	<span class="attr">"term"</span> : &#123;         </span><br><span class="line">		 		<span class="attr">"user_name"</span> : <span class="string">"123123123"</span>       </span><br><span class="line">		 		&#125;     </span><br><span class="line">		 	&#125;   </span><br><span class="line">		 &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可是上面只是缩减版的订单model，一个订单的属性有20多个 所以每个属性都判断是否为null，代码就太不漂亮了,而且可读性差，不易维护，所以就想通过注解和反射来精简代码。</p>
+<h4 id="EsGiraffe的主要内容"><a href="#EsGiraffe的主要内容" class="headerlink" title="EsGiraffe的主要内容"></a>EsGiraffe的主要内容</h4><p>EsGiraffe主要是自定义了一些注解，将一些诸如model属性对应的搜索引擎的字段，查询的类型，要查询的index名，要查询的document名用注解标注在model类上，然后在工具类中利用反射获取注解的值 拼接查询语句。下面是几个比较重要的注解:</p>
+<ul>
+<li>Index注解 DocumentType注解</li>
+</ul>
+<blockquote>
+<p>只能在类上使用 Index代表要在哪个索引中查询， Document代表要查询的文档 可以指定多个索引或文档用”,”分割</p>
+</blockquote>
+<p>例子:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Index</span>(<span class="string">"index"</span>)</span><br><span class="line"><span class="meta">@DocumentType</span>(<span class="string">"document1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">model</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>EsField注解</li>
+</ul>
+<blockquote>
+<p>在类的属性上使用 值为该属性对应的索引字段名 如果value为空，那么对应的索引名就是该属性名。这个注解主要是考虑到在Java习惯驼峰式的命名，而搜索引擎中往往是下划线，所以需要一个注解将他们对应起来。</p>
+</blockquote>
+<p>例子:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Index</span>(<span class="string">"index"</span>)</span><br><span class="line"><span class="meta">@DocumentType</span>(<span class="string">"document1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">model</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"come_from"</span>)</span><br><span class="line">	<span class="keyword">private</span> Integer comeFrom;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过，这两个注解只适用于在查询前就确定要查询的索引和文档时使用。如果要根据查询的内容才能<br>确定要查询的文档，目前没有想到什么好的解决办法，这种情况只能不用Index和DocumentType注解了。比如做活动查询时，活动索引到搜索引擎中是按照活动所属的城市存储到不同的文档，举个栗子🌰，如果活动1的城市id是1,那么活动1就存在在文档activity_1,如果活动2的城市id是3，那么活动2就存在在文档activity_3中，这种情况就不能靠通过注解的方式获得查询的文档了。</p>
+<ul>
+<li>Bool注解</li>
+</ul>
+<blockquote>
+<p>最重要的注解，里面包含5个元素value,type,escape,fuzziness,prefix。其中<strong>value</strong>是MatchType(枚举类)类型，代表了该Bool查询是MUST，MUST_NOT还是SHOULD，默认是MUST。<strong>type</strong>的值是EsSearchType(枚举类)类型，代表对该字段采用什么类型的查询。默认值是TERMS，支持的其他类型还有TERM,RANGE_FROM, RANGE_TO, RANGE_GT,RANGE_LT, RANGE_GTE, RANGE_LTE, FUZZY, SHOULD_TERM, QUERY_STRING, MATCH。<strong>escape</strong>是布尔类型的，代表是否需要进行特殊字符(eg: !$()等)的转换，默认值是false。<strong>fuzziness</strong>和<strong>prefix</strong>是在新版本中针对type=EsSearchType.FUZZY做的扩展而新增的元素。分别代表Fuzzy Query中的fuzziness和prefix_length,这两个参数的意思可以到<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html#_string_fields_2" target="_blank" rel="external">官方文档</a>上看，fuzziness的值只能为[0,1,2],否则会报错“org.elasticsearch.ElasticsearchIllegalArgumentException: Valid edit distances are [0, 1, 2]”，不要问我为什么知道。要注意的是这两个元素只有在type=EsSearchType.FUZZY时才有效</p>
+</blockquote>
+<p>例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Index</span>(<span class="string">"index"</span>)</span><br><span class="line"><span class="meta">@DocumentType</span>(<span class="string">"document1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">model</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"come_from"</span>)</span><br><span class="line">	<span class="meta">@Bool</span>(type = EsSearchType.TERM)</span><br><span class="line">	<span class="keyword">private</span> Integer comeFrom;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"created_at"</span>)</span><br><span class="line">	<span class="meta">@Bool</span>(type = EsSearchType.RANGE_GTE)</span><br><span class="line">	<span class="keyword">private</span> String createdAtBegin;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的注解代表的查询语句是</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;   <span class="attr">"bool"</span> : &#123;    </span><br><span class="line">		 <span class="attr">"must"</span> : [ &#123;       </span><br><span class="line">		 	<span class="attr">"term"</span> : &#123;         </span><br><span class="line">		 		<span class="attr">"come_from"</span> : <span class="number">1</span>       </span><br><span class="line">		 		&#125;    </span><br><span class="line">		 	&#125;, &#123;       </span><br><span class="line">		 	<span class="attr">"range"</span> : &#123;         </span><br><span class="line">		 		<span class="attr">"created_at"</span> : &#123;           </span><br><span class="line">		 			<span class="attr">"from"</span> : <span class="string">"2015-02-03"</span>,          </span><br><span class="line">		 			 <span class="attr">"to"</span> : <span class="literal">null</span>,         </span><br><span class="line">		 			 <span class="attr">"include_lower"</span> : <span class="literal">true</span>,           </span><br><span class="line">		 			 <span class="attr">"include_upper"</span> : <span class="literal">true</span>         </span><br><span class="line">		 			 &#125;       </span><br><span class="line">		 		&#125;     </span><br><span class="line">		 	&#125; ]   </span><br><span class="line">		&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>From,Size,Sort注解</li>
+</ul>
+<blockquote>
+<p>这三个注解也是用到类的属性上的，如果一个属性上标有From注解，代表这个字段的值是查询分页的起始位置；如果一个属性上标有Size注解，代表这个字段的值是分页的长度；如果一个属性上标有Sort注解，代表查询结果按该字段排序，Sort的值有SortType.ASC和SortType.DESC两种。</p>
+</blockquote>
+<ul>
+<li>ElasticBaseSearch中两个工具方法 getIndexAndType和getQueryBuilder</li>
+</ul>
+<blockquote>
+<p>已经在类和属性添加了注解，那么就需要写两个方法分别通过反射获取类和属性上的值 来拼接对应的查询语句。<br>其中getQueryBuilder是根据属性上的注解拼装查询语句并返回一个QueryBuilder对象，getIndexAndType是根据注解获得要查询的索引，文档等信息，并返回一个SearchRequestBuilder对象。</p>
+</blockquote>
+<h4 id="使用EsGiraffe简化代码"><a href="#使用EsGiraffe简化代码" class="headerlink" title="使用EsGiraffe简化代码"></a>使用EsGiraffe简化代码</h4><blockquote>
+<p>下面是使用EsGiraffe简化后的代码</p>
+</blockquote>
+<p>查询model类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Index</span>(<span class="string">"index1"</span>)</span><br><span class="line"><span class="meta">@DocumentType</span>(<span class="string">"type1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderModel</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"user_name"</span>)</span><br><span class="line">    	<span class="meta">@Bool</span>(type = EsSearchType.QUERY_STRING, value = MatchType.SHOULD, escape=<span class="keyword">true</span>)</span><br><span class="line">	<span class="keyword">private</span> String userName;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"restaurant_id"</span>)</span><br><span class="line">    	<span class="meta">@Bool</span>(type = EsSearchType.TERM)</span><br><span class="line">	<span class="keyword">private</span> Integer restaurantId;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"order_mode"</span>)</span><br><span class="line">	<span class="meta">@Bool</span>(type = EsSearchType.TERM)</span><br><span class="line">	<span class="keyword">private</span> Integer orderMode;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"usr_phone"</span>)</span><br><span class="line">	<span class="meta">@Bool</span>(type = EsSearchType.TERM)</span><br><span class="line">	<span class="keyword">private</span> String userPhone;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"come_from"</span>)</span><br><span class="line">	<span class="meta">@Bool</span>(type = EsSearchType.TERM)</span><br><span class="line">	<span class="keyword">private</span> Integer comeFrom;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"restaurant_name"</span>)</span><br><span class="line">    	<span class="meta">@Bool</span>(type = EsSearchType.QUERY_STRING,escape=<span class="keyword">true</span>)</span><br><span class="line">	<span class="keyword">private</span> String restaurantName;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@EsField</span>(<span class="string">"created_at"</span>)</span><br><span class="line">    	<span class="meta">@Bool</span>(type = EsSearchType.RANGE_GTE)</span><br><span class="line">    	<span class="keyword">private</span> String createdAtBegin;</span><br><span class="line">    </span><br><span class="line">    	<span class="meta">@EsField</span>(<span class="string">"created_at"</span>)</span><br><span class="line">    	<span class="meta">@Bool</span>(type = EsSearchType.RANGE_LTE)</span><br><span class="line">    	<span class="keyword">private</span> String createdAtEnd;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@From</span></span><br><span class="line">    	<span class="keyword">private</span> Integer offset = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Size</span></span><br><span class="line">    	<span class="keyword">private</span> Integer limit = <span class="number">10</span>;</span><br><span class="line">    <span class="comment">//省略getter和setter</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>接口类，也无需写大量的业务逻辑，只需要调用两个工具方法即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">searchOrder</span><span class="params">(SearchOrderModel search)</span> <span class="keyword">throws</span> IllegalAccessException </span>&#123;</span><br><span class="line">    log.info(<span class="string">"查询参数:&#123;&#125;"</span>, search.toString());     </span><br><span class="line">    </span><br><span class="line">    QueryBuilder baseQuery = ElasticBaseSearch.getInstance().getQueryBuilder(search);</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(baseQuery != <span class="keyword">null</span>)&#123;</span><br><span class="line">    	log.info(baseQuery.toString());        </span><br><span class="line">        SearchResponse response = ElasticBaseSearch.getInstance().getIndexAndType(client, search).setQuery(baseQuery).execute().actionGet();</span><br><span class="line">        log.info(response.toString());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response.toString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用了EsGiraffe之后，大大简化了查询接口的代码，无需挨个属性判断是否为null。而且在model类上使用注解，使得程序变得更加可读，每个属性对应搜索引擎中哪个字段，采用哪种查询方式一目了然。下面是使用EsGiraffe之后，对餐厅名称，用户名和来源查询时打印的查询语句，和不用注解生成的是一样的。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;   <span class="attr">"bool"</span> : &#123;     </span><br><span class="line">		<span class="attr">"must"</span> : [ &#123;       </span><br><span class="line">			<span class="attr">"term"</span> : &#123;         </span><br><span class="line">				<span class="attr">"come_from"</span> : <span class="number">1</span>       </span><br><span class="line">				&#125;     </span><br><span class="line">			&#125;, &#123;       </span><br><span class="line">			<span class="attr">"query_string"</span> : &#123;         </span><br><span class="line">				<span class="attr">"query"</span> : <span class="string">"测试餐厅"</span>,         </span><br><span class="line">				<span class="attr">"default_field"</span> : <span class="string">"restaurant_name"</span>       </span><br><span class="line">				&#125;    </span><br><span class="line">		 &#125; ],     </span><br><span class="line">		 <span class="attr">"should"</span> : &#123;       </span><br><span class="line">		 	<span class="attr">"term"</span> : &#123;         </span><br><span class="line">		 		<span class="attr">"user_name"</span> : <span class="string">"123123123"</span>       </span><br><span class="line">		 		&#125;     </span><br><span class="line">		 	&#125;   </span><br><span class="line">		 &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="cilyhezht0003y3tllaa0loj8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/#comments" class="article-comment-link ds-thread-count" data-thread-key="EsGiraffe-利用注解和反射拼接Elasticsearch查询语句">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    读书笔记-Linux Bible 9th Edition之使用shell
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/11/12/读书笔记-深入理解Java虚拟机1/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">读书笔记---深入理解Java虚拟机1</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="EsGiraffe-利用注解和反射拼接Elasticsearch查询语句" data-title="EsGiraffe-利用注解和反射拼接Elasticsearch查询语句" data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

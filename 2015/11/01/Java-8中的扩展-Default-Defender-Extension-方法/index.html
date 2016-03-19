@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【译】Java8中的扩展(default/extension)方法 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="原文来自一个java大牛的技术博客 地址http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。
+
+Java 8允许开发者">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Java8中的扩展(default/extension)方法">
+<meta property="og:url" content="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="原文来自一个java大牛的技术博客 地址http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。
+
+Java 8允许开发者">
+<meta property="og:image" content="http://yemengying.com/images/shaonvshidai.jpg">
+<meta property="og:updated_time" content="2016-02-03T08:19:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Java8中的扩展(default/extension)方法">
+<meta name="twitter:description" content="原文来自一个java大牛的技术博客 地址http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。
+
+Java 8允许开发者">
+<meta name="twitter:image" content="http://yemengying.com/images/shaonvshidai.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-Java-8中的扩展-Default-Defender-Extension-方法" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/shaonvshidai.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            【译】Java8中的扩展(default/extension)方法
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">
+            <time datetime="2015-11-01T14:11:06.000Z" itemprop="datePublished">2015-11-01</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/interface/">interface</a>, <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Default方法的例子"><span class="toc-number">1.</span> <span class="toc-text">Default方法的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#default方法的关键点"><span class="toc-number">2.</span> <span class="toc-text">default方法的关键点</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p>原文来自一个java大牛的技术博客 地址<a href="http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results" target="_blank" rel="external">http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results</a> 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。</p>
+</blockquote>
+<p>Java 8允许开发者使用<code>default</code>和<code>static</code>两个关键字在接口中加入非抽象的方法。带有default关键字的方法在Java中也被称作defender方法或defaul方法。在Java 8之前，想要改变一个已经发布的接口几乎是不可能的，任何改动(例如增加一个新的方法)都会影响该接口现有的实现类。这也是为什么在Java 8想要改变内部iterator的实现，使用forEach()方法时面临了一个巨大的挑战，因为这会破坏了现有的Iterable接口的实现类。毫无疑问，向后兼容是Java工程师最优先考虑的事，所以要破坏现有的实现类是不可行的。因此，他们提出了一个解决办法，引入default方法。这是一个绝妙的想法，因为现在你可以用扩展现有的接口。JDK本身也使用了许多default方法,java.util.Map接口扩展了许多default方法，例如replaceAll(),putIfAbsent(Key k,Value v)….。另外，由于default方法可以扩展现有的接口也被称作extension方法。一个接口中的default方法是数量不受限制的。我相信，在这次改变之后，将不再需要抽象类来提供骨架实现(skeletal implementation),例如List接口有AbstractList，Collection接口有AbstractCollection，Set接口有AbstractSet，Map接口有AbstractMap。我们可以通过在接口中定义default方法来替代创建一个新的抽象类。相似的，static方法的引入也使得接口的工具类变得冗余。例如，Collection接口的Collections类，Path接口的Paths类，因为你可以直接在接口中定义静态工具方法。如果你想了解更多关于Java 8的新特性，我建议阅读Cay S. Horstmann写的Java SE 8 Really Impatient。这是我最喜欢的关于Java 8的书之一，它详细的介绍了Java7与Java 8不同的特性。</p>
+<a id="more"></a>
+<h3 id="Default方法的例子"><a href="#Default方法的例子" class="headerlink" title="Default方法的例子"></a>Default方法的例子</h3><p>Java 8让我们可以通过default关键字为接口添加非抽象的方法。这一特性也被称作Extension(扩展)方法。下面是第一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Multiplication</span></span>&#123; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">square</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123; </span><br><span class="line">        <span class="keyword">return</span> multiply(a, a); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了抽象方法multiply()之外，接口Multiplication还包含一个default方法square()。任何实现Multiplication接口的类只需实现抽象方法multiply，default方法square()可以直接使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Multiplication product = <span class="keyword">new</span> Multiplication()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">multiply</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x*y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> square = product.square(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">int</span> multiplication = product.multiply(<span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>product是个匿名类。这段代码有点啰嗦了，用了6行实现一个简单地乘法的功能。我们可以利用lambda表达式来简化一下代码，lambda表达式也是Java 8中新引入的。因为我们的接口只包含一个抽象方法，而且lambda表达式也是SAM(Single Abstract method单一抽象方法)类型的。我们可以用lambda表达式来替代匿名类将代码简化成下面的样子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Multiplication lambda = (x, y) -&gt; x*y; </span><br><span class="line"><span class="keyword">int</span> product = lambda.multiply(<span class="number">3</span>, <span class="number">4</span>); </span><br><span class="line"><span class="keyword">int</span> square = lambda.square(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<p>以上就是在接口中使用default方法的例子。现在，你可以毫无顾虑的在旧的接口中扩展新的方法，只要这些方法是default或static的就不用担心会破坏接口的实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**Java Program to demonstrate use of default method in Java 8. </span><br><span class="line"> * You can define non-abstract method by using default keyword, and more </span><br><span class="line"> * than one default method is permitted, which allows you to ship default skeletal </span><br><span class="line"> * implementation on interface itself. </span><br><span class="line"> * <span class="doctag">@author</span> Javin Paul</span><br><span class="line"> */</span> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Java8DefaultMethodDemo</span></span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123; </span><br><span class="line">    <span class="comment">// Implementing interface using Anonymous class </span></span><br><span class="line">    Multiplication product = <span class="keyword">new</span> Multiplication()&#123; </span><br><span class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">multiply</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123; </span><br><span class="line">            <span class="keyword">return</span> x*y; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125;; </span><br><span class="line">        <span class="keyword">int</span> squareOfTwo = product.square(<span class="number">2</span>); </span><br><span class="line">        <span class="keyword">int</span> cubeOfTwo = product.cube(<span class="number">2</span>); </span><br><span class="line">        System.out.println(<span class="string">"Square of Two : "</span> + squareOfTwo); </span><br><span class="line">        System.out.println(<span class="string">"Cube of Two : "</span> + cubeOfTwo); </span><br><span class="line">        <span class="comment">// Since Multiplication has only one abstract method, it can </span></span><br><span class="line">        <span class="comment">// also be implemented using lambda expression in Java 8 </span></span><br><span class="line">        Multiplication lambda = (x, y) -&gt; x*y; </span><br><span class="line">        <span class="keyword">int</span> squareOfThree = lambda.square(<span class="number">3</span>); </span><br><span class="line">        <span class="keyword">int</span> cubeOfThree = lambda.cube(<span class="number">3</span>); </span><br><span class="line">        System.out.println(<span class="string">"Square of Three : "</span> + squareOfThree); </span><br><span class="line">        System.out.println(<span class="string">"Cube of Three : "</span> + cubeOfThree);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">   <span class="class"><span class="keyword">interface</span> <span class="title">Multiplication</span></span>&#123; </span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">square</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123; </span><br><span class="line">            <span class="keyword">return</span> multiply(a, a); </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">cube</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123; </span><br><span class="line">            <span class="keyword">return</span> multiply(multiply(a, a), a); </span><br><span class="line">        &#125; </span><br><span class="line">       &#125; </span><br><span class="line">       Output :  Square of Two : <span class="number">4</span> </span><br><span class="line">                 Cube of Two : <span class="number">8</span> </span><br><span class="line">                 Square of Three : <span class="number">9</span> </span><br><span class="line">                 Cube of Three : <span class="number">27</span></span><br></pre></td></tr></table></figure>
+<p>这是个很好的关于如何使用default方法在接口中方便的添加方法的例子。也展示了如何避免一个额外的帮助类，比如Collections类。它仅仅提供了一些用于Collection的工具方法，而现在我们可以直接在Collection中定义这些方法。在上面的例子中，我们有一个包含一个抽象方法multiply(a,b)的接口Multiplication，接口还包括两个依赖于multiply(a,b)方法的非抽象方法square(a)和cube(b)。接口的实现类只需要实现multiply(a,b)方法，就可以直接使用square(a)和cube(b)方法了。</p>
+<h3 id="default方法的关键点"><a href="#default方法的关键点" class="headerlink" title="default方法的关键点"></a>default方法的关键点</h3><p>现在让我们来复习我们刚刚学到了什么，记一下关于default方法的关键点。</p>
+<p><img src="/images/default.jpg" alt="image"></p>
+<ul>
+<li>在Java8中你可以在接口中添加default方法</li>
+<li>default方法的出现使得接口和抽象类的不同变得模糊。所以，当在面试中被问到这个问题，别忘了提一下，以前只能通过抽象类实现的事情，现在也可以通过default方法实现了。</li>
+<li>default并不是一个新的关键字，在JDK1.1中就是保留关键字</li>
+<li>接口中default方法的数量没有限制</li>
+<li>如果接口C继承了接口A和B，如果A和B中拥有一样的default方法，编译器在编译过程中会报错。为了避免歧义，这在Java 8中是不允许的。所以当default方法有冲突时，是不可以多继承的</li>
+<li>在JDK1.8中有许多关于default方法的例子，比如forEach方法。也可以查看java.util.Map中新添的putIfAbsent方法，在JDK1.8之前，我们只能ConcurrentMap来使用它。</li>
+</ul>
+<p>以上就是default方法。不得不说，这是一个巨大的突破，使我们可以更好更方便的使用接口。了解CurrentMap的putIfAbsent方法可以帮助我们更好的记住default方法。在JDK1.7中，putIfAbsent方法并不存在于Map接口中，所以为了使用putIfAbsent方法，必须将Map接口指向的ConcurrentMap对象强制转换成ConcurrentMap。但Java 8引入扩展方法之后，Map接口中也有了putIfAbsent方法。想了解更多的关于Java8的新特性，可以阅读<code>Manning&#39;s Java 8 in Action</code></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="cilyhezi6000ay3tl33qpjwr1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/#comments" class="article-comment-link ds-thread-count" data-thread-key="Java-8中的扩展-Default-Defender-Extension-方法">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    【译】如何在java中使用ConcurrentHashMap
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">【译】以生产者消费者为例阐述如何使用wait，notify和notifyAll</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="Java-8中的扩展-Default-Defender-Extension-方法" data-title="【译】Java8中的扩展(default/extension)方法" data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

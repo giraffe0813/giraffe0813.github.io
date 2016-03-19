@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>使用基于注解的mybatis时,利用反射和注解生成sql语句 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的问题截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法git地址：htt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用基于注解的mybatis时,利用反射和注解生成sql语句">
+<meta property="og:url" content="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的问题截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法git地址：htt">
+<meta property="og:image" content="http://yemengying.com/images/baoman1.jpg">
+<meta property="og:updated_time" content="2016-02-03T06:33:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用基于注解的mybatis时,利用反射和注解生成sql语句">
+<meta name="twitter:description" content="在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的问题截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法git地址：htt">
+<meta name="twitter:image" content="http://yemengying.com/images/baoman1.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-基于注解的mybatis插入对象时利用反射生成sql语句" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            使用基于注解的mybatis时,利用反射和注解生成sql语句
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/">
+            <time datetime="2015-10-28T05:21:29.000Z" itemprop="datePublished">2015-10-28</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/anntation/">anntation</a>, <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/mybatis/">mybatis</a>, <a class="tag-link" href="/tags/reflection/">reflection</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一版-利用反射"><span class="toc-number">1.</span> <span class="toc-text">第一版(利用反射)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最终版-加入注解"><span class="toc-number">2.</span> <span class="toc-text">最终版(加入注解)</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p>在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的<a href="http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on" target="_blank" rel="external">问题</a>截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法<br>git地址：<a href="https://github.com/giraffe0813/spring-mybatis-utils" target="_blank" rel="external">https://github.com/giraffe0813/spring-mybatis-utils</a></p>
+</blockquote>
+<a id="more"></a>
+<p>下面是之前的代码片段:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into poi_shop(name,brand,tags,status,phone,mobile,business_time,address,city,lng,lat,business_type,attribute_json) values(#&#123;name&#125;,#&#123;brand&#125;,#&#123;tags&#125;,#&#123;status&#125;,#&#123;phone&#125;,#&#123;mobile&#125;,#&#123;business_time&#125;,#&#123;address&#125;,#&#123;city&#125;,#&#123;lng&#125;,#&#123;lat&#125;,#&#123;business_type&#125;,#&#123;attribute_json&#125;)"</span>)</span><br><span class="line"><span class="meta">@Options</span>(useGeneratedKeys = <span class="keyword">true</span>, keyProperty = <span class="string">"id"</span>, keyColumn = <span class="string">"id"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Long <span class="title">insertPoiInfo</span><span class="params">(PoiBo poiBo)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>是不是too looooooooooooong：</p>
+<p><img src="/images/baoman1.jpg" alt="image"></p>
+<h3 id="第一版-利用反射"><a href="#第一版-利用反射" class="headerlink" title="第一版(利用反射)"></a>第一版(利用反射)</h3><p>首先想到的是可以利用反射获得对象的所有属性，然后拼接成sql语句。所以写了一个基于反射拼装sql语句的方法，然后基于mybatis动态获得sql语句的方式 获得完整的sql 具体的代码如下:<br>接口层改为下面的样子，sql语句的生成放到PoiSqlProvider的insertPoiBo方法中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@InsertProvider</span>(type = PoiSqlProvider.class, method = <span class="string">"insertPoiBo"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Long <span class="title">insertPoiInfo</span><span class="params">(@Param(<span class="string">"poiBo"</span>)</span>PoiBo poiBo)</span>;</span><br></pre></td></tr></table></figure>
+<p>PoiSqlProvider.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">insertPoiBo</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>&#123;</span><br><span class="line">       PoiBo poiBo = (PoiBo)map.get(<span class="string">"poiBo"</span>);</span><br><span class="line">       StringBuilder sql = <span class="keyword">new</span> StringBuilder(<span class="string">"insert into poi_shop "</span>);</span><br><span class="line">       <span class="comment">//get sql via reflection</span></span><br><span class="line">       Map&lt;String,String&gt; sqlMap = getAllPropertiesForSql(poiBo, <span class="string">"poiBo"</span>);</span><br><span class="line">       <span class="comment">//</span></span><br><span class="line">       sql.append(sqlMap.get(<span class="string">"field"</span>)).append(sqlMap.get(<span class="string">"value"</span>));</span><br><span class="line">       System.out.println(sql.toString());</span><br><span class="line">       <span class="keyword">return</span> sql.toString();</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//根据传入的对象 基于反射生成两部分sql语句</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span>  Map&lt;String,String&gt; <span class="title">getAllPropertiesForSql</span><span class="params">(Object obj, String objName)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       Map&lt;String,String&gt; map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">null</span> == obj) <span class="keyword">return</span> map;</span><br><span class="line">       StringBuilder filedSql = <span class="keyword">new</span> StringBuilder(<span class="string">"("</span>);</span><br><span class="line">       StringBuilder valueSql = <span class="keyword">new</span> StringBuilder(<span class="string">"value ("</span>);</span><br><span class="line">       Field[] fields = obj.getClass().getDeclaredFields();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; fields.length; i++) &#123;</span><br><span class="line">           filedSql.append(fields[i].getName() + <span class="string">","</span>);</span><br><span class="line">           valueSql.append(<span class="string">"#&#123;"</span> + objName + <span class="string">"."</span> + fields[i].getName() + <span class="string">"&#125;,"</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//remove last ','</span></span><br><span class="line">       valueSql.deleteCharAt(valueSql.length() - <span class="number">1</span>);</span><br><span class="line">       filedSql.deleteCharAt(filedSql.length() - <span class="number">1</span>);</span><br><span class="line">       valueSql.append(<span class="string">") "</span>);</span><br><span class="line">       filedSql.append(<span class="string">") "</span>);</span><br><span class="line">       map.put(<span class="string">"field"</span>,filedSql.toString());</span><br><span class="line">       map.put(<span class="string">"value"</span>, valueSql.toString());</span><br><span class="line"></span><br><span class="line">       System.out.println(<span class="string">"database filed sql: "</span> + filedSql.toString());</span><br><span class="line">       System.out.println(<span class="string">"value sql:"</span> + valueSql.toString());</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> map;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>下面是基于反射生成的两部分sq语句和最后拼接的语句</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">database filed sql:</span><br><span class="line"> </span><br><span class="line">(id,name,brand,tags,status,phone,mobile,business_time,address,city,lng,lat,business_type,attribute_json,updated_at,created_at)</span><br><span class="line"> </span><br><span class="line">value sql:</span><br><span class="line"></span><br><span class="line">value(#&#123;poiBo.id&#125;,#&#123;poiBo.name&#125;,#&#123;poiBo.brand&#125;,#&#123;poiBo.tags&#125;,#&#123;poiBo.status&#125;,#&#123;poiBo.phone&#125;,#&#123;poiBo.mobile&#125;,#&#123;poiBo.business_time&#125;,#&#123;poiBo.address&#125;,#&#123;poiBo.city&#125;,#&#123;poiBo.lng&#125;,#&#123;poiBo.lat&#125;,#&#123;poiBo.business_type&#125;,#&#123;poiBo.attribute_json&#125;,#&#123;poiBo.updated_at&#125;,#&#123;poiBo.created_at&#125;) </span><br><span class="line"></span><br><span class="line">insert into poi_shop (id,name,brand,tags,status,phone,mobile,business_time,address,city,lng,lat,business_type,attribute_json,updated_at,created_at) value (#&#123;poiBo.id&#125;,#&#123;poiBo.name&#125;,#&#123;poiBo.brand&#125;,#&#123;poiBo.tags&#125;,#&#123;poiBo.status&#125;,#&#123;poiBo.phone&#125;,#&#123;poiBo.mobile&#125;,#&#123;poiBo.business_time&#125;,#&#123;poiBo.address&#125;,#&#123;poiBo.city&#125;,#&#123;poiBo.lng&#125;,#&#123;poiBo.lat&#125;,#&#123;poiBo.business_type&#125;,#&#123;poiBo.attribute_json&#125;,#&#123;poiBo.updated_at&#125;,#&#123;poiBo.created_at&#125;)</span><br></pre></td></tr></table></figure>
+<p>要注意的是如果数据库的字段名和插入对象的属性名不一致，那么不能使用生成的database filed sql。</p>
+<h3 id="最终版-加入注解"><a href="#最终版-加入注解" class="headerlink" title="最终版(加入注解)"></a>最终版(加入注解)</h3><p>上面的getAllPropertiesForSql方法有个缺点，如果数据库的字段名和类的属性名不一致，就不能依靠反射获得sql了。所以借鉴老大的ORM框架也写了一个注解Column，用于model类的属性上，表明属性所对应数据库字段。下面是Column注解的snippet。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 定义字段的注解*/</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="comment">/*该注解只能用在成员变量上*/</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Column &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 用来存放字段的名字 如果未指定列名，默认列名使用成员变量名</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>之后在model类属性上加入对应的注解,省略getter和setter。Column的name为空时，代表属性名和字段名一致。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PoiBo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line">	<span class="meta">@Column</span>(name = <span class="string">"poi_name"</span>)</span><br><span class="line">	<span class="keyword">private</span> String name;<span class="comment">//表示name属性对应数据库poi_name字段</span></span><br><span class="line">	<span class="meta">@Column</span>(name = <span class="string">"poi_brand"</span>)</span><br><span class="line">	<span class="keyword">private</span> String brand;<span class="comment">//表示brand属性对应数据库poi_brand字段</span></span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String tags;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Integer status;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String phone;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String mobile;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String business_time;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Float average_price;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String address;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String city;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Double lng;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Double lat;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String business_type;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> String attribute_json;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Timestamp updated_at;</span><br><span class="line">	<span class="meta">@Column</span></span><br><span class="line">	<span class="keyword">private</span> Timestamp created_at;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>修改getAllPropertiesForSql方法，通过获取类属性上的注解获得数据库字段名。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span>  Map&lt;String,String&gt; <span class="title">getAllPropertiesForSql</span><span class="params">(Object obj, String objName)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        Map&lt;String,String&gt; map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">         <span class="keyword">if</span>(<span class="keyword">null</span> == obj) <span class="keyword">return</span> map;</span><br><span class="line">        StringBuilder filedSql = <span class="keyword">new</span> StringBuilder(<span class="string">"("</span>);</span><br><span class="line">        StringBuilder valueSql = <span class="keyword">new</span> StringBuilder(<span class="string">"value ("</span>);</span><br><span class="line">        Field[] fields = obj.getClass().getDeclaredFields();</span><br><span class="line">        <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">                <span class="comment">// 判断该成员变量上是不是存在Column类型的注解</span></span><br><span class="line">                <span class="keyword">if</span> (!field.isAnnotationPresent(Column.class)) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                Column c = field.getAnnotation(Column.class);<span class="comment">// 获取实例</span></span><br><span class="line">                <span class="comment">// 获取元素值</span></span><br><span class="line">                String columnName = c.name();</span><br><span class="line">                <span class="comment">// 如果未指定列名，默认列名使用成员变量名</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="string">""</span>.equals(columnName.trim())) &#123;</span><br><span class="line">                    columnName = field.getName();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            filedSql.append(columnName + <span class="string">","</span>);</span><br><span class="line">            valueSql.append(<span class="string">"#&#123;"</span> + objName + <span class="string">"."</span> + field.getName() + <span class="string">"&#125;,"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//remove last ','</span></span><br><span class="line">        valueSql.deleteCharAt(valueSql.length() - <span class="number">1</span>);</span><br><span class="line">        filedSql.deleteCharAt(filedSql.length() - <span class="number">1</span>);</span><br><span class="line">        valueSql.append(<span class="string">") "</span>);</span><br><span class="line">        filedSql.append(<span class="string">") "</span>);</span><br><span class="line">        map.put(<span class="string">"field"</span>,filedSql.toString());</span><br><span class="line">        map.put(<span class="string">"value"</span>, valueSql.toString());</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"database filed sql: "</span> + filedSql.toString());</span><br><span class="line">        System.out.println(<span class="string">"value sql:"</span> + valueSql.toString());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p>利用反射+注解之后的输出结果，可以看到sql语句正确按照name的Column注解的输出了name属性对应的数据库字段是poi_name.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">database filed sql: </span><br><span class="line"></span><br><span class="line">(id,poi_name,poi_brand,tags,status,phone,mobile,business_time,average_price,address,city,lng,lat,business_type,attribute_json,updated_at,created_at) </span><br><span class="line"></span><br><span class="line">value sql:</span><br><span class="line">value(#&#123;poiBo.id&#125;,#&#123;poiBo.name&#125;,#&#123;poiBo.brand&#125;,#&#123;poiBo.tags&#125;,#&#123;poiBo.status&#125;,#&#123;poiBo.phone&#125;,#&#123;poiBo.mobile&#125;,#&#123;poiBo.business_time&#125;,#&#123;poiBo.average_price&#125;,#&#123;poiBo.address&#125;,#&#123;poiBo.city&#125;,#&#123;poiBo.lng&#125;,#&#123;poiBo.lat&#125;,#&#123;poiBo.business_type&#125;,#&#123;poiBo.attribute_json&#125;,#&#123;poiBo.updated_at&#125;,#&#123;poiBo.created_at&#125;) </span><br><span class="line"></span><br><span class="line">insert into poi_shop </span><br><span class="line">(id,poi_name,poi_brand,tags,status,phone,mobile,business_time,average_price,address,city,lng,lat,business_type,attribute_json,updated_at,created_at) value (#&#123;poiBo.id&#125;,#&#123;poiBo.name&#125;,#&#123;poiBo.brand&#125;,#&#123;poiBo.tags&#125;,#&#123;poiBo.status&#125;,#&#123;poiBo.phone&#125;,#&#123;poiBo.mobile&#125;,#&#123;poiBo.business_time&#125;,#&#123;poiBo.average_price&#125;,#&#123;poiBo.address&#125;,#&#123;poiBo.city&#125;,#&#123;poiBo.lng&#125;,#&#123;poiBo.lat&#125;,#&#123;poiBo.business_type&#125;,#&#123;poiBo.attribute_json&#125;,#&#123;poiBo.updated_at&#125;,#&#123;poiBo.created_at&#125;)</span><br></pre></td></tr></table></figure>
+<p>写的好累放张萌图吧</p>
+<p><img src="/images/cat.jpg" alt="cat"></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cilyhezj7000yy3tlg7a0k36h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/#comments" class="article-comment-link ds-thread-count" data-thread-key="基于注解的mybatis插入对象时利用反射生成sql语句">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    【译】以生产者消费者为例阐述如何使用wait，notify和notifyAll
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">【译】如何重置一个ArrayList--clear vs removeAll</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="基于注解的mybatis插入对象时利用反射生成sql语句" data-title="使用基于注解的mybatis时,利用反射和注解生成sql语句" data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>读书笔记-Linux Bible 9th Edition之文件系统 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻
+
+ 相关博客: Linux Bible 9th Edition之使用shell Linux Bible 9th Edition之玩转文本文件 Linux Bible 9th Edition之进程大法好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-Linux Bible 9th Edition之文件系统">
+<meta property="og:url" content="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻
+
+ 相关博客: Linux Bible 9th Edition之使用shell Linux Bible 9th Edition之玩转文本文件 Linux Bible 9th Edition之进程大法好">
+<meta property="og:image" content="http://yemengying.com/images/霸气的喵喵.jpg">
+<meta property="og:updated_time" content="2016-02-23T03:46:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="读书笔记-Linux Bible 9th Edition之文件系统">
+<meta name="twitter:description" content="跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻
+
+ 相关博客: Linux Bible 9th Edition之使用shell Linux Bible 9th Edition之玩转文本文件 Linux Bible 9th Edition之进程大法好">
+<meta name="twitter:image" content="http://yemengying.com/images/霸气的喵喵.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                <td>
+                    
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://yemengying.com"></form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="post-读书笔记-Linux-Bible-9th-Edition之文件系统" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            读书笔记-Linux Bible 9th Edition之文件系统
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/">
+            <time datetime="2015-11-26T08:28:15.000Z" itemprop="datePublished">2015-11-26</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/linux/">linux</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/linux/">linux</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux文件系统结构"><span class="toc-number">1.</span> <span class="toc-text">Linux文件系统结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本的一些文件系统命令"><span class="toc-number">2.</span> <span class="toc-text">基本的一些文件系统命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Metacharacters-元字符-和Operators-操作符"><span class="toc-number">3.</span> <span class="toc-text">使用Metacharacters(元字符)和Operators(操作符)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列出文件和目录"><span class="toc-number">4.</span> <span class="toc-text">列出文件和目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#理解文件权限"><span class="toc-number">5.</span> <span class="toc-text">理解文件权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用chmod命令更改权限"><span class="toc-number">6.</span> <span class="toc-text">使用chmod命令更改权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改变文件的拥有者"><span class="toc-number">7.</span> <span class="toc-text">改变文件的拥有者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移动-复制-删除文件"><span class="toc-number">8.</span> <span class="toc-text">移动 复制 删除文件</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p>跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻</p>
+</blockquote>
+<p> 相关博客:<br> <a href="http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/">Linux Bible 9th Edition之使用shell</a><br> <a href="http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/">Linux Bible 9th Edition之玩转文本文件</a><br> <a href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/">Linux Bible 9th Edition之进程大法好</a></p>
+<p><img src="/images/霸气的喵喵.jpg" alt="霸气的喵喵"></p>
+<a id="more"></a>
+<h3 id="Linux文件系统结构"><a href="#Linux文件系统结构" class="headerlink" title="Linux文件系统结构"></a>Linux文件系统结构</h3><blockquote>
+<p>在linux中文件组织在一个层级的目录结构中，每个目录可以包含文件和目录，整体看起来就像一个倒过来的树。最上面就是根目录，用”/“符号表示。根目录下面是linux系统中一些常见的目录,比如bin,dev,home,lib等等。下面的图(书上的截图)展示了linux文件系统的层级结构。<br><img src="/images/linux_filesystem.jpg" alt="linux_filesystem"></p>
+</blockquote>
+<h3 id="基本的一些文件系统命令"><a href="#基本的一些文件系统命令" class="headerlink" title="基本的一些文件系统命令"></a>基本的一些文件系统命令</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">cd</td>
+<td style="text-align:left">进入另一个目录</td>
+</tr>
+<tr>
+<td style="text-align:left">pwd</td>
+<td style="text-align:left">打印当前工作目录的路径</td>
+</tr>
+<tr>
+<td style="text-align:left">mkdir</td>
+<td style="text-align:left">创建一个目录</td>
+</tr>
+<tr>
+<td style="text-align:left">chmod</td>
+<td style="text-align:left">更改文件或目录的权限</td>
+</tr>
+<tr>
+<td style="text-align:left">ls</td>
+<td style="text-align:left">列出目录的内容</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><em>cd</em>命令<br>cd命令是其中最常用的<br>eg：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入根目录下的usr目录下的share目录 以"/"开头，代表在根目录下</span></span><br><span class="line">$ <span class="built_in">cd</span> /usr/share</span><br><span class="line"><span class="comment"># 只输入cd 回到home目录</span></span><br><span class="line">$ <span class="built_in">cd</span> </span><br><span class="line"><span class="comment"># 进入home目录下的某一目录 "~"代表home目录</span></span><br><span class="line">$ <span class="built_in">cd</span> ~/coffee</span><br><span class="line"><span class="comment"># 回到上一级目录 ".."代表上一级目录</span></span><br><span class="line">$ <span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建目录并查看权限</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建目录test</span></span><br><span class="line">$ mkdir <span class="built_in">test</span></span><br><span class="line"><span class="comment"># 查看目录权限</span></span><br><span class="line">$ ls -ld <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用Metacharacters-元字符-和Operators-操作符"><a href="#使用Metacharacters-元字符-和Operators-操作符" class="headerlink" title="使用Metacharacters(元字符)和Operators(操作符)"></a>使用Metacharacters(元字符)和Operators(操作符)</h3><p> 使用metacharacters进行文件匹配     </p>
+<p>  “*”代表任意数量的字符 “?”代表任意一个字符 “[…]”匹配任意一个包含在括号中的字符,也可以用连字符表示一个范围<br>  eg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建5个空文件</span></span><br><span class="line">$ touch apple banana grape grapefruit watermelon</span><br><span class="line">$ ls a*</span><br><span class="line">apple</span><br><span class="line">$ ls g*</span><br><span class="line">grape </span><br><span class="line">$ ls g???e</span><br><span class="line">grape</span><br><span class="line">$ ls [abw]*</span><br><span class="line">apple banana watermelon</span><br><span class="line">$ ls [a-g]*</span><br><span class="line">apple banana grape grapefruit</span><br></pre></td></tr></table></figure>
+<p> 使用metacharacters进行文件重定向<br>    使用管道符号”|”可以将一个命令的标准输出(standard output)作为另一个命令的标准输入(standard input)。对于文件，我们可以用”&lt;”和”&gt;”来将数据从文件中输入或输出。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">符号</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">文件的内容输入到命令</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">将一个命令的标准输出输出到文件，如果文件已存在,文件的内容会被覆盖</td>
+</tr>
+<tr>
+<td style="text-align:left">2&gt;</td>
+<td style="text-align:left">将错误输出输出到文件</td>
+</tr>
+<tr>
+<td style="text-align:left">&amp;&gt;</td>
+<td style="text-align:left">将标准输出和错误输出都输出到文件</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;&gt;</td>
+<td style="text-align:left">将命令的输出到文件中，不覆盖文件原有内容，将输出添加到文件最后</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;&lt;</td>
+<td style="text-align:left">后面要跟着一个单词，之后所有的输入都会当做用户输入，直到重复输入符号后的单词</td>
+</tr>
+</tbody>
+</table>
+<p> 使用大括号 </p>
+<p> 通过使用大括号”{}”,可以在文件名后扩展一组元素。<br> eg:<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ touch &#123;a,b,c&#125;-&#123;1,2,3&#125;</span><br><span class="line">$ ls</span><br><span class="line">a-1 a-2 a-3 b-1 b-2 b-3 c-1 c-2 c-3</span><br></pre></td></tr></table></figure></p>
+<h3 id="列出文件和目录"><a href="#列出文件和目录" class="headerlink" title="列出文件和目录"></a>列出文件和目录</h3><p>在linux系统中,<em>ls</em>命令用来列出文件和目录的有关信息，<em>ls</em>命令有许多option。在默认情况下，输入<em>ls</em>，会输出当前目录下所有的非隐藏的文件和目录。如果在命令后在上选项”-l”会输出详细的信息(如下)，其中total代表了目录中的内容占用了多少磁盘空间;第一列第一个字符代表了文件的类型，”-“代表普通文件，”d”代表是目录，”l”代表是一个符号链接,剩下的9个字符代表了文件的权限(下面会讲);第二列展示了文件硬链接数或目录子目录数;第三列显示了文件或目录的拥有者;第四列代表文件拥有者所在的组;第五列是文件的大小;第六列是文件最后的修改时间;最后一列展示了文件或目录的名字;<br>eg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls <span class="_">-l</span></span><br><span class="line">total 4-rw-rw-r--. 1 joe joe 0 Dec 18 13:38 applelrwxrwxrwx. 1 joe joe 5 Dec 18 13:46 pointer_to_apple -&gt; apple -rwxr-xr-x. 1 joe joe 0 Dec 18 13:37 scriptx.shdrwxrwxr-x. 2 joe joe 4096 Dec 18 13:38 Stuff</span><br></pre></td></tr></table></figure>
+<p><em>ls</em>命令的其它选项：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-a</td>
+<td style="text-align:left">展示包含隐藏文件(以.开头)在内的所有文件</td>
+</tr>
+<tr>
+<td style="text-align:left">-t</td>
+<td style="text-align:left">按照最近修改时间展示</td>
+</tr>
+<tr>
+<td style="text-align:left">-F</td>
+<td style="text-align:left">在展示时，在目录名后加”/“,在可执行文件后加”*”,在符号链接后加”@”</td>
+</tr>
+<tr>
+<td style="text-align:left">-S</td>
+<td style="text-align:left">展示时按大小排序</td>
+</tr>
+<tr>
+<td style="text-align:left">-d</td>
+<td style="text-align:left">只展示包含的目录</td>
+</tr>
+<tr>
+<td style="text-align:left">-R</td>
+<td style="text-align:left">递归的列出当前目录下所有的文件和目录</td>
+</tr>
+<tr>
+<td style="text-align:left">–hide=</td>
+<td style="text-align:left">不展示指定目录或文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="理解文件权限"><a href="#理解文件权限" class="headerlink" title="理解文件权限"></a>理解文件权限</h3><blockquote>
+<p>在使用Linux系统时，经常会看到”Permission Denied”(权限不足)的提示。权限控制是为了避免用户访问其他用户的私有文件和保护重要的系统文件。在Linux中，每个文件对应一个9bit的权限信息(eg:rwxrwxrwx)。其中前三位代表了文件拥有者的权限，中间三位代表了拥有者所在组的权限，最后三位代表了其他用户的权限。权限由字母代表，”r”代表读权限，”w”代表写权限，”x”代表执行权限，如果某一位不是字母，而是”-“，则代表没有该位所代表的权限。举个两个栗子🌰🌰，”rw-“代表有读写权限，没有执行权限；”r–”代表只有读权限</p>
+</blockquote>
+<h3 id="使用chmod命令更改权限"><a href="#使用chmod命令更改权限" class="headerlink" title="使用chmod命令更改权限"></a>使用chmod命令更改权限</h3><ul>
+<li>使用数字<blockquote>
+<p>文件的拥有者可以改变文件的权限，每种权限都对应了一个数字，读权限r对应4，写权限w对应2，执行权限x对应1。可以通过设置数值来建立权限。<br>eg:</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置权限 rwxrwxrwx</span></span><br><span class="line"><span class="comment"># chmod 777 filename</span></span><br><span class="line"><span class="comment"># 设置权限 rwxr-xr-x</span></span><br><span class="line"><span class="comment"># chomd 755 filename</span></span><br><span class="line"><span class="comment"># 设置权限 rw-r--r--</span></span><br><span class="line"><span class="comment"># chomd 644 filename</span></span><br><span class="line"><span class="comment"># 设置权限 ---------</span></span><br><span class="line"><span class="comment"># chmod 000 filename</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用字母<blockquote>
+<p>在linux中，还有另一种改变权限的方式。在这种方式中，”+”和”-“分别代表权限的开和关。字母”u”,”g”,”o”和”a”分别代表拥有者,组，其他用户和全部用户。和上一种方式一样”r”,”w”,”x”分别代表读、写和执行权限。<br>eg：</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置权限 将权限rwxrwxrwx改为r-xr-xr-x</span></span><br><span class="line"><span class="comment"># chmod a-w filename</span></span><br><span class="line"><span class="comment"># 设置权限 将权限rwxrwxrwx改为rwxrwxrw-</span></span><br><span class="line"><span class="comment"># chomd o-x filename</span></span><br><span class="line"><span class="comment"># 设置权限 将权限rwxrwxrwx改为rwx------</span></span><br><span class="line"><span class="comment"># chmod go-rwx filename</span></span><br><span class="line"><span class="comment"># 设置权限 将权限---------改为rw-------</span></span><br><span class="line"><span class="comment"># chmod u+rw filename</span></span><br><span class="line"><span class="comment"># 更改目录下所有文件和目录的权限</span></span><br><span class="line"><span class="comment"># chmod -R o-w myapps</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用umask设置默认权限<blockquote>
+<p>普通用户创建文件 默认权限是rw-rw-r–，创建目录 默认权限是rwxrwxr-x。root用户创建文件和目录权限分别是rw-r–r–和rwxr-xr-x。这些默认值由<em>umask</em>的值决定，可通过命令<em>umask</em>查看它的值。与<em>chmod</em>效果刚好相反，<em>umask</em>设置的是权限的补码，<em>umask</em>的值有三位分别对应拥有者，同组用户和其他用户的权限。对于文件来说，每一位的最大值是6，因为系统不允许在创建一个文件时就赋予执行权限，需通过<em>chmod</em>设置；对于目录来说每一位的最大值是7。例如<em>umask</em>值002所对应的文件和目录的创建权限是664和775。可通过<em>umask</em>命令改变默认值。<br>eg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看默认值</span></span><br><span class="line">$ <span class="built_in">umask</span></span><br><span class="line"><span class="comment"># 改变默认值</span></span><br><span class="line">$ <span class="built_in">umask</span> 022</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h3 id="改变文件的拥有者"><a href="#改变文件的拥有者" class="headerlink" title="改变文件的拥有者"></a>改变文件的拥有者</h3><blockquote>
+<p>作为普通用户，是不能更改文件或目录的拥有者的，只有root user(管理员才可以)。<br>eg:</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改文件的拥有者</span></span><br><span class="line"><span class="comment"># chown giraffe filename.text</span></span><br><span class="line"><span class="comment"># 同时修改拥有者和组</span></span><br><span class="line"><span class="comment"># chown giraffe:coffee filename.txt</span></span><br><span class="line"><span class="comment"># 修改目录下的所有目录和文件的拥有者</span></span><br><span class="line"><span class="comment"># chown -R giraffe:coffee /mydic</span></span><br></pre></td></tr></table></figure>
+<h3 id="移动-复制-删除文件"><a href="#移动-复制-删除文件" class="headerlink" title="移动 复制 删除文件"></a>移动 复制 删除文件</h3><blockquote>
+<p>移动、复制和删除文件的命令很简单。如果想要改变文件的位置，使用<em>mv</em>命令。如果想要复制文件，使用<em>cp</em>命令。如果想要删除文件，使用<em>rm</em>命令。这些命令可以使用在单一的文件和目录上，也可以递归的使用在许多文件和目录上。</p>
+</blockquote>
+<ul>
+<li>移动文件<br>eg：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件abc移到home目录</span></span><br><span class="line">$ mv abc ~</span><br><span class="line"><span class="comment"># 将目录mydemo的全部内容移到目录document中</span></span><br><span class="line">$ mv /home/giraffe/mydemo /home/giraffe/document</span><br></pre></td></tr></table></figure>
+<ul>
+<li>复制文件<br>eg：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件abc复制到home目录下</span></span><br><span class="line">$ cp abc ~</span><br><span class="line"><span class="comment"># 将目录bash-completion*下的内容复制到tmp/a下</span></span><br><span class="line">$ cp -r /usr/share/bash-completion* /tmp/a</span><br><span class="line"><span class="comment"># 将目录bash-completion*下的内容复制到tmp/a下 并且保留权限</span></span><br><span class="line">$ cp -ra /usr/share/bash-completion* /tmp/a</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除文件<br>eg：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除文件abc</span></span><br><span class="line">$ rm abc</span><br><span class="line"><span class="comment"># 删除当前目录下所有文件</span></span><br><span class="line">$ rm *</span><br><span class="line"><span class="comment"># 删除一个空的目录</span></span><br><span class="line">$ rmdir /home/giraffe/empty</span><br><span class="line"><span class="comment"># 删除目录和他包含的所有内容</span></span><br><span class="line">$ rm -r /home/giraffe/bigdir</span><br><span class="line"><span class="comment"># 不提示的删除目录和它包含的所有内容</span></span><br><span class="line">$ rm -rf /home/giraffe/bigdir</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" data-id="cilyhezjr001ny3tlmf6kkm40" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/#comments" class="article-comment-link ds-thread-count" data-thread-key="读书笔记-Linux-Bible-9th-Edition之文件系统">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    读书笔记-Linux Bible 9th Edition之玩转文本文件
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">读书笔记-Linux Bible 9th Edition之使用shell</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="读书笔记-Linux-Bible-9th-Edition之文件系统" data-title="读书笔记-Linux Bible 9th Edition之文件系统" data-url="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 12.5px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 12.5px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12.5px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 17.5px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 17.5px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12.5px;">随笔</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://kevin.doyeden.com/">三&quot;观&quot;茅庐</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://javarevisited.blogspot.com/">Java大牛的博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.programcreek.com/">Java&amp;Python学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://tutorials.jenkov.com/">Java学习</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.petrikainulainen.net/">Spring&amp;Java</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yemengying'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
