@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-03-18T12:25:15.000Z</updated>
+  <updated>2016-03-19T02:53:32.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,9 +20,11 @@
     <link href="http://yemengying.com/2016/03/18/Elasticsearch%E9%85%8D%E7%BD%AE%E9%A1%B9-Local-gateway-HTTP-Indices-Network-Settings%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE/"/>
     <id>http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/</id>
     <published>2016-03-18T09:48:10.000Z</published>
-    <updated>2016-03-18T12:25:15.000Z</updated>
+    <updated>2016-03-19T02:53:32.000Z</updated>
     
-    <content type="html">&lt;p&gt;近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。&lt;br&gt;&lt;img src=&quot;/images/baobao.jpg&quot; alt=&quot;哇咔咔咔&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。&lt;br&gt;&lt;img src=&quot;/images/baobao.jpg&quot; alt=&quot;哇咔咔咔&quot;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;参考资料-万分感谢-：&quot;&gt;&lt;a href=&quot;#参考资料-万分感谢-：&quot; class=&quot;headerlink&quot; title=&quot;参考资料(万分感谢)：&quot;&gt;&lt;/a&gt;参考资料(万分感谢)：&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://donlianli.iteye.com/blog/2115979&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://donlianli.iteye.com/blog/2115979&lt;/a&gt;&lt;/li&gt;
@@ -392,7 +394,9 @@
     
     <summary type="html">
     
-      &lt;p&gt;近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。&lt;br&gt;&lt;img src=&quot;/images/baobao.jpg&quot; alt=&quot;哇咔咔咔&quot;&gt;&lt;/p&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。&lt;br&gt;&lt;img src=&quot;/images/baobao.jpg&quot; alt=&quot;哇咔咔咔&quot;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     

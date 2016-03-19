@@ -5,17 +5,17 @@
     
     <title>[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置 | Giraffe&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看">
+    <meta name="description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置">
 <meta property="og:url" content="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
-<meta property="og:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看">
+<meta property="og:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看">
 <meta property="og:image" content="http://yemengying.com/images/trim.jpg">
-<meta property="og:updated_time" content="2016-03-18T12:25:15.000Z">
+<meta property="og:updated_time" content="2016-03-19T02:53:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置">
-<meta name="twitter:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看">
+<meta name="twitter:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看">
 <meta name="twitter:image" content="http://yemengying.com/images/trim.jpg">
     
 
@@ -201,7 +201,9 @@
                     <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料-万分感谢-："><span class="toc-number">1.</span> <span class="toc-text">参考资料(万分感谢)：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Local-gateway模块"><span class="toc-number">2.</span> <span class="toc-text">Local gateway模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP模块"><span class="toc-number">3.</span> <span class="toc-text">HTTP模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">3.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#禁用HTTP"><span class="toc-number">3.2.</span> <span class="toc-text">禁用HTTP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Indices-索引模块"><span class="toc-number">4.</span> <span class="toc-text">Indices(索引模块)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Circuit-breaker-断路器"><span class="toc-number">4.1.</span> <span class="toc-text">Circuit breaker(断路器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fielddata-cache-字段数据缓存"><span class="toc-number">4.2.</span> <span class="toc-text">Fielddata cache(字段数据缓存)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Node-query-cache-查询缓存"><span class="toc-number">4.3.</span> <span class="toc-text">Node query cache(查询缓存)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Indexing-buffer-索引缓冲"><span class="toc-number">4.4.</span> <span class="toc-text">Indexing buffer(索引缓冲)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shard-request-cache-分片请求缓存"><span class="toc-number">4.5.</span> <span class="toc-text">Shard request cache(分片请求缓存)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Indices-Recovery-索引恢复"><span class="toc-number">4.6.</span> <span class="toc-text">Indices Recovery(索引恢复)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TTL-interval"><span class="toc-number">4.7.</span> <span class="toc-text">TTL interval</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NetWork-Settings-网络设置"><span class="toc-number">5.</span> <span class="toc-text">NetWork Settings(网络设置)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的网络设置"><span class="toc-number">5.1.</span> <span class="toc-text">常用的网络设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#network-host可使用的一些特殊值"><span class="toc-number">5.2.</span> <span class="toc-text">network.host可使用的一些特殊值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级网络设置"><span class="toc-number">5.3.</span> <span class="toc-text">高级网络设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级TCP设置"><span class="toc-number">5.4.</span> <span class="toc-text">高级TCP设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transport和HTTP协议"><span class="toc-number">5.5.</span> <span class="toc-text">Transport和HTTP协议</span></a></li></ol></li></ol>
                 </div>
             
-            <p>近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。<br><img src="/images/baobao.jpg" alt="哇咔咔咔"></p>
+            <blockquote>
+<p>近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。<br><img src="/images/baobao.jpg" alt="哇咔咔咔"></p>
+</blockquote>
 <a id="more"></a>
 <h3 id="参考资料-万分感谢-："><a href="#参考资料-万分感谢-：" class="headerlink" title="参考资料(万分感谢)："></a>参考资料(万分感谢)：</h3><ul>
 <li><a href="http://donlianli.iteye.com/blog/2115979" target="_blank" rel="external">http://donlianli.iteye.com/blog/2115979</a></li>
@@ -577,7 +579,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cilyhx6gu0003yqtls18gbzvv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cilyjj76r00019wtlienlv7zh" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
