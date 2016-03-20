@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看">
 <meta property="og:image" content="http://yemengying.com/images/trim.jpg">
-<meta property="og:updated_time" content="2016-03-19T02:53:32.000Z">
+<meta property="og:updated_time" content="2016-03-20T10:45:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置">
 <meta name="twitter:description" content="近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看">
@@ -202,7 +202,7 @@
                 </div>
             
             <blockquote>
-<p>近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。<br><img src="/images/baobao.jpg" alt="哇咔咔咔"></p>
+<p>近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)<br><img src="/images/baobao.jpg" alt="哇咔咔咔"></p>
 </blockquote>
 <a id="more"></a>
 <h3 id="参考资料-万分感谢-："><a href="#参考资料-万分感谢-：" class="headerlink" title="参考资料(万分感谢)："></a>参考资料(万分感谢)：</h3><ul>
@@ -365,7 +365,7 @@
 </blockquote>
 <p><strong>监控field data</strong><br>可以通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html" target="_blank" rel="external">Node Stats API</a>监控内存使用情况。</p>
 <h4 id="Node-query-cache-查询缓存"><a href="#Node-query-cache-查询缓存" class="headerlink" title="Node query cache(查询缓存)"></a>Node query cache(查询缓存)</h4><p>配置缓存查询结果可以使用多少堆内存<br>查询缓存负责对查询结果进行缓存。每一个节点都有一个查询缓存，由所有分片共享。缓存采用LRU机制，将最近最少使用的内容替换成新数据。查询缓存只会缓存filter的内容。<br>下面的配置需要在集群的每一个节点上配置。<br><code>indices.queries.cache.size</code>: 控制过滤结果缓存的大小。默认是10%。也可设置为一个确定的值，如<code>512mb</code>。</p>
-<h4 id="Indexing-buffer-索引缓冲"><a href="#Indexing-buffer-索引缓冲" class="headerlink" title="Indexing buffer(索引缓冲)"></a>Indexing buffer(索引缓冲)</h4><p>控制分配多少内存给索引进程<br>索引缓冲用来存储新索引的文档。当缓冲区满了时，缓冲的文档会被写到磁盘的一个段，会被划分到该节点的所有分片上。<br>这些静态配置需要在集群的每一个节点上设置。</p>
+<h4 id="Indexing-buffer-索引缓冲"><a href="#Indexing-buffer-索引缓冲" class="headerlink" title="Indexing buffer(索引缓冲)"></a>Indexing buffer(索引缓冲)</h4><p>控制分配多少内存给索引进程<br>索引缓冲用来存储新索引的文档。当缓冲区满了时，缓冲的文档会被写到磁盘的一个段，划分到该节点的所有分片上。<br>以下这些静态配置需要在集群的每一个节点上设置。</p>
 <table>
 <thead>
 <tr>
@@ -579,7 +579,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cim0ebxak0001qb7bcmdcao8u" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cim0funxc0000t17bnow5m7x4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
