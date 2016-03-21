@@ -18,7 +18,7 @@ w">
 相关博客：elasticsearch 配置项(一)
 w">
 <meta property="og:image" content="http://yemengying.com/images/thumbnail16.jpg">
-<meta property="og:updated_time" content="2016-03-21T14:03:23.000Z">
+<meta property="og:updated_time" content="2016-03-21T14:07:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Elasticsearch配置项(二)]Node,Threadpool模块配置">
 <meta name="twitter:description" content="接上文。。。。。。按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项。先整理了Node，ThreadPool两个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含两个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)
@@ -220,14 +220,12 @@ w">
 <li><a href="http://www.opscoder.info/es_threadpool.html" target="_blank" rel="external">http://www.opscoder.info/es_threadpool.html</a></li>
 <li><a href="http://www.voidcn.com/blog/BrotherDong90/article/p-3851633.html" target="_blank" rel="external">http://www.voidcn.com/blog/BrotherDong90/article/p-3851633.html</a></li>
 </ul>
-<h3 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node(节点)"></a>Node(节点)</h3><p>每当启动一个Es实例，就是启动了一个节点。多个连接在一起的节点组成的集合就是集群。<br>默认情况下，每个节点都可以通过HTTP和Transport通信。每个节点都知道集群中的其他节点，可以将客户端的请求转发到合适的节点。除此之外，每个节点还有着以下一种或多种具体角色。<br><strong> Master-eligible node (候选主节点) </strong><br>当一个节点的<code>node.master</code>被设置为<code>true</code>(默认为true)时，该节点就有资格被选为master节点，控制集群。<br><strong> Data node (数据节点) </strong><br>配置项<code>node.data</code>设置为true的节点称为数据节点。数据节点存储数据并且处理和数据相关的一些操作，比如CRUD，查找和聚合等。</p>
-<p><strong> Client node (客户端节点) </strong></p>
-<p>当一个节点的<code>node.master</code>和<code>node.data</code>均被设置为<code>false</code>时，它既不能存储数据也不能作为一个主节点。它被看做一个“路由器”，负责将集群层面的请求转发到主节点，将数据相关的请求转发到数据节点。<br><strong> Tribe node (部落节点) </strong><br>部落节点是一种特殊类型的客户端节点，可通过<code>tribe.*</code>配置项配置。部落节点可以连接多个集群，并且可以跨集群执行查找和其他操作。</p>
+<h3 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node(节点)"></a>Node(节点)</h3><p>每当启动一个Es实例，就是启动了一个节点。多个连接在一起的节点组成的集合就是集群。<br>默认情况下，每个节点都可以通过HTTP和Transport通信。每个节点都知道集群中的其他节点，可以将客户端的请求转发到合适的节点。除此之外，每个节点还有着以下一种或多种具体角色。<br><strong> Master-eligible node (候选主节点) </strong><br>当一个节点的<code>node.master</code>被设置为<code>true</code>(默认为true)时，该节点就有资格被选为master节点，控制集群。<br><strong> Data node (数据节点) </strong><br>配置项<code>node.data</code>设置为true的节点称为数据节点。数据节点存储数据并且处理和数据相关的一些操作，比如CRUD，查找和聚合等。<br><strong> Client node (客户端节点) </strong><br>当一个节点的<code>node.master</code>和<code>node.data</code>均被设置为<code>false</code>时，它既不能存储数据也不能作为一个主节点。它被看做一个“路由器”，负责将集群层面的请求转发到主节点，将数据相关的请求转发到数据节点。<br><strong> Tribe node (部落节点) </strong><br>部落节点是一种特殊类型的客户端节点，可通过<code>tribe.*</code>配置项配置。部落节点可以连接多个集群，并且可以跨集群执行查找和其他操作。</p>
 <p>默认情况下，每个节点即是主节点也是数据节点。但是当集群扩大后，更好的做法是将主节点和数据节点独立开。</p>
 <blockquote>
 <p>Coordinating node(协调节点)：一些请求可能会涉及到多个数据节点，比如搜索或批量索引。搜索请求一般分为两个阶段，由接受客户端请求的节点做协调，称为协调节点。在搜索的第一阶段协调节点会将请求转发到数据节点，每个节点在本地执行请求，并将结果返给协调节点。在第二阶段，协调节点会将各个结果汇总在一起。这意味着负责接受请求的客户端节点(也就是协调节点)需要用足够的内存和CPU来处理查询结果的汇总。</p>
 </blockquote>
-<h4 id="Master-eligible-node-候选主节点"><a href="#Master-eligible-node-候选主节点" class="headerlink" title="Master-eligible node(候选主节点)"></a>Master-eligible node(候选主节点)</h4><p>主节点主要负责创建索引，删除索引，追踪集群中的节点，分配分片等，所以有一个稳定的主节点对于集群来说非常重要，非常重要，非常重要（说三遍，哈哈哈）。集群中任何有资格成为主节点的节点都可能被选为主节点。<br>由于索引和搜索会对节点资源造成压力，所以最好将主节点和数据节点的角色区分，即不要让主节点同时也是数据节点。<br>通过下面的配置可以设置一个专门的主节点(只是主节点不是数据节点)。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: <span class="literal">true</span></span><br><span class="line">node.data: <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="Master-eligible-node-候选主节点"><a href="#Master-eligible-node-候选主节点" class="headerlink" title="Master-eligible node(候选主节点)"></a>Master-eligible node(候选主节点)</h4><p>主节点主要负责创建索引，删除索引，追踪集群中的节点，分配分片等，所以有一个稳定的主节点对于集群来说非常重要，非常重要，非常重要（说三遍，哈哈哈）。集群中任何有资格成为主节点的节点都可能被选为主节点。<br>由于索引和搜索会对节点资源造成压力，在集群比较大时，最好将主节点和数据节点的角色区分，即不要让主节点同时也是数据节点。<br>通过下面的配置可以设置一个专门的主节点(只是主节点不是数据节点)。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: <span class="literal">true</span></span><br><span class="line">node.data: <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
 <p><strong> 通过minimum_master_nodes来避免脑裂现象 </strong><br><code>discovery.zen.minimum_master_nodes</code>配置项说明形成集群时，集群中有资格成为主节点的节点数最少是多少，默认为1.<br>脑裂现象：假设集群中有两个有资格成为主节点的候选主节点，<code>discovery.zen.minimum_master_nodes</code>配置默认为1。当由于网络问题中断了两个节点间的通信，这时两个节点都只会发现一个有资格成为主节点的节点（自己本身）， 根据配置(minimum_master_nodes = 1),符合组成一个集群的条件，所以每个节点都会成为新的master节点，从而导致形成了两个集群，也就是脑裂。直到其中一个节点重启，才会重新形成集群，并且写入重启节点的数据会丢失。假设集群中有三个有资格成为主节点的候选主节点，而这时<code>minimum_master_nodes</code>设置为2，如果一个节点与其他两个失去了通信，被独立的节点会发现不满足设置的条件(有两个候选主节点)，所以不会选举自己为主节点。而剩下两个节点会选举出一个新的主节点，确保正常运行。</p>
 <p><code>discovery.zen.minimum_master_nodes</code>最好设置为(候选主节点数/2) + 1, 举个例子，当有三个候选主节点时，该配置项的值为(3/2)+1=2。<br>也可以通过下面的API动态的更新这个值：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">  "transient": &#123;</span><br><span class="line">    "discovery.zen.minimum_master_nodes": 2</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -317,7 +315,7 @@ w">
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/03/21/elasticsearch-settings2/" data-id="cim22ennb000gjw7b8o5mxt2x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/03/21/elasticsearch-settings2/" data-id="cim22hm8a001ykc7b1nhbejgu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
