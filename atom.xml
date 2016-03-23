@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-03-23T00:52:27.000Z</updated>
+  <updated>2016-03-23T00:53:45.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/03/21/elasticsearch-settings2/"/>
     <id>http://yemengying.com/2016/03/21/elasticsearch-settings2/</id>
     <published>2016-03-21T13:32:41.000Z</published>
-    <updated>2016-03-23T00:52:27.000Z</updated>
+    <updated>2016-03-23T00:53:45.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;接上文。。。。。。按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项。先整理了Node，ThreadPool两个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含两个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)&lt;/p&gt;
@@ -117,7 +117,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;注意以上这些配置如果不是很了解，还是不要轻易改动，使用默认配置即可。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;看累了吧，分享个觉得还不错的视频~~&lt;/p&gt;
+&lt;p&gt;看累了吧，分享个觉得还不错的TED视频~~&lt;/p&gt;
 &lt;object width=&quot;640&quot; height=&quot;360&quot;&gt;&lt;param name=&quot;movie&quot; value=&quot;http://swf.ws.126.net/openplayer/v02/-0-2_MBFLN6BJF_MBFLNJGFE-vimg1_ws_126_net//image/snapshot_movie/2016/2/F/F/MBFLNJGFF-1423031805654.swf?isTEDPlay=1&quot;&gt;&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot;&gt;&lt;param name=&quot;wmode&quot; value=&quot;transparent&quot;&gt;&lt;embed src=&quot;http://swf.ws.126.net/openplayer/v02/-0-2_MBFLN6BJF_MBFLNJGFE-vimg1_ws_126_net//image/snapshot_movie/2016/2/F/F/MBFLNJGFF-1423031805654.swf?isTEDPlay=1&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;640&quot; height=&quot;360&quot; allowfullscreen=&quot;true&quot; wmode=&quot;transparent&quot; allowscriptaccess=&quot;always&quot;&gt;&lt;/object&gt;
 
 
@@ -1662,9 +1662,9 @@
       <category term="elasticsearch" scheme="http://yemengying.com/categories/elasticsearch/"/>
     
     
-      <category term="java" scheme="http://yemengying.com/tags/java/"/>
-    
       <category term="elasticsearch" scheme="http://yemengying.com/tags/elasticsearch/"/>
+    
+      <category term="java" scheme="http://yemengying.com/tags/java/"/>
     
       <category term="annotation" scheme="http://yemengying.com/tags/annotation/"/>
     
