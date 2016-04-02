@@ -100,13 +100,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
-        <lastmod>2016-02-26T10:27:22.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/python/</loc>
         <lastmod>2016-02-26T10:41:06.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -200,6 +193,20 @@
     <url>
         <loc>http://yemengying.com/tags/rabbitMq/</loc>
         <lastmod>2016-03-31T15:01:10.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
+        <lastmod>2016-04-02T05:56:05.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/redis/</loc>
+        <lastmod>2016-04-02T05:56:05.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

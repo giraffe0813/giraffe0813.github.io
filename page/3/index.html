@@ -36,7 +36,29 @@
         <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
     
     
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
     
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
     
 
 </head>
@@ -123,11 +145,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                25
+                26
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                29
+                30
                 <span>标签</span>
             </div>
         </div>
@@ -149,6 +171,148 @@
 
             
             <section id="main">
+    <article id="post-使代码更简洁-三-利用方法链为对象属性赋值" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<a href="/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/" itemprop="url">
+            <img src="/images/thumbnail4.jpg" class="article-banner" />
+        </a>
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/">使代码更简洁(三)---利用Builder Pattern为对象属性赋值</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/">
+            <time datetime="2015-09-26T07:18:12.000Z" itemprop="datePublished">2015-09-26</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>以前写在segmentFault上的一篇文章，搬移到这里</p>
+<p>有一个有很多属性的类，在为它的属性赋值时，通常有两种方式，使用构造函数和使用set方法。可是使用构造函数有时会忘了各个字段的顺序 ，直接使用set方法，又比较麻烦。所以同事提出可以使用方法链。<br></p>
+            <p class="article-more-link">
+                <a href="/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/" data-id="cimiq86pp000ybn7b8nevhsz5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/#comments" class="article-comment-link ds-thread-count" data-thread-key="使代码更简洁-三-利用方法链为对象属性赋值">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-spring结合rabbitmq-简单的demo" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -205,7 +369,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/19/spring结合rabbitmq-简单的demo/" data-id="cimhsreou000bhp7b6i9i3vsg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/19/spring结合rabbitmq-简单的demo/" data-id="cimiq86p5000ibn7bgeqqdm6q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -349,7 +513,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/12/spring事务管理总结/" data-id="cimhsrepf000qhp7b43aj5bbd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/12/spring事务管理总结/" data-id="cimiq86ot000bbn7bgm1gu2vr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -493,7 +657,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/" data-id="cimhsreps0015hp7bze9ejj3g" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/" data-id="cimiq86q7001gbn7ba1a37ctk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -637,7 +801,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cimhsrepp0010hp7b4xkwinyq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cimiq86py0019bn7bqa71lbco" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -779,7 +943,7 @@
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog实现模式对话框/" data-id="cimhsrep3000ghp7bz6hecvk5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog实现模式对话框/" data-id="cimiq86pr0011bn7bg06yz6wd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -868,7 +1032,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/angularJs/">angularJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/hashmap/">hashmap</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/list/">list</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/thread/">thread</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -877,7 +1041,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -886,7 +1050,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 14px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/list/" style="font-size: 12px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 12px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 12px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 18px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 18px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 12px;">随笔</a>
+            <a href="/tags/Idea/" style="font-size: 10px;">Idea</a> <a href="/tags/STS/" style="font-size: 10px;">STS</a> <a href="/tags/angularJs/" style="font-size: 10px;">angularJs</a> <a href="/tags/annotation/" style="font-size: 10px;">annotation</a> <a href="/tags/anntation/" style="font-size: 10px;">anntation</a> <a href="/tags/bootstrap/" style="font-size: 10px;">bootstrap</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/elasticsearch/" style="font-size: 13.33px;">elasticsearch</a> <a href="/tags/interface/" style="font-size: 10px;">interface</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/list/" style="font-size: 11.67px;">list</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ngDialog/" style="font-size: 10px;">ngDialog</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/rabbitMq/" style="font-size: 10px;">rabbitMq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/spring/" style="font-size: 11.67px;">spring</a> <a href="/tags/spring-aop/" style="font-size: 10px;">spring-aop</a> <a href="/tags/stream/" style="font-size: 11.67px;">stream</a> <a href="/tags/transaction/" style="font-size: 10px;">transaction</a> <a href="/tags/书单/" style="font-size: 10px;">书单</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a> <a href="/tags/翻译/" style="font-size: 18.33px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 16.67px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 11.67px;">随笔</a>
         </div>
     </div>
 
