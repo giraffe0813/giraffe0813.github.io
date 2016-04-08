@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/03/21/elasticsearch-settings2/</loc>
+        <lastmod>2016-04-08T00:32:07.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/04/02/take-advantage-of-Redis/</loc>
         <lastmod>2016-04-02T05:56:05.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,14 +25,6 @@
     <url>
         <loc>http://yemengying.com/2015/09/19/spring%E7%BB%93%E5%90%88rabbitmq-%E7%AE%80%E5%8D%95%E7%9A%84demo/</loc>
         <lastmod>2016-03-31T15:01:10.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/03/21/elasticsearch-settings2/</loc>
-        <lastmod>2016-03-23T00:53:45.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

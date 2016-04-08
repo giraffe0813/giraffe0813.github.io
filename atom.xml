@@ -108,7 +108,7 @@
     <link href="http://yemengying.com/2016/03/21/elasticsearch-settings2/"/>
     <id>http://yemengying.com/2016/03/21/elasticsearch-settings2/</id>
     <published>2016-03-21T13:32:41.000Z</published>
-    <updated>2016-03-23T00:53:45.000Z</updated>
+    <updated>2016-04-08T00:32:07.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;接上文。。。。。。按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项。先整理了Node，ThreadPool两个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含两个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)&lt;/p&gt;
