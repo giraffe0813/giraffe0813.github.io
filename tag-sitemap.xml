@@ -37,48 +37,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/angularJs/</loc>
-        <lastmod>2016-02-03T07:26:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/ngDialog/</loc>
-        <lastmod>2016-02-03T07:26:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/bootstrap/</loc>
-        <lastmod>2016-02-03T07:26:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/stream/</loc>
-        <lastmod>2016-02-03T07:37:58.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/list/</loc>
-        <lastmod>2016-02-03T07:37:58.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/map/</loc>
-        <lastmod>2016-02-03T07:37:58.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/transaction/</loc>
         <lastmod>2016-02-03T07:38:24.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -93,85 +51,8 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/interface/</loc>
-        <lastmod>2016-02-03T08:19:23.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/python/</loc>
-        <lastmod>2016-02-26T10:41:06.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/%E7%88%AC%E8%99%AB/</loc>
-        <lastmod>2016-02-26T10:41:06.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/django/</loc>
-        <lastmod>2016-02-26T10:41:06.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/linux/</loc>
-        <lastmod>2016-02-26T10:41:17.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-        <lastmod>2016-02-26T10:41:17.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/%E4%B9%A6%E5%8D%95/</loc>
-        <lastmod>2016-02-26T10:42:58.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2016-03-15T13:08:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/%E7%94%B5%E5%BD%B1/</loc>
         <lastmod>2016-03-15T13:08:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/annotation/</loc>
-        <lastmod>2016-03-18T11:13:43.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/reflect/</loc>
-        <lastmod>2016-03-18T11:13:43.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/java/</loc>
-        <lastmod>2016-03-31T15:01:10.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -191,22 +72,141 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/tags/redis/</loc>
+        <lastmod>2016-04-22T13:38:08.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/linux/</loc>
+        <lastmod>2016-04-22T13:43:30.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+        <lastmod>2016-04-22T13:43:30.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/map/</loc>
+        <lastmod>2016-04-22T13:43:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/stream/</loc>
+        <lastmod>2016-04-22T13:43:56.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/list/</loc>
+        <lastmod>2016-04-22T13:43:56.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/python/</loc>
+        <lastmod>2016-04-22T13:44:20.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E7%88%AC%E8%99%AB/</loc>
+        <lastmod>2016-04-22T13:44:20.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/django/</loc>
+        <lastmod>2016-04-22T13:44:20.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
+        <lastmod>2016-04-22T13:44:30.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E4%B9%A6%E5%8D%95/</loc>
+        <lastmod>2016-04-22T13:44:30.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/angularJs/</loc>
+        <lastmod>2016-04-22T13:44:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/ngDialog/</loc>
+        <lastmod>2016-04-22T13:44:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/bootstrap/</loc>
+        <lastmod>2016-04-22T13:44:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yemengying.com/tags/elasticsearch/</loc>
-        <lastmod>2016-04-08T00:32:07.000Z</lastmod>
+        <lastmod>2016-04-22T13:44:50.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/annotation/</loc>
+        <lastmod>2016-04-22T13:44:50.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/reflect/</loc>
+        <lastmod>2016-04-22T13:44:50.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/java/</loc>
+        <lastmod>2016-04-22T13:45:06.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/interface/</loc>
+        <lastmod>2016-04-22T13:45:06.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
-        <lastmod>2016-04-22T13:38:08.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/redis/</loc>
-        <lastmod>2016-04-22T13:38:08.000Z</lastmod>
+        <lastmod>2016-04-22T13:45:06.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

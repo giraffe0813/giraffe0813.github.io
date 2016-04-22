@@ -238,7 +238,7 @@
     <link href="http://yemengying.com/2016/03/18/Elasticsearch%E9%85%8D%E7%BD%AE%E9%A1%B9-Local-gateway-HTTP-Indices-Network-Settings%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE/"/>
     <id>http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/</id>
     <published>2016-03-18T09:48:10.000Z</published>
-    <updated>2016-03-21T14:05:31.000Z</updated>
+    <updated>2016-04-22T13:44:45.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)&lt;/p&gt;
@@ -677,7 +677,7 @@
     <link href="http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/"/>
     <id>http://yemengying.com/2016/02/20/Java-8-行为参数化-behavior-parameterization/</id>
     <published>2016-02-20T11:33:21.000Z</published>
-    <updated>2016-03-02T11:15:02.000Z</updated>
+    <updated>2016-04-22T13:44:59.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;根据书 &amp;lt;&amp;lt; Java 8 in action &amp;gt;&amp;gt;第二章的一个例子整理。书中通过一个例子，讲述了如何利用behavior parameterization来应对不停变化的需求。想想之前自己写的工具类，真是大写的Low啊。。。。&lt;/p&gt;
@@ -740,7 +740,7 @@
     <link href="http://yemengying.com/2016/02/03/%E8%AF%91-Java%E4%B8%ADHashMap%E5%92%8CLinkedHashMap%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81/"/>
     <id>http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/</id>
     <published>2016-02-03T08:23:39.000Z</published>
-    <updated>2016-02-26T10:27:22.000Z</updated>
+    <updated>2016-04-22T13:44:14.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;原文来自一个java大牛的博客 原文地址&lt;a href=&quot;http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html&lt;/a&gt; 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。&lt;/p&gt;
@@ -786,7 +786,7 @@
     <link href="http://yemengying.com/2016/01/19/%E6%9C%80%E8%BF%91%E7%9C%8B%E7%9A%84%E4%B9%A6/"/>
     <id>http://yemengying.com/2016/01/19/最近看的书/</id>
     <published>2016-01-19T06:34:13.000Z</published>
-    <updated>2016-02-26T10:42:58.000Z</updated>
+    <updated>2016-04-22T13:44:30.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;自从去年8月份之后真是变成了个爱看书のgirl，算是*%^&amp;amp;#$带来的唯一好处吧，是时候整理一发啦。不过，要按什么分类呢，技术和非技术，看完和没看完，好看和不好看还是外文和中文？好乱。。。。&lt;/p&gt;
@@ -829,7 +829,7 @@
     <link href="http://yemengying.com/2016/01/09/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9B%BE%E4%B9%A6%E5%B0%8F%E9%87%91%E5%BA%93/"/>
     <id>http://yemengying.com/2016/01/09/拥有自己的图书小金库/</id>
     <published>2016-01-09T06:15:46.000Z</published>
-    <updated>2016-02-26T10:41:06.000Z</updated>
+    <updated>2016-04-22T13:44:20.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;a href=&quot;https://github.com/giraffe0813/GeekBook&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;a href=&quot;https://github.com/Geek-Organization/geek-programming-books&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;book&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -868,7 +868,7 @@
     <link href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/"/>
     <id>http://yemengying.com/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/</id>
     <published>2015-12-24T09:56:03.000Z</published>
-    <updated>2016-02-26T10:41:17.000Z</updated>
+    <updated>2016-04-22T13:43:24.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;根据Linux Bible第九版第六章整理的读书笔记，记录linux系统下如何管理进程&lt;/p&gt;
@@ -943,7 +943,7 @@
     <link href="http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/"/>
     <id>http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/</id>
     <published>2015-11-30T07:04:46.000Z</published>
-    <updated>2016-02-26T10:38:57.000Z</updated>
+    <updated>2016-04-22T13:43:30.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼&lt;/p&gt;
@@ -1648,7 +1648,7 @@
     <link href="http://yemengying.com/2015/11/19/EsGiraffe-%E5%88%A9%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84%E6%8B%BC%E6%8E%A5Elasticsearch%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/"/>
     <id>http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/</id>
     <published>2015-11-19T05:56:50.000Z</published>
-    <updated>2016-03-18T11:13:43.000Z</updated>
+    <updated>2016-04-22T13:44:50.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;EsGiraffe&quot;&gt;&lt;a href=&quot;#EsGiraffe&quot; class=&quot;headerlink&quot; title=&quot;EsGiraffe&quot;&gt;&lt;/a&gt;EsGiraffe&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，git 地址：&lt;a href=&quot;https://github.com/giraffe0813/EsGiraffe&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/giraffe0813/EsGiraffe&lt;/a&gt;。生成的大致的样子如下:&lt;/p&gt;
@@ -1750,9 +1750,9 @@
       <category term="elasticsearch" scheme="http://yemengying.com/categories/elasticsearch/"/>
     
     
-      <category term="java" scheme="http://yemengying.com/tags/java/"/>
-    
       <category term="elasticsearch" scheme="http://yemengying.com/tags/elasticsearch/"/>
+    
+      <category term="java" scheme="http://yemengying.com/tags/java/"/>
     
       <category term="annotation" scheme="http://yemengying.com/tags/annotation/"/>
     
@@ -1797,7 +1797,7 @@
     <link href="http://yemengying.com/2015/11/06/%E3%80%90%E8%AF%91%E3%80%91%E5%A6%82%E4%BD%95%E5%9C%A8java%E4%B8%AD%E4%BD%BF%E7%94%A8ConcurrentHashMap/"/>
     <id>http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/</id>
     <published>2015-11-06T05:20:37.000Z</published>
-    <updated>2016-02-26T10:26:49.000Z</updated>
+    <updated>2016-04-22T13:43:07.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;原文来自一个java大牛的技术博客 地址&lt;a href=&quot;http://javarevisited.blogspot.com/2013/02/concurrenthashmap-in-java-example-tutorial-working.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://javarevisited.blogspot.com/2013/02/concurrenthashmap-in-java-example-tutorial-working.html&lt;/a&gt; 博客讲解了如何在java中使用ConcurrentHashMap。马上要封闭开发10天，连上15天班，真酸爽。下面是原文的翻译：&lt;/p&gt;
@@ -1855,7 +1855,7 @@
     <link href="http://yemengying.com/2015/11/01/Java-8%E4%B8%AD%E7%9A%84%E6%89%A9%E5%B1%95-Default-Defender-Extension-%E6%96%B9%E6%B3%95/"/>
     <id>http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/</id>
     <published>2015-11-01T14:11:06.000Z</published>
-    <updated>2016-02-03T08:19:23.000Z</updated>
+    <updated>2016-04-22T13:45:06.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;原文来自一个java大牛的技术博客 地址&lt;a href=&quot;http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results&lt;/a&gt; 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。&lt;/p&gt;
@@ -2013,7 +2013,7 @@
     <link href="http://yemengying.com/2015/10/26/%E8%AF%91-%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AE%E4%B8%80%E4%B8%AAArrayList-clear-vs-removeAll/"/>
     <id>http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/</id>
     <published>2015-10-26T15:20:04.000Z</published>
-    <updated>2016-02-03T09:59:33.000Z</updated>
+    <updated>2016-04-22T13:44:02.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;安利一个APP–开发者头条，在上面发现一个不错的英文技术类博客，地址&lt;a href=&quot;http://javarevisited.blogspot.com/，&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://javarevisited.blogspot.com/，&lt;/a&gt;  会不定期的翻译一些 翻译不好见谅啊😼&lt;/p&gt;
