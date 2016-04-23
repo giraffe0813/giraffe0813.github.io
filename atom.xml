@@ -829,10 +829,24 @@
     <link href="http://yemengying.com/2016/01/09/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9B%BE%E4%B9%A6%E5%B0%8F%E9%87%91%E5%BA%93/"/>
     <id>http://yemengying.com/2016/01/09/拥有自己的图书小金库/</id>
     <published>2016-01-09T06:15:46.000Z</published>
-    <updated>2016-04-22T13:44:20.000Z</updated>
+    <updated>2016-04-23T01:59:14.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;a href=&quot;https://github.com/giraffe0813/GeekBook&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;a href=&quot;https://github.com/Geek-Organization/geek-programming-books&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;book&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;/strong&gt;&lt;div id=&quot;badge-container-giraffe0813-GeekBook-3d83e8f&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-giraffe0813-GeekBook-3d83e8f&quot;, &quot;giraffe0813&quot;, &quot;GeekBook&quot;, &quot;3d83e8f&quot;, false);
+&lt;/script&gt;
+&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;/strong&gt; &lt;div id=&quot;badge-container-Geek-Organization-geek-programming-books-643e0bd&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-Geek-Organization-geek-programming-books-643e0bd&quot;, &quot;Geek-Organization&quot;, &quot;geek-programming-books&quot;, &quot;643e0bd&quot;, false);
+&lt;/script&gt;
+&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;遇到的坑&quot;&gt;&lt;a href=&quot;#遇到的坑&quot; class=&quot;headerlink&quot; title=&quot;遇到的坑&quot;&gt;&lt;/a&gt;遇到的坑&lt;/h3&gt;&lt;p&gt;记录下遇到的坑 不然就忘了😂&lt;/p&gt;
@@ -847,7 +861,21 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;a href=&quot;https://github.com/giraffe0813/GeekBook&quot;&gt;github&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;a href=&quot;https://github.com/Geek-Organization/geek-programming-books&quot;&gt;book&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;/strong&gt;&lt;div id=&quot;badge-container-giraffe0813-GeekBook-3d83e8f&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-giraffe0813-GeekBook-3d83e8f&quot;, &quot;giraffe0813&quot;, &quot;GeekBook&quot;, &quot;3d83e8f&quot;, false);
+&lt;/script&gt;
+&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;/strong&gt; &lt;div id=&quot;badge-container-Geek-Organization-geek-programming-books-643e0bd&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-Geek-Organization-geek-programming-books-643e0bd&quot;, &quot;Geek-Organization&quot;, &quot;geek-programming-books&quot;, &quot;643e0bd&quot;, false);
+&lt;/script&gt;
+&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>
@@ -1648,10 +1676,10 @@
     <link href="http://yemengying.com/2015/11/19/EsGiraffe-%E5%88%A9%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84%E6%8B%BC%E6%8E%A5Elasticsearch%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/"/>
     <id>http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/</id>
     <published>2015-11-19T05:56:50.000Z</published>
-    <updated>2016-04-22T13:44:50.000Z</updated>
+    <updated>2016-04-23T02:01:58.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;EsGiraffe&quot;&gt;&lt;a href=&quot;#EsGiraffe&quot; class=&quot;headerlink&quot; title=&quot;EsGiraffe&quot;&gt;&lt;/a&gt;EsGiraffe&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，git 地址：&lt;a href=&quot;https://github.com/giraffe0813/EsGiraffe&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/giraffe0813/EsGiraffe&lt;/a&gt;。生成的大致的样子如下:&lt;/p&gt;
+&lt;p&gt;封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，生成的大致的样子如下:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;quot;query&amp;quot;: {
      &amp;quot;bool&amp;quot;: {
               &amp;quot;must&amp;quot;: [
@@ -1666,6 +1694,14 @@
           }
       }
 &lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;git地址：&lt;/strong&gt;&lt;div id=&quot;badge-container-giraffe0813-EsGiraffe-6afdc51&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-giraffe0813-EsGiraffe-6afdc51&quot;, &quot;giraffe0813&quot;, &quot;EsGiraffe&quot;, &quot;6afdc51&quot;, false);
+&lt;/script&gt;
+&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h4 id=&quot;常见的工作需求&quot;&gt;&lt;a href=&quot;#常见的工作需求&quot; class=&quot;headerlink&quot; title=&quot;常见的工作需求&quot;&gt;&lt;/a&gt;常见的工作需求&lt;/h4&gt;&lt;p&gt;在我工作比较常见的搜索需求就是对外提供搜索的接口。会按照搜索引擎中的字段定义一个对应的model，然后这些字段的值如果为Null，就代表调用方不想对这个字段进行查询，如果不为Null代表需要对这个字段进行查询。而且还会提前在API文档中定义好查询的类型是must、must_not还是should&lt;/p&gt;
 &lt;h4 id=&quot;未使用工具类的代码Demo&quot;&gt;&lt;a href=&quot;#未使用工具类的代码Demo&quot; class=&quot;headerlink&quot; title=&quot;未使用工具类的代码Demo&quot;&gt;&lt;/a&gt;未使用工具类的代码Demo&lt;/h4&gt;&lt;p&gt;假设有一个和订单有关的索引，需要对订单的一系列属性进行查询 其中userName和orderMode是should查询 其余都是must&lt;br&gt;查询model：&lt;/p&gt;
@@ -1729,7 +1765,7 @@
     <summary type="html">
     
       &lt;h3 id=&quot;EsGiraffe&quot;&gt;&lt;a href=&quot;#EsGiraffe&quot; class=&quot;headerlink&quot; title=&quot;EsGiraffe&quot;&gt;&lt;/a&gt;EsGiraffe&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，git 地址：&lt;a href=&quot;https://github.com/giraffe0813/EsGiraffe&quot;&gt;https://github.com/giraffe0813/EsGiraffe&lt;/a&gt;。生成的大致的样子如下:&lt;/p&gt;
+&lt;p&gt;封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，生成的大致的样子如下:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;quot;query&amp;quot;: {
      &amp;quot;bool&amp;quot;: {
               &amp;quot;must&amp;quot;: [
@@ -1744,6 +1780,14 @@
           }
       }
 &lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;git地址：&lt;/strong&gt;&lt;div id=&quot;badge-container-giraffe0813-EsGiraffe-6afdc51&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-giraffe0813-EsGiraffe-6afdc51&quot;, &quot;giraffe0813&quot;, &quot;EsGiraffe&quot;, &quot;6afdc51&quot;, false);
+&lt;/script&gt;
+&lt;/p&gt;
     
     </summary>
     
@@ -1958,10 +2002,17 @@
     <link href="http://yemengying.com/2015/10/28/%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84mybatis%E6%8F%92%E5%85%A5%E5%AF%B9%E8%B1%A1%E6%97%B6%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E7%94%9F%E6%88%90sql%E8%AF%AD%E5%8F%A5/"/>
     <id>http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/</id>
     <published>2015-10-28T05:21:29.000Z</published>
-    <updated>2016-02-03T06:33:30.000Z</updated>
+    <updated>2016-04-23T02:06:45.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的&lt;a href=&quot;http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;问题&lt;/a&gt;截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法&lt;br&gt;git地址：&lt;a href=&quot;https://github.com/giraffe0813/spring-mybatis-utils&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/giraffe0813/spring-mybatis-utils&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的&lt;a href=&quot;http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;问题&lt;/a&gt;截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法&lt;br&gt;git地址：&lt;div id=&quot;badge-container-giraffe0813-spring-mybatis-utils-a555c91&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-giraffe0813-spring-mybatis-utils-a555c91&quot;, &quot;giraffe0813&quot;, &quot;spring-mybatis-utils&quot;, &quot;a555c91&quot;, false);
+&lt;/script&gt;
+&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;下面是之前的代码片段:&lt;/p&gt;
@@ -1990,7 +2041,14 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的&lt;a href=&quot;http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on&quot;&gt;问题&lt;/a&gt;截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法&lt;br&gt;git地址：&lt;a href=&quot;https://github.com/giraffe0813/spring-mybatis-utils&quot;&gt;https://github.com/giraffe0813/spring-mybatis-utils&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的&lt;a href=&quot;http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on&quot;&gt;问题&lt;/a&gt;截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法&lt;br&gt;git地址：&lt;div id=&quot;badge-container-giraffe0813-spring-mybatis-utils-a555c91&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  loadStyle(&quot;/hexo-github/style.css&quot;);
+  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
+  new Badge(&quot;#badge-container-giraffe0813-spring-mybatis-utils-a555c91&quot;, &quot;giraffe0813&quot;, &quot;spring-mybatis-utils&quot;, &quot;a555c91&quot;, false);
+&lt;/script&gt;
+&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>

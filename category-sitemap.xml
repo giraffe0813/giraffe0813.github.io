@@ -14,13 +14,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/spring/</loc>
-        <lastmod>2016-03-31T15:01:10.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/redis/</loc>
         <lastmod>2016-04-22T13:38:08.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -49,13 +42,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/python/</loc>
-        <lastmod>2016-04-22T13:44:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
         <lastmod>2016-04-22T13:44:30.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -63,22 +49,36 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/angularJs/</loc>
-        <lastmod>2016-04-22T13:44:36.000Z</lastmod>
+        <loc>http://yemengying.com/categories/python/</loc>
+        <lastmod>2016-04-23T01:59:14.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/categories/elasticsearch/</loc>
-        <lastmod>2016-04-22T13:44:50.000Z</lastmod>
+        <lastmod>2016-04-23T02:01:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/spring/</loc>
+        <lastmod>2016-04-23T02:04:27.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/categories/java/</loc>
-        <lastmod>2016-04-22T13:45:06.000Z</lastmod>
+        <lastmod>2016-04-23T02:06:45.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/angularJs/</loc>
+        <lastmod>2016-04-23T02:08:57.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
