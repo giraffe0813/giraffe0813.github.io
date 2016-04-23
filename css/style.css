@@ -139,7 +139,7 @@ code {
   background-color: #f8f8f8;
 }
 .outer {
-  max-width: 1020px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -186,13 +186,16 @@ code {
   #main {
     display: inline;
     float: left;
-    width: 68%;
-    margin: 0 1%;
+    width: 52.307692307692314%;
+    margin: 0 0.769230769230769%;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
   #main {
-    width: 100%;
+    display: inline;
+    float: left;
+    width: 67.6923076923077%;
+    margin: 0 0.769230769230769%;
   }
 }
 .archive-article-header a,
@@ -503,9 +506,9 @@ code {
 }
 #search-form-wrap .search-form .search-form-input {
   width: 100%;
-  height: 40px;
   padding: 0 30px 0 15px;
   line-height: 40px;
+  height: 40px !important;
   -webkit-border-radius: 21px;
   border-radius: 21px;
 }
@@ -632,8 +635,8 @@ code {
 #profile {
   display: inline;
   float: left;
-  width: 28.000000000000004%;
-  margin: 0 1%;
+  width: 21.53846153846154%;
+  margin: 0 0.769230769230769%;
   display: none;
 }
 @media screen and (min-width: 1200px) {
@@ -1655,16 +1658,16 @@ ol.toc {
   #sidebar {
     display: inline;
     float: left;
-    width: 28.000000000000004%;
-    margin: 0 1%;
+    width: 21.53846153846154%;
+    margin: 0 0.769230769230769%;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
   #sidebar {
     display: inline;
     float: left;
-    width: 38%;
-    margin: 0 1%;
+    width: 29.230769230769234%;
+    margin: 0 0.769230769230769%;
   }
 }
 .widget {
@@ -1797,36 +1800,36 @@ ol.toc {
   color: #333;
 }
 #toTop {
+  display: none;
   cursor: pointer;
   text-align: center;
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   color: #fff;
-  font-size: 32px;
-  line-height: 64px;
+  font-size: 50px;
+  line-height: 55px;
   background: #565a5f;
+  opacity: 0.8;
   -webkit-border-radius: 4px;
   border-radius: 4px;
+  bottom: 20px;
+  position: fixed;
 }
 @media screen and (min-width: 560px) and (max-width: 799px) {
   #toTop {
-    width: 54px;
-    height: 54px;
-    font-size: 28px;
-    line-height: 54px;
+    width: 52px;
+    height: 52px;
+    font-size: 34px;
+    line-height: 52px;
   }
 }
 @media screen and (max-width: 559px) {
   #toTop {
-    width: 54px;
-    height: 54px;
-    font-size: 28px;
-    line-height: 54px;
+    width: 48px;
+    height: 48px;
+    font-size: 32px;
+    line-height: 48px;
   }
-}
-#toTop.fix {
-  bottom: 20px;
-  position: fixed;
 }
 #recent-post li {
   padding: 10px 0 10px 94px;
