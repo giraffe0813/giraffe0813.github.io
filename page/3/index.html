@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                27
+                28
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -210,6 +210,141 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/">【译】如何重置一个ArrayList--clear vs removeAll</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/">
+            <time datetime="2015-10-26T15:20:04.000Z" itemprop="datePublished">2015-10-26</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/list/">list</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>安利一个APP–开发者头条，在上面发现一个不错的英文技术类博客，地址<a href="http://javarevisited.blogspot.com/，">http://javarevisited.blogspot.com/，</a>  会不定期的翻译一些 翻译不好见谅啊😼</p>
+</blockquote>
+<p>原文地址：<a href="http://javarevisited.blogspot.co.uk/2015/09/how-to-reset-arraylist-in-java-clear-vs-removeAll-example.html">http://javarevisited.blogspot.co.uk/2015/09/how-to-reset-arraylist-in-java-clear-vs-removeAll-example.html</a></p>
+<p>很多时候为了重用我们会想要重置一个ArrayList，这里的重置是指清空列表或移除列表所有的元素。在Java中，有两个方法可以帮助我们实现重置<code>clear</code>或<code>removeAll</code>。在列表长度很小的情况下(eg:10或100个元素)，可以放心的使用这两种方法。但如果列表很大(eg:10M个元素)，那么选择clear还是removeAll会对你java应用的性能造成巨大的影响。甚至有时，在列表过大的情况下，重置会耗费许多时间，那么重新创建一个新的列表比将老的列表重置要好。但需要提醒的是，必须要确保老的列表可以被垃圾回收，否则，有很大的风险会出现<code>java.lang.OutOfMemoryError: Java Heap Space</code>。言归正传，让我们看看clear()和removeAll()两个方法。大家应该常常会选择用clear(),因为他的复杂度是O(n),而相比之下，removeAll(Collection C)的性能要差一些，它的复杂度是O(n^2)。这也是为什么在重置大的列表的时候两个方法会有巨大的差异。如果阅读他们的源码并运行下面的例子程序，差异会更明显。<br></p>
+            <p class="article-more-link">
+                <a href="/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cinenwm84001wc47brk86siop" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="2015/10/23/Idea和STS的快捷键对比/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -370,7 +505,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/23/Idea和STS的快捷键对比/" data-id="cinen1hbn00078a7bxuj27wvw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/23/Idea和STS的快捷键对比/" data-id="cinenwm5o0007c47blg7bujyo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -502,7 +637,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/" data-id="cinen1hck00128a7be8xuzhrn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/26/使代码更简洁-三-利用方法链为对象属性赋值/" data-id="cinenwm81001sc47b9yee0mbs" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -636,7 +771,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/19/spring结合rabbitmq-简单的demo/" data-id="cinen1hcb000s8a7b4tf6q08t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/19/spring结合rabbitmq-简单的demo/" data-id="cinenwm6m000qc47b9odmg61r" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -780,7 +915,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/12/spring事务管理总结/" data-id="cinen1hc7000l8a7bx73j8vne" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/12/spring事务管理总结/" data-id="cinenwm6h000mc47bnqroh514" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -914,7 +1049,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/" data-id="cinen1hcp00198a7bobuluhjx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/11/使代码更简洁-二-集合转换相关/" data-id="cinenwm7b0018c47bkqpu80te" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1048,7 +1183,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cinen1hcm00148a7b5exbsrns" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cinenwm730011c47bkb2qp09h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1179,7 +1314,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog实现模式对话框/" data-id="cinen1hc9000o8a7b47w1wr4s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog实现模式对话框/" data-id="cinenwm6a000ic47b3diynyi3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
