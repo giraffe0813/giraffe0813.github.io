@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看R">
 <meta property="og:image" content="http://yemengying.com/images/redis.png">
-<meta property="og:updated_time" content="2016-04-24T09:46:33.000Z">
+<meta property="og:updated_time" content="2016-04-24T13:56:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis相关---Redis持久化(AOF&Snapshot)">
 <meta name="twitter:description" content="恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看R">
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
             
                 <div id="toc" class="toc-article">
                 <strong class="toc-title">文章目录</strong>
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF持久化"><span class="toc-number">1.</span> <span class="toc-text">AOF持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF可用配置"><span class="toc-number">1.1.</span> <span class="toc-text">AOF可用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF优缺点"><span class="toc-number">1.2.</span> <span class="toc-text">AOF优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF文件格式"><span class="toc-number">1.3.</span> <span class="toc-text">AOF文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#压缩AOF文件"><span class="toc-number">1.4.</span> <span class="toc-text">压缩AOF文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快照持久化"><span class="toc-number">2.</span> <span class="toc-text">快照持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#快照可用配置"><span class="toc-number">2.1.</span> <span class="toc-text">快照可用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#快照优缺点"><span class="toc-number">2.2.</span> <span class="toc-text">快照优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档"><span class="toc-number">3.</span> <span class="toc-text">参考文档</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF持久化"><span class="toc-number">1.</span> <span class="toc-text">AOF持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF可用配置"><span class="toc-number">1.1.</span> <span class="toc-text">AOF可用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF优缺点"><span class="toc-number">1.2.</span> <span class="toc-text">AOF优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF文件格式"><span class="toc-number">1.3.</span> <span class="toc-text">AOF文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#压缩AOF文件"><span class="toc-number">1.4.</span> <span class="toc-text">压缩AOF文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快照持久化"><span class="toc-number">2.</span> <span class="toc-text">快照持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#快照可用配置"><span class="toc-number">2.1.</span> <span class="toc-text">快照可用配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB文件结构"><span class="toc-number">3.</span> <span class="toc-text">RDB文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#快照优缺点"><span class="toc-number">3.1.</span> <span class="toc-text">快照优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档"><span class="toc-number">4.</span> <span class="toc-text">参考文档</span></a></li></ol>
                 </div>
             
             <blockquote>
@@ -312,12 +312,12 @@ var _hmt = _hmt || [];
 <ul>
 <li>相同数据集大小，AOF文件会比快照文件大</li>
 </ul>
-<h4 id="AOF文件格式"><a href="#AOF文件格式" class="headerlink" title="AOF文件格式"></a>AOF文件格式</h4><p>一开始以为Redis就是将写命令原封不动的存储到AOF文件中，自己试了一下才知道，AOF文件是使用网络通讯协议的格式来保存这些命令。<br>举个🌰：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> number 21</span><br><span class="line">OK</span><br></pre></td></tr></table></figure></p>
+<h4 id="AOF文件格式"><a href="#AOF文件格式" class="headerlink" title="AOF文件格式"></a>AOF文件格式</h4><p>一开始以为Redis就是将写命令原封不动的存储到AOF文件中，自己试了一下才知道，AOF文件是使用Redis网络通讯协议的格式来保存这些命令。<br>举个🌰：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> number 21</span><br><span class="line">OK</span><br></pre></td></tr></table></figure></p>
 <p>将上面的命令存储到AOF文件就是下面的样子（select 0命令是代表选择id为0的数据库）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*2</span><br><span class="line"><span class="variable">$6</span></span><br><span class="line">SELECT</span><br><span class="line"><span class="variable">$1</span></span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line"><span class="variable">$3</span></span><br><span class="line">SET</span><br><span class="line"><span class="variable">$6</span></span><br><span class="line">number</span><br><span class="line"><span class="variable">$2</span></span><br><span class="line">21</span><br></pre></td></tr></table></figure>
-<p>来看下AOF文件的格式，了解它的格式可以让我们很容易得解析它，指不定哪天能用到啊🌝。*号代表命令参数的个数(在上面的例子中参数为set、number、21,共3个)，$号代表第N个参数的长度，在上面的例子中，三个参数的长度分别为3，6，2。</p>
-<h4 id="压缩AOF文件"><a href="#压缩AOF文件" class="headerlink" title="压缩AOF文件"></a>压缩AOF文件</h4><p>Redis可以自动压缩AOF文件，用户也可以通过BGREWRITEAOF命令来压缩AOF文件。这里的压缩，不是平时说的压缩的意思，是指通过移除一些冗余的命令重写文件，从而尽量缩小文件大小。我知道这样说其实还是不好理解，还是上图吧。为了方便画图，我就默默假装Redis直接将命令按输入的样子存储到AOF文件中，不要拆穿我🙈。<br>假设执行的写命令是下面的样子：<br><img src="/images/write.png" alt="执行的写操作"><br>那么看看在压缩前AOF文件的样子(就是存储了除get命令外的所有写命令)：<br><img src="/images/aof.png" alt="压缩前的AOF文件"><br>接着执行BGREWRITEAOF命令，Redis对AOF文件进行压缩：<br><img src="/images/yasuo.png" alt="压缩后的AOF文件"></p>
-<p>可以看到压缩前文件中存储了7条写命令，压缩后只存储一条。而且执行set number 1和6次incr number命令 ，与执行set number 7命令效果是一样的。从而即保证了数据的正确性又压缩了文件的大小。</p>
+<p>来看下AOF文件的格式，了解它的格式可以让我们很容易的解析它，指不定哪天能用到啊🌝。*号代表命令参数的个数(在上面的例子中参数为set、number、21,共3个)，$号代表第N个参数的长度，在上面的例子中，三个参数的长度分别为3，6，2。</p>
+<h4 id="压缩AOF文件"><a href="#压缩AOF文件" class="headerlink" title="压缩AOF文件"></a>压缩AOF文件</h4><p>Redis可以自动压缩(也可以叫重写)AOF文件，用户也可以通过<code>BGREWRITEAOF</code>命令来压缩AOF文件。这里的压缩，不是平时说的压缩的意思，是指创建一个新的文件来替换旧的文件，两个文件保存的数据状态完全一致。如果在本地手动执行<code>BGREWRITEAOF</code>命令，可以看到会生成一个temp-rewriteaof-*.aof的临时文件，在结束后替换appendonly.aof文件，从而减小appendonly.aof文件的大小。我知道这样说其实还是不好理解，还是上图吧。为了方便画图，我就默默假装Redis直接将命令按输入的样子存储到AOF文件中，不要拆穿我🙈。<br>假设执行的写命令是下面的样子：<br><img src="/images/write.png" alt="执行的写操作"><br>那么看看在压缩前AOF文件的样子(就是存储了除get命令外的所有写命令)：<br><img src="/images/aof.png" alt="压缩前的AOF文件"><br>接着执行BGREWRITEAOF命令，Redis会生成一个新的文件来替换旧的AOF文件，从而达到压缩的目的：<br><img src="/images/yasuo.png" alt="压缩后的AOF文件"></p>
+<p>可以看到压缩前文件中存储了7条写命令，压缩后只存储一条。而且执行set number 1和6次incr number命令 ，与执行set number 7命令效果是一样的。从而即保证了数据的正确性又压缩了文件的大小。<br>需要注意的是，Redis是启用子进程来进行AOF文件的压缩，在这期间主进程还是可以继续处理请求的，如果这时请求有写操作就可能导致当前数据库与压缩后的AOF不一致。Redis增加了一个缓存来解决这个问题，主进程在接收到新的写操作命令之后，会将命令写入现有的AOF文件和缓存中。在子进程完成新的AOF文件之后会将缓存的内容写入到新的AOF文件中，并改名覆盖旧的AOF文件。</p>
 <h3 id="快照持久化"><a href="#快照持久化" class="headerlink" title="快照持久化"></a>快照持久化</h3><h4 id="快照可用配置"><a href="#快照可用配置" class="headerlink" title="快照可用配置"></a>快照可用配置</h4><table>
 <thead>
 <tr>
@@ -353,6 +353,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+<h3 id="RDB文件结构"><a href="#RDB文件结构" class="headerlink" title="RDB文件结构"></a>RDB文件结构</h3><p>RDB文件是一个经过压缩的二进制文件，不同类型的键值对会采用不同的方式来保存它们。具体的结构我也还没理清楚。。可以参考这篇文章<a href="http://redisbook.com/preview/rdb/rdb_struct.html" target="_blank" rel="external">http://redisbook.com/preview/rdb/rdb_struct.html</a></p>
 <h4 id="快照优缺点"><a href="#快照优缺点" class="headerlink" title="快照优缺点"></a>快照优缺点</h4><p>优点：</p>
 <ul>
 <li>文件紧凑,适用于做不同版本的数据备份</li>
@@ -374,7 +375,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cinee531s000dv19lc6jr5ish" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cinen1hc2000g8a7bzhigsetj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
