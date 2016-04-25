@@ -68,7 +68,7 @@
     <link href="http://yemengying.com/2016/04/24/Redis-Persistence/"/>
     <id>http://yemengying.com/2016/04/24/Redis-Persistence/</id>
     <published>2016-04-24T07:09:18.000Z</published>
-    <updated>2016-04-24T14:00:02.000Z</updated>
+    <updated>2016-04-25T13:37:13.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看Redis吧，整理下Redis持久化的相关内容，加深下印象。不想看文字的可直接看下面的图😂。&lt;/p&gt;
@@ -129,7 +129,10 @@
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;*2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SET&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;来看下AOF文件的格式，了解它的格式可以让我们很容易的解析它，指不定哪天能用到啊🌝。*号代表命令参数的个数(在上面的例子中参数为set、number、21,共3个)，$号代表第N个参数的长度，在上面的例子中，三个参数的长度分别为3，6，2。&lt;/p&gt;
 &lt;h4 id=&quot;压缩AOF文件&quot;&gt;&lt;a href=&quot;#压缩AOF文件&quot; class=&quot;headerlink&quot; title=&quot;压缩AOF文件&quot;&gt;&lt;/a&gt;压缩AOF文件&lt;/h4&gt;&lt;p&gt;Redis可以自动压缩(也可以叫重写)AOF文件，用户也可以通过&lt;code&gt;BGREWRITEAOF&lt;/code&gt;命令来压缩AOF文件。这里的压缩，不是平时说的压缩的意思，是指创建一个新的文件来替换旧的文件，两个文件保存的数据状态完全一致。如果在本地手动执行&lt;code&gt;BGREWRITEAOF&lt;/code&gt;命令，可以看到会生成一个temp-rewriteaof-*.aof的临时文件，在结束后替换appendonly.aof文件，从而减小appendonly.aof文件的大小。我知道这样说其实还是不好理解，还是上图吧。为了方便画图，我就默默假装Redis直接将命令按输入的样子存储到AOF文件中，不要拆穿我🙈。&lt;br&gt;假设执行的写命令是下面的样子：&lt;br&gt;&lt;img src=&quot;/images/write.png&quot; alt=&quot;执行的写操作&quot;&gt;&lt;br&gt;那么看看在压缩前AOF文件的样子(就是存储了除get命令外的所有写命令)：&lt;br&gt;&lt;img src=&quot;/images/aof.png&quot; alt=&quot;压缩前的AOF文件&quot;&gt;&lt;br&gt;接着执行BGREWRITEAOF命令，Redis会生成一个新的文件来替换旧的AOF文件，从而达到压缩的目的：&lt;br&gt;&lt;img src=&quot;/images/yasuo.png&quot; alt=&quot;压缩后的AOF文件&quot;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到压缩前文件中存储了7条写命令，压缩后只存储一条。而且执行set number 1和6次incr number命令 ，与执行set number 7命令效果是一样的。从而即保证了数据的正确性又压缩了文件的大小。&lt;br&gt;需要注意的是，Redis是启用子进程来进行AOF文件的压缩，在这期间主进程还是可以继续处理请求的，如果这时请求有写操作就可能导致当前数据库与压缩后的AOF不一致。Redis增加了一个缓存来解决这个问题，主进程在接收到新的写操作命令之后，会将命令写入现有的AOF文件和缓存中。在子进程完成新的AOF文件之后会将缓存的内容写入到新的AOF文件中，并改名覆盖旧的AOF文件。&lt;/p&gt;
+&lt;p&gt;可以看到压缩前文件中存储了7条写命令，压缩后只存储一条。而且执行set number 1和6次incr number命令 ，与执行set number 7命令效果是一样的。从而即保证了数据的正确性又压缩了文件的大小。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;需要注意的是，Redis是启用子进程来进行AOF文件的压缩，在这期间主进程还是可以继续处理请求的，如果这时请求有写操作就可能导致当前数据库与压缩后的AOF不一致。Redis增加了一个缓存来解决这个问题，主进程在接收到新的写操作命令之后，会将命令写入现有的AOF文件和缓存中。在子进程完成新的AOF文件之后会将缓存的内容写入到新的AOF文件中，并改名覆盖旧的AOF文件。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&quot;快照持久化&quot;&gt;&lt;a href=&quot;#快照持久化&quot; class=&quot;headerlink&quot; title=&quot;快照持久化&quot;&gt;&lt;/a&gt;快照持久化&lt;/h3&gt;&lt;h4 id=&quot;快照可用配置&quot;&gt;&lt;a href=&quot;#快照可用配置&quot; class=&quot;headerlink&quot; title=&quot;快照可用配置&quot;&gt;&lt;/a&gt;快照可用配置&lt;/h4&gt;&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -165,7 +168,15 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&quot;RDB文件结构&quot;&gt;&lt;a href=&quot;#RDB文件结构&quot; class=&quot;headerlink&quot; title=&quot;RDB文件结构&quot;&gt;&lt;/a&gt;RDB文件结构&lt;/h3&gt;&lt;p&gt;RDB文件是一个经过压缩的二进制文件，不同类型的键值对会采用不同的方式来保存它们。具体的结构我也还没理清楚。。可以参考这篇文章&lt;a href=&quot;http://redisbook.com/preview/rdb/rdb_struct.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redisbook.com/preview/rdb/rdb_struct.html&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;RDB文件结构&quot;&gt;&lt;a href=&quot;#RDB文件结构&quot; class=&quot;headerlink&quot; title=&quot;RDB文件结构&quot;&gt;&lt;/a&gt;RDB文件结构&lt;/h4&gt;&lt;p&gt;RDB文件是一个经过压缩的二进制文件，不同类型的键值对会采用不同的方式来保存它们。具体的结构我也还没理清楚。。可以参考这篇文章&lt;a href=&quot;http://redisbook.com/preview/rdb/rdb_struct.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redisbook.com/preview/rdb/rdb_struct.html&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;创建快照&quot;&gt;&lt;a href=&quot;#创建快照&quot; class=&quot;headerlink&quot; title=&quot;创建快照&quot;&gt;&lt;/a&gt;创建快照&lt;/h4&gt;&lt;p&gt;创建快照的方式有以下几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;客户端发送&lt;code&gt;BGSAVE&lt;/code&gt;命令。与压缩AOF文件一样，Redis会fork出一个子进程，由子进程负责将快照写入硬盘。&lt;/li&gt;
+&lt;li&gt;客户端发送&lt;code&gt;SAVE&lt;/code&gt;命令。Redis会开始创建快照，并且在快照创建完成之前不再处理其他命令。不常使用&lt;code&gt;SAVE&lt;/code&gt;命令&lt;/li&gt;
+&lt;li&gt;在满足配置的save m n选项时。比如，配置了save 60 1000,会在满足60秒内有1000次写入的时候开始创建快照。&lt;/li&gt;
+&lt;li&gt;当接收到&lt;code&gt;SHUTDOWN&lt;/code&gt;请求时，Redis会执行&lt;code&gt;SAVE&lt;/code&gt;命令,并且不再执行任何其他命令。&lt;/li&gt;
+&lt;li&gt;当从服务器向主服务器发送SYNC命令时，如果主服务器不是刚刚执行过&lt;code&gt;BGSAVE&lt;/code&gt;命令,就会开始执行&lt;code&gt;BGSAVE&lt;/code&gt;来创建快照。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4 id=&quot;快照优缺点&quot;&gt;&lt;a href=&quot;#快照优缺点&quot; class=&quot;headerlink&quot; title=&quot;快照优缺点&quot;&gt;&lt;/a&gt;快照优缺点&lt;/h4&gt;&lt;p&gt;优点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;文件紧凑,适用于做不同版本的数据备份&lt;/li&gt;
@@ -277,9 +288,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
