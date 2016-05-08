@@ -198,13 +198,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2016-05-07T08:54:32.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/java/</loc>
         <lastmod>2016-05-08T14:09:37.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -214,6 +207,13 @@
     <url>
         <loc>http://yemengying.com/tags/hashMap/</loc>
         <lastmod>2016-05-08T14:09:37.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
+        <lastmod>2016-05-08T14:26:56.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
