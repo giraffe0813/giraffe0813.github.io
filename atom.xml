@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-05-08T14:09:37.000Z</updated>
+  <updated>2016-05-09T00:39:42.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/05/07/threadsafe-hashmap/"/>
     <id>http://yemengying.com/2016/05/07/threadsafe-hashmap/</id>
     <published>2016-05-07T09:21:06.000Z</published>
-    <updated>2016-05-08T14:09:37.000Z</updated>
+    <updated>2016-05-09T00:39:42.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。&lt;/p&gt;
@@ -53,7 +53,7 @@
 &lt;p&gt;依次来看看。&lt;/p&gt;
 &lt;h4 id=&quot;Hashtable&quot;&gt;&lt;a href=&quot;#Hashtable&quot; class=&quot;headerlink&quot; title=&quot;Hashtable&quot;&gt;&lt;/a&gt;Hashtable&lt;/h4&gt;&lt;p&gt;先稍微吐槽一下，为啥命名不是HashTable啊，看着好难受😖，不管了就装作它叫HashTable吧。这货已经不常用了，就简单说说吧。HashTable源码中是使用&lt;code&gt;synchronized&lt;/code&gt;来保证线程安全的，比如下面的get方法和put方法：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; V &lt;span class=&quot;title&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Object key)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       &lt;span class=&quot;comment&quot;&gt;// 省略实现&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; V &lt;span class=&quot;title&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(K key, V value)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// 省略实现&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;所以当一个线程访问HashTable的同步方法时，其他线程如果也要访问同步方法，会被阻塞住。举个例子，当一个线程使用put方法时，另一个线程不但不可以使用put方法，连get方法都不可以，好霸道啊！！！so~~，效率很低，现在基本不会选择它了。&lt;/p&gt;
-&lt;h3 id=&quot;ConcurrentMap&quot;&gt;&lt;a href=&quot;#ConcurrentMap&quot; class=&quot;headerlink&quot; title=&quot;ConcurrentMap&quot;&gt;&lt;/a&gt;ConcurrentMap&lt;/h3&gt;&lt;h3 id=&quot;Synchronized-Map&quot;&gt;&lt;a href=&quot;#Synchronized-Map&quot; class=&quot;headerlink&quot; title=&quot;Synchronized Map&quot;&gt;&lt;/a&gt;Synchronized Map&lt;/h3&gt;&lt;blockquote&gt;
+&lt;h4 id=&quot;ConcurrentMap&quot;&gt;&lt;a href=&quot;#ConcurrentMap&quot; class=&quot;headerlink&quot; title=&quot;ConcurrentMap&quot;&gt;&lt;/a&gt;ConcurrentMap&lt;/h4&gt;&lt;h4 id=&quot;Synchronized-Map&quot;&gt;&lt;a href=&quot;#Synchronized-Map&quot; class=&quot;headerlink&quot; title=&quot;Synchronized Map&quot;&gt;&lt;/a&gt;Synchronized Map&lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;欢迎指正错误，欢迎一起讨论。另外，针对提离职当天发生的一个小插曲真是给我上了一课，只想引用欢乐颂里安迪的一句话:常与同好争高下,不与傻瓜论短长。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;未完待续。。。。&lt;/p&gt;
@@ -351,9 +351,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
