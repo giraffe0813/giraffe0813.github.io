@@ -8,17 +8,17 @@
     <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
     <title>如何线程安全的使用HashMap | Giraffe&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。">
+    <meta name="description" content="这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair!!!。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何线程安全的使用HashMap">
 <meta property="og:url" content="http://yemengying.com/2016/05/07/threadsafe-hashmap/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
-<meta property="og:description" content="这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。">
+<meta property="og:description" content="这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair!!!。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。">
 <meta property="og:image" content="http://yemengying.com/images/fighting.jpg">
-<meta property="og:updated_time" content="2016-05-09T13:03:56.000Z">
+<meta property="og:updated_time" content="2016-05-09T13:12:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何线程安全的使用HashMap">
-<meta name="twitter:description" content="这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。">
+<meta name="twitter:description" content="这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair!!!。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。">
 <meta name="twitter:image" content="http://yemengying.com/images/fighting.jpg">
     
 
@@ -259,7 +259,7 @@ var _hmt = _hmt || [];
                 </div>
             
             <blockquote>
-<p>这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。</p>
+<p>这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一个面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair!!!。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。</p>
 </blockquote>
 <a id="more"></a>
 <p><img src="/images/fighting.jpg" alt="fighting！！！">    </p>
@@ -312,7 +312,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/07/threadsafe-hashmap/" data-id="cio00w4fq000wzr7b3jmsu21q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/07/threadsafe-hashmap/" data-id="cio012xnw00100p7b2bn8m24k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
