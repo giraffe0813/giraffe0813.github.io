@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看R">
 <meta property="og:image" content="http://yemengying.com/images/redis.png">
-<meta property="og:updated_time" content="2016-04-25T13:37:13.000Z">
+<meta property="og:updated_time" content="2016-05-09T12:49:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis相关---Redis持久化(AOF&Snapshot)">
 <meta name="twitter:description" content="恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看R">
@@ -261,8 +261,8 @@ var _hmt = _hmt || [];
             <blockquote>
 <p>恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看Redis吧，整理下Redis持久化的相关内容，加深下印象。不想看文字的可直接看下面的图😂。</p>
 </blockquote>
-<p><img src="/images/persistent.png" alt="概要"></p>
 <a id="more"></a>
+<p><img src="/images/persistent.png" alt="概要"></p>
 <h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3><p>AOF(append-only file只追加文件)持久化会将执行的写命令追加到AOF文件的末尾。在恢复数据时，只要从头到尾的执行AOF文件中包含的所有写命令即可</p>
 <h4 id="AOF可用配置"><a href="#AOF可用配置" class="headerlink" title="AOF可用配置"></a>AOF可用配置</h4><table>
 <thead>
@@ -386,7 +386,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cinza73o7000boc7bv452jjj7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cio00h6gu000exg7bol0ea0mk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

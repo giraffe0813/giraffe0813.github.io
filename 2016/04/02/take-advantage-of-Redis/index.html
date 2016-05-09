@@ -19,7 +19,7 @@
 
 原文地址：http://oldblog.antirez.com/post/take-advantage-o">
 <meta property="og:image" content="http://yemengying.com/images/redis.png">
-<meta property="og:updated_time" content="2016-04-24T05:03:35.000Z">
+<meta property="og:updated_time" content="2016-05-09T12:45:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis相关---【译】利用Redis起飞吧">
 <meta name="twitter:description" content="一直以来对Redis的使用都很是简单粗暴，不得精髓，趁假期好好补补。翻译一篇Redis之父Antirez的博客，文章中讲述了几个利用Redis解决实际问题的例子。并非逐字逐句的翻译，有些不太懂的地方就任性的跳过了😋，翻译这篇博客只做加深印象之用，建议大家还是出门左转看原文吧。。。。。。
@@ -275,9 +275,9 @@ var _hmt = _hmt || [];
 <ul>
 <li>每当创建一条新的评论，将评论的Id插入到Redis的一个列表中:<strong>LPUSH latest.comments <id></id></strong></li>
 <li>Redis支持将列表修剪到指定长度。所以我们可以通过<strong>LTRIM latest.comments 0 5000.</strong>操作维持列表中始终存储5000个最新的评论Id.</li>
-<li>每次想要获取指定范围内的评论时，可以使用下面的函数（伪代码）.</li>
+<li>每次想要获取指定范围内的评论时，可以使用下面的函数（伪代码）.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FUNCTION get_latest_comments(start,num_items):</span><br><span class="line">    id_list = redis.lrange(<span class="string">"latest.comments"</span>,start,start+num_items<span class="number">-1</span>)</span><br><span class="line">    IF id_list.length &lt; num_items</span><br><span class="line">        id_list = SQL_DB(<span class="string">"SELECT ... ORDER BY time LIMIT ..."</span>)</span><br><span class="line">    END</span><br><span class="line">    RETURN id_list</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FUNCTION get_latest_comments(start,num_items):</span><br><span class="line">    id_list = redis.lrange(<span class="string">"latest.comments"</span>,start,start+num_items<span class="number">-1</span>)</span><br><span class="line">    IF id_list.length &lt; num_items</span><br><span class="line">        id_list = SQL_DB(<span class="string">"SELECT ... ORDER BY time LIMIT ..."</span>)</span><br><span class="line">    END</span><br><span class="line">    RETURN id_list</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
 <p>这段代码的功能很简单。在Redis中维护一个<code>“动态缓存”</code>，经常更新,存储最新评论的Id,缓存中限制最多只存5000个Id。在系统第一次启动时,缓存列表中的Id个数为0。所以我们上面实现的方法会在先访问Redis，如果参数(start/count)的超过了列表范围，再去访问数据库。<br>我们无需刷新缓存，并且只会在用户想要查看最新5000条评论之外的评论时才会访问数据库。也就是说展示最新评论的主页，和查看历史评论前几页都无需访问数据库。</p>
 <h3 id="删除和过滤"><a href="#删除和过滤" class="headerlink" title="删除和过滤"></a>删除和过滤</h3><p>在遇到评论被删除时，我们可以使用<code>LREM</code>命令来删除Redis列表中缓存的评论Id。如果删除评论的情况不常见，也可以在展示指定评论时跳过它，因为我们在根据评论Id去数据库查询评论具体内容时，数据库会告诉我们某条评论已经不存在了。</p>
 <h3 id="选手积分榜及相关问题"><a href="#选手积分榜及相关问题" class="headerlink" title="选手积分榜及相关问题"></a>选手积分榜及相关问题</h3><p>另一个比较常见的，用数据库实现性能较差的需求是按分数排序，展现列表，并且实时更新，一个常见的例子就是在线游戏中的选手积分榜。在在线游戏中，需要接受高频率的来自不同用户的分数更新，通过这些分数实现以下需求：</p>
@@ -285,27 +285,19 @@ var _hmt = _hmt || [];
 <li>在积分榜中展现分数最高的100位选手</li>
 <li>展现用户的当前排名</li>
 </ul>
-<p>这些操作用Redis的<code>有序集合</code>来实现是很简单的，哪怕你的系统每分钟要更新上百万的分数。<br>每当接受到一个用户的新分数时，我们对Redis做如下的操作：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZADD leaderboard &lt;score&gt; &lt;username&gt;</span><br></pre></td></tr></table></figure>
-<p>ps:也可以使用userId，而不是用户名, 看开发者的个人喜好。<br>接下来，我们可以很简单的通过下面的操作获得分数排名前100的用户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREVRANGE leaderboard 0 99</span><br></pre></td></tr></table></figure>
-<p>也可以通过</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZRANK leaderboard &lt;username&gt;</span><br></pre></td></tr></table></figure>
+<p>这些操作用Redis的<code>有序集合</code>来实现是很简单的，哪怕你的系统每分钟要更新上百万的分数。<br>每当接受到一个用户的新分数时，我们对Redis做如下的操作：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZADD leaderboard &lt;score&gt; &lt;username&gt;</span><br></pre></td></tr></table></figure></p>
+<p>ps:也可以使用userId，而不是用户名, 看开发者的个人喜好。<br>接下来，我们可以很简单的通过下面的操作获得分数排名前100的用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREVRANGE leaderboard 0 99</span><br></pre></td></tr></table></figure></p>
+<p>也可以通过<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZRANK leaderboard &lt;username&gt;</span><br></pre></td></tr></table></figure></p>
 <p>来获取用户的当前排名。<br>除此之外，我们还可以获得排名靠近当前用户的用户，以及等等等等。。。。。</p>
 <h3 id="按照用户投票和时间排序"><a href="#按照用户投票和时间排序" class="headerlink" title="按照用户投票和时间排序"></a>按照用户投票和时间排序</h3><p>下面谈谈选手积分榜问题的一个变种问题。在诸如Reddit和Hacker News这类的网站中，新闻是按照类似下面公式计算得出的分数来排序的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = points / time^alpha</span><br></pre></td></tr></table></figure></p>
 <p>也就是说用户的投票会在一定很小程度上提升新闻的排名，而时间流逝则会使新闻的排名呈指数级下降。实际的算法会比我们的例子更复杂，但解决的方式是一样的。<br>首先假设只有最新发布的1000条新闻才有资格出现在首页上，所以我们只关注最新发布的1000条新闻，忽略太老的新闻，大致解决方法如下：</p>
 <ul>
 <li>每当新发布一条新闻，将其Id加入到Redis的列表中，通过<strong>LPUSH+LTRIM</strong>将列表维持到只保存最新发布的1000条新闻的Id。</li>
-<li>通过一个定时任务获取Redis中Id列表，并且不断的计算列表中新闻的分数。将计算结果通过ZADD操作存储到一个有序集合中，同时将旧的新闻从有序列表中清除。</li>
-</ul>
-<p>主要思想就是，有序集合中存储着1000条最新新闻，并按分数排序。分数的排序是通过后台程序完成的，与浏览网站的用户数无关。</p>
-<h3 id="将元素过期"><a href="#将元素过期" class="headerlink" title="将元素过期"></a>将元素过期</h3><p>我们还可以利用有序集合实现将超过指定时间的元素在数据库中删除或置为过期。具体做法如下：</p>
-<ul>
+<li>通过一个定时任务获取Redis中Id列表，并且不断的计算列表中新闻的分数。将计算结果通过ZADD操作存储到一个有序集合中，同时将旧的新闻从有序列表中清除。<br>主要思想就是，有序集合中存储着1000条最新新闻，并按分数排序。分数的排序是通过后台程序完成的，与浏览网站的用户数无关。<h3 id="将元素过期"><a href="#将元素过期" class="headerlink" title="将元素过期"></a>将元素过期</h3>我们还可以利用有序集合实现将超过指定时间的元素在数据库中删除或置为过期。具体做法如下：</li>
 <li>每当数据库中新加入一个元素时，同时将其添加到有序集合中，分数是当前时间加上指定的存活时间</li>
-<li>让一个后台任务查询有序集合，利用<strong>ZRANGE …WITHSCORES</strong>获取元素，如果元素对应的分数小于当前时间，说明元素已过期，在数据库中删除对应记录。</li>
+<li>让一个后台任务查询有序集合，利用<strong>ZRANGE …WITHSCORES</strong>获取元素，如果元素对应的分数小于当前时间，说明元素已过期，在数据库中删除对应记录。<h3 id="计数器"><a href="#计数器" class="headerlink" title="计数器"></a>计数器</h3>Redis可以用来实现计数器,使用INCRBY操作即可。<br>相信很多人都曾想过在数据库中添加一张计数器表，用来为用户展现一些统计信息，但又考虑到需要对这张表进行大量的写操作而放弃，本宝宝曾经无数次遇到过这个问题。<br>现在，我们可以通过Redis来解决这个问题。通过Redis我们可以为计数器原子性的增加计数,也可以使用<code>GETSET</code>命令重置计数器或者为计数器设置过期时间。比如我们可以按照如下做法实现计数一个用户指定时间内的页面访问量，如果超过了指定值，比如20，就弹出一个提示。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INCR user:&lt;id&gt;</span><br><span class="line">EXPIRE user:&lt;id&gt; 60</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h3 id="计数器"><a href="#计数器" class="headerlink" title="计数器"></a>计数器</h3><p>Redis可以用来实现计数器,使用INCRBY操作即可。<br>相信很多人都曾想过在数据库中添加一张计数器表，用来为用户展现一些统计信息，但又考虑到需要对这张表进行大量的写操作而放弃，本宝宝曾经无数次遇到过这个问题。<br>现在，我们可以通过Redis来解决这个问题。通过Redis我们可以为计数器原子性的增加计数,也可以使用<code>GETSET</code>命令重置计数器或者为计数器设置过期时间。比如我们可以按照如下做法实现计数一个用户指定时间内的页面访问量，如果超过了指定值，比如20，就弹出一个提示。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INCR user:&lt;id&gt;</span><br><span class="line">EXPIRE user:&lt;id&gt; 60</span><br></pre></td></tr></table></figure>
 <h3 id="统计指定时间内不同的用户"><a href="#统计指定时间内不同的用户" class="headerlink" title="统计指定时间内不同的用户"></a>统计指定时间内不同的用户</h3><p>另一个用数据库实现比较困难，但是用Redis却很简单的功能就是统计指定时间内访问某资源的用户数。比如我想知道访问指定页面的用户数(相同用户访问多次只计算一次)，我只需要在新增一个页面浏览(PV)时,执行下面的操作：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SADD page:day1:&lt;page_id&gt;  &lt;user_id&gt;</span><br></pre></td></tr></table></figure></p>
 <p>想获得某页面的用户访问数，只需执行<strong>SCARD page:day1:<page_id></page_id></strong>即可。</p>
 <h3 id="实时分析"><a href="#实时分析" class="headerlink" title="实时分析"></a>实时分析</h3><p>我们已经看过了几个利用Redis如何实现一些利用数据库不好实现的功能，如果深入学习Redis的命令集，活用Redis中的数据结构，我们可以很容易的实现实时统计的功能，用来增强反垃圾邮件系统，或者通过分析得到的一些数据来提高网站的质量。</p>
@@ -335,7 +327,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/02/take-advantage-of-Redis/" data-id="cinza73pb000qoc7b3tozdtjb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/02/take-advantage-of-Redis/" data-id="cio00h6h9000rxg7byupbamdw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
