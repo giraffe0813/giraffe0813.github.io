@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/05/07/threadsafe-hashmap/</loc>
+        <lastmod>2016-05-09T13:03:56.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/03/21/elasticsearch-settings2/</loc>
         <lastmod>2016-05-09T12:54:33.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -33,14 +41,6 @@
     <url>
         <loc>http://yemengying.com/2016/04/24/good-website/</loc>
         <lastmod>2016-05-09T12:49:09.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/05/07/threadsafe-hashmap/</loc>
-        <lastmod>2016-05-09T12:48:41.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
