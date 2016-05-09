@@ -139,7 +139,7 @@ code {
   background-color: #f8f8f8;
 }
 .outer {
-  max-width: 1020px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -186,8 +186,8 @@ code {
   #main {
     display: inline;
     float: left;
-    width: 68%;
-    margin: 0 1%;
+    width: 73.33333333333333%;
+    margin: 0 0.833333333333333%;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
@@ -632,8 +632,8 @@ code {
 #profile {
   display: inline;
   float: left;
-  width: 28.000000000000004%;
-  margin: 0 1%;
+  width: 23.333333333333332%;
+  margin: 0 0.833333333333333%;
   display: none;
 }
 @media screen and (min-width: 1200px) {
@@ -804,7 +804,7 @@ code {
   height: auto;
 }
 .article-header {
-  padding: 20px 20px 0;
+  padding: 10px 10px 0;
 }
 .article-header .article-title {
   display: block;
@@ -864,7 +864,7 @@ a.article-title:hover {
 }
 .article-entry {
   color: #565a5f;
-  padding: 0 20px;
+  padding: 0 10px;
   line-height: 1.6em;
 }
 .article-entry:before,
@@ -1010,7 +1010,7 @@ a.article-title:hover {
   line-height: 1.6em;
   border-top: 1px solid #eceff2;
   padding-top: 1.6em;
-  margin: 0 20px 20px;
+  margin: 0 10px 10px;
 }
 .article-footer:before,
 .article-footer:after {
@@ -1310,7 +1310,7 @@ ol.toc {
   transition: color 0.3s ease-out;
 }
 #comments {
-  padding: 20px;
+  padding: 10px;
   margin: 40px 0;
 }
 #comments a {
@@ -1655,16 +1655,16 @@ ol.toc {
   #sidebar {
     display: inline;
     float: left;
-    width: 28.000000000000004%;
-    margin: 0 1%;
+    width: 15%;
+    margin: 0 0.833333333333333%;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
   #sidebar {
     display: inline;
     float: left;
-    width: 38%;
-    margin: 0 1%;
+    width: 31.666666666666664%;
+    margin: 0 0.833333333333333%;
   }
 }
 .widget {
