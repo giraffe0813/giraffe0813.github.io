@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-05-14T06:20:57.000Z</updated>
+  <updated>2016-05-14T06:24:50.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/05/13/jvm-GC/"/>
     <id>http://yemengying.com/2016/05/13/jvm-GC/</id>
     <published>2016-05-13T15:28:15.000Z</published>
-    <updated>2016-05-14T06:20:57.000Z</updated>
+    <updated>2016-05-14T06:24:50.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;感觉人生就是while(true){一个选择接着一个选择接着一个选择;},好怕自己一不小心就做了错误的决定啊😭。堵上全部人品,希望新公司技术氛围浓厚,有大牛带我,切拜🙊🙏。&lt;/p&gt;
@@ -46,8 +46,9 @@
 &lt;h3 id=&quot;GC算法&quot;&gt;&lt;a href=&quot;#GC算法&quot; class=&quot;headerlink&quot; title=&quot;GC算法&quot;&gt;&lt;/a&gt;GC算法&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;标记清除算法&lt;br&gt;分为标记和清除两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。该算法的缺点是效率不高并且会产生不连续的内存碎片。&lt;br&gt;&lt;img src=&quot;/images/sweep.jpg&quot; alt=&quot;image&quot;&gt;&lt;/li&gt;
 &lt;li&gt;复制算法&lt;br&gt;把内存空间划为两个区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不会出现“碎片”问题。优点：实现简单，运行高效。缺点：会浪费一定的内存。一般新生代采用这种算法。&lt;br&gt;&lt;img src=&quot;/images/copy.jpg&quot; alt=&quot;image&quot;&gt;&lt;/li&gt;
-&lt;li&gt;标记整理算法&lt;br&gt;标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。&lt;br&gt;&lt;img src=&quot;/images/compact.jpg&quot; alt=&quot;image&quot;&gt;&lt;h3 id=&quot;Java中垃圾回收器的类型&quot;&gt;&lt;a href=&quot;#Java中垃圾回收器的类型&quot; class=&quot;headerlink&quot; title=&quot;Java中垃圾回收器的类型&quot;&gt;&lt;/a&gt;Java中垃圾回收器的类型&lt;/h3&gt;Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。&lt;/li&gt;
+&lt;li&gt;标记整理算法&lt;br&gt;标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。&lt;br&gt;&lt;img src=&quot;/images/compact.jpg&quot; alt=&quot;image&quot;&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h3 id=&quot;Java中垃圾回收器的类型&quot;&gt;&lt;a href=&quot;#Java中垃圾回收器的类型&quot; class=&quot;headerlink&quot; title=&quot;Java中垃圾回收器的类型&quot;&gt;&lt;/a&gt;Java中垃圾回收器的类型&lt;/h3&gt;&lt;p&gt;Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Serial收集器：新生代收集器，使用复制算法，使用一个线程进行GC，串行，其它工作线程暂停。&lt;/li&gt;
 &lt;li&gt;ParNew收集器：新生代收集器，使用复制算法，Serial收集器的多线程版，用多个线程进行GC，并行，其它工作线程暂停。使用-XX:+UseParNewGC开关来控制使用ParNew+Serial Old收集器组合收集内存；使用-XX:ParallelGCThreads来设置执行内存回收的线程数。&lt;/li&gt;
@@ -74,7 +75,7 @@
 &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/zhguang/p/3257367.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/zhguang/p/3257367.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.amazon.cn/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA-JVM%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E5%91%A8%E5%BF%97%E6%98%8E/dp/B00D2ID4PK/ref=sr_1_1?ie=UTF8&amp;amp;qid=1463192894&amp;amp;sr=8-1&amp;amp;keywords=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《深入理解java虚拟机》&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;——————————————–其实我只是一条分割线——————————————————&lt;/p&gt;
+&lt;p&gt;————————————————其实我只是一条分割线———————————————————&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;关于永久代到底有没有GC还是很懵逼，很多地方看到的说法都不一致。欢迎指正错误，欢迎一起讨论~~&lt;/p&gt;
 &lt;/blockquote&gt;

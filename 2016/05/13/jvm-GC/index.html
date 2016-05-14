@@ -19,7 +19,7 @@
 
 不扯有的没的了，翻译一篇关于垃圾回收(以下简称GC)机制的博客(原文地址)。博客内容包括：Java中GC是如何工作的，常见的GC算法(比如:标记清除)，Java中不同的垃圾收集器(比如:serial)。">
 <meta property="og:image" content="http://yemengying.com/images/GC-Object.png">
-<meta property="og:updated_time" content="2016-05-14T06:20:57.000Z">
+<meta property="og:updated_time" content="2016-05-14T06:24:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】Java中的垃圾回收机制">
 <meta name="twitter:description" content="感觉人生就是while(true){一个选择接着一个选择接着一个选择;},好怕自己一不小心就做了错误的决定啊😭。堵上全部人品,希望新公司技术氛围浓厚,有大牛带我,切拜🙊🙏。
@@ -288,8 +288,9 @@ var _hmt = _hmt || [];
 <h3 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h3><ol>
 <li>标记清除算法<br>分为标记和清除两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。该算法的缺点是效率不高并且会产生不连续的内存碎片。<br><img src="/images/sweep.jpg" alt="image"></li>
 <li>复制算法<br>把内存空间划为两个区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不会出现“碎片”问题。优点：实现简单，运行高效。缺点：会浪费一定的内存。一般新生代采用这种算法。<br><img src="/images/copy.jpg" alt="image"></li>
-<li>标记整理算法<br>标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。<br><img src="/images/compact.jpg" alt="image"><h3 id="Java中垃圾回收器的类型"><a href="#Java中垃圾回收器的类型" class="headerlink" title="Java中垃圾回收器的类型"></a>Java中垃圾回收器的类型</h3>Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。</li>
+<li>标记整理算法<br>标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。<br><img src="/images/compact.jpg" alt="image"></li>
 </ol>
+<h3 id="Java中垃圾回收器的类型"><a href="#Java中垃圾回收器的类型" class="headerlink" title="Java中垃圾回收器的类型"></a>Java中垃圾回收器的类型</h3><p>Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。</p>
 <ul>
 <li>Serial收集器：新生代收集器，使用复制算法，使用一个线程进行GC，串行，其它工作线程暂停。</li>
 <li>ParNew收集器：新生代收集器，使用复制算法，Serial收集器的多线程版，用多个线程进行GC，并行，其它工作线程暂停。使用-XX:+UseParNewGC开关来控制使用ParNew+Serial Old收集器组合收集内存；使用-XX:ParallelGCThreads来设置执行内存回收的线程数。</li>
@@ -316,7 +317,7 @@ var _hmt = _hmt || [];
 <li><a href="http://www.cnblogs.com/zhguang/p/3257367.html" target="_blank" rel="external">http://www.cnblogs.com/zhguang/p/3257367.html</a></li>
 <li><a href="https://www.amazon.cn/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA-JVM%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E5%91%A8%E5%BF%97%E6%98%8E/dp/B00D2ID4PK/ref=sr_1_1?ie=UTF8&amp;qid=1463192894&amp;sr=8-1&amp;keywords=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA" target="_blank" rel="external">《深入理解java虚拟机》</a></li>
 </ul>
-<p>——————————————–其实我只是一条分割线——————————————————</p>
+<p>————————————————其实我只是一条分割线———————————————————</p>
 <blockquote>
 <p>关于永久代到底有没有GC还是很懵逼，很多地方看到的说法都不一致。欢迎指正错误，欢迎一起讨论~~</p>
 </blockquote>
@@ -331,7 +332,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cio6rle0h000n109lk4omqmng" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cio6rq5nh000p1y9lne938e94" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
