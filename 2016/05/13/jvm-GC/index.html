@@ -19,7 +19,7 @@
 
 不扯有的没的了，翻译一篇关于垃圾回收(以下简称GC)机制的博客(原文地址)。博客内容包括：Java中GC是如何工作的，常见的GC算法(比如:标记清除)，Java中不同的垃圾收集器(比如:serial)。">
 <meta property="og:image" content="http://yemengying.com/images/GC-Object.png">
-<meta property="og:updated_time" content="2016-05-14T02:52:59.000Z">
+<meta property="og:updated_time" content="2016-05-14T06:20:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】Java中的垃圾回收机制">
 <meta name="twitter:description" content="感觉人生就是while(true){一个选择接着一个选择接着一个选择;},好怕自己一不小心就做了错误的决定啊😭。堵上全部人品,希望新公司技术氛围浓厚,有大牛带我,切拜🙊🙏。
@@ -261,7 +261,7 @@ var _hmt = _hmt || [];
             
                 <div id="toc" class="toc-article">
                 <strong class="toc-title">文章目录</strong>
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#关键字约定"><span class="toc-number">1.</span> <span class="toc-text">关键字约定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要的东东"><span class="toc-number">2.</span> <span class="toc-text">重要的东东</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC针对什么对象？"><span class="toc-number">3.</span> <span class="toc-text">GC针对什么对象？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#堆内存是如何划分的？"><span class="toc-number">4.</span> <span class="toc-text">堆内存是如何划分的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java中垃圾回收器的类型"><span class="toc-number">5.</span> <span class="toc-text">Java中垃圾回收器的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#与GC有关的JVM参数"><span class="toc-number">6.</span> <span class="toc-text">与GC有关的JVM参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-GC和并发垃圾回收"><span class="toc-number">7.</span> <span class="toc-text">Full GC和并发垃圾回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档-康桑阿米达"><span class="toc-number">9.</span> <span class="toc-text">参考文档(康桑阿米达~)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#关键字约定"><span class="toc-number">1.</span> <span class="toc-text">关键字约定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要的东东"><span class="toc-number">2.</span> <span class="toc-text">重要的东东</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC针对什么对象？"><span class="toc-number">3.</span> <span class="toc-text">GC针对什么对象？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#堆内存是如何划分的？"><span class="toc-number">4.</span> <span class="toc-text">堆内存是如何划分的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC算法"><span class="toc-number">5.</span> <span class="toc-text">GC算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java中垃圾回收器的类型"><span class="toc-number">6.</span> <span class="toc-text">Java中垃圾回收器的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#与GC有关的JVM参数"><span class="toc-number">7.</span> <span class="toc-text">与GC有关的JVM参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-GC和并发垃圾回收"><span class="toc-number">8.</span> <span class="toc-text">Full GC和并发垃圾回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档-康桑阿米达"><span class="toc-number">10.</span> <span class="toc-text">参考文档(康桑阿米达~)</span></a></li></ol>
                 </div>
             
             <blockquote>
@@ -285,7 +285,11 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="GC针对什么对象？"><a href="#GC针对什么对象？" class="headerlink" title="GC针对什么对象？"></a>GC针对什么对象？</h3><p>了解GC机制的第一步就是理解什么样的对象会被回收。当一个对象通过一系列根对象(比如：静态属性引用的常量)都不可达时就会被回收。简而言之，当一个对象的所有引用都为null。循环依赖不算做引用，如果对象A有一个指向对象B的引用，对象B也有一个指向对象A的引用，除此之外，它们没有其他引用，那么对象A和对象B都、需要被回收(如下图,ObjA和ObjB需要被回收)。<br><img src="/images/GC-Object.png" alt="GC回收对象"></p>
 <h3 id="堆内存是如何划分的？"><a href="#堆内存是如何划分的？" class="headerlink" title="堆内存是如何划分的？"></a>堆内存是如何划分的？</h3><p>Java中对象都在堆上创建。为了GC，堆内存分为三个部分，也可以说三代，分别称为新生代，老年代和永久代。其中新生代又进一步分为Eden区，Survivor 1区和Survivor 2区(如下图)。新创建的对象会分配在Eden区,在经历一次Minor GC后会被移到Survivor 1区，再经历一次Minor GC后会被移到Survivor 2区，直到升至老年代,需要注意的是，一些大对象(长字符串或数组)可能会直接存放到老年代。<br><img src="/images/堆内存.png" alt="堆内存"><br>永久代有一些特殊，它用来存储类的元信息。对于GC是否发生在永久代有许多不同的看法，在我看来这取决于采用的JVM。大家可以通过创建大量的字符串来观察是发生了GC还是抛出了OutOfMemoryError。</p>
-<h3 id="Java中垃圾回收器的类型"><a href="#Java中垃圾回收器的类型" class="headerlink" title="Java中垃圾回收器的类型"></a>Java中垃圾回收器的类型</h3><p>Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。</p>
+<h3 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h3><ol>
+<li>标记清除算法<br>分为标记和清除两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。该算法的缺点是效率不高并且会产生不连续的内存碎片。<br><img src="/images/sweep.jpg" alt="image"></li>
+<li>复制算法<br>把内存空间划为两个区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不会出现“碎片”问题。优点：实现简单，运行高效。缺点：会浪费一定的内存。一般新生代采用这种算法。<br><img src="/images/copy.jpg" alt="image"></li>
+<li>标记整理算法<br>标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。<br><img src="/images/compact.jpg" alt="image"><h3 id="Java中垃圾回收器的类型"><a href="#Java中垃圾回收器的类型" class="headerlink" title="Java中垃圾回收器的类型"></a>Java中垃圾回收器的类型</h3>Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。</li>
+</ol>
 <ul>
 <li>Serial收集器：新生代收集器，使用复制算法，使用一个线程进行GC，串行，其它工作线程暂停。</li>
 <li>ParNew收集器：新生代收集器，使用复制算法，Serial收集器的多线程版，用多个线程进行GC，并行，其它工作线程暂停。使用-XX:+UseParNewGC开关来控制使用ParNew+Serial Old收集器组合收集内存；使用-XX:ParallelGCThreads来设置执行内存回收的线程数。</li>
@@ -327,7 +331,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cio6k5wso000rpu7b0491yjgw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cio6rle0h000n109lk4omqmng" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
