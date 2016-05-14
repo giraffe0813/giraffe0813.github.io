@@ -7,8 +7,16 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/04/02/take-advantage-of-Redis/</loc>
+        <lastmod>2016-05-14T09:30:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/05/13/jvm-GC/</loc>
-        <lastmod>2016-05-14T06:28:00.000Z</lastmod>
+        <lastmod>2016-05-14T08:07:49.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -57,14 +65,6 @@
     <url>
         <loc>http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/</loc>
         <lastmod>2016-05-09T12:47:45.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/04/02/take-advantage-of-Redis/</loc>
-        <lastmod>2016-05-09T12:45:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

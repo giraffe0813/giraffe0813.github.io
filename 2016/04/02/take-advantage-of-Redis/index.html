@@ -19,7 +19,7 @@
 
 原文地址：http://oldblog.antirez.com/post/take-advantage-o">
 <meta property="og:image" content="http://yemengying.com/images/redis.png">
-<meta property="og:updated_time" content="2016-05-09T12:45:00.000Z">
+<meta property="og:updated_time" content="2016-05-14T09:30:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis相关---【译】利用Redis起飞吧">
 <meta name="twitter:description" content="一直以来对Redis的使用都很是简单粗暴，不得精髓，趁假期好好补补。翻译一篇Redis之父Antirez的博客，文章中讲述了几个利用Redis解决实际问题的例子。并非逐字逐句的翻译，有些不太懂的地方就任性的跳过了😋，翻译这篇博客只做加深印象之用，建议大家还是出门左转看原文吧。。。。。。
@@ -293,11 +293,14 @@ var _hmt = _hmt || [];
 <p>也就是说用户的投票会在一定很小程度上提升新闻的排名，而时间流逝则会使新闻的排名呈指数级下降。实际的算法会比我们的例子更复杂，但解决的方式是一样的。<br>首先假设只有最新发布的1000条新闻才有资格出现在首页上，所以我们只关注最新发布的1000条新闻，忽略太老的新闻，大致解决方法如下：</p>
 <ul>
 <li>每当新发布一条新闻，将其Id加入到Redis的列表中，通过<strong>LPUSH+LTRIM</strong>将列表维持到只保存最新发布的1000条新闻的Id。</li>
-<li>通过一个定时任务获取Redis中Id列表，并且不断的计算列表中新闻的分数。将计算结果通过ZADD操作存储到一个有序集合中，同时将旧的新闻从有序列表中清除。<br>主要思想就是，有序集合中存储着1000条最新新闻，并按分数排序。分数的排序是通过后台程序完成的，与浏览网站的用户数无关。<h3 id="将元素过期"><a href="#将元素过期" class="headerlink" title="将元素过期"></a>将元素过期</h3>我们还可以利用有序集合实现将超过指定时间的元素在数据库中删除或置为过期。具体做法如下：</li>
-<li>每当数据库中新加入一个元素时，同时将其添加到有序集合中，分数是当前时间加上指定的存活时间</li>
-<li>让一个后台任务查询有序集合，利用<strong>ZRANGE …WITHSCORES</strong>获取元素，如果元素对应的分数小于当前时间，说明元素已过期，在数据库中删除对应记录。<h3 id="计数器"><a href="#计数器" class="headerlink" title="计数器"></a>计数器</h3>Redis可以用来实现计数器,使用INCRBY操作即可。<br>相信很多人都曾想过在数据库中添加一张计数器表，用来为用户展现一些统计信息，但又考虑到需要对这张表进行大量的写操作而放弃，本宝宝曾经无数次遇到过这个问题。<br>现在，我们可以通过Redis来解决这个问题。通过Redis我们可以为计数器原子性的增加计数,也可以使用<code>GETSET</code>命令重置计数器或者为计数器设置过期时间。比如我们可以按照如下做法实现计数一个用户指定时间内的页面访问量，如果超过了指定值，比如20，就弹出一个提示。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INCR user:&lt;id&gt;</span><br><span class="line">EXPIRE user:&lt;id&gt; 60</span><br></pre></td></tr></table></figure>
-</li>
+<li>通过一个定时任务获取Redis中Id列表，并且不断的计算列表中新闻的分数。将计算结果通过ZADD操作存储到一个有序集合中，同时将旧的新闻从有序列表中清除。<br>主要思想就是，有序集合中存储着1000条最新新闻，并按分数排序。分数的排序是通过后台程序完成的，与浏览网站的用户数无关。</li>
 </ul>
+<h3 id="将元素过期"><a href="#将元素过期" class="headerlink" title="将元素过期"></a>将元素过期</h3><p>我们还可以利用有序集合实现将超过指定时间的元素在数据库中删除或置为过期。具体做法如下：</p>
+<ul>
+<li>每当数据库中新加入一个元素时，同时将其添加到有序集合中，分数是当前时间加上指定的存活时间</li>
+<li>让一个后台任务查询有序集合，利用<strong>ZRANGE …WITHSCORES</strong>获取元素，如果元素对应的分数小于当前时间，说明元素已过期，在数据库中删除对应记录。</li>
+</ul>
+<h3 id="计数器"><a href="#计数器" class="headerlink" title="计数器"></a>计数器</h3><p>Redis可以用来实现计数器,使用INCRBY操作即可。<br>相信很多人都曾想过在数据库中添加一张计数器表，用来为用户展现一些统计信息，但又考虑到需要对这张表进行大量的写操作而放弃，本宝宝曾经无数次遇到过这个问题。<br>现在，我们可以通过Redis来解决这个问题。通过Redis我们可以为计数器原子性的增加计数,也可以使用<code>GETSET</code>命令重置计数器或者为计数器设置过期时间。比如我们可以按照如下做法实现计数一个用户指定时间内的页面访问量，如果超过了指定值，比如20，就弹出一个提示。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INCR user:&lt;id&gt;</span><br><span class="line">EXPIRE user:&lt;id&gt; 60</span><br></pre></td></tr></table></figure></p>
 <h3 id="统计指定时间内不同的用户"><a href="#统计指定时间内不同的用户" class="headerlink" title="统计指定时间内不同的用户"></a>统计指定时间内不同的用户</h3><p>另一个用数据库实现比较困难，但是用Redis却很简单的功能就是统计指定时间内访问某资源的用户数。比如我想知道访问指定页面的用户数(相同用户访问多次只计算一次)，我只需要在新增一个页面浏览(PV)时,执行下面的操作：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SADD page:day1:&lt;page_id&gt;  &lt;user_id&gt;</span><br></pre></td></tr></table></figure></p>
 <p>想获得某页面的用户访问数，只需执行<strong>SCARD page:day1:<page_id></page_id></strong>即可。</p>
 <h3 id="实时分析"><a href="#实时分析" class="headerlink" title="实时分析"></a>实时分析</h3><p>我们已经看过了几个利用Redis如何实现一些利用数据库不好实现的功能，如果深入学习Redis的命令集，活用Redis中的数据结构，我们可以很容易的实现实时统计的功能，用来增强反垃圾邮件系统，或者通过分析得到的一些数据来提高网站的质量。</p>
@@ -327,7 +330,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/02/take-advantage-of-Redis/" data-id="cio6vech8000ng49lihy1jopz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/02/take-advantage-of-Redis/" data-id="cio6ycjp9000to19lwvzrqtzv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
