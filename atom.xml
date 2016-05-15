@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-05-15T08:51:13.000Z</updated>
+  <updated>2016-05-15T08:53:14.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/05/15/broken-window-theory/"/>
     <id>http://yemengying.com/2016/05/15/broken-window-theory/</id>
     <published>2016-05-15T06:02:14.000Z</published>
-    <updated>2016-05-15T08:51:13.000Z</updated>
+    <updated>2016-05-15T08:53:14.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;在湾区日报上看到篇关于破窗理论(Broken Window Theory)的&lt;a href=&quot;http://blog.codinghorror.com/the-broken-window-theory/?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=ios&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;文章&lt;/a&gt;，真是颇有感触，所以决定写篇博客，结合这几个月开发代理商网站的心(keng)路(die)历程,谈谈为何不能忽视一点点糟糕的代码或者不好的设计。&lt;/p&gt;
@@ -38,7 +38,7 @@
 &lt;p&gt;好了，背景聊完了，进入正题，聊聊代理商是怎么变得越来越难维护的。代理商的开发leader是个搜索大牛，但没做过Web开发，对Java Web开发并不是十分了解。因为部门leader要求快快快，所以将许多必要的步骤省略了。比如定义方法参数命名规范，定义api规范，代码review等等。。。每天就是划分下接口，每人开发几个接口，和前端定义接口文档，就开始开发提测了。讲真，所有人都是有责任的，可能是对这个项目一开始就很反感，有抵触心理，所以从内心就没打算好好做，一些觉得可以改进的地方也就得过且过了。后面的事实证明，当觉得设计或规范有不合理的时候，一定要及时提出来，不能忍，忍的后果就是一次一次降低自己的底线，然后亲手造就一个难维护的系统，到时候即便有心想重构也是心有余力不足了。&lt;/p&gt;
 &lt;p&gt;公司项目就不贴实际代码了，简单举几个例子，看看开发前定义必要的规范是多么的重要。由于代理商没有事先规定api的定义要符合RESTFul的规范，所以项目中api的风格有两种，符合RESTFul的和不符合的。比如获取餐厅信息的api定义是&lt;code&gt;GET /restaurant/{id}&lt;/code&gt;，而创建餐厅的api定义是&lt;code&gt;POST /restaurant/create&lt;/code&gt;，so。。。如果后面的人想设计更新餐厅信息的api是&lt;code&gt;PUT /restaurant/{id}&lt;/code&gt;还是&lt;code&gt;PUT /restaurant/update&lt;/code&gt;呢，真是一脸懵逼。接口的命名就更是五花八门了，因为大家是来自不同组，而且也没有定义统一的命名的规范，比如：一个简单获取信息，获取餐厅信息的接口是&lt;code&gt;getRestaurant&lt;/code&gt;,获取活动信息是&lt;code&gt;activityInfo&lt;/code&gt;,获取代理商信息接口是&lt;code&gt;getAgentDto&lt;/code&gt;，获取订单信息又变成了&lt;code&gt;getOrderData&lt;/code&gt;,so。。。谁能告诉我之后想添加个获取信息的接口到底该叫什么。。。只能看当时的心情随便写了。。。还有就是项目中存在大量重复代码，获取餐厅管理员信息基本上每个人都写了一遍，因为获取餐厅，活动信息时都用的到，因为没有代码review，所以一开始大家也不知道，就各写各的，也是蛮醉的。&lt;/p&gt;
 &lt;p&gt;上面的例子只是一点点，实际还有很多很多很多，都是泪啊。由于第一版本为了压缩工时(至今也不明白为啥要那么急。。。)就这样草草交工，导致后面的几个迭代开发也随之变得越来越随意，越来越不上心。听说代理商要移交给BD组，但估计情况也只会越来越糟，因为没人会闲着没事去整理糟糕的代码，只会在出现问题的时候，随意的打补丁。。。&lt;/p&gt;
-&lt;h3 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h3&gt;&lt;p&gt;其实也没啥好总结的，一句话，以后一定要写干净，整洁的代码，不能忽视一点点糟糕的代码或者设计对项目带来的负面影响。&lt;/p&gt;
+&lt;h3 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h3&gt;&lt;p&gt;其实也没啥好总结的，一句话，以后一定要写干净，整洁的代码，注意规范，不能忽视一点点糟糕的代码或者设计对项目带来的负面影响。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;欢迎一起讨论~~&lt;/p&gt;
 &lt;/blockquote&gt;
