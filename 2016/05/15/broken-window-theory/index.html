@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="在湾区日报上看到篇关于破窗理论(Broken Window Theory)的文章，真是颇有感触，所以决定写篇博客，结合这几个月开发代理商网站的心(keng)路(die)历程,谈谈为何不能忽视一点点糟糕的代码或者不好的设计。">
 <meta property="og:image" content="http://yemengying.com/images/broken-window.jpg">
-<meta property="og:updated_time" content="2016-05-15T09:02:28.000Z">
+<meta property="og:updated_time" content="2016-05-15T09:03:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈破窗理论">
 <meta name="twitter:description" content="在湾区日报上看到篇关于破窗理论(Broken Window Theory)的文章，真是颇有感触，所以决定写篇博客，结合这几个月开发代理商网站的心(keng)路(die)历程,谈谈为何不能忽视一点点糟糕的代码或者不好的设计。">
@@ -268,7 +268,7 @@ var _hmt = _hmt || [];
 <h3 id="亲身感受"><a href="#亲身感受" class="headerlink" title="亲身感受"></a>亲身感受</h3><p>先说说背景，故事要从三个月前开始讲起了，当时刚刚转去搜索组做部门内部的搜索，组内总共3个人。本以为可以远离业务代码，专心技术，可万万没想到Elasticsearch的书还没焐热就被部门leader叫去开会，说要做一个代理商系统，很紧急，是公司P0级别的项目，全公司的资源都要给我们让路(事实证明只是画饼，因为现在连一个固定前端都没了)。其实这个项目一听就是个深坑，因为主数据全在别的部门，比如餐厅，活动，订单，85%的功能都依赖于其他部门的接口(si不si很神奇)，所以做这个项目主要工作就是。。。。。通过SOA或者Thrift调别人的接口。不过即便知道是坑也没办法，只有搜索组刚刚成立比较闲，只能我们做-_-|||。当时部门leader的要求是封闭开发一周半，拿出个可用的版本就行，一定要快！！。所以我们搜索组的三个人加上从别的组借调的两个实习生再加上两个前端就搬去了小黑屋，开始了近两周的封闭开发。</p>
 <p>好了，背景聊完了，进入正题，聊聊代理商是怎么变得越来越难维护的。代理商的开发leader是个搜索大牛，但没做过Web开发，对Java Web开发并不是十分了解。因为部门leader要求快快快，所以将许多必要的步骤省略了。比如定义方法参数命名规范，定义api规范，代码review等等。。。每天就是划分下接口，每人开发几个接口，和前端定义接口文档，就开始开发提测了。讲真，所有人都是有责任的，可能是对这个项目一开始就很反感，有抵触心理，所以从内心就没打算好好做，一些觉得可以改进的地方也就得过且过了。后面的事实证明，当觉得设计或规范有不合理的时候，一定要及时提出来，不能忍，忍的后果就是一次一次降低自己的底线，然后亲手造就一个难维护的系统，到时候即便有心想重构也是心有余力不足了。</p>
 <p>公司项目就不贴实际代码了，简单举几个例子，看看开发前定义必要的规范是多么的重要。由于代理商没有事先规定api的定义要符合RESTFul的规范，所以项目中api的风格有两种，符合RESTFul的和不符合的。比如获取餐厅信息的api定义是<code>GET /restaurant/{id}</code>，而创建餐厅的api定义是<code>POST /restaurant/create</code>，so。。。如果后面的人想设计更新餐厅信息的api是<code>PUT /restaurant/{id}</code>还是<code>PUT /restaurant/update</code>呢，真是一脸懵逼。接口的命名就更是五花八门了，因为大家是来自不同组，而且也没有定义统一的命名的规范，比如：一个简单获取信息，获取餐厅信息的接口是<code>getRestaurant</code>,获取活动信息是<code>activityInfo</code>,获取代理商信息接口是<code>getAgentDto</code>，获取订单信息又变成了<code>getOrderData</code>,so。。。谁能告诉我之后想添加个获取信息的接口到底该叫什么。。。只能看当时的心情随便写了。。。还有就是项目中存在大量重复代码，获取餐厅管理员信息基本上每个人都写了一遍，因为获取餐厅，活动信息时都用的到，因为没有代码review，所以一开始大家也不知道，就各写各的，也是蛮醉的。</p>
-<p>上面的例子只是一点点，实际还有很多很多很多，都是泪啊。由于第一版本为了压缩工时(至今也不明白为啥要那么急。。。)就这样草草交工，导致后面的几个迭代开发也随之变得越来越随意，随意命名，随意定义api，越来越不上心。听说代理商要移交给BD组，但估计情况也只会越来越糟，因为没人愿意去整理一坨坨糟糕的代码，只会在出现问题的时候，随意的打补丁。。。</p>
+<p>上面的例子只是一点点，实际还有很多很多很多，都是泪啊。由于第一版本为了压缩工时(至今也不明白为啥要那么急。。。)就这样草草交工，导致后面的几个迭代开发也随之变得越来越随意，随意命名，随意定义api，缺乏junit测试，越来越不上心。听说代理商要移交给BD组，但估计情况也只会越来越糟，因为没人愿意去整理一坨坨糟糕的代码，只会在出现问题的时候，随意的打补丁。。。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实也没啥好总结的，一句话，以后一定要写干净，整洁的代码，注意规范，不能忽视一点点糟糕的代码或者设计对项目带来的负面影响。</p>
 <blockquote>
 <p>欢迎一起讨论~~</p>
@@ -283,7 +283,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/15/broken-window-theory/" data-id="cio8cspqt000h0r9lsy7sc82t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/15/broken-window-theory/" data-id="cio8ctm2n000l1d9lugo9y7ua" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
