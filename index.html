@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                30
+                31
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -210,6 +210,139 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2016/05/15/broken-window-theory/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/15/broken-window-theory/">谈谈破窗理论</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/15/broken-window-theory/">
+            <time datetime="2016-05-15T06:02:14.000Z" itemprop="datePublished">2016-05-15</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/随笔/">随笔</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>在湾区日报上看到篇关于破窗理论(Broken Window Theory)的<a href="http://blog.codinghorror.com/the-broken-window-theory/?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=ios">文章</a>，真是颇有感触，所以决定写篇博客，结合这几个月开发代理商网站的心(keng)路(die)历程,谈谈为何不能忽视一点点糟糕的代码或者不好的设计。</p>
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2016/05/15/broken-window-theory/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/05/15/broken-window-theory/" data-id="cio8ceel3000jx09lgo9s52dv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/05/15/broken-window-theory/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/05/15/broken-window-theory/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="2016/05/13/jvm-GC/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -266,7 +399,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cio6ycjox000io19lsedudjk4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cio8ceel9000qx09li2oqbx1f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -399,7 +532,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/07/threadsafe-hashmap/" data-id="cio6ycjqi0020o19lwv3c5mi8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/07/threadsafe-hashmap/" data-id="cio8ceelm0013x09lyioxbfmq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -532,7 +665,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/24/good-website/" data-id="cio6ycjpd000xo19ljp8ezl7a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/24/good-website/" data-id="cio8ceel7000ox09l0li44rc7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -665,7 +798,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cio6ycjp4000no19lo01ik49q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cio8ceekw000ex09lknyf27g9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -799,7 +932,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/02/take-advantage-of-Redis/" data-id="cio6ycjp9000to19lwvzrqtzv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/02/take-advantage-of-Redis/" data-id="cio8ceelk0010x09lha4qypjc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -933,7 +1066,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/03/21/elasticsearch-settings2/" data-id="cio6ycjot000fo19lnwxxpl82" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/03/21/elasticsearch-settings2/" data-id="cio8ceel5000lx09l5mrdsw25" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1067,7 +1200,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cio6ycjnw0000o19lx6qx7yq0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/03/18/Elasticsearch配置项-Local-gateway-HTTP-Indices-Network-Settings模块配置/" data-id="cio8ceek50001x09lug4xiprf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1210,7 +1343,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/03/15/zootopia/" data-id="cio6ycjqa001qo19lb75kmrf4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/03/15/zootopia/" data-id="cio8ceels001bx09lil7i2hmj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1344,7 +1477,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/02/20/Java-8-行为参数化-behavior-parameterization/" data-id="cio6ycjoc0006o19l1ixrbqsi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/02/20/Java-8-行为参数化-behavior-parameterization/" data-id="cio8ceekq000bx09liarvvtcq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1422,141 +1555,8 @@ var _hmt = _hmt || [];
 
 
 
-    <article id="2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">[译]Java 8中HashMap和LinkedHashMap如何解决冲突</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">
-            <time datetime="2016-02-03T08:23:39.000Z" itemprop="datePublished">2016-02-03</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/hashmap/">hashmap</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
-    </div>
-
-                </div>
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><blockquote>
-<p>原文来自一个java大牛的博客 原文地址<a href="http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html">http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html</a> 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。</p>
-</blockquote></p>
-            <p class="article-more-link">
-                <a href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/" data-id="cio6ycjq6001no19ln47nus9x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
     </nav>
 </section>
             
