@@ -2,20 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://yemengying.com/tags/STS/</loc>
-        <lastmod>2016-02-02T06:34:22.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/Idea/</loc>
-        <lastmod>2016-02-02T06:34:22.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/transaction/</loc>
         <lastmod>2016-02-03T07:38:24.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -93,13 +79,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/annotation/</loc>
-        <lastmod>2016-04-23T02:01:58.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/reflect/</loc>
         <lastmod>2016-04-23T02:01:58.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -116,27 +95,6 @@
     <url>
         <loc>http://yemengying.com/tags/rabbitMq/</loc>
         <lastmod>2016-04-23T02:04:27.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/mybatis/</loc>
-        <lastmod>2016-04-23T02:06:45.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/reflection/</loc>
-        <lastmod>2016-04-23T02:06:45.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/anntation/</loc>
-        <lastmod>2016-04-23T02:06:45.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -191,13 +149,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/java/</loc>
-        <lastmod>2016-05-14T08:07:49.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/jvm/</loc>
         <lastmod>2016-05-14T08:07:49.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -221,6 +172,41 @@
     <url>
         <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
         <lastmod>2016-05-15T15:21:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/annotation/</loc>
+        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/mybatis/</loc>
+        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/reflection/</loc>
+        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/java/</loc>
+        <lastmod>2016-05-24T13:46:41.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/IDE/</loc>
+        <lastmod>2016-05-24T13:46:41.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
