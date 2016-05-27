@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>MySQL调优 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="啦啦啦，啦啦啦，我是卖报的小行家~~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL调优">
+<meta property="og:url" content="http://yemengying.com/2016/05/24/mysql-tuning/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="啦啦啦，啦啦啦，我是卖报的小行家~~">
+<meta property="og:image" content="http://yemengying.com/images/mysql.png">
+<meta property="og:updated_time" content="2016-05-27T06:14:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL调优">
+<meta name="twitter:description" content="啦啦啦，啦啦啦，我是卖报的小行家~~">
+<meta name="twitter:image" content="http://yemengying.com/images/mysql.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/zootopia/judy.jpg" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/zootopia/judy.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/zootopia/judy.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                32
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                31
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    <td><a href="http://github.com/giraffe0813" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                    
+                    <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2016/05/24/mysql-tuning/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            MySQL调优
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/24/mysql-tuning/">
+            <time datetime="2016-05-24T13:16:33.000Z" itemprop="datePublished">2016-05-24</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要进行优化？"><span class="toc-number">1.</span> <span class="toc-text">为什么要进行优化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可以从哪几个方面进行数据库优化？"><span class="toc-number">2.</span> <span class="toc-text">可以从哪几个方面进行数据库优化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL优化"><span class="toc-number">3.</span> <span class="toc-text">SQL优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#慢查询日志配置"><span class="toc-number">3.1.</span> <span class="toc-text">慢查询日志配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析慢查日志的工具"><span class="toc-number">3.2.</span> <span class="toc-text">分析慢查日志的工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定位有问题的SQL"><span class="toc-number">3.3.</span> <span class="toc-text">定位有问题的SQL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过Explain查询和分析SQL的执行计划"><span class="toc-number">3.4.</span> <span class="toc-text">通过Explain查询和分析SQL的执行计划</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引优化"><span class="toc-number">4.</span> <span class="toc-text">索引优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何选择合适的列来建立索引"><span class="toc-number">4.1.</span> <span class="toc-text">如何选择合适的列来建立索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何维护和优化索引"><span class="toc-number">4.2.</span> <span class="toc-text">如何维护和优化索引</span></a></li></ol></li></ol>
+                </div>
+            
+            <blockquote>
+<p>啦啦啦，啦啦啦，我是卖报的小行家~~</p>
+</blockquote>
+<a id="more"></a>
+<p>先分享个脑洞打开的mv，coldplay新单up&amp;up，看看会飞的海龟🐢，一点也不精彩，就看了30多遍而已😂。</p>
+<embed src="http://player.video.qiyi.com/977853bfe26ef11b25e524a983e72c30/0/0/w_19rt2btvq9.swf-albumId=5831552909-tvId=5831552909-isPurchase=0-cnId=5" allowfullscreen="true" quality="high" width="480" height="350" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash">
+
+
+<p>———————————-我是预示画风转变分割线——————————————–<br>根据视频(<a href="http://www.imooc.com/learn/194" target="_blank" rel="external">链接</a>)整理。</p>
+<h3 id="为什么要进行优化？"><a href="#为什么要进行优化？" class="headerlink" title="为什么要进行优化？"></a>为什么要进行优化？</h3><ul>
+<li>避免由数据库链接timeout产生页面5xx的错误</li>
+<li>避免由于慢查询造成页面无法加载</li>
+<li>避免由于阻塞造成数据无法提交</li>
+<li>优化用户体验</li>
+</ul>
+<h3 id="可以从哪几个方面进行数据库优化？"><a href="#可以从哪几个方面进行数据库优化？" class="headerlink" title="可以从哪几个方面进行数据库优化？"></a>可以从哪几个方面进行数据库优化？</h3><p><img src="/images/mysql.png" alt="image"><br>从图中可以看出，SQL及索引的优化是最重要的，成本最低效果最好。<br>下面分别来看看如何优化SQL和索引。</p>
+<h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3><h4 id="慢查询日志配置"><a href="#慢查询日志配置" class="headerlink" title="慢查询日志配置"></a>慢查询日志配置</h4><p>可以使用慢查询日志对有效率问题的SQL进行监控。下面是关于如何开启慢查询日志和慢查询日志的一些配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">'slow_query_log'</span>; //查看是否开启了慢查询</span><br><span class="line"><span class="built_in">set</span> global slow_query_<span class="built_in">log</span>_file=<span class="string">'/home/mysql/sql_log/mysql-slow.log'</span>; //设置慢查询日志的位置</span><br><span class="line"><span class="built_in">set</span> global <span class="built_in">log</span>_queries_not_using_indexes=ON; //是否记录未使用索引的查询</span><br><span class="line"><span class="built_in">set</span> global long_query_time=1;//设置记录超过多长时间的SQL语句</span><br><span class="line"><span class="built_in">set</span> global slow_query_<span class="built_in">log</span>=ON;//设置慢查询日志是否开启</span><br></pre></td></tr></table></figure></p>
+<p>慢查询日志的格式：<br><img src="/images/mysql2.png" alt="慢查询日志的格式"><br>详细看一下每一行都是什么意思。<br>查询的执行时间 Time:140606 12:30:17<br>执行SQL的主机信息 User@Host:root[root] @ localhost []<br>SQL的执行信息 Query_time: 0.000024 Lock_time:0.000000 Rows_sent:0 Rows_examined: 0<br>SQL执行时间 SET timestamp=1402389328<br>SQL的内容:show tables</p>
+<h4 id="分析慢查日志的工具"><a href="#分析慢查日志的工具" class="headerlink" title="分析慢查日志的工具"></a>分析慢查日志的工具</h4><p>1.mysqldumpslow<br>可以使用MySQL自带的慢查询分析工具<code>mysqldumpslow</code>，可以通过<code>mysqldumpslow -h</code>来查看具体的使用方法。<br>eg:mysqldumpslow -t 3 /path/to/mysql-slow-query.log | more<br>上面的命令会列出查询时间top 3的SQL语句，具体格式如下图，会列出SQL执行的次数，SQL来执行的时间，锁定的时间，发送的函数，由谁在哪个服务器上执行的和具体的SQL内容。<br><img src="/images/mysql3.png" alt="mysqldumpslow格式"><br>mysqldumpslow是比较常用的慢查询日志分析工具，但是分析结果包含的信息比较少，对于SQL优化来说可能还不太够。下面看看另一种分析工具。</p>
+<p>2.pt-query-digest<br><code>pt-query-digest</code>支持将分析结果保存到文件或数据表中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输出到文件</span><br><span class="line">pt-query-digest slow.log &gt; slow_log.report</span><br><span class="line">输出到数据库表</span><br><span class="line">pt-query-digest slow.log -review \</span><br><span class="line">h=127.0.0.1,D=test,p=root,P=3306,u=root,t=query_review \</span><br><span class="line">--creat-reviewtable \</span><br><span class="line">--review-history t=hostname_slow</span><br></pre></td></tr></table></figure></p>
+<p>通过<code>pt-query-digest --help</code>可以查看具体的使用方式。<br>eg: pt-query-digest /home/mysql/data/mysql-slow.log | more<br>通过上面的命令，会列出慢查询日志的分析结果，分为三个部分。<br>第一部分中包含日志中有多少个SQL，多少个不同的SQL，SQL执行的时间范围，总的执行时间，最短的执行时间，最长的执行时间，平均执行时间，总锁定时间，总发送行数，总检索行数等等。<br><img src="/images/pt1.png" alt="pt-query-digest格式"><br>第二部分包含关于  表和执行语句的统计，可以看到哪个表的哪个操作的实行时间是最多的，也可以看到对应的响应时间和调用次数。<br><img src="/images/pt2.png" alt="pt-query-digest格式"><br>第三部分就是具体的SQL的分析，包括对应语句执行时间，锁定时间，发送行数，检索行数等等。<br><img src="/images/pt3.png" alt="pt-query-digest格式"></p>
+<h4 id="定位有问题的SQL"><a href="#定位有问题的SQL" class="headerlink" title="定位有问题的SQL"></a>定位有问题的SQL</h4><p>通过上面的慢查询日志分析我们可以定位需要优化的SQL,通常有三种：</p>
+<ul>
+<li>查询次数多且每次查询占用时间长的SQL：通常为pt-query-digest分析的前几个查询。</li>
+<li>IO大的SQL：注意pt-query-digest分析中的Rows examine项</li>
+<li>未命中索引的SQL： 注意pt-query-digest分析中Rows examine和Rows Send的对比。</li>
+</ul>
+<h4 id="通过Explain查询和分析SQL的执行计划"><a href="#通过Explain查询和分析SQL的执行计划" class="headerlink" title="通过Explain查询和分析SQL的执行计划"></a>通过Explain查询和分析SQL的执行计划</h4><p>可以通过Explain查询SQL的执行计划，例子如下：<br><img src="/images/explain.png" alt="Explain"><br>explain返回的各列的含义：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">列</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">table</td>
+<td style="text-align:center">显示查询是关于哪个表的</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">type</td>
+<td style="text-align:center">很重要的列，显示连接使用了何种类型。从最好到最差的连接类型为const、eq_reg、ref、range、index和ALL</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">possible_keys</td>
+<td style="text-align:center">显示可能应用在这张表中的索引。如果为空，没有可能应用的索引</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">key</td>
+<td style="text-align:center">实际使用的索引。如果为NULL，则没有使用索引</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">key_len</td>
+<td style="text-align:center">使用的索引的长度。在不损失精确性的情况下，长度越短越好</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">ref</td>
+<td style="text-align:center">显示索引的哪一列被使用了</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">rows</td>
+<td style="text-align:center">MYSQL认为必须检查的用来返回请求的行数</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">extra</td>
+<td style="text-align:center">当这一列的值是Using filesort或Using temporary时，说明查询需要优化了</td>
+</tr>
+</tbody>
+</table>
+<h3 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h3><h4 id="如何选择合适的列来建立索引"><a href="#如何选择合适的列来建立索引" class="headerlink" title="如何选择合适的列来建立索引"></a>如何选择合适的列来建立索引</h4><ul>
+<li>在where从句，group by从句，order by从句，on从句中出现的列</li>
+<li>索引的字段越小越好</li>
+<li>在建立联合索引时，离散度大的列放大联合索引的前面</li>
+</ul>
+<h4 id="如何维护和优化索引"><a href="#如何维护和优化索引" class="headerlink" title="如何维护和优化索引"></a>如何维护和优化索引</h4><p>要避免重复及冗余索引，重复索引是指相同的列以相同的顺序建立的同类型的索引。冗余索引是指多个索引的前缀列相同，或是在联合索引中包含了主键的索引。<br>可以使用<code>pt-duplicate-key-checker</code>工具可以检查重复及冗余索引。<br>同时还要注意及时删除由于业务变更不再使用的索引。目前MySQL中还没有记录索引的使用情况，但在PerconMuSQL和MariaDB中可以通过INDEX_STATISTICS表来查看哪些索引未使用，在MySQL中目前只能通过慢查询日志配合pt-index-usage工具来进行索引的使用情况的分析。</p>
+<blockquote>
+<p>欢迎指正错误，欢迎一起讨论~~</p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/05/24/mysql-tuning/" data-id="ciopc51ny001ivy9lla21dcaz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/05/24/mysql-tuning/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/05/24/mysql-tuning/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/05/15/broken-window-theory/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">谈谈破窗理论</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2016/05/24/mysql-tuning/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
