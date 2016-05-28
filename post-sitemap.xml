@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/</loc>
+        <lastmod>2016-05-28T13:45:50.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/05/24/mysql-tuning/</loc>
         <lastmod>2016-05-27T06:28:37.000Z</lastmod>
         <changefreq>weekly</changefreq>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>优化MySQL中的分页 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优化MySQL中的分页">
+<meta property="og:url" content="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。">
+<meta property="og:image" content="http://yemengying.com/images/liguangzhu06.gif">
+<meta property="og:updated_time" content="2016-05-28T13:45:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="优化MySQL中的分页">
+<meta name="twitter:description" content="一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。">
+<meta name="twitter:image" content="http://yemengying.com/images/liguangzhu06.gif">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/zootopia/judy.jpg" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/zootopia/judy.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/zootopia/judy.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                33
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                31
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    <td><a href="http://github.com/giraffe0813" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                    
+                    <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2016/05/28/optimized-pagiantion-mysql/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            优化MySQL中的分页
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/28/optimized-pagiantion-mysql/">
+            <time datetime="2016-05-28T01:45:42.000Z" itemprop="datePublished">2016-05-28</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。</p>
+</blockquote>
+<a id="more"></a>
+<p>翻译一篇关于优化MySQL中的分页的文章，原文地址：<a href="http://www.xarg.org/2011/10/optimized-pagination-using-mysql/" target="_blank" rel="external">Optimized Pagination using MySQL</a>，谢谢，3Q，康桑阿米达~~~</p>
+<p>很多应用往往只展示最新或最热门的几条记录，但为了旧记录仍然可访问，所以就需要个分页的导航栏。然而，如何通过MySQL更好的实现分页，始终是比较令人头疼的问题。虽然没有拿来就能用的解决办法，但了解数据库的底层或多或少有助于优化分页查询。<br>我们先从一个常用但性能很差的查询来看一看。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line"><span class="keyword">LIMIT</span> <span class="number">0</span>, <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
+<p>这个查询耗时0.00sec。So，这个查询有什么问题呢？实际上，这个查询语句和参数都没有问题，因为它用到了下面表的主键，而且只读取15条记录。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> city (</span><br><span class="line">  <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  city <span class="built_in">varchar</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure></p>
+<p>真正的问题在于offset(分页偏移量)很大的时候，像下面这样：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line"><span class="keyword">LIMIT</span> <span class="number">100000</span>, <span class="number">15</span>;</span><br></pre></td></tr></table></figure></p>
+<p>上面的查询在有2M行记录时需要0.22sec，通过EXPLAIN查看SQL的执行计划可以发现该SQL检索了100015行，但最后只需要15行。大的分页偏移量会增加使用的数据，MySQL会将大量最终不会使用的数据加载到内存中。就算我们假设大部分网站的用户只访问前几页数据，但少量的大的分页偏移量的请求也会对整个系统造成危害。Facebook意识到了这一点，但Facebook并没有为了每秒可以处理更多的请求而去优化数据库，而是将重心放在将<a href="http://highscalability.com/blog/2010/11/4/facebook-at-13-million-queries-per-second-recommends-minimiz.html" target="_blank" rel="external">请求响应时间的方差变小</a>。<br>对于分页请求，还有一个信息也很重要，就是总共的记录数。我们可以通过下面的查询很容易的获取总的记录数。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> city;</span><br></pre></td></tr></table></figure></p>
+<p>然而，上面的SQL在采用InnoDB为存储引擎时需要耗费9.28sec。一个不正确的优化是采用<code>SQL_CALC_FOUND_ROWS</code>,<code>SQL_CALC_FOUND_ROWS</code>可以在能够在分页查询时事先准备好符合条件的记录数，随后只要执行一句<code>select FOUND_ROWS();</code> 就能获得总记录数。但是在大多数情况下，查询语句简短并不意味着性能的提高。不幸的是，这种分页查询方式在许多主流框架中都有用到，下面看看这个语句的查询性能。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SQL_CALC_FOUND_ROWS</span> *</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line"><span class="keyword">LIMIT</span> <span class="number">100000</span>, <span class="number">15</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这个语句耗时20.02sec，是上一个的两倍。事实证明使用<code>SQL_CALC_FOUND_ROWS</code>做分页是很糟糕的想法。<br>下面来看看到底如何优化。文章分为两部分，第一部分是如何获取记录的总数目，第二部分是获取真正的记录。</p>
+<h3 id="高效的计算行数"><a href="#高效的计算行数" class="headerlink" title="高效的计算行数"></a>高效的计算行数</h3><p>如果采用的引擎是MyISAM，可以直接执行COUNT(*)去获取行数即可。相似的，在堆表中也会将行数存储到表的元信息中。但如果引擎是InnoDB情况就会复杂一些，因为InnoDB不保存表的具体行数。<br>我们可以将行数缓存起来，然后可以通过一个守护进程定期更新或者用户的某些操作导致缓存失效时，执行下面的语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">USE</span> <span class="keyword">INDEX</span>(PRIMARY);</span><br></pre></td></tr></table></figure></p>
+<h3 id="获取记录"><a href="#获取记录" class="headerlink" title="获取记录"></a>获取记录</h3><p>下面进入这篇文章最重要的部分，获取分页要展示的记录。上面已经说过了，大的偏移量会影响性能，所以我们要重写查询语句。为了演示，我们创建一个新的表“news”，按照时事性排序(最新发布的在最前面)，实现一个高性能的分页。为了简单，我们就假设最新发布的新闻的Id也是最大的。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> news(</span><br><span class="line">   <span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">   title <span class="built_in">VARCHAR</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure></p>
+<p>一个比较高效的方式是基于用户展示的最后一个新闻Id。查询下一页的语句如下，需要传入当前页面展示的最后一个Id。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> news <span class="keyword">WHERE</span> <span class="keyword">id</span> &lt; $last_id</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line"><span class="keyword">LIMIT</span> $perpage</span><br></pre></td></tr></table></figure></p>
+<p>查询上一页的语句类似，只不过需要传入当前页的第一个Id，并且要逆序。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> news <span class="keyword">WHERE</span> <span class="keyword">id</span> &gt; $last_id</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">ASC</span></span><br><span class="line"><span class="keyword">LIMIT</span> $perpage</span><br></pre></td></tr></table></figure></p>
+<p>上面的查询方式适合实现简易的分页，即不显示具体的页数导航，只显示“上一页”和“下一页”，例如博客中页脚显示“上一页”，“下一页”的按钮。但如果要实现真正的页面导航还是很难的,下面看看另一种方式。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> <span class="keyword">id</span>, ((@cnt:= @cnt + <span class="number">1</span>) + $perpage - <span class="number">1</span>) % $perpage cnt</span><br><span class="line">   <span class="keyword">FROM</span> news </span><br><span class="line">   <span class="keyword">JOIN</span> (<span class="keyword">SELECT</span> @cnt:= <span class="number">0</span>)T</span><br><span class="line">   <span class="keyword">WHERE</span> <span class="keyword">id</span> &lt; $last_id</span><br><span class="line">   <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line">   <span class="keyword">LIMIT</span> $perpage * $buttons</span><br><span class="line">)C</span><br><span class="line"><span class="keyword">WHERE</span> cnt = <span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
+<p>通过上面的语句可以为每一个分页的按钮计算出一个offset对应的id。这种方法还有一个好处。假设，网站上正在发布一片新的文章，那么所有文章的位置都会往后移一位，所以如果用户在发布文章时换页，那么他会看见一篇文章两次。如果固定了每个按钮的offset Id，这个问题就迎刃而解了。Mark Callaghan发表过一篇类似的<a href="http://www.facebook.com/note.php?note_id=206034210932" target="_blank" rel="external">博客</a>，利用了组合索引和两个位置变量，但是基本思想是一致的。<br>如果表中的记录很少被删除、修改，还可以将记录对应的页码存储到表中，并在该列上创建合适的索引。采用这种方式，当新增一个记录的时候，需要执行下面的查询重新生成对应的页号。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> @p:= <span class="number">0</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> news <span class="keyword">SET</span> page=<span class="keyword">CEIL</span>((@p:= @p + <span class="number">1</span>) / $perpage) <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure></p>
+<p>当然，也可以新增一个专用于分页的表，可以用个后台程序来维护。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> pagination T</span><br><span class="line"><span class="keyword">JOIN</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> <span class="keyword">id</span>, <span class="keyword">CEIL</span>((@p:= @p + <span class="number">1</span>) / $perpage) page</span><br><span class="line">   <span class="keyword">FROM</span> news</span><br><span class="line">   <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span></span><br><span class="line">)C</span><br><span class="line"><span class="keyword">ON</span> C.<span class="keyword">id</span> = T.<span class="keyword">id</span></span><br><span class="line"><span class="keyword">SET</span> T.page = C.page;</span><br></pre></td></tr></table></figure></p>
+<p>现在想获取任意一页的元素就很简单了：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> news A</span><br><span class="line"><span class="keyword">JOIN</span> pagination B <span class="keyword">ON</span> A.<span class="keyword">id</span>=B.<span class="keyword">ID</span></span><br><span class="line"><span class="keyword">WHERE</span> page=$<span class="keyword">offset</span>;</span><br></pre></td></tr></table></figure></p>
+<p>还有另外一种与上种方法比较相似的方法来做分页，这种方式比较试用于数据集相对小，并且没有可用的索引的情况下—比如处理搜索结果时。在一个普通的服务器上执行下面的查询，当有2M条记录时，要耗费2sec左右。这种方式比较简单，创建一个用来存储所有Id的临时表即可(这也是最耗费性能的地方)。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> <span class="keyword">TABLE</span> _tmp (<span class="keyword">KEY</span> <span class="keyword">SORT</span>(random))</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, <span class="keyword">FLOOR</span>(<span class="keyword">RAND</span>() * <span class="number">0x8000000</span>) random</span><br><span class="line"><span class="keyword">FROM</span> city;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> _tmp <span class="keyword">ADD</span> <span class="keyword">OFFSET</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT, <span class="keyword">DROP</span> <span class="keyword">INDEX</span> <span class="keyword">SORT</span>, <span class="keyword">ORDER</span> <span class="keyword">BY</span> random;</span><br></pre></td></tr></table></figure></p>
+<p>接下来就可以向下面一样执行分页查询了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> _tmp</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">OFFSET</span> &gt;= $<span class="keyword">offset</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">OFFSET</span></span><br><span class="line"><span class="keyword">LIMIT</span> $perpage;</span><br></pre></td></tr></table></figure></p>
+<p>————————————–俺只是个分割线——————————————–<br>博客比较长，所以翻译的有些粗糙。。。，之后会在好好检查一遍的。在自己做测试时，有些查询时间与作者有点不一致，不过作者这篇博客是写于2011年的，so<del>不要在意具体数据，领会精神吧</del></p>
+<blockquote>
+<p>欢迎指正错误，欢迎一起讨论！！！<br>国际惯例，wuli光洙结尾~~<br><img src="/images/liguangzhu06.gif" alt="李光洙"></p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/" data-id="cior7ncok000w207b793ndo00" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/05/24/mysql-tuning/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MySQL调优</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
