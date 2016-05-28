@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-05-28T13:45:50.000Z</updated>
+  <updated>2016-05-28T13:47:56.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>优化MySQL中的分页</title>
+    <title>【译】优化MySQL中的分页</title>
     <link href="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/"/>
     <id>http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/</id>
     <published>2016-05-28T01:45:42.000Z</published>
-    <updated>2016-05-28T13:45:50.000Z</updated>
+    <updated>2016-05-28T13:47:56.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。&lt;/p&gt;
@@ -640,9 +640,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
-    
       <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
     
   </entry>
   

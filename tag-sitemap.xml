@@ -156,14 +156,14 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/redis/</loc>
+        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
         <lastmod>2016-05-14T09:30:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
+        <loc>http://yemengying.com/tags/redis/</loc>
         <lastmod>2016-05-14T09:30:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -213,7 +213,7 @@
 
     <url>
         <loc>http://yemengying.com/tags/MySQL/</loc>
-        <lastmod>2016-05-28T13:45:50.000Z</lastmod>
+        <lastmod>2016-05-28T13:47:56.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
