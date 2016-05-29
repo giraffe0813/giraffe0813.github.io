@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。">
 <meta property="og:image" content="http://yemengying.com/images/liguangzhu06.gif">
-<meta property="og:updated_time" content="2016-05-28T13:51:34.000Z">
+<meta property="og:updated_time" content="2016-05-29T12:34:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】优化MySQL中的分页">
 <meta name="twitter:description" content="一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。">
@@ -274,7 +274,7 @@ var _hmt = _hmt || [];
 <p>现在想获取任意一页的元素就很简单了：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> news A</span><br><span class="line"><span class="keyword">JOIN</span> pagination B <span class="keyword">ON</span> A.<span class="keyword">id</span>=B.<span class="keyword">ID</span></span><br><span class="line"><span class="keyword">WHERE</span> page=$<span class="keyword">offset</span>;</span><br></pre></td></tr></table></figure></p>
 <p>还有另外一种与上种方法比较相似的方法来做分页，这种方式比较试用于数据集相对小，并且没有可用的索引的情况下—比如处理搜索结果时。在一个普通的服务器上执行下面的查询，当有2M条记录时，要耗费2sec左右。这种方式比较简单，创建一个用来存储所有Id的临时表即可(这也是最耗费性能的地方)。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> <span class="keyword">TABLE</span> _tmp (<span class="keyword">KEY</span> <span class="keyword">SORT</span>(random))</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, <span class="keyword">FLOOR</span>(<span class="keyword">RAND</span>() * <span class="number">0x8000000</span>) random</span><br><span class="line"><span class="keyword">FROM</span> city;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> _tmp <span class="keyword">ADD</span> <span class="keyword">OFFSET</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT, <span class="keyword">DROP</span> <span class="keyword">INDEX</span> <span class="keyword">SORT</span>, <span class="keyword">ORDER</span> <span class="keyword">BY</span> random;</span><br></pre></td></tr></table></figure></p>
 <p>接下来就可以向下面一样执行分页查询了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> _tmp</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">OFFSET</span> &gt;= $<span class="keyword">offset</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">OFFSET</span></span><br><span class="line"><span class="keyword">LIMIT</span> $perpage;</span><br></pre></td></tr></table></figure></p>
-<p>——————————————–俺只是个分割线———————————————————-<br>博客比较长，所以翻译的有些粗糙。。。，之后会在好好检查一遍的。在自己做测试时，有些查询时间与作者有点不一致，不过作者这篇博客是写于2011年的，so~不要在意具体数据，领会精神吧~~</p>
+<p>——————————————–俺只是个分割线———————————————————-<br>简单来说，对于分页的优化就是。。。避免数据量大时扫描过多的记录。<br>博客比较长，所以翻译的有些粗糙。。。，之后会在好好检查一遍的。在自己做测试时，有些查询时间与作者有点不一致，不过作者这篇博客是写于2011年的，so~不要在意具体数据，领会精神吧~~</p>
 <blockquote>
 <p>欢迎指正错误，欢迎一起讨论！！！</p>
 </blockquote>
@@ -289,7 +289,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/" data-id="ciosjqj1w000wqf7bfp4g6mes" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/28/optimized-pagiantion-mysql/" data-id="cioskj302000wt07bz2r1a4co" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
