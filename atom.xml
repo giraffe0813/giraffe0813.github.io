@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-06-05T11:06:00.000Z</updated>
+  <updated>2016-06-05T11:10:30.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/06/05/interview/"/>
     <id>http://yemengying.com/2016/06/05/interview/</id>
     <published>2016-06-05T02:12:59.000Z</published>
-    <updated>2016-06-05T11:06:00.000Z</updated>
+    <updated>2016-06-05T11:10:30.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
@@ -98,6 +98,8 @@
 &lt;p&gt;&lt;strong&gt;画一下心中房树人的关系(重要程度:★☆☆☆☆)&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;给你一块地建房如何规划(重要程度:★☆☆☆☆)&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;估计二号线有几辆车在运行(重要程度:★☆☆☆☆)&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&quot;其他&quot;&gt;&lt;a href=&quot;#其他&quot; class=&quot;headerlink&quot; title=&quot;其他&quot;&gt;&lt;/a&gt;其他&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Thrift通信协议&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这个问题被问了两遍，然而现在还是不知道。。。什么东西都不能停留在只会用的阶段啊~&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;git相关&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一些git相关的问题，比如如何做分支管理(git flow)，rebase和merge的区别(merge操作会生成一个新的节点)等等。。。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;了不了解微服务&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;简单了解过。。。&lt;br&gt;参考资料：&lt;br&gt;&lt;a href=&quot;http://www.jianshu.com/p/546ef242b6a3&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;基于微服务的软件架构模式&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;针对简历中的项目问一些问题&lt;/strong&gt;&lt;/p&gt;
@@ -754,9 +756,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
