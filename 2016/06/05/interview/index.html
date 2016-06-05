@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yemengying.com/2016/06/05/interview/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
-<meta property="og:updated_time" content="2016-06-05T10:54:35.000Z">
+<meta property="og:updated_time" content="2016-06-05T11:06:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试总结">
 <meta name="twitter:description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
@@ -309,6 +309,8 @@ var _hmt = _hmt || [];
 <p>一般就是hash%N,就是用对象的hash值对缓存服务器的个数取余</p>
 <p><strong>接上个问题，缓存集群中如果新增一台服务器，怎么才能不影响大部分缓存数据的命中？</strong></p>
 <p>其实就是一致性Hash算法。以前有看过，可惜面试的时候脑袋就空了，只记得一个环，果然还是要实践啊。<br>参考资料：<br><a href="http://blog.plasmaconduit.com/consistent-hashing/" target="_blank" rel="external">Consistent Hashing</a><br><a href="http://blog.csdn.net/cywosp/article/details/23397179" target="_blank" rel="external">五分钟理解一致性哈希算法(consistent hashing)</a></p>
+<p><strong>项目中具体是怎样使用Redis的</strong></p>
+<p>根据实际情况回答吧。。。。我是主要做权限控制时用到了Redis，将用户Id和权限Code拼接在一起作为一个key，放到Redis的集合中，在验证某一用户是否有指定权限时，只需验证集合中是否有用户Id和权限Code拼接的key即可</p>
 <h3 id="算法相关"><a href="#算法相关" class="headerlink" title="算法相关"></a>算法相关</h3><p><strong>判断一个数字是否为快乐数字(重要程度:★☆☆☆☆)</strong></p>
 <p>leetcode第202题<br><a href="https://leetcode.com/problems/happy-number/" target="_blank" rel="external">链接</a></p>
 <p><strong>给定一个乱序数组和一个目标数字 找到和为这个数字的两个数字 时间复杂度是多少(重要程度:★☆☆☆☆)</strong></p>
@@ -322,9 +324,12 @@ var _hmt = _hmt || [];
 <p><strong>地铁票价是如何计算的(重要程度:★★☆☆☆)</strong></p>
 <p>不知道正确答案，感觉是图的最短路径算法相关的。</p>
 <h3 id="Elasticsearch相关"><a href="#Elasticsearch相关" class="headerlink" title="Elasticsearch相关"></a>Elasticsearch相关</h3><p><strong>为什么要用Elasticsearch</strong><br>其实对Es的了解还是比较少的，因为没做多久就去写坑爹代理商了😖。个人觉得项目中用Es的原因一是可以做分词，二是Es中采用的是倒排索引所以性能比较好，三是Es是个分布式的搜索服务，对各个节点的配置还是很简单方便的</p>
-<p><strong>Elasticsearch中的数据来源是什么，如何做同步</strong><br>数据是来自其他部门的数据库，会在一开始写python脚本做全量更新，之后利用RabbitMQ做增量更新，就是数据更改之后，数据提供方将更改的数据插入到指定消息队列，由对应的消费者索引到Es中</p>
-<p><strong>接上个问题，利用消息队列是会对对方代码造成侵入的，还有没有别的方式</strong><br>还可以读MySQL的binlog</p>
-<h3 id="发散思维的题"><a href="#发散思维的题" class="headerlink" title="发散思维的题"></a>发散思维的题</h3><p>以下题都是没有正确答案的，不知道是想考思维，还是压力面试，就只写题目，不写回答了。。。<br><strong>画一下心中房树人的关系(重要程度:★☆☆☆☆)</strong><br><strong>给你一块地建房如何规划(重要程度:★☆☆☆☆)</strong><br><strong>估计二号线有几辆车在运行(重要程度:★☆☆☆☆)</strong></p>
+<p><strong>Elasticsearch中的数据来源是什么，如何做同步</strong></p>
+<p>数据是来自其他部门的数据库，会在一开始写python脚本做全量更新，之后利用RabbitMQ做增量更新，就是数据更改之后，数据提供方将更改的数据插入到指定消息队列，由对应的消费者索引到Es中</p>
+<p><strong>接上个问题，利用消息队列是会对对方代码造成侵入的，还有没有别的方式</strong></p>
+<p>还可以读MySQL的binlog</p>
+<h3 id="发散思维的题"><a href="#发散思维的题" class="headerlink" title="发散思维的题"></a>发散思维的题</h3><p>以下题都是没有正确答案的，不知道是想考思维，还是压力面试，就只写题目，不写回答了。。。</p>
+<p><strong>画一下心中房树人的关系(重要程度:★☆☆☆☆)</strong><br><strong>给你一块地建房如何规划(重要程度:★☆☆☆☆)</strong><br><strong>估计二号线有几辆车在运行(重要程度:★☆☆☆☆)</strong></p>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><strong>Thrift通信协议</strong></p>
 <p>这个问题被问了两遍，然而现在还是不知道。。。什么东西都不能停留在只会用的阶段啊~</p>
 <p><strong>了不了解微服务</strong></p>
@@ -335,7 +340,7 @@ var _hmt = _hmt || [];
 <p>被问了n遍，挺不好回答的一个问题，毕竟不算实习期工作还没满一年，这个时候跳槽很容易让人觉得不安稳。。。。</p>
 <p><strong>对公司还有什么问题</strong></p>
 <p>基本每轮面试结束都会问的一个问题，一开始也没当回事，直到有家公司居然挂在四面的这个问题上，我也是蛮醉的😂，果然言多必失啊🌝。。。</p>
-<p><strong>在<em>*</em>公司最大的收获是什么</strong></p>
+<p><strong>在***公司最大的收获是什么</strong></p>
 <p>对于我来说，觉得最大的收获就是对企业级的应用有了一个大致的了解，企业里的项目不像学校的课程作业，只要jdbc连接数据库完成功能就可以了，企业的项目要考虑很多东西，比如说为了提高可用性，要部署在多台服务器上，用nginx做负载均衡，还有就是用缓存，异步之类来提高接口性能。然后，也是第一次接触到SOA，这种面向服务的架构。也了解到一个好的应用，除了开发本身，一些自动化发布系统和监控系统也是必不可少的。当然，还认识了一群三观合的小伙伴~~~</p>
 <blockquote>
 <p>未完待续。。。。暂时只想到这些。。。后天就要入职了，想想还有点小紧张呢，去看学叔推荐的美剧压压惊。。。</p>
@@ -350,7 +355,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/06/05/interview/" data-id="cip2h1ywg000q3y7b0275sjcb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/06/05/interview/" data-id="cip2hgh0m000u637b1akv3zdw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
