@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yemengying.com/2016/06/05/interview/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
-<meta property="og:updated_time" content="2016-06-05T11:25:13.000Z">
+<meta property="og:updated_time" content="2016-06-05T13:40:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试总结">
 <meta name="twitter:description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
@@ -323,7 +323,8 @@ var _hmt = _hmt || [];
 <p>利用队列就可以了</p>
 <p><strong>地铁票价是如何计算的(重要程度:★★☆☆☆)</strong></p>
 <p>不知道正确答案，感觉是图的最短路径算法相关的。</p>
-<h3 id="Elasticsearch相关"><a href="#Elasticsearch相关" class="headerlink" title="Elasticsearch相关"></a>Elasticsearch相关</h3><p><strong>为什么要用Elasticsearch(重要程度:★★★★☆)</strong><br>其实对Es的了解还是比较少的，因为没做多久就去写坑爹代理商了😖。个人觉得项目中用Es的原因一是可以做分词，二是Es中采用的是倒排索引所以性能比较好，三是Es是个分布式的搜索服务，对各个节点的配置还是很简单方便的</p>
+<h3 id="Elasticsearch相关"><a href="#Elasticsearch相关" class="headerlink" title="Elasticsearch相关"></a>Elasticsearch相关</h3><p><strong>为什么要用Elasticsearch(重要程度:★★★★☆)</strong></p>
+<p>其实对Es的了解还是比较少的，因为没做多久就去写坑爹代理商了😖。个人觉得项目中用Es的原因一是可以做分词，二是Es中采用的是倒排索引所以性能比较好，三是Es是个分布式的搜索服务，对各个节点的配置还是很简单方便的</p>
 <p><strong>Elasticsearch中的数据来源是什么，如何做同步(重要程度:★★★★☆)</strong></p>
 <p>数据是来自其他部门的数据库，会在一开始写python脚本做全量更新，之后利用RabbitMQ做增量更新，就是数据更改之后，数据提供方将更改的数据插入到指定消息队列，由对应的消费者索引到Es中</p>
 <p><strong>接上个问题，利用消息队列是会对对方代码造成侵入的，还有没有别的方式(重要程度:★★★☆☆)</strong></p>
@@ -361,7 +362,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/06/05/interview/" data-id="cip2i596w000sag7b30mh7fiq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/06/05/interview/" data-id="cip2myqru001epu7bbvxhbwzt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

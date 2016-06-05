@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-06-05T11:25:13.000Z</updated>
+  <updated>2016-06-05T13:40:00.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/06/05/interview/"/>
     <id>http://yemengying.com/2016/06/05/interview/</id>
     <published>2016-06-05T02:12:59.000Z</published>
-    <updated>2016-06-05T11:25:13.000Z</updated>
+    <updated>2016-06-05T13:40:00.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
@@ -89,7 +89,8 @@
 &lt;p&gt;利用队列就可以了&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;地铁票价是如何计算的(重要程度:★★☆☆☆)&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;不知道正确答案，感觉是图的最短路径算法相关的。&lt;/p&gt;
-&lt;h3 id=&quot;Elasticsearch相关&quot;&gt;&lt;a href=&quot;#Elasticsearch相关&quot; class=&quot;headerlink&quot; title=&quot;Elasticsearch相关&quot;&gt;&lt;/a&gt;Elasticsearch相关&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;为什么要用Elasticsearch(重要程度:★★★★☆)&lt;/strong&gt;&lt;br&gt;其实对Es的了解还是比较少的，因为没做多久就去写坑爹代理商了😖。个人觉得项目中用Es的原因一是可以做分词，二是Es中采用的是倒排索引所以性能比较好，三是Es是个分布式的搜索服务，对各个节点的配置还是很简单方便的&lt;/p&gt;
+&lt;h3 id=&quot;Elasticsearch相关&quot;&gt;&lt;a href=&quot;#Elasticsearch相关&quot; class=&quot;headerlink&quot; title=&quot;Elasticsearch相关&quot;&gt;&lt;/a&gt;Elasticsearch相关&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;为什么要用Elasticsearch(重要程度:★★★★☆)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其实对Es的了解还是比较少的，因为没做多久就去写坑爹代理商了😖。个人觉得项目中用Es的原因一是可以做分词，二是Es中采用的是倒排索引所以性能比较好，三是Es是个分布式的搜索服务，对各个节点的配置还是很简单方便的&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Elasticsearch中的数据来源是什么，如何做同步(重要程度:★★★★☆)&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;数据是来自其他部门的数据库，会在一开始写python脚本做全量更新，之后利用RabbitMQ做增量更新，就是数据更改之后，数据提供方将更改的数据插入到指定消息队列，由对应的消费者索引到Es中&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;接上个问题，利用消息队列是会对对方代码造成侵入的，还有没有别的方式(重要程度:★★★☆☆)&lt;/strong&gt;&lt;/p&gt;
