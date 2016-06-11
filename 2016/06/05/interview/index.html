@@ -8,16 +8,16 @@
     <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
     <title>面试总结 | Giraffe&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
+    <meta name="description" content="从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试总结">
 <meta property="og:url" content="http://yemengying.com/2016/06/05/interview/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
-<meta property="og:description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
-<meta property="og:updated_time" content="2016-06-05T13:40:00.000Z">
+<meta property="og:description" content="从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
+<meta property="og:updated_time" content="2016-06-11T11:07:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试总结">
-<meta name="twitter:description" content="从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
+<meta name="twitter:description" content="从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~">
     
 
     
@@ -257,7 +257,7 @@ var _hmt = _hmt || [];
                 </div>
             
             <blockquote>
-<p>从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~</p>
+<p>从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~</p>
 </blockquote>
 <a id="more"></a>
 <h3 id="Java相关"><a href="#Java相关" class="headerlink" title="Java相关"></a>Java相关</h3><p><strong>Java GC机制(重要程度:★★★★★)</strong></p>
@@ -277,6 +277,7 @@ var _hmt = _hmt || [];
 <p>悲观锁，就是总觉得有刁民想害朕，每次访问数据的时候都觉得会有别人修改它，所以每次拿数据时都会上锁，确保在自己使用的过程中不会被他人访问。乐观锁就是很单纯，心态好，所以每次拿数据的时候都不会上锁，只是在更新数据的时候去判断该数据是否被别人修改过。<br>大多数的关系数据库写入操作都是基于悲观锁，缺点在于如果持有锁的客户端运行的很慢，那么等待解锁的客户端被阻塞的时间就越长。Redis的事务是基于乐观锁的机制，不会在执行WATCH命令时对数据进行加锁，只是会在数据已经被其他客户端抢先修改了的情况下，通知执行WATCH命令的客户端。乐观锁适用于读多写少的情况，因为在写操作比较频繁的时候，会不断地retry，从而降低性能。<br>参考资料：<br><a href="https://yq.aliyun.com/articles/1273" target="_blank" rel="external">关于悲观锁和乐观锁的区别</a><br><a href="http://www.cnblogs.com/guyufei/archive/2011/01/10/1931632.html" target="_blank" rel="external">乐观锁和悲观锁</a></p>
 <p><strong>单例模式找错误(重要程度:★★★★☆)</strong></p>
 <p>错误是没有将构造函数私有化，单例还是比较简单的，把它的饿汉式和懒汉式的两种实现方式看明白了就可以了。<br><a href="https://quanke.gitbooks.io/design-pattern-java/content/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-Singleton%20Pattern.html" target="_blank" rel="external">单例模式</a></p>
+<p>__</p>
 <h3 id="Spring相关"><a href="#Spring相关" class="headerlink" title="Spring相关"></a>Spring相关</h3><p>关于Spring的问题主要就是围绕着Ioc和AOP，它们真是Spring的核心啊。</p>
 <p><strong>Spring Bean的生命周期(重要程度:★★★★★)</strong></p>
 <p>就不写我那么low的回答了，直接看参考资料吧。<br>参考资料：<br><a href="http://www.cnblogs.com/zrtqsk/p/3735273.html" target="_blank" rel="external">Spring Bean的生命周期</a><br><a href="http://javarevisited.blogspot.jp/2011/09/spring-interview-questions-answers-j2ee.html" target="_blank" rel="external">Top 10 Spring Interview Questions Answers J2EE</a></p>
@@ -362,7 +363,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/06/05/interview/" data-id="cip2myqru001epu7bbvxhbwzt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/06/05/interview/" data-id="cipb26hq9000hjw7b8dcnfjsg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-06-05T13:40:00.000Z</updated>
+  <updated>2016-06-11T11:07:59.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://yemengying.com/2016/06/05/interview/"/>
     <id>http://yemengying.com/2016/06/05/interview/</id>
     <published>2016-06-05T02:12:59.000Z</published>
-    <updated>2016-06-05T13:40:00.000Z</updated>
+    <updated>2016-06-11T11:07:59.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
+&lt;p&gt;从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;Java相关&quot;&gt;&lt;a href=&quot;#Java相关&quot; class=&quot;headerlink&quot; title=&quot;Java相关&quot;&gt;&lt;/a&gt;Java相关&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Java GC机制(重要程度:★★★★★)&lt;/strong&gt;&lt;/p&gt;
@@ -43,6 +43,7 @@
 &lt;p&gt;悲观锁，就是总觉得有刁民想害朕，每次访问数据的时候都觉得会有别人修改它，所以每次拿数据时都会上锁，确保在自己使用的过程中不会被他人访问。乐观锁就是很单纯，心态好，所以每次拿数据的时候都不会上锁，只是在更新数据的时候去判断该数据是否被别人修改过。&lt;br&gt;大多数的关系数据库写入操作都是基于悲观锁，缺点在于如果持有锁的客户端运行的很慢，那么等待解锁的客户端被阻塞的时间就越长。Redis的事务是基于乐观锁的机制，不会在执行WATCH命令时对数据进行加锁，只是会在数据已经被其他客户端抢先修改了的情况下，通知执行WATCH命令的客户端。乐观锁适用于读多写少的情况，因为在写操作比较频繁的时候，会不断地retry，从而降低性能。&lt;br&gt;参考资料：&lt;br&gt;&lt;a href=&quot;https://yq.aliyun.com/articles/1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;关于悲观锁和乐观锁的区别&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.cnblogs.com/guyufei/archive/2011/01/10/1931632.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;乐观锁和悲观锁&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;单例模式找错误(重要程度:★★★★☆)&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;错误是没有将构造函数私有化，单例还是比较简单的，把它的饿汉式和懒汉式的两种实现方式看明白了就可以了。&lt;br&gt;&lt;a href=&quot;https://quanke.gitbooks.io/design-pattern-java/content/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-Singleton%20Pattern.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;单例模式&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;__&lt;/p&gt;
 &lt;h3 id=&quot;Spring相关&quot;&gt;&lt;a href=&quot;#Spring相关&quot; class=&quot;headerlink&quot; title=&quot;Spring相关&quot;&gt;&lt;/a&gt;Spring相关&lt;/h3&gt;&lt;p&gt;关于Spring的问题主要就是围绕着Ioc和AOP，它们真是Spring的核心啊。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Spring Bean的生命周期(重要程度:★★★★★)&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;就不写我那么low的回答了，直接看参考资料吧。&lt;br&gt;参考资料：&lt;br&gt;&lt;a href=&quot;http://www.cnblogs.com/zrtqsk/p/3735273.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spring Bean的生命周期&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://javarevisited.blogspot.jp/2011/09/spring-interview-questions-answers-j2ee.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Top 10 Spring Interview Questions Answers J2EE&lt;/a&gt;&lt;/p&gt;
@@ -123,7 +124,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;从决定离职开始，前前后后面试了5家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
+&lt;p&gt;从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>
@@ -761,9 +762,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
