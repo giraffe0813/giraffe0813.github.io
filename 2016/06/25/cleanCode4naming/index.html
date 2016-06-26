@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yemengying.com/2016/06/25/cleanCode4naming/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。">
-<meta property="og:updated_time" content="2016-06-26T07:53:46.000Z">
+<meta property="og:updated_time" content="2016-06-26T08:02:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】如何给变量取个简短且无歧义的名字">
 <meta name="twitter:description" content="湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。">
@@ -311,7 +311,7 @@ var _hmt = _hmt || [];
 <p>方法是包含在<code>WaffleObject</code>类中的，所以方法名中无需Waffle的说明：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WaffleObject</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">garnish</span><span class="params">(List&lt;Strawberry&gt; strawberries)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>很明显它是一个对象，任何事物都是一个对象，这也就是传说中的“面向对象”的含义，所以命名中无需带有<code>Object</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Waffle</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">garnish</span><span class="params">(List&lt;Strawberry&gt; strawberries)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>好了，这样看起来好多了。</p>
-<p>以上就是我总结的相当简洁的命名原则。可能有些人会觉得无需在命名上耗费太多的精力，但我认为命名是开发过程中最基本的任务之一。<br>————————————-我是萌萌哒分界线—————————————————————-<br>感觉变量或者方法的命名，看似简单，实际很难，特别是想一个简洁明了可读性高的命名。自己也经常用什么<code>data</code>,<code>xxxlist</code>来命名，作者说的挺对的，前者没什么意义，后者又有点啰嗦。不过对于集合类型的变量，统一用名词复数命名容易混淆。举个例子对于Apple这个类来说，可能存在List<apple>和Map<integer,apple>两种集合类型的变量。个人觉得对List类型的变量可以采用名词复数来命名，Map类型的变量可以采用valueByKey格式来命名，比较容易区分。</integer,apple></apple></p>
+<p>以上就是我总结的相当简洁的命名原则。可能有些人会觉得无需在命名上耗费太多的精力，但我认为命名是开发过程中最基本的任务之一。<br>————————————————–我是萌萌哒分界线—————————————————————-<br>感觉变量或者方法的命名，看似简单，实际很难，特别是想一个简洁明了可读性高的命名。自己也经常用什么<code>data</code>,<code>xxxlist</code>来命名，作者说的挺对的，前者没什么意义，后者又有点啰嗦。不过对于集合类型的变量，统一用名词复数命名容易混淆。举个例子对于Apple这个类来说，可能存在List<apple>和Map<integer,apple>两种集合类型的变量。个人觉得对List类型的变量可以采用名词复数来命名，Map类型的变量可以采用valueByKey格式来命名，比较容易区分。</integer,apple></apple></p>
 <blockquote>
 <p>欢迎指正错误，欢迎一起讨论~~~</p>
 </blockquote>
@@ -325,7 +325,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/06/25/cleanCode4naming/" data-id="cipwaxm2t000mhe7bod8lad0f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/06/25/cleanCode4naming/" data-id="cipwb5rwx000eio7bb1ke10mo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
