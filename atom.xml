@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-06-11T11:07:59.000Z</updated>
+  <updated>2016-06-26T07:53:46.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,89 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【译】如何给变量取个简短且无歧义的名字</title>
+    <link href="http://yemengying.com/2016/06/25/%E3%80%90%E8%AF%91%E3%80%91%E5%A6%82%E4%BD%95%E7%BB%99%E5%8F%98%E9%87%8F%E5%8F%96%E4%B8%AA%E7%AE%80%E7%9F%AD%E4%B8%94%E6%97%A0%E6%AD%A7%E4%B9%89%E7%9A%84%E5%90%8D%E5%AD%97/"/>
+    <id>http://yemengying.com/2016/06/25/【译】如何给变量取个简短且无歧义的名字/</id>
+    <published>2016-06-25T08:23:39.000Z</published>
+    <updated>2016-06-26T07:53:46.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;原文地址（康桑阿米达）：&lt;a href=&quot;http://journal.stuffwithstuff.com/2016/06/16/long-names-are-long/?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=website&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://journal.stuffwithstuff.com/2016/06/16/long-names-are-long/?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=website&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;google做的最明智的规定之一就是严格执行code review。每一个改动在上线之前，都要经过两种形式的review。首先，团队中的人会进行常规的review，以确保代码完成了它应该完成的功能。&lt;/p&gt;
+&lt;p&gt;接下来还会进行可读性层面的review。顾名思义，它是为了确保代码是可读性高的：是否利于理解和维护？是否符合该编程语言的一些惯例？是否有良好的文档？&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.dartlang.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Dart&lt;/a&gt;已经开始google内部使用，所以我有幸参与了n次上面类型的code review。作为该语言的设计者，这是一项令人着迷的工作。我可以直接看到人们是如何使用Dart的，这对语言的进一步发展很有帮助。在reivew的同时，我也能够清晰的了解到那些比较常见的错误和使用最多的特性，我就好像是一个记录本地居民生活的人类学者。&lt;/p&gt;
+&lt;p&gt;当然，上面说的与本文的主旨无关，这并不是一篇关于Dart的文章。本文主要是想讨论我看到过的一些令人抓狂的代码：&lt;strong&gt;这些代码的变量命名实在是太尼玛的长了。。。。。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;是的，变量的名称可以很短。回到当C语言中外部标识符仅需要由前六个字符来唯一的区分; 自动补全功能还没有发明; 每次按键盘都像在雪地上坡一样艰难的时候,长的命名就会带来很多问题。不过幸运的是，我们现在生活的世界太美好了，键盘操作变得如此简单。&lt;/p&gt;
+&lt;p&gt;但我们现在似乎走上了另一个极端，我们不应该做海明威，但我们也无需成为田纳西·威廉斯。代码中使用了超长的命名会影响代码的清晰性。同时，超长的变量命名会造成换行，这会影响代码的结构，不易于阅读。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;长的类名会使开发者不易声明该类型的变量。&lt;/li&gt;
+&lt;li&gt;长的方法命名会使它变得晦涩难懂.&lt;/li&gt;
+&lt;li&gt;长的变量命名不利于代码重用，导致过长的方法链。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我曾见过超过60个字符的变量命名,你甚至可以写首诗。别慌，下面我们来看看如何解决这一问题。&lt;/p&gt;
+&lt;h3 id=&quot;选择一个好的命名&quot;&gt;&lt;a href=&quot;#选择一个好的命名&quot; class=&quot;headerlink&quot; title=&quot;选择一个好的命名&quot;&gt;&lt;/a&gt;选择一个好的命名&lt;/h3&gt;&lt;p&gt;命名有两个目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;清晰：你要知道该命名与什么有关&lt;/li&gt;
+&lt;li&gt;精确：你要知道该命名与什么无关&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当一个命名完成上面两个目标之后，其余的字符就是多余的了。下面是我在开发时的一些命名原则：&lt;/p&gt;
+&lt;h4 id=&quot;命名中无需含有表示变量或参数类型的单词&quot;&gt;&lt;a href=&quot;#命名中无需含有表示变量或参数类型的单词&quot; class=&quot;headerlink&quot; title=&quot;命名中无需含有表示变量或参数类型的单词&quot;&gt;&lt;/a&gt;命名中无需含有表示变量或参数类型的单词&lt;/h4&gt;&lt;p&gt;如果使用如Java之类的静态类型语言, 开发者通常知道变量的类型. 由于方法的实现一般都比较简短, 所以即便是在查看一个需要推断才知道类型的本地变量, 或者在code review等静态分析器不可用的情况下, 我们也可以通过多看很少的几行代码就能知道变量的类型.&lt;/p&gt;
+&lt;p&gt;所以将类型说明加入到变量名中是多余的. 我们应该舍弃&lt;a href=&quot;https://en.wikipedia.org/wiki/Hungarian_notation&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;匈牙利命名法&lt;/a&gt;，如下：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 不好的:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String nameString;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DockableModelessWindow dockableModelessWindow;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 改进:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String name;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DockableModelessWindow window;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;特别是对于集合来说，最好使用名词的复数形式来描述其内容, 而不是使用名词的单数形式来描述. 如果开发者更在乎集合中存储的内容, 那么变量命名应当反映这一点。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 不好的:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;List&amp;lt;DateTime&amp;gt; holidayDateList;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Map&amp;lt;Employee, Role&amp;gt; employeeRoleHashMap;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 改进:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;List&amp;lt;DateTime&amp;gt; holidays;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Map&amp;lt;Employee, Role&amp;gt; employeeRoles;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这一点也同样适用于方法的命名。方法名不需要描述它的参数及参数的类型–参数列表已经说明了这些。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 不好的:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mergeTableCells(List&amp;lt;TableCell&amp;gt; cells)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sortEventsUsingComparator(List&amp;lt;Event&amp;gt; events,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Comparator&amp;lt;Event&amp;gt; comparator)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 改进:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;merge(List&amp;lt;TableCell&amp;gt; cells)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sort(List&amp;lt;Event&amp;gt; events, Comparator&amp;lt;Event&amp;gt; comparator)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这样可以帮助调用者更好的阅读：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mergeTableCells(tableCells);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sortEventsUsingComparator(events, comparator);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当然，这只是我个人的看法，欢迎大家一起讨论~~&lt;/p&gt;
+&lt;h4 id=&quot;省略命名中不是用来消除歧义的单词&quot;&gt;&lt;a href=&quot;#省略命名中不是用来消除歧义的单词&quot; class=&quot;headerlink&quot; title=&quot;省略命名中不是用来消除歧义的单词&quot;&gt;&lt;/a&gt;省略命名中不是用来消除歧义的单词&lt;/h4&gt;&lt;p&gt;有些开发者倾向于将他们知道的有关这个变量的所有信息都塞到命名里。要记住，命名只是一个标识符：只是告诉你该变量是在哪定义的。并不是用来告诉阅读者所有他们想知道的有关这个对象的详细信息。这是定义应该做的事情的。 命名只是让你找到他的定义。&lt;/p&gt;
+&lt;p&gt;当我看到一个叫&lt;code&gt;recentlyUpdatedAnnualSalesBid&lt;/code&gt;(最近更新的全年销售投标)的标识符时，我会问：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;存在不是最近更新的全年销售投标么？&lt;/li&gt;
+&lt;li&gt;存在没有被更新的最近的全年销售投标么？&lt;/li&gt;
+&lt;li&gt;存在最近更新的非全年的销售投标么？&lt;/li&gt;
+&lt;li&gt;存在最近更新的全年非销售的投标么？&lt;/li&gt;
+&lt;li&gt;存在最近更新的全年销售非投标的东东吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面任何一个问题的回答是“不存在”，就意味着命名中引入了无用的单词。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 不好的:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;finalBattleMostDangerousBossMonster;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;weaklingFirstEncounterMonster;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 改进:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;boss;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;firstMonster;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当然，你可能会觉得这有一些过了。比如将第一个例子的标识符简化为&lt;code&gt;bid&lt;/code&gt;,会让人觉得有点模糊不清。但你可以放心大胆的这样做，如果在之后的开发中觉得该命名会造成冲突或不明确，可以添加些修饰词来完善它。反之，如果一开始就取了一个很长的命名，你是不可能在之后重新回来简化它的。&lt;/p&gt;
+&lt;h4 id=&quot;省略命名中可以从上下文获取的单词&quot;&gt;&lt;a href=&quot;#省略命名中可以从上下文获取的单词&quot; class=&quot;headerlink&quot; title=&quot;省略命名中可以从上下文获取的单词&quot;&gt;&lt;/a&gt;省略命名中可以从上下文获取的单词&lt;/h4&gt;&lt;p&gt;我可以在文章中使用”我”，因为读者都知道这是一篇由Bob Nystrom所做的博客。我蠢萌的脸就挂在那，我无需不停的说我的名字。写代码也是一样，类中的方法/属性和方法中的变量，都是存在在上下文中的，无需重复。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Bad:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnnualHolidaySale&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; _annualSaleRebate;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;promoteHolidaySale&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Better:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnnualHolidaySale&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; _rebate;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;promote&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;实际上, 一个命名嵌套的层次越多, 它就有更多的相关的上下文，也就更简短。换句话说，一个变量的作用域越小，命名就越短。&lt;/p&gt;
+&lt;h4 id=&quot;省略命名中无任何含义的单词&quot;&gt;&lt;a href=&quot;#省略命名中无任何含义的单词&quot; class=&quot;headerlink&quot; title=&quot;省略命名中无任何含义的单词&quot;&gt;&lt;/a&gt;省略命名中无任何含义的单词&lt;/h4&gt;&lt;p&gt;我常常在许多游戏开发中看到包含无任何含义的单词的命名，一些开发者喜欢在命名中添加一些看起来有点严肃的单词。我猜可能他们觉得这样做可以让他们的代码显得重要，或者说让他们觉得自己更重要。&lt;/p&gt;
+&lt;p&gt;实际上，有一些词语并没有实际意义，只是一些套话。比如：data, state, amount, value, manager, engine, object, entity和instance。&lt;/p&gt;
+&lt;p&gt;一个好的命名能够在阅读者的脑海中描画出一幅图画。而将某变量命名为”manager”并不能向读者传达任何有关该变量是做什么的信息. 它是用来做绩效评估的吗? 它是管理加薪的吗?&lt;/p&gt;
+&lt;p&gt;在命名时可以问一下自己，把这个单词去掉含义是不是不变？如果是，那就果断把它剔除吧~~&lt;/p&gt;
+&lt;h3 id=&quot;实际例子—华夫饼&quot;&gt;&lt;a href=&quot;#实际例子—华夫饼&quot; class=&quot;headerlink&quot; title=&quot;实际例子—华夫饼&quot;&gt;&lt;/a&gt;实际例子—华夫饼&lt;/h3&gt;&lt;p&gt;为了让大家了解以上的命名原则在实际中如何应用，这有个违法了以上所有原则的反例。这个例子和我实际上review过的一段代码一样令人心碎。。。。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 好吃的比利时华夫饼&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;DeliciousBelgianWaffleObject&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;garnishDeliciousBelgianWaffleWithStrawberryList&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      List&amp;lt;Strawberry&amp;gt; strawberryList)&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;首先，通过参数列表我们可以知道方法是用来处理一个strawberry的列表，所以可以在方法命名中去掉：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;DeliciousBelgianWaffleObject&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;garnishDeliciousBelgianWaffle&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        List&amp;lt;Strawberry&amp;gt; strawberries)&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;除非程序中还包含不好吃的比利时华夫饼或者其他国家的华夫饼，不然我们可以将这些无用的形容词去掉：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;WaffleObject&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;garnishWaffle&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(List&amp;lt;Strawberry&amp;gt; strawberries)&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法是包含在&lt;code&gt;WaffleObject&lt;/code&gt;类中的，所以方法名中无需Waffle的说明：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;WaffleObject&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;garnish&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(List&amp;lt;Strawberry&amp;gt; strawberries)&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;很明显它是一个对象，任何事物都是一个对象，这也就是传说中的“面向对象”的含义，所以命名中无需带有&lt;code&gt;Object&lt;/code&gt;：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Waffle&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;garnish&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(List&amp;lt;Strawberry&amp;gt; strawberries)&lt;/span&gt; &lt;/span&gt;&amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;好了，这样看起来好多了。&lt;/p&gt;
+&lt;p&gt;以上就是我总结的相当简洁的命名原则。可能有些人会觉得无需在命名上耗费太多的精力，但我认为命名是开发过程中最基本的任务之一。&lt;br&gt;————————————-我是萌萌哒分界线—————————————————————-&lt;br&gt;感觉变量或者方法的命名，看似简单，实际很难，特别是想一个简洁明了可读性高的命名。自己也经常用什么&lt;code&gt;data&lt;/code&gt;,&lt;code&gt;xxxlist&lt;/code&gt;来命名，作者说的挺对的，前者没什么意义，后者又有点啰嗦。不过对于集合类型的变量，统一用名词复数命名容易混淆。举个例子对于Apple这个类来说，可能存在List&lt;apple&gt;和Map&lt;integer,apple&gt;两种集合类型的变量。个人觉得对List类型的变量可以采用名词复数来命名，Map类型的变量可以采用valueByKey格式来命名，比较容易区分。&lt;/integer,apple&gt;&lt;/apple&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;欢迎指正错误，欢迎一起讨论~~~&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Clean Code" scheme="http://yemengying.com/categories/Clean-Code/"/>
+    
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
   
   <entry>
     <title>面试总结</title>
@@ -762,9 +845,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
-    
       <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
     
   </entry>
   
@@ -2152,167 +2235,6 @@
 &lt;/blockquote&gt;
 &lt;p&gt; 相关博客:&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/&quot;&gt;Linux Bible 9th Edition之使用shell&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/&quot;&gt;Linux Bible 9th Edition之进程大法好&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/霸气的喵喵.jpg&quot; alt=&quot;霸气的喵喵&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="http://yemengying.com/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://yemengying.com/tags/linux/"/>
-    
-      <category term="读书笔记" scheme="http://yemengying.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>读书笔记-Linux Bible 9th Edition之使用shell</title>
-    <link href="http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/"/>
-    <id>http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/</id>
-    <published>2015-11-23T08:23:32.000Z</published>
-    <updated>2016-05-09T12:47:45.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;其实也不算读书笔记 主要是想整理一下常用的一些linux命令 &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt; 相关博客:&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&quot;&gt;Linux Bible 9th Edition之文件系统&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/&quot;&gt;Linux Bible 9th Edition之进程大法好&lt;/a&gt;&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;img src=&quot;/images/doge.jpg&quot; alt=&quot;doge&quot;&gt;&lt;/p&gt;
-&lt;h4 id=&quot;linux命令的一些语法&quot;&gt;&lt;a href=&quot;#linux命令的一些语法&quot; class=&quot;headerlink&quot; title=&quot;linux命令的一些语法&quot;&gt;&lt;/a&gt;linux命令的一些语法&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;$&lt;/em&gt;提示符代表普通用户 &lt;em&gt;#&lt;/em&gt;提示符代表root用户。 大多数命令都有许多选项 选项通常由单一字符和连字符组成(eg:ls -a),还有选项是由一个单词代表,需在单词前加双连字符(eg:date - -help)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&quot;获得当前登录会话的一些信息&quot;&gt;&lt;a href=&quot;#获得当前登录会话的一些信息&quot; class=&quot;headerlink&quot; title=&quot;获得当前登录会话的一些信息&quot;&gt;&lt;/a&gt;获得当前登录会话的一些信息&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ who &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ who am i &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ who -uH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;查看服务器上的时间&quot;&gt;&lt;a href=&quot;#查看服务器上的时间&quot; class=&quot;headerlink&quot; title=&quot;查看服务器上的时间&quot;&gt;&lt;/a&gt;查看服务器上的时间&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ date&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ date +&lt;span class=&quot;string&quot;&gt;&#39;%d/%m/%y&#39;&lt;/span&gt;(以10/12/14的格式输出)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;当前的目录&quot;&gt;&lt;a href=&quot;#当前的目录&quot; class=&quot;headerlink&quot; title=&quot;当前的目录&quot;&gt;&lt;/a&gt;当前的目录&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;pwd&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;获得hostname&quot;&gt;&lt;a href=&quot;#获得hostname&quot; class=&quot;headerlink&quot; title=&quot;获得hostname&quot;&gt;&lt;/a&gt;获得hostname&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hostname&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;列出当前目录下的文件和目录&quot;&gt;&lt;a href=&quot;#列出当前目录下的文件和目录&quot; class=&quot;headerlink&quot; title=&quot;列出当前目录下的文件和目录&quot;&gt;&lt;/a&gt;列出当前目录下的文件和目录&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ls&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls &lt;span class=&quot;_&quot;&gt;-l&lt;/span&gt;(列出详细信息) &lt;span class=&quot;_&quot;&gt;-a&lt;/span&gt;(列出包括.开头的隐含文件在内的所有文件) -t(按时间排序)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;查看uid-gid&quot;&gt;&lt;a href=&quot;#查看uid-gid&quot; class=&quot;headerlink&quot; title=&quot;查看uid gid&quot;&gt;&lt;/a&gt;查看uid gid&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ id&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;LINUX如何定位命令&quot;&gt;&lt;a href=&quot;#LINUX如何定位命令&quot; class=&quot;headerlink&quot; title=&quot;LINUX如何定位命令&quot;&gt;&lt;/a&gt;LINUX如何定位命令&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;可通过&lt;em&gt;echo $PATH&lt;/em&gt;命令查看PATH环境变量的值，如果命令存放的目录包含在PATH中，可直接输入命令运行。如果不包含则需给出命令的位置(eg:绝对位置:/home/chris/scriptx.sh,相对位置:./scriptx.sh) shell检查输入命令的顺序：1.Aliases(别名) 2.Reserved word(保留的关键字) 3.Function 4.Build-in command(eg:cd/echo/exit/type..) 5.Filesystem&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#查看一个命令的位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;type&lt;/span&gt; bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#打印PATH环境变量的值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$PATH&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;在文件系统中查找&quot;&gt;&lt;a href=&quot;#在文件系统中查找&quot; class=&quot;headerlink&quot; title=&quot;在文件系统中查找&quot;&gt;&lt;/a&gt;在文件系统中查找&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ locate ymy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;查看历史输入的命令-修改命令&quot;&gt;&lt;a href=&quot;#查看历史输入的命令-修改命令&quot; class=&quot;headerlink&quot; title=&quot;查看历史输入的命令,修改命令&quot;&gt;&lt;/a&gt;查看历史输入的命令,修改命令&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;可以用&lt;em&gt;history&lt;/em&gt;命令查看之前输入过的所有命令,之后可以通过!+行号 运行指定一行的命令。向上箭头(↑)可查看最近一条命令,下面是修改命令的一些快捷按键。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;快捷键&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;作用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+A&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将光标定位到命令的最前面&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+E&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将光标定位到命令的最后面&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+L&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;清空屏幕，将命令置为最上面&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+F或 →&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将光标后移&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+B或 ←&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将光标前移&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+F&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将光标后移一个单词&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+B&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将光标前移一个单词&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+D&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;删除当前字符&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;backspace&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;删除前一个字符&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+T&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将当前字符和前一个字符对换&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+T&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将当前单词和前一个单词对换&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+U&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将当前单词变成大写&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+L&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将当前单词变成小写&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+K&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;剪切从光标位置到最后&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+U&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;剪切从光标位置到最前&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+W&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;剪切前一个单词&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+D&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;剪切后一个单词&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ctrl+Y&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;粘贴最近复制的内容&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;alt+Y&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;粘贴最前复制的内容&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;tab&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;补全命令&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&quot;连接和扩展命令&quot;&gt;&lt;a href=&quot;#连接和扩展命令&quot; class=&quot;headerlink&quot; title=&quot;连接和扩展命令&quot;&gt;&lt;/a&gt;连接和扩展命令&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;管道符号 “|”&lt;br&gt;将前一个命令的输出作为下一个命令的输入&lt;br&gt;eg:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ cat /etc/passwd | sort |less&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;命令分隔符 “;”&lt;br&gt;在一行语句中 顺次执行各个命令&lt;br&gt;eg: &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#可获得troff命令的执行时间&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ date; troff -me verylargedocument|lpr ; date&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;后台进程符 “&amp;amp;”&lt;br&gt;如果不希望shell一直被一个命令占用着，可以使用”&amp;amp;”让命令在后台运行&lt;br&gt;eg:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ troff -me verylargedocument | lpr &amp;amp;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;使用数学表达式/命令的结果 “$[]”/“$()”&lt;br&gt;可以在一个命令中使用数学表达式或另一个命令的结果&lt;br&gt;eg:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;I am $[2015 - 1993] years old&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;there are &lt;span class=&quot;variable&quot;&gt;$(ls | wc -w)&lt;/span&gt; files in this directory&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;变量调用符号 “$”&lt;br&gt;eg:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$USER&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;创建和使用别名&quot;&gt;&lt;a href=&quot;#创建和使用别名&quot; class=&quot;headerlink&quot; title=&quot;创建和使用别名&quot;&gt;&lt;/a&gt;创建和使用别名&lt;/h4&gt;&lt;p&gt;使用&lt;em&gt;alias&lt;/em&gt;命令，可以给任何的命令及选项取一个别名&lt;br&gt;eg:&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#为命令pwd取别名ymy&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; ymy=&lt;span class=&quot;string&quot;&gt;&#39;pwd&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#查看所有的别名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#删除别名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;unalias&lt;/span&gt; ymy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;退出shell&quot;&gt;&lt;a href=&quot;#退出shell&quot; class=&quot;headerlink&quot; title=&quot;退出shell&quot;&gt;&lt;/a&gt;退出shell&lt;/h4&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;exit&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;其实也不算读书笔记 主要是想整理一下常用的一些linux命令 &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt; 相关博客:&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&quot;&gt;Linux Bible 9th Edition之文件系统&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/&quot;&gt;Linux Bible 9th Edition之进程大法好&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     

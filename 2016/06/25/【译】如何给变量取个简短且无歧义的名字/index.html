@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>【译】如何给变量取个简短且无歧义的名字 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】如何给变量取个简短且无歧义的名字">
+<meta property="og:url" content="http://yemengying.com/2016/06/25/【译】如何给变量取个简短且无歧义的名字/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。">
+<meta property="og:updated_time" content="2016-06-26T07:53:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】如何给变量取个简短且无歧义的名字">
+<meta name="twitter:description" content="湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/zootopia/judy.jpg" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/zootopia/judy.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/zootopia/judy.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                35
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                31
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    <td><a href="http://github.com/giraffe0813" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                    
+                    <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2016/06/25/【译】如何给变量取个简短且无歧义的名字/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            【译】如何给变量取个简短且无歧义的名字
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/06/25/【译】如何给变量取个简短且无歧义的名字/">
+            <time datetime="2016-06-25T08:23:39.000Z" itemprop="datePublished">2016-06-25</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Clean-Code/">Clean Code</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#选择一个好的命名"><span class="toc-number">1.</span> <span class="toc-text">选择一个好的命名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#命名中无需含有表示变量或参数类型的单词"><span class="toc-number">1.1.</span> <span class="toc-text">命名中无需含有表示变量或参数类型的单词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#省略命名中不是用来消除歧义的单词"><span class="toc-number">1.2.</span> <span class="toc-text">省略命名中不是用来消除歧义的单词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#省略命名中可以从上下文获取的单词"><span class="toc-number">1.3.</span> <span class="toc-text">省略命名中可以从上下文获取的单词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#省略命名中无任何含义的单词"><span class="toc-number">1.4.</span> <span class="toc-text">省略命名中无任何含义的单词</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实际例子—华夫饼"><span class="toc-number">2.</span> <span class="toc-text">实际例子—华夫饼</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p>湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。</p>
+</blockquote>
+<a id="more"></a>
+<p>原文地址（康桑阿米达）：<a href="http://journal.stuffwithstuff.com/2016/06/16/long-names-are-long/?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website" target="_blank" rel="external">http://journal.stuffwithstuff.com/2016/06/16/long-names-are-long/?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website</a></p>
+<p>google做的最明智的规定之一就是严格执行code review。每一个改动在上线之前，都要经过两种形式的review。首先，团队中的人会进行常规的review，以确保代码完成了它应该完成的功能。</p>
+<p>接下来还会进行可读性层面的review。顾名思义，它是为了确保代码是可读性高的：是否利于理解和维护？是否符合该编程语言的一些惯例？是否有良好的文档？</p>
+<p><a href="https://www.dartlang.org/" target="_blank" rel="external">Dart</a>已经开始google内部使用，所以我有幸参与了n次上面类型的code review。作为该语言的设计者，这是一项令人着迷的工作。我可以直接看到人们是如何使用Dart的，这对语言的进一步发展很有帮助。在reivew的同时，我也能够清晰的了解到那些比较常见的错误和使用最多的特性，我就好像是一个记录本地居民生活的人类学者。</p>
+<p>当然，上面说的与本文的主旨无关，这并不是一篇关于Dart的文章。本文主要是想讨论我看到过的一些令人抓狂的代码：<strong>这些代码的变量命名实在是太尼玛的长了。。。。。</strong></p>
+<p>是的，变量的名称可以很短。回到当C语言中外部标识符仅需要由前六个字符来唯一的区分; 自动补全功能还没有发明; 每次按键盘都像在雪地上坡一样艰难的时候,长的命名就会带来很多问题。不过幸运的是，我们现在生活的世界太美好了，键盘操作变得如此简单。</p>
+<p>但我们现在似乎走上了另一个极端，我们不应该做海明威，但我们也无需成为田纳西·威廉斯。代码中使用了超长的命名会影响代码的清晰性。同时，超长的变量命名会造成换行，这会影响代码的结构，不易于阅读。</p>
+<ul>
+<li>长的类名会使开发者不易声明该类型的变量。</li>
+<li>长的方法命名会使它变得晦涩难懂.</li>
+<li>长的变量命名不利于代码重用，导致过长的方法链。</li>
+</ul>
+<p>我曾见过超过60个字符的变量命名,你甚至可以写首诗。别慌，下面我们来看看如何解决这一问题。</p>
+<h3 id="选择一个好的命名"><a href="#选择一个好的命名" class="headerlink" title="选择一个好的命名"></a>选择一个好的命名</h3><p>命名有两个目标：</p>
+<ul>
+<li>清晰：你要知道该命名与什么有关</li>
+<li>精确：你要知道该命名与什么无关</li>
+</ul>
+<p>当一个命名完成上面两个目标之后，其余的字符就是多余的了。下面是我在开发时的一些命名原则：</p>
+<h4 id="命名中无需含有表示变量或参数类型的单词"><a href="#命名中无需含有表示变量或参数类型的单词" class="headerlink" title="命名中无需含有表示变量或参数类型的单词"></a>命名中无需含有表示变量或参数类型的单词</h4><p>如果使用如Java之类的静态类型语言, 开发者通常知道变量的类型. 由于方法的实现一般都比较简短, 所以即便是在查看一个需要推断才知道类型的本地变量, 或者在code review等静态分析器不可用的情况下, 我们也可以通过多看很少的几行代码就能知道变量的类型.</p>
+<p>所以将类型说明加入到变量名中是多余的. 我们应该舍弃<a href="https://en.wikipedia.org/wiki/Hungarian_notation" target="_blank" rel="external">匈牙利命名法</a>，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不好的:</span></span><br><span class="line">String nameString;</span><br><span class="line">DockableModelessWindow dockableModelessWindow;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改进:</span></span><br><span class="line">String name;</span><br><span class="line">DockableModelessWindow window;</span><br></pre></td></tr></table></figure></p>
+<p>特别是对于集合来说，最好使用名词的复数形式来描述其内容, 而不是使用名词的单数形式来描述. 如果开发者更在乎集合中存储的内容, 那么变量命名应当反映这一点。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不好的:</span></span><br><span class="line">List&lt;DateTime&gt; holidayDateList;</span><br><span class="line">Map&lt;Employee, Role&gt; employeeRoleHashMap;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改进:</span></span><br><span class="line">List&lt;DateTime&gt; holidays;</span><br><span class="line">Map&lt;Employee, Role&gt; employeeRoles;</span><br></pre></td></tr></table></figure></p>
+<p>这一点也同样适用于方法的命名。方法名不需要描述它的参数及参数的类型–参数列表已经说明了这些。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不好的:</span></span><br><span class="line">mergeTableCells(List&lt;TableCell&gt; cells)</span><br><span class="line">sortEventsUsingComparator(List&lt;Event&gt; events,</span><br><span class="line">    Comparator&lt;Event&gt; comparator)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改进:</span></span><br><span class="line">merge(List&lt;TableCell&gt; cells)</span><br><span class="line">sort(List&lt;Event&gt; events, Comparator&lt;Event&gt; comparator)</span><br></pre></td></tr></table></figure></p>
+<p>这样可以帮助调用者更好的阅读：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mergeTableCells(tableCells);</span><br><span class="line">sortEventsUsingComparator(events, comparator);</span><br></pre></td></tr></table></figure>
+<p>当然，这只是我个人的看法，欢迎大家一起讨论~~</p>
+<h4 id="省略命名中不是用来消除歧义的单词"><a href="#省略命名中不是用来消除歧义的单词" class="headerlink" title="省略命名中不是用来消除歧义的单词"></a>省略命名中不是用来消除歧义的单词</h4><p>有些开发者倾向于将他们知道的有关这个变量的所有信息都塞到命名里。要记住，命名只是一个标识符：只是告诉你该变量是在哪定义的。并不是用来告诉阅读者所有他们想知道的有关这个对象的详细信息。这是定义应该做的事情的。 命名只是让你找到他的定义。</p>
+<p>当我看到一个叫<code>recentlyUpdatedAnnualSalesBid</code>(最近更新的全年销售投标)的标识符时，我会问：</p>
+<ul>
+<li>存在不是最近更新的全年销售投标么？</li>
+<li>存在没有被更新的最近的全年销售投标么？</li>
+<li>存在最近更新的非全年的销售投标么？</li>
+<li>存在最近更新的全年非销售的投标么？</li>
+<li>存在最近更新的全年销售非投标的东东吗？</li>
+</ul>
+<p>上面任何一个问题的回答是“不存在”，就意味着命名中引入了无用的单词。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不好的:</span></span><br><span class="line">finalBattleMostDangerousBossMonster;</span><br><span class="line">weaklingFirstEncounterMonster;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改进:</span></span><br><span class="line">boss;</span><br><span class="line">firstMonster;</span><br></pre></td></tr></table></figure>
+<p>当然，你可能会觉得这有一些过了。比如将第一个例子的标识符简化为<code>bid</code>,会让人觉得有点模糊不清。但你可以放心大胆的这样做，如果在之后的开发中觉得该命名会造成冲突或不明确，可以添加些修饰词来完善它。反之，如果一开始就取了一个很长的命名，你是不可能在之后重新回来简化它的。</p>
+<h4 id="省略命名中可以从上下文获取的单词"><a href="#省略命名中可以从上下文获取的单词" class="headerlink" title="省略命名中可以从上下文获取的单词"></a>省略命名中可以从上下文获取的单词</h4><p>我可以在文章中使用”我”，因为读者都知道这是一篇由Bob Nystrom所做的博客。我蠢萌的脸就挂在那，我无需不停的说我的名字。写代码也是一样，类中的方法/属性和方法中的变量，都是存在在上下文中的，无需重复。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Bad:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnnualHolidaySale</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> _annualSaleRebate;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">promoteHolidaySale</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Better:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnnualHolidaySale</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> _rebate;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">promote</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上, 一个命名嵌套的层次越多, 它就有更多的相关的上下文，也就更简短。换句话说，一个变量的作用域越小，命名就越短。</p>
+<h4 id="省略命名中无任何含义的单词"><a href="#省略命名中无任何含义的单词" class="headerlink" title="省略命名中无任何含义的单词"></a>省略命名中无任何含义的单词</h4><p>我常常在许多游戏开发中看到包含无任何含义的单词的命名，一些开发者喜欢在命名中添加一些看起来有点严肃的单词。我猜可能他们觉得这样做可以让他们的代码显得重要，或者说让他们觉得自己更重要。</p>
+<p>实际上，有一些词语并没有实际意义，只是一些套话。比如：data, state, amount, value, manager, engine, object, entity和instance。</p>
+<p>一个好的命名能够在阅读者的脑海中描画出一幅图画。而将某变量命名为”manager”并不能向读者传达任何有关该变量是做什么的信息. 它是用来做绩效评估的吗? 它是管理加薪的吗?</p>
+<p>在命名时可以问一下自己，把这个单词去掉含义是不是不变？如果是，那就果断把它剔除吧~~</p>
+<h3 id="实际例子—华夫饼"><a href="#实际例子—华夫饼" class="headerlink" title="实际例子—华夫饼"></a>实际例子—华夫饼</h3><p>为了让大家了解以上的命名原则在实际中如何应用，这有个违法了以上所有原则的反例。这个例子和我实际上review过的一段代码一样令人心碎。。。。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 好吃的比利时华夫饼</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeliciousBelgianWaffleObject</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">garnishDeliciousBelgianWaffleWithStrawberryList</span><span class="params">(</span><br><span class="line">      List&lt;Strawberry&gt; strawberryList)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先，通过参数列表我们可以知道方法是用来处理一个strawberry的列表，所以可以在方法命名中去掉：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeliciousBelgianWaffleObject</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">garnishDeliciousBelgianWaffle</span><span class="params">(</span><br><span class="line">        List&lt;Strawberry&gt; strawberries)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>除非程序中还包含不好吃的比利时华夫饼或者其他国家的华夫饼，不然我们可以将这些无用的形容词去掉：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WaffleObject</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">garnishWaffle</span><span class="params">(List&lt;Strawberry&gt; strawberries)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>方法是包含在<code>WaffleObject</code>类中的，所以方法名中无需Waffle的说明：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WaffleObject</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">garnish</span><span class="params">(List&lt;Strawberry&gt; strawberries)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>很明显它是一个对象，任何事物都是一个对象，这也就是传说中的“面向对象”的含义，所以命名中无需带有<code>Object</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Waffle</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">garnish</span><span class="params">(List&lt;Strawberry&gt; strawberries)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>好了，这样看起来好多了。</p>
+<p>以上就是我总结的相当简洁的命名原则。可能有些人会觉得无需在命名上耗费太多的精力，但我认为命名是开发过程中最基本的任务之一。<br>————————————-我是萌萌哒分界线—————————————————————-<br>感觉变量或者方法的命名，看似简单，实际很难，特别是想一个简洁明了可读性高的命名。自己也经常用什么<code>data</code>,<code>xxxlist</code>来命名，作者说的挺对的，前者没什么意义，后者又有点啰嗦。不过对于集合类型的变量，统一用名词复数命名容易混淆。举个例子对于Apple这个类来说，可能存在List<apple>和Map<integer,apple>两种集合类型的变量。个人觉得对List类型的变量可以采用名词复数来命名，Map类型的变量可以采用valueByKey格式来命名，比较容易区分。</integer,apple></apple></p>
+<blockquote>
+<p>欢迎指正错误，欢迎一起讨论~~~</p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/06/25/【译】如何给变量取个简短且无歧义的名字/" data-id="cipwau9td001rfl7bk9dayml7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/06/25/【译】如何给变量取个简短且无歧义的名字/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/06/25/【译】如何给变量取个简短且无歧义的名字/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/06/05/interview/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">面试总结</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2016/06/25/【译】如何给变量取个简短且无歧义的名字/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

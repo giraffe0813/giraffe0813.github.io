@@ -163,13 +163,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
-        <lastmod>2016-05-14T09:30:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/annotation/</loc>
         <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -214,6 +207,13 @@
     <url>
         <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
         <lastmod>2016-06-11T11:07:59.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
+        <lastmod>2016-06-26T07:53:46.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
