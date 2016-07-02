@@ -1,7 +1,6 @@
 title: EsGiraffe-利用注解和反射拼接Elasticsearch查询语句
 date: 2015-11-19 13:56:50
 thumbnail: /images/hope.jpg
-banner: /images/hope.jpg
 comment: true
 toc: true
 categories: elasticsearch
@@ -12,7 +11,7 @@ tags: [elasticsearch, java,annotation,reflect]
 ### EsGiraffe
 
 
-> 封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，git 地址：[https://github.com/giraffe0813/EsGiraffe](https://github.com/giraffe0813/EsGiraffe)。生成的大致的样子如下:
+> 封闭开发结束，终于有时间可以整理一下了。EsGiraffe是一个利用注解和反射开发一套工具类，用来生成elastisearch的查询语句。为什么要叫Giraffe呢？一是因为我喜欢长颈鹿，二是希望可以通过工具类把像长颈鹿脖子一样长的代码简化一下，三是希望这个工具类可以像桥梁一样连接java和elaticsearch。实在编不下去了，其实就是因为喜欢长颈鹿。目前只适用于简单的查询，不过会在工作学习中慢慢完善的。由于目前在工作中用到最多的就是Bool查询，所以目前生成的查询语句最外层就是bool查询，生成的大致的样子如下:
 > 
 	    "query": {
              "bool": {
@@ -29,6 +28,7 @@ tags: [elasticsearch, java,annotation,reflect]
               }
               
 
+**git地址：**{% github giraffe0813 EsGiraffe 6afdc51%}
            
 
 <!-- more -->

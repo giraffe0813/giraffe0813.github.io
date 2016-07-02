@@ -2,7 +2,6 @@ title: 读书笔记-Linux Bible 9th Edition之进程大法好
 date: 2015-12-24 17:56:03
 comment: true
 thumbnail: /images/thumbnail11.jpg
-banner: /images/thumbnail11.jpg
 toc: true
 categories: linux
 tags: [linux, 读书笔记]

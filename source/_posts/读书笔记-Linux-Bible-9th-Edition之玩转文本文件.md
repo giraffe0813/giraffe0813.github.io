@@ -1,7 +1,6 @@
 title: 读书笔记-Linux Bible 9th Edition之玩转文本文件
 date: 2015-11-30 15:04:46
 thumbnail: /images/thumbnail9.jpg
-banner: /images/thumbnail9.jpg
 toc: true
 comment: true
 categories: linux

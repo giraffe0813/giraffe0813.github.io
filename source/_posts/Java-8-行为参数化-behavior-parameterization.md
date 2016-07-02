@@ -3,7 +3,6 @@ toc: true
 comment: true
 date: 2016-02-20 19:33:21
 thumbnail: /images/thumbnail6.jpg
-banner: /images/thumbnail6.jpg
 categories: java
 tags: [java]
 ---

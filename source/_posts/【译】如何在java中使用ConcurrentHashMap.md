@@ -1,7 +1,6 @@
 title: 【译】如何在java中使用ConcurrentHashMap
 date: 2015-11-06 13:20:37
 thumbnail: /images/thumbnail5.jpg
-banner: /images/thumbnail5.jpg
 comment: true
 toc: true
 categories: [java, hashmap]
@@ -9,7 +8,6 @@ tags: [java, 翻译]
 
 ---
 > 原文来自一个java大牛的技术博客 地址[http://javarevisited.blogspot.com/2013/02/concurrenthashmap-in-java-example-tutorial-working.html](http://javarevisited.blogspot.com/2013/02/concurrenthashmap-in-java-example-tutorial-working.html) 博客讲解了如何在java中使用ConcurrentHashMap。马上要封闭开发10天，连上15天班，真酸爽。下面是原文的翻译：
-
 
 <!-- more -->
 

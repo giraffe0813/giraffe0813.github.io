@@ -1,8 +1,6 @@
 ---
 title: '[Elasticsearch配置项(二)]Node,Threadpool模块配置'
 date: 2016-03-21 21:32:41
-thumbnail: /images/thumbnail16.jpg
-banner: /images/thumbnail16.jpg
 toc: true
 categories: elasticsearch
 tags: [elasticsearch]
@@ -10,11 +8,9 @@ tags: [elasticsearch]
 >接上文。。。。。。按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项。先整理了Node，ThreadPool两个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含两个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)
 
 相关博客：[elasticsearch 配置项(一)](http://yemengying.com/2016/03/18/Elasticsearch%E9%85%8D%E7%BD%AE%E9%A1%B9-Local-gateway-HTTP-Indices-Network-Settings%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE/)
-
+<!-- more -->
 wuli光洙镇楼~~
 ![hahaha](/images/guangzhu.jpg)
-
-<!-- more -->
 
 ### 参考文档（万分感谢）
 
@@ -47,10 +43,8 @@ wuli光洙镇楼~~
 ** 通过minimum_master_nodes来避免脑裂现象 **
 `discovery.zen.minimum_master_nodes`配置项说明形成集群时，集群中有资格成为主节点的节点数最少是多少，默认为1.
 脑裂现象：假设集群中有两个有资格成为主节点的候选主节点，`discovery.zen.minimum_master_nodes`配置默认为1。当由于网络问题中断了两个节点间的通信，这时两个节点都只会发现一个有资格成为主节点的节点（自己本身）， 根据配置(minimum_master_nodes = 1),符合组成一个集群的条件，所以每个节点都会成为新的master节点，从而导致形成了两个集群，也就是脑裂。直到其中一个节点重启，才会重新形成集群，并且写入重启节点的数据会丢失。假设集群中有三个有资格成为主节点的候选主节点，而这时`minimum_master_nodes`设置为2，如果一个节点与其他两个失去了通信，被独立的节点会发现不满足设置的条件(有两个候选主节点)，所以不会选举自己为主节点。而剩下两个节点会选举出一个新的主节点，确保正常运行。
-
 `discovery.zen.minimum_master_nodes`最好设置为(候选主节点数/2) + 1, 举个例子，当有三个候选主节点时，该配置项的值为(3/2)+1=2。
 也可以通过下面的API动态的更新这个值：
-
 ```json
 PUT _cluster/settings
 {
@@ -67,7 +61,6 @@ PUT _cluster/settings
 ```
 #### Client node(客户端节点)
 客户端节点主要负责路由请求，汇总搜索结果等，本质上来看，客户端节点更像一个负载均衡器。
-
 > 注意：集群中添加过多的客户端节点会增加整个集群的负担。所以不要过大夸大客户端节点的好处，数据节点也可以像客户端节点一样服务。
 
  通过下面的配置可以设置一个专门的客户端节点(不是数据节点也不是主节点)。
@@ -78,7 +71,6 @@ PUT _cluster/settings
 #### 设置节点的数据路径
 `path.data`
 每个数据节点和主节点都需要在文件中存储一些关于分片，索引和集群的元数据。`elasticsearch.yml`文件中的`path.data`可以配置文件的绝对路径或相对路径，默认值是`$ES_HOME/data`，也可以通过命令配置。
-
 ```bash
 ./bin/elasticsearch --path.data /var/elasticsearch/data
 ```
@@ -112,7 +104,6 @@ node.max_local_storage_nodes: 1
 **scaling**:
 	`scaling`线程池中线程数可动态变化。线程数在1和`size`参数值的中间。
 	`keep_alive`参数定义了未使用的线程的存活时间。
-	
 	```bash
 	threadpool:
     warmer:
@@ -139,7 +130,6 @@ node.max_local_storage_nodes: 1
 
 #### 处理器设置
 Es可以自动检测处理器的数量，线程池的配置也会基于这个值。可能存在检测失败的情况，这是可以通过`processors`配置显式设置这个值。
-
 > 注意以上这些配置如果不是很了解，还是不要轻易改动，使用默认配置即可。
 
 看累了吧，分享个觉得还不错的TED视频~~

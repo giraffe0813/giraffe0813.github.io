@@ -2,7 +2,7 @@ title: Mac系统下Idea和STS的快捷键对比
 date: 2015-10-23 16:15:42
 toc: true
 categories: java
-tags: [java, STS,Idea]
+tags: [java, IDE]
 
 ---
 

@@ -1,4 +1,4 @@
-title: "留言板"
+title: "留言"
 layout: "page"
 ---
 ![welcome](/images/friends.png)

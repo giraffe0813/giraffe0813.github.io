@@ -1,7 +1,6 @@
 title: 【译】Java8中的扩展(default/extension)方法
 date: 2015-11-01 22:11:06
 thumbnail: /images/shaonvshidai.jpg
-banner: /images/shaonvshidai.jpg
 toc: true
 categories: java
 tags: [java, interface , 翻译]

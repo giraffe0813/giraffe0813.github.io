@@ -75,5 +75,9 @@ duoshuo_shortname: "yemengying"
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:giraffe0813/giraffe0813.github.io.git
-  branch: master
+  # repository: git@github.com:giraffe0813/giraffe0813.github.io.git
+  repository: 
+      coding: git@git.coding.net:giraffe0813/giraffe0813.git,coding-pages
+      github: git@github.com:giraffe0813/giraffe0813.github.io.git,master
+  # branch: master
+  # branch: coding-pages

@@ -3,7 +3,6 @@ comment: true
 date: 2016-02-03 16:23:39
 toc: true
 thumbnail: /images/thumbnail7.jpg
-banner: /images/thumbnail7.jpg
 categories: [java, hashmap]
 tags: [java, 翻译]
 ---

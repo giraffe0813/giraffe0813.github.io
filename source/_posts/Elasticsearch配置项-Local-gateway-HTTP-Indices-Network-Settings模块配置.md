@@ -1,7 +1,6 @@
 title: '[Elasticsearch配置项(一)]Local gateway,HTTP,Indices,Network Settings模块配置'
 date: 2016-03-18 17:48:10
 thumbnail: /images/trim.jpg
-banner: /images/trim.jpg
 toc: true
 categories: elasticsearch
 tags: [elasticsearch]
@@ -9,10 +8,8 @@ tags: [elasticsearch]
 > 近两周线上的搜索接口间隔性莫名其妙的出现莫名其妙的异常，比如神马NoAvailableThread，NoAvailableWorker之类的。可能是由于部门中没有很懂elasticsearch的人，只能摸着石头过河，所以一直使用elasticsearch的默认配置并没有对其线程池和内存分配进行优化造成的。所以按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项，看看可不可以优化一下。先整理了Local gateway,HTTP,Indices,Network Settings四个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含四个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)
 
 相关博客：[elasticsearch 配置项(二)](http://yemengying.com/2016/03/21/elasticsearch-settings2/)
-
-![哇咔咔咔](/images/baobao.jpg)
-
 <!-- more -->
+![哇咔咔咔](/images/baobao.jpg)
 
 ### 参考资料(万分感谢)：
 

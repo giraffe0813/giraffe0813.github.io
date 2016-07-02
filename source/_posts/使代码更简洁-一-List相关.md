@@ -3,7 +3,6 @@ title: 使代码更简洁(一)---List相关
 date: 2015-09-10 14:07:54
 comments: true 
 thumbnail: /images/thumbnail1.jpg
-banner: /images/thumbnail1.jpg
 toc: true
 categories: java
 tags: [java, stream,list]

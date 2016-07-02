@@ -2,13 +2,11 @@ title: angularjs+bootstrap+ngDialog实现模式对话框
 date: 2015-09-08 14:07:54
 toc: true
 thumbnail: /images/runningman.jpg
-banner: /images/runningman.jpg
 categories: angularJs
 tags: [angularJs, ngDialog,bootstrap]
 
 ---
 
-以前写在segmentFault上的一篇文章 搬移到这里。[segmentFault地址](http://segmentfault.com/a/1190000003721467)
 
 在完成一个后台管理系统时，需要用表格显示注册用户的信息。但是用户地址太长了，不好显示。所以想做一个模式对话框，点击详细地址按钮时，弹出对话框，显示地址。
 <!--more-->
@@ -142,4 +140,4 @@ user.html (显示用户的信息，当地址不为空时，显示详细地址按
 </div>  
 ```
 
-git地址:https://github.com/giraffe0813/hellofreshAdmin
+git地址:{% github giraffe0813 hellofreshAdmin 278d259%}

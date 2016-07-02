@@ -3,11 +3,11 @@ date: 2015-10-28 13:21:29
 comments: true
 toc: true
 categories: java
-tags: [java, mybatis, reflection, anntation]
+tags: [java, mybatis, reflection, annotation]
  
 ---
 >在开发时遇到一个问题，在使用基于注解的mybatis插入一个对象到mysql时，在写sql语句时需要列出对象的所有属性，所以在插入一个拥有10个以上属性的对象时sql语句就会变得很长，写起来也很不方便,也很容易拼错。google了一下也没有找到什么解决方式(可能是姿势不对😜)，在stackoverflow上提的[问题](http://stackoverflow.com/questions/33383134/how-to-insert-an-objectmore-than-10-properties-into-mysql-via-mybatis-based-on)截止目前还没有人回答。所以自己想了一个基于反射和注解的解决办法
-git地址：https://github.com/giraffe0813/spring-mybatis-utils
+git地址：{% github giraffe0813 spring-mybatis-utils a555c91%}
 
 <!-- more -->
 

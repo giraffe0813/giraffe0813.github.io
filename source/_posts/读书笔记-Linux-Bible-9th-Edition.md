@@ -6,35 +6,29 @@ categories: linux
 tags: [linux, 读书笔记]
 ---
 > 其实也不算读书笔记 主要是想整理一下常用的一些linux命令 
-> 
 
  相关博客:
  [Linux Bible 9th Edition之玩转文本文件](http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/)
  [Linux Bible 9th Edition之文件系统](http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/)
  [Linux Bible 9th Edition之进程大法好](http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/)
 
-
-![doge](/images/doge.jpg)
 <!-- more -->
-
+![doge](/images/doge.jpg)
 #### linux命令的一些语法
 > *$*提示符代表普通用户 *#*提示符代表root用户。 大多数命令都有许多选项 选项通常由单一字符和连字符组成(eg:ls -a),还有选项是由一个单词代表,需在单词前加双连字符(eg:date - -help)
 
 #### 获得当前登录会话的一些信息
-
 ```bash
  $ who 
  $ who am i 
  $ who -uH
 ```
 #### 查看服务器上的时间
-
 ``` bash
  $ date
  $ date +'%d/%m/%y'(以10/12/14的格式输出)
 ```
 #### 当前的目录
-
 ```bash
  $ pwd 
 ```
@@ -43,19 +37,15 @@ tags: [linux, 读书笔记]
  $ hostname
 ```
 #### 列出当前目录下的文件和目录
-
 ```bash
  $ ls
  $ ls -l(列出详细信息) -a(列出包括.开头的隐含文件在内的所有文件) -t(按时间排序)
 ```
 #### 查看uid gid
-
 ```bash
  $ id
 ```
-
 #### LINUX如何定位命令
-
 >可通过*echo $PATH*命令查看PATH环境变量的值，如果命令存放的目录包含在PATH中，可直接输入命令运行。如果不包含则需给出命令的位置(eg:绝对位置:/home/chris/scriptx.sh,相对位置:./scriptx.sh) shell检查输入命令的顺序：1.Aliases(别名) 2.Reserved word(保留的关键字) 3.Function 4.Build-in command(eg:cd/echo/exit/type..) 5.Filesystem
 
 ```bash
@@ -64,13 +54,11 @@ tags: [linux, 读书笔记]
  #打印PATH环境变量的值
  $ echo $PATH
 ```
-
 #### 在文件系统中查找
 
 ```bash
  $ locate ymy
 ```
-
 #### 查看历史输入的命令,修改命令
 
 >可以用*history*命令查看之前输入过的所有命令,之后可以通过!+行号 运行指定一行的命令。向上箭头(↑)可查看最近一条命令,下面是修改命令的一些快捷按键。
@@ -98,9 +86,7 @@ tags: [linux, 读书笔记]
 |alt+Y|粘贴最前复制的内容|
 |tab|补全命令|
 
-
 #### 连接和扩展命令
-
 - 管道符号 "|"
 将前一个命令的输出作为下一个命令的输入   
 eg:
@@ -133,11 +119,9 @@ eg:
 ```bash
  $ echo $USER
 ```
-
 #### 创建和使用别名
 使用*alias*命令，可以给任何的命令及选项取一个别名     
 eg:
- 
 ```bash
  #为命令pwd取别名ymy
  $ alias ymy='pwd'
@@ -148,7 +132,6 @@ eg:
  
 ```
 #### 退出shell
-
 ```bash
  $ exit
 ```

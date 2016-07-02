@@ -2,7 +2,6 @@ title: '【译】如何重置一个ArrayList--clear vs removeAll'
 date: 2015-10-26 23:20:04
 comments: true
 thumbnail: /images/金泰妍.jpg
-banner: /images/金泰妍.jpg
 toc: true
 categories: [java, list]
 tags: [java, 翻译]

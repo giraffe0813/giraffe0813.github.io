@@ -194,4 +194,4 @@ public class MessageConsumerService implements MessageListener{
 ```
 
 ## git 地址：
-   [https://github.com/giraffe0813/spring-rabbit-demo](https://github.com/giraffe0813/spring-rabbit-demo)
+{% github giraffe0813 spring-rabbit-demo 617348a%}
