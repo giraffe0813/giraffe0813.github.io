@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-06-26T08:02:48.000Z</updated>
+  <updated>2016-07-03T14:36:32.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,43 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Keep Going</title>
+    <link href="http://yemengying.com/2016/07/03/keep-going/"/>
+    <id>http://yemengying.com/2016/07/03/keep-going/</id>
+    <published>2016-07-03T13:31:34.000Z</published>
+    <updated>2016-07-03T14:36:32.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;睡前看了眼Analysis的数据，比以前进步太多，发上来纪念一下，为什么呢？因为我知道。。。。。。下周。。。。。它就会。。。。降下去了😱。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;不说废话，直接上图。&lt;br&gt;&lt;img src=&quot;/images/data.png&quot; alt=&quot;Analysis Data&quot;&gt;&lt;/p&gt;
+&lt;p&gt;千万别吐槽这数据其实挺low的，我才不会告诉你们以前都超不过20的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/sad.jpg&quot; alt=&quot;sad&quot;&gt;&lt;/p&gt;
+&lt;p&gt;要是周六看到这个数据就好了，周末肯定会写写写，就不会在看剧中度过了。。。。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/cat.jpg&quot; alt=&quot;cat&quot;&gt;&lt;/p&gt;
+&lt;p&gt;看到种说法，人分为自燃型，助燃型和阻燃型，嗯，我应该就属于助燃型的吧~~ &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/liguangzhu09.jpg&quot; alt=&quot;wuli光洙&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Keep going &amp;amp; 碎觉。。。。😂&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/keep-going.jpg&quot; alt=&quot;Keep going&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;睡前看了眼Analysis的数据，比以前进步太多，发上来纪念一下，为什么呢？因为我知道。。。。。。下周。。。。。它就会。。。。降下去了😱。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>【译】如何给变量取个简短且无歧义的名字</title>
@@ -2036,205 +2073,6 @@
 &lt;p&gt;根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;相关博客:&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/&quot;&gt;Linux Bible 9th Edition之使用shell&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&quot;&gt;Linux Bible 9th Edition之文件系统&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/&quot;&gt;Linux Bible 9th Edition之进程大法好&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="http://yemengying.com/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://yemengying.com/tags/linux/"/>
-    
-      <category term="读书笔记" scheme="http://yemengying.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>读书笔记-Linux Bible 9th Edition之文件系统</title>
-    <link href="http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/</id>
-    <published>2015-11-26T08:28:15.000Z</published>
-    <updated>2016-02-23T03:46:42.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt; 相关博客:&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/&quot;&gt;Linux Bible 9th Edition之使用shell&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/&quot;&gt;Linux Bible 9th Edition之进程大法好&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/霸气的喵喵.jpg&quot; alt=&quot;霸气的喵喵&quot;&gt;&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h3 id=&quot;Linux文件系统结构&quot;&gt;&lt;a href=&quot;#Linux文件系统结构&quot; class=&quot;headerlink&quot; title=&quot;Linux文件系统结构&quot;&gt;&lt;/a&gt;Linux文件系统结构&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;在linux中文件组织在一个层级的目录结构中，每个目录可以包含文件和目录，整体看起来就像一个倒过来的树。最上面就是根目录，用”/“符号表示。根目录下面是linux系统中一些常见的目录,比如bin,dev,home,lib等等。下面的图(书上的截图)展示了linux文件系统的层级结构。&lt;br&gt;&lt;img src=&quot;/images/linux_filesystem.jpg&quot; alt=&quot;linux_filesystem&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;基本的一些文件系统命令&quot;&gt;&lt;a href=&quot;#基本的一些文件系统命令&quot; class=&quot;headerlink&quot; title=&quot;基本的一些文件系统命令&quot;&gt;&lt;/a&gt;基本的一些文件系统命令&lt;/h3&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;命令&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;作用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;cd&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;进入另一个目录&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;pwd&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;打印当前工作目录的路径&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;mkdir&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;创建一个目录&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;chmod&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;更改文件或目录的权限&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ls&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;列出目录的内容&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;cd&lt;/em&gt;命令&lt;br&gt;cd命令是其中最常用的&lt;br&gt;eg：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 进入根目录下的usr目录下的share目录 以&quot;/&quot;开头，代表在根目录下&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; /usr/share&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 只输入cd 回到home目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 进入home目录下的某一目录 &quot;~&quot;代表home目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; ~/coffee&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 回到上一级目录 &quot;..&quot;代表上一级目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; ..&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;创建目录并查看权限&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 创建目录test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ mkdir &lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 查看目录权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls -ld &lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;使用Metacharacters-元字符-和Operators-操作符&quot;&gt;&lt;a href=&quot;#使用Metacharacters-元字符-和Operators-操作符&quot; class=&quot;headerlink&quot; title=&quot;使用Metacharacters(元字符)和Operators(操作符)&quot;&gt;&lt;/a&gt;使用Metacharacters(元字符)和Operators(操作符)&lt;/h3&gt;&lt;p&gt; 使用metacharacters进行文件匹配     &lt;/p&gt;
-&lt;p&gt;  “*”代表任意数量的字符 “?”代表任意一个字符 “[…]”匹配任意一个包含在括号中的字符,也可以用连字符表示一个范围&lt;br&gt;  eg：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 创建5个空文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ touch apple banana grape grapefruit watermelon&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls a*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;apple&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls g*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grape &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls g???e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grape&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls [abw]*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;apple banana watermelon&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls [a-g]*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;apple banana grape grapefruit&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt; 使用metacharacters进行文件重定向&lt;br&gt;    使用管道符号”|”可以将一个命令的标准输出(standard output)作为另一个命令的标准输入(standard input)。对于文件，我们可以用”&amp;lt;”和”&amp;gt;”来将数据从文件中输入或输出。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;符号&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;作用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&amp;lt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;文件的内容输入到命令&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&amp;gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将一个命令的标准输出输出到文件，如果文件已存在,文件的内容会被覆盖&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;2&amp;gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将错误输出输出到文件&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&amp;amp;&amp;gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将标准输出和错误输出都输出到文件&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&amp;gt;&amp;gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;将命令的输出到文件中，不覆盖文件原有内容，将输出添加到文件最后&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&amp;lt;&amp;lt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;后面要跟着一个单词，之后所有的输入都会当做用户输入，直到重复输入符号后的单词&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt; 使用大括号 &lt;/p&gt;
-&lt;p&gt; 通过使用大括号”{}”,可以在文件名后扩展一组元素。&lt;br&gt; eg:&lt;br&gt; &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ touch &amp;#123;a,b,c&amp;#125;-&amp;#123;1,2,3&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ ls&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;a-1 a-2 a-3 b-1 b-2 b-3 c-1 c-2 c-3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h3 id=&quot;列出文件和目录&quot;&gt;&lt;a href=&quot;#列出文件和目录&quot; class=&quot;headerlink&quot; title=&quot;列出文件和目录&quot;&gt;&lt;/a&gt;列出文件和目录&lt;/h3&gt;&lt;p&gt;在linux系统中,&lt;em&gt;ls&lt;/em&gt;命令用来列出文件和目录的有关信息，&lt;em&gt;ls&lt;/em&gt;命令有许多option。在默认情况下，输入&lt;em&gt;ls&lt;/em&gt;，会输出当前目录下所有的非隐藏的文件和目录。如果在命令后在上选项”-l”会输出详细的信息(如下)，其中total代表了目录中的内容占用了多少磁盘空间;第一列第一个字符代表了文件的类型，”-“代表普通文件，”d”代表是目录，”l”代表是一个符号链接,剩下的9个字符代表了文件的权限(下面会讲);第二列展示了文件硬链接数或目录子目录数;第三列显示了文件或目录的拥有者;第四列代表文件拥有者所在的组;第五列是文件的大小;第六列是文件最后的修改时间;最后一列展示了文件或目录的名字;&lt;br&gt;eg：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ls &lt;span class=&quot;_&quot;&gt;-l&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;total 4-rw-rw-r--. 1 joe joe 0 Dec 18 13:38 applelrwxrwxrwx. 1 joe joe 5 Dec 18 13:46 pointer_to_apple -&amp;gt; apple -rwxr-xr-x. 1 joe joe 0 Dec 18 13:37 scriptx.shdrwxrwxr-x. 2 joe joe 4096 Dec 18 13:38 Stuff&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;em&gt;ls&lt;/em&gt;命令的其它选项：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;选项&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;作用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;-a&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;展示包含隐藏文件(以.开头)在内的所有文件&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;-t&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;按照最近修改时间展示&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;-F&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;在展示时，在目录名后加”/“,在可执行文件后加”*”,在符号链接后加”@”&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;-S&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;展示时按大小排序&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;-d&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;只展示包含的目录&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;-R&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;递归的列出当前目录下所有的文件和目录&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;–hide=&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;不展示指定目录或文件&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&quot;理解文件权限&quot;&gt;&lt;a href=&quot;#理解文件权限&quot; class=&quot;headerlink&quot; title=&quot;理解文件权限&quot;&gt;&lt;/a&gt;理解文件权限&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;在使用Linux系统时，经常会看到”Permission Denied”(权限不足)的提示。权限控制是为了避免用户访问其他用户的私有文件和保护重要的系统文件。在Linux中，每个文件对应一个9bit的权限信息(eg:rwxrwxrwx)。其中前三位代表了文件拥有者的权限，中间三位代表了拥有者所在组的权限，最后三位代表了其他用户的权限。权限由字母代表，”r”代表读权限，”w”代表写权限，”x”代表执行权限，如果某一位不是字母，而是”-“，则代表没有该位所代表的权限。举个两个栗子🌰🌰，”rw-“代表有读写权限，没有执行权限；”r–”代表只有读权限&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;使用chmod命令更改权限&quot;&gt;&lt;a href=&quot;#使用chmod命令更改权限&quot; class=&quot;headerlink&quot; title=&quot;使用chmod命令更改权限&quot;&gt;&lt;/a&gt;使用chmod命令更改权限&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;使用数字&lt;blockquote&gt;
-&lt;p&gt;文件的拥有者可以改变文件的权限，每种权限都对应了一个数字，读权限r对应4，写权限w对应2，执行权限x对应1。可以通过设置数值来建立权限。&lt;br&gt;eg:&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 rwxrwxrwx&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chmod 777 filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 rwxr-xr-x&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chomd 755 filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 rw-r--r--&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chomd 644 filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 ---------&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chmod 000 filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;使用字母&lt;blockquote&gt;
-&lt;p&gt;在linux中，还有另一种改变权限的方式。在这种方式中，”+”和”-“分别代表权限的开和关。字母”u”,”g”,”o”和”a”分别代表拥有者,组，其他用户和全部用户。和上一种方式一样”r”,”w”,”x”分别代表读、写和执行权限。&lt;br&gt;eg：&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 将权限rwxrwxrwx改为r-xr-xr-x&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chmod a-w filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 将权限rwxrwxrwx改为rwxrwxrw-&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chomd o-x filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 将权限rwxrwxrwx改为rwx------&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chmod go-rwx filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置权限 将权限---------改为rw-------&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chmod u+rw filename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 更改目录下所有文件和目录的权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chmod -R o-w myapps&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;使用umask设置默认权限&lt;blockquote&gt;
-&lt;p&gt;普通用户创建文件 默认权限是rw-rw-r–，创建目录 默认权限是rwxrwxr-x。root用户创建文件和目录权限分别是rw-r–r–和rwxr-xr-x。这些默认值由&lt;em&gt;umask&lt;/em&gt;的值决定，可通过命令&lt;em&gt;umask&lt;/em&gt;查看它的值。与&lt;em&gt;chmod&lt;/em&gt;效果刚好相反，&lt;em&gt;umask&lt;/em&gt;设置的是权限的补码，&lt;em&gt;umask&lt;/em&gt;的值有三位分别对应拥有者，同组用户和其他用户的权限。对于文件来说，每一位的最大值是6，因为系统不允许在创建一个文件时就赋予执行权限，需通过&lt;em&gt;chmod&lt;/em&gt;设置；对于目录来说每一位的最大值是7。例如&lt;em&gt;umask&lt;/em&gt;值002所对应的文件和目录的创建权限是664和775。可通过&lt;em&gt;umask&lt;/em&gt;命令改变默认值。&lt;br&gt;eg：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 查看默认值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;umask&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 改变默认值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;umask&lt;/span&gt; 022&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;改变文件的拥有者&quot;&gt;&lt;a href=&quot;#改变文件的拥有者&quot; class=&quot;headerlink&quot; title=&quot;改变文件的拥有者&quot;&gt;&lt;/a&gt;改变文件的拥有者&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;作为普通用户，是不能更改文件或目录的拥有者的，只有root user(管理员才可以)。&lt;br&gt;eg:&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 修改文件的拥有者&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chown giraffe filename.text&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 同时修改拥有者和组&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chown giraffe:coffee filename.txt&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 修改目录下的所有目录和文件的拥有者&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# chown -R giraffe:coffee /mydic&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;移动-复制-删除文件&quot;&gt;&lt;a href=&quot;#移动-复制-删除文件&quot; class=&quot;headerlink&quot; title=&quot;移动 复制 删除文件&quot;&gt;&lt;/a&gt;移动 复制 删除文件&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;移动、复制和删除文件的命令很简单。如果想要改变文件的位置，使用&lt;em&gt;mv&lt;/em&gt;命令。如果想要复制文件，使用&lt;em&gt;cp&lt;/em&gt;命令。如果想要删除文件，使用&lt;em&gt;rm&lt;/em&gt;命令。这些命令可以使用在单一的文件和目录上，也可以递归的使用在许多文件和目录上。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;移动文件&lt;br&gt;eg：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 将文件abc移到home目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ mv abc ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 将目录mydemo的全部内容移到目录document中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ mv /home/giraffe/mydemo /home/giraffe/document&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;复制文件&lt;br&gt;eg：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 将文件abc复制到home目录下&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ cp abc ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 将目录bash-completion*下的内容复制到tmp/a下&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ cp -r /usr/share/bash-completion* /tmp/a&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 将目录bash-completion*下的内容复制到tmp/a下 并且保留权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ cp -ra /usr/share/bash-completion* /tmp/a&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;删除文件&lt;br&gt;eg：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 删除文件abc&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ rm abc&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 删除当前目录下所有文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ rm *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 删除一个空的目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ rmdir /home/giraffe/empty&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 删除目录和他包含的所有内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ rm -r /home/giraffe/bigdir&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 不提示的删除目录和它包含的所有内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ rm -rf /home/giraffe/bigdir&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;跟着书，重新梳理一下linux文件系统的有关知识, 最近一天一个接口的节奏真真是极好的,有时间看看书了。😻😻😻&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt; 相关博客:&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/&quot;&gt;Linux Bible 9th Edition之使用shell&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt; &lt;a href=&quot;http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/&quot;&gt;Linux Bible 9th Edition之进程大法好&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/霸气的喵喵.jpg&quot; alt=&quot;霸气的喵喵&quot;&gt;&lt;/p&gt;
     
     </summary>
     

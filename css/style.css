@@ -736,7 +736,7 @@ code {
 #profile .inner .social-links > table td a:hover {
   color: #565a5f;
 }
-#profile .inner .social-links > table td a:hover:after {
+#profile .inner .social-links > table td a.tooltip:hover:after {
   right: -50%;
   top: -41px;
   color: #fff;
@@ -754,7 +754,7 @@ code {
   box-shadow: 0 0 2px rgba(0,0,0,0.2);
   z-index: 1;
 }
-#profile .inner .social-links > table td a:hover:before {
+#profile .inner .social-links > table td a.tooltip:hover:before {
   top: -12px;
   right: 8px;
   border: solid;
@@ -1146,7 +1146,7 @@ a.article-title:hover {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   font: 14px "open sans", "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif;
-  padding: 0 15px;
+  padding: 0 10px;
   color: #565a5f;
   outline: none;
   border: 1px solid #eceff2;
