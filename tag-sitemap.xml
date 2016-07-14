@@ -86,13 +86,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/spring/</loc>
-        <lastmod>2016-04-23T02:04:27.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/rabbitMq/</loc>
         <lastmod>2016-04-23T02:04:27.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -214,6 +207,13 @@
     <url>
         <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
         <lastmod>2016-07-03T15:02:14.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/spring/</loc>
+        <lastmod>2016-07-14T14:27:40.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
