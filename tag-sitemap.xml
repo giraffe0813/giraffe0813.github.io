@@ -156,13 +156,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/annotation/</loc>
-        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/mybatis/</loc>
         <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -171,6 +164,13 @@
 
     <url>
         <loc>http://yemengying.com/tags/reflection/</loc>
+        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/annotation/</loc>
         <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
