@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/07/25/spring-xml/</loc>
+        <lastmod>2016-07-26T01:05:19.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/07/14/spring-bean-life-cycle/</loc>
         <lastmod>2016-07-16T01:08:26.000Z</lastmod>
         <changefreq>weekly</changefreq>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-07-16T01:08:26.000Z</updated>
+  <updated>2016-07-26T01:05:19.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Spring】Xml解析相关</title>
+    <link href="http://yemengying.com/2016/07/25/spring-xml/"/>
+    <id>http://yemengying.com/2016/07/25/spring-xml/</id>
+    <published>2016-07-25T14:37:18.000Z</published>
+    <updated>2016-07-26T01:05:19.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;先请看下左上角，hiahia，新logo，si不si很漂酿，有个会设计的表哥就是好，又好又快，还不用钱。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;总结下最近看的 Spring Xml 解析相关的一点点东东，还没有看完。。。。&lt;/p&gt;
+&lt;h3 id=&quot;参考文档&quot;&gt;&lt;a href=&quot;#参考文档&quot; class=&quot;headerlink&quot; title=&quot;参考文档&quot;&gt;&lt;/a&gt;参考文档&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://www.ibm.com/developerworks/cn/java/j-lo-spring-resource/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spring 资源访问剖析和策略模式应用&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;题外话&quot;&gt;&lt;a href=&quot;#题外话&quot; class=&quot;headerlink&quot; title=&quot;题外话&quot;&gt;&lt;/a&gt;题外话&lt;/h3&gt;&lt;p&gt;先说个在看源码时，发现的一个以前没有关注过的点。大神们在创建集合的时候，大多数都设置了一个预估的初始容量(2的幂数)，而不是直接采用默认的初始容量( HashMap 中是16)，就像下面这样:&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** Map from dependency type to corresponding autowired value */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Map&amp;lt;Class&amp;lt;?&amp;gt;, Object&amp;gt; resolvableDependencies = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ConcurrentHashMap&amp;lt;Class&amp;lt;?&amp;gt;, Object&amp;gt;(&lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** Map of bean definition objects, keyed by bean name */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Map&amp;lt;String, BeanDefinition&amp;gt; beanDefinitionMap = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ConcurrentHashMap&amp;lt;String, BeanDefinition&amp;gt;(&lt;span class=&quot;number&quot;&gt;256&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** Map of singleton and non-singleton bean names, keyed by dependency type */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Map&amp;lt;Class&amp;lt;?&amp;gt;, String[]&amp;gt; allBeanNamesByType = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ConcurrentHashMap&amp;lt;Class&amp;lt;?&amp;gt;, String[]&amp;gt;(&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** Map of singleton-only bean names, keyed by dependency type */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Map&amp;lt;Class&amp;lt;?&amp;gt;, String[]&amp;gt; singletonBeanNamesByType = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ConcurrentHashMap&amp;lt;Class&amp;lt;?&amp;gt;, String[]&amp;gt;(&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** List of bean definition names, in registration order */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;volatile&lt;/span&gt; List&amp;lt;String&amp;gt; beanDefinitionNames = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;String&amp;gt;(&lt;span class=&quot;number&quot;&gt;256&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** List of names of manually registered singletons, in registration order */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;volatile&lt;/span&gt; Set&amp;lt;String&amp;gt; manualSingletonNames = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; LinkedHashSet&amp;lt;String&amp;gt;(&lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;大神们这样写肯定是有好处的。不太了解其它集合类的实现，就以 HashMap 为例看一下。HashMap 底层的存储结构是一个 Entry 对象的数组(Java 8中是 Node 对象的数组)，默认初始容量是16，负载因子是0.75。也就是说当元素个数超过16*0.75=12时，就要进行扩容，将数组大小扩大一倍，并计算元素在新数组中的位置，这个过程是比较耗费性能的。所以，个人觉得大神们这样写是因为如果直接采用默认的初始容量，那么在元素个数较少时，会浪费空间；元素个数较多时，又会造成频繁的扩容，耗费性能。&lt;/p&gt;
+&lt;p&gt;想起上次的需求，明明确定一定以及肯定评分只有5个，还是new了个默认容量(16)的map。&lt;br&gt;&lt;img src=&quot;/images/renxing.jpeg&quot; alt=&quot;ren xing&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;相关接口&quot;&gt;&lt;a href=&quot;#相关接口&quot; class=&quot;headerlink&quot; title=&quot;相关接口&quot;&gt;&lt;/a&gt;相关接口&lt;/h3&gt;&lt;p&gt;先理一理加载xml配置文件的相关接口&lt;br&gt;&lt;strong&gt;1.Resource&lt;/strong&gt;：采用了策略模式，是 Spring 资源访问策略的抽象，该接口有多种实现类，每个实现类代表一种资源访问策略，负责具体的资源访问。&lt;br&gt;&lt;strong&gt;2.ResourceLoader&lt;/strong&gt;：该接口的实现类可以获得一个 Resource 的实例。&lt;br&gt;&lt;strong&gt;3.BeanDefinitionReader&lt;/strong&gt;： 根据指定的 Resource 加载bean definition. &lt;/p&gt;
+&lt;p&gt;未完待续。。。。。。&lt;/p&gt;
+&lt;p&gt;本来是想多整理一点的，但是。。。听说新一期RM主角是wuli光洙，这还能忍，滚去看RM了。。。。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;先请看下左上角，hiahia，新logo，si不si很漂酿，有个会设计的表哥就是好，又好又快，还不用钱。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="spring" scheme="http://yemengying.com/categories/spring/"/>
+    
+    
+      <category term="spring" scheme="http://yemengying.com/tags/spring/"/>
+    
+  </entry>
   
   <entry>
     <title>【Spring】Bean的生命周期</title>
@@ -1751,81 +1787,6 @@
       <category term="爬虫" scheme="http://yemengying.com/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="django" scheme="http://yemengying.com/tags/django/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>读书笔记-Linux Bible 9th Edition之进程大法好</title>
-    <link href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/"/>
-    <id>http://yemengying.com/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/</id>
-    <published>2015-12-24T09:56:03.000Z</published>
-    <updated>2016-04-22T13:43:24.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;根据Linux Bible第九版第六章整理的读书笔记，记录linux系统下如何管理进程&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Linux是一个支持多用户和多任务的操作系统，多任务是指可以同时运行多个程序，而每个运行程序的一个实例被称作一个进程。Linux系统提供了可以让我们列出正运行进程，杀死进程，监听系统使用情况的工具。&lt;/p&gt;
-&lt;p&gt;相关博客:&lt;br&gt;&lt;a href=&quot;http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/&quot;&gt;Linux Bible 9th Edition之使用shell&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&quot;&gt;Linux Bible 9th Edition之文件系统&lt;/a&gt;&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h3 id=&quot;理解进程&quot;&gt;&lt;a href=&quot;#理解进程&quot; class=&quot;headerlink&quot; title=&quot;理解进程&quot;&gt;&lt;/a&gt;理解进程&lt;/h3&gt;&lt;p&gt;一个进程是一个命令正在运行的实例。比如，系统中有一个&lt;strong&gt;vi&lt;/strong&gt;命令，如果&lt;strong&gt;vi&lt;/strong&gt;命令正在被15个不同的用户运行，那么就对应了15个不同的运行进程。&lt;br&gt;一个进程在系统中通过进程Id(process ID)来标识，在当前系统中进程Id是独一无二的。换句话说，如果一个进程正在运行，那么其他进程都不能使用它的进程Id的数字作为自己的进程Id。但如果这个进程已经结束，那么他的进程Id可以被重新使用当做其他进程的进程Id。&lt;br&gt;除了进程Id，进程还有一些其他属性。每个运行的进程都会关联一个指定的用户账号和用户组，这个账号决定了进程可以访问哪些系统资源。所以root用户运行的进程能比普通用户的进程访问更多的文件。&lt;br&gt;对于一个Linux的管理员来说，管理进程的能力至关重要。因为有时，一些运行的进程会严重影响系统的性能，这一章会讲述如果根据内存和CPU的使用情况，定位和处理这些进程。&lt;/p&gt;
-&lt;h4 id=&quot;列出进程&quot;&gt;&lt;a href=&quot;#列出进程&quot; class=&quot;headerlink&quot; title=&quot;列出进程&quot;&gt;&lt;/a&gt;列出进程&lt;/h4&gt;&lt;p&gt;如果使用命令行列出当前系统运行的进程，&lt;strong&gt;ps&lt;/strong&gt;命令是最老也是最常用的命令，而&lt;strong&gt;top&lt;/strong&gt;命令不仅可以列出进程还可以更改进程的状态。如果使用的是GNOME，可以使用&lt;strong&gt;gnome-system-monitor&lt;/strong&gt;来通过图形界面管理进程。&lt;/p&gt;
-&lt;h5 id=&quot;通过ps命令列出进程&quot;&gt;&lt;a href=&quot;#通过ps命令列出进程&quot; class=&quot;headerlink&quot; title=&quot;通过ps命令列出进程&quot;&gt;&lt;/a&gt;通过ps命令列出进程&lt;/h5&gt;&lt;p&gt;最常用的查看正在运行进程的工具就是ps命令，通过ps命令，我们可以查看正在运行的进程，它们使用的资源以及运行它们的用户。下面是ps命令的一个例子:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ps u&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;jake 2147 0.0 0.7 1836 1020 tty1 S+ 14:50 0:00 -bash &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;jake 2310 0.0 0.7 2592 912 tty1 R+ 18:22 0:00 ps u&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在上面的命令中，使用u选项会显示用户名和一些其他信息，比如进程是什么时候开始运行的，进程占用的内存和Cpu，命令运行的位置(TTY)等。上面的第一个进程说明了jake用户在登录之后打开了一个bash shell。第二进程显示了jake用户正在运行ps u命令。终端设备&lt;strong&gt;tty1&lt;/strong&gt;正在被登录会话使用着。&lt;strong&gt;STAT&lt;/strong&gt;这一列代表了进程的状态，R代表进程正在运行，S代表进程处于休眠状态。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;STAT除了R和S之外还可以有别的值，D代表不可中断，R运行，S中断/休眠，T停止，Z僵死。如果后面有+号，代表在前台运行的进程。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;USER&lt;/strong&gt;列显示了运行这个进程的用户。&lt;strong&gt;PID&lt;/strong&gt;列是进程的进程Id，每个进程都有一个独一无二的进程Id，在需要杀死一个进程或者为进程发送信号时使用。&lt;strong&gt;%CPU&lt;/strong&gt;和&lt;strong&gt;%MEN&lt;/strong&gt;两列显示了进程占用的CPU百分比和内存百分比。&lt;br&gt;&lt;strong&gt;VSZ&lt;/strong&gt;(virtual set size)展示了虚拟内存占用大小(单位：kb/kilobytes),&lt;strong&gt;RSS&lt;/strong&gt;(reside set size)展示了实际内存占用大小(单位：kb/kilobytes)。VSZ和RSS的值可能不一样，因为VSZ是分配给进程的内存大小，而RSS是进程实际使用的内存大小，代表了不可交换的物理内存。&lt;strong&gt;START&lt;/strong&gt;代表了进程启动的时间，&lt;strong&gt;TIME&lt;/strong&gt;执行累计时间(如果占用cpu时间非常短不到一秒，会显示 0:00)。&lt;br&gt;在Linux中，有些运行的进程是与终端无关的，这些进程通常在系统启动时开始运行，并且会持续运行，直到系统关闭。可以使用x选项查看与终端无关的进程。&lt;/p&gt;
-&lt;p&gt;分页查看与当前用户有关的所有运行进程&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ps ux | less&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;分页查看所有用户的运行的进程&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ps aux | less&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;管道符(“|”)会将第一个命令的输出当做第二个命令的输入，上面的例子中ps命令的输出会当做less命令的输入，这样就可以分页查看信息了。按空格键换页，按q退出。&lt;br&gt;我们还可以自定义ps命令展示的信息，并按其中一列排序。使用-o选项，可以通过关键字指定想要展示的列。下面的例子就是指定ps展示进程Id(pid),用户名(username),用户Id(uid),用户组(group),组Id(gid),分配的虚拟内存(vsz),实际使用内存(rss),运行的命令(comm),默认情况下按进程Id排序。&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ps -eo pid,user,uid,group,gid,vsz,rss,comm | less  PID USER GROUP GID VSZ   RSS   COMMAND&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  1   root  root  0  19324 1320   init &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  2   root  root  0  0       0    kthreadd&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;如果想要按其他列排序可以使用sort=选项。例如，想查看那个进程占用了最多的内存，可以按rss排列，会按rss从低到高展示进程，如果想从高到底可以在前面加连字符。下面是例子：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ps -eo pid,user,group,gid,vsz,rss,comm --sort=-rss | less&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;PID     USER     GROUP     GID     VSZ       RSS       COMMAND&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12005   cnegus   cnegus   13597   1271008    522192    firefox&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5412    cnegus   cnegus   13597   949584     157268 thunderbird-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25870   cnegus   cnegus   13597   1332492    112952 swriter.bin&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h5 id=&quot;通过top命令列出进程-修改进程&quot;&gt;&lt;a href=&quot;#通过top命令列出进程-修改进程&quot; class=&quot;headerlink&quot; title=&quot;通过top命令列出进程,修改进程&quot;&gt;&lt;/a&gt;通过top命令列出进程,修改进程&lt;/h5&gt;&lt;p&gt;使用top命令，会默认按占用CPU的时间展示进程，也可以按其他指标排序。如果定位到了一个异常的进程，可以使用top终止(kill)进程或修改其优先级(reprioritize)。如果想要能够终止所有的进程或更改所有进程优先级需要使用root user来运行top命令。如果只是想要展示进程，或者更改自己的进程，那么可以使用普通用户的身份。下图是使用top的例子，最上面列出了系统的基本信息，下面是每个运行进程的信息。从最上面的输出信息你可以知道系统启动了多长时间，目前用多少用户登入，在过去的1,5,10分钟内分别运行了多少条命令。除此之外还包括了当前有多少进程在运行，CPU占用多少，用多少可用的Swap和RAM。紧接着列出了每个进程的基本信息，按进程占用cpu百分比排列，默认情况下所有信息5秒钟刷新一次。&lt;br&gt;&lt;img src=&quot;/images/top.png&quot; alt=&quot;top&quot;&gt;&lt;/p&gt;
-&lt;p&gt;下面列出了在用top展示、修改进程时可用的一些操作：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;按&lt;strong&gt;h&lt;/strong&gt;看帮助选项，按任意键返回&lt;/li&gt;
-&lt;li&gt;按&lt;strong&gt;M&lt;/strong&gt;按占用内存排列，按&lt;strong&gt;P&lt;/strong&gt;返回按CPU排列&lt;/li&gt;
-&lt;li&gt;按数字1可以在所有cpu中切换，前提是你的系统中有多于一个cpu&lt;/li&gt;
-&lt;li&gt;按&lt;strong&gt;R&lt;/strong&gt;将输出倒序排列&lt;/li&gt;
-&lt;li&gt;按&lt;strong&gt;u&lt;/strong&gt;并输入一个用户名，展示指定用户的进程&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;下面是运行top命令时，如何终止进程或修改其优先级:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;修改优先级：记下想要修改的进程的PID，之后按r输入线程对应的PID,再输入想要调整的值(-19 到 20)。&lt;/li&gt;
-&lt;li&gt;终止进程： 记下想要修改的进程的PID，之后按k输入线程对应的PID，之后输入15(终止)或9(强迫终止)。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;题外话&quot;&gt;&lt;a href=&quot;#题外话&quot; class=&quot;headerlink&quot; title=&quot;题外话&quot;&gt;&lt;/a&gt;题外话&lt;/h3&gt;&lt;p&gt;最近负能量太多了 赶紧听首我大少时的歌压压。&lt;/p&gt;
-&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot; src=&quot;http://music.163.com/outchain/player?type=2&amp;id=26133356&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;
-
-
-
-
-
-
-
-
-
-
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;根据Linux Bible第九版第六章整理的读书笔记，记录linux系统下如何管理进程&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Linux是一个支持多用户和多任务的操作系统，多任务是指可以同时运行多个程序，而每个运行程序的一个实例被称作一个进程。Linux系统提供了可以让我们列出正运行进程，杀死进程，监听系统使用情况的工具。&lt;/p&gt;
-&lt;p&gt;相关博客:&lt;br&gt;&lt;a href=&quot;http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/&quot;&gt;Linux Bible 9th Edition之使用shell&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/&quot;&gt;Linux Bible 9th Edition之玩转文本文件&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&quot;&gt;Linux Bible 9th Edition之文件系统&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="http://yemengying.com/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://yemengying.com/tags/linux/"/>
-    
-      <category term="读书笔记" scheme="http://yemengying.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
