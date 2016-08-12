@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $comment.classList.add('comment');
 
     $avatar.src = comment.author.avatar.cache;
-    $username.innerHTML = comment.author.username || name;
+    $username.innerHTML = comment.author.username || comment.author.name;
     $date.innerHTML = dateFormat(comment.createdAt);
     $comment.innerHTML = comment.raw_message;
 
