@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-07-27T13:27:48.000Z</updated>
+  <updated>2016-08-23T14:35:18.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何快速拥有产品的sense</title>
+    <link href="http://yemengying.com/2016/08/23/how-to-get-pm-sense/"/>
+    <id>http://yemengying.com/2016/08/23/how-to-get-pm-sense/</id>
+    <published>2016-08-23T08:32:31.000Z</published>
+    <updated>2016-08-23T14:35:18.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;趁着在家葛优躺的几天，培养培养自己在产品方面技能，经过axure,sketch,xmind的重重磨炼，总结出来这篇文章，从三个方面讲讲如何才能在短时间内快速拥有产品的sense，画出高保真的原型。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;img src=&quot;/images/no-dream.jpg&quot; alt=&quot;lalala&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;趁着在家葛优躺的几天，培养培养自己在产品方面技能，经过axure,sketch,xmind的重重磨炼，总结出来这篇文章，从三个方面讲讲如何才能在短时间内快速拥有产品的sense，画出高保真的原型。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>【Spring】Xml解析相关</title>
@@ -1006,9 +1035,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
-    
       <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
     
   </entry>
   
@@ -1720,73 +1749,6 @@
       <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
       <category term="书单" scheme="http://yemengying.com/tags/%E4%B9%A6%E5%8D%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>拥有自己的图书小金库</title>
-    <link href="http://yemengying.com/2016/01/09/%E6%8B%A5%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9B%BE%E4%B9%A6%E5%B0%8F%E9%87%91%E5%BA%93/"/>
-    <id>http://yemengying.com/2016/01/09/拥有自己的图书小金库/</id>
-    <published>2016-01-09T06:15:46.000Z</published>
-    <updated>2016-04-23T01:59:14.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;/strong&gt;&lt;div id=&quot;badge-container-giraffe0813-GeekBook-3d83e8f&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
-&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-  loadStyle(&quot;/hexo-github/style.css&quot;);
-  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
-  new Badge(&quot;#badge-container-giraffe0813-GeekBook-3d83e8f&quot;, &quot;giraffe0813&quot;, &quot;GeekBook&quot;, &quot;3d83e8f&quot;, false);
-&lt;/script&gt;
-&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;/strong&gt; &lt;div id=&quot;badge-container-Geek-Organization-geek-programming-books-643e0bd&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
-&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-  loadStyle(&quot;/hexo-github/style.css&quot;);
-  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
-  new Badge(&quot;#badge-container-Geek-Organization-geek-programming-books-643e0bd&quot;, &quot;Geek-Organization&quot;, &quot;geek-programming-books&quot;, &quot;643e0bd&quot;, false);
-&lt;/script&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h3 id=&quot;遇到的坑&quot;&gt;&lt;a href=&quot;#遇到的坑&quot; class=&quot;headerlink&quot; title=&quot;遇到的坑&quot;&gt;&lt;/a&gt;遇到的坑&lt;/h3&gt;&lt;p&gt;记录下遇到的坑 不然就忘了😂&lt;/p&gt;
-&lt;h4 id=&quot;只带cookie-无法下载&quot;&gt;&lt;a href=&quot;#只带cookie-无法下载&quot; class=&quot;headerlink&quot; title=&quot;只带cookie 无法下载&quot;&gt;&lt;/a&gt;只带cookie 无法下载&lt;/h4&gt;&lt;p&gt;本来以为只要带着登录之后的cookie请求下载的地址(eg:&lt;a href=&quot;https://www.geekbooks.me/books/56/48/c1955c13518f994167b11f7b7279/amazon_ec2_cookbook.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.geekbooks.me/books/56/48/c1955c13518f994167b11f7b7279/amazon_ec2_cookbook.pdf&lt;/a&gt;) 就可以下载了，不过发现下下来的并不是书，而是网站上书的详情页的html。受到博客&lt;a href=&quot;http://www.jianshu.com/p/c3dbf8294c33&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Course抓站小结&lt;/a&gt; 的启发，又研究了一下请求的header。&lt;br&gt;&lt;img src=&quot;/images/header.jpg&quot; alt=&quot;header&quot;&gt;&lt;br&gt;发现除了要带cookie之外，还要带有user_agent和Referer，refer是表示从哪个页面访问当前链接。&lt;br&gt;所以修改了下代码，在请求头中加入user-agent和referer之后，问题就解决了,部分代码如下&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cookie = cookielib.MozillaCookieJar()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# get cookie from file&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cookie.load(&lt;span class=&quot;string&quot;&gt;&#39;../data/cookie4geek.data&#39;&lt;/span&gt;, ignore_discard=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;, ignore_expires=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;handler = urllib2.HTTPCookieProcessor(cookie)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;opener = urllib2.build_opener(handler)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# add header&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;opener.addheaders = [(&lt;span class=&quot;string&quot;&gt;&#39;User-agent&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Mozilla/5.0&#39;&lt;/span&gt;), (&lt;span class=&quot;string&quot;&gt;&quot;Referer&quot;&lt;/span&gt;, url)]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;下载文件的时候不显示进度&quot;&gt;&lt;a href=&quot;#下载文件的时候不显示进度&quot; class=&quot;headerlink&quot; title=&quot;下载文件的时候不显示进度&quot;&gt;&lt;/a&gt;下载文件的时候不显示进度&lt;/h4&gt;&lt;p&gt;可以下载文件之后，希望可以在下载文件的时候显示下载进度，让我们知道他在工作。。。。直接在stackoverflow上抄了段代码，这个问题也愉快的解决了。&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;u = opener.open(&lt;span class=&quot;string&quot;&gt;&quot;https://www.geekbooks.me&quot;&lt;/span&gt; + url)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;Preparing to download...&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# f with directory&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; os.path.exists(conf_books_dir + category + &lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt; + file_name) &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; detect_book(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        (conf_books_dir + category + &lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt; + file_name)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;continue&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;f = open(conf_books_dir + category + &lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt; + file_name, &lt;span class=&quot;string&quot;&gt;&#39;wb&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;meta = u.info()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;file_size = int(meta.getheaders(&lt;span class=&quot;string&quot;&gt;&quot;Content-Length&quot;&lt;/span&gt;)[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;Downloading: %s Bytes: %s&quot;&lt;/span&gt; % (file_name, file_size)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;file_size_dl = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;block_sz = &lt;span class=&quot;number&quot;&gt;8192&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    buffer = u.read(block_sz)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;not&lt;/span&gt; buffer:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    file_size_dl += len(buffer)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    f.write(buffer)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    status = &lt;span class=&quot;string&quot;&gt;r&quot;%10d  [%3.2f%%]&quot;&lt;/span&gt; % (file_size_dl, file_size_dl * &lt;span class=&quot;number&quot;&gt;100.&lt;/span&gt; / file_size)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    status = status + chr(&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;) * (len(status) + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; status,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;f.close()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;一本一本下载速度太慢&quot;&gt;&lt;a href=&quot;#一本一本下载速度太慢&quot; class=&quot;headerlink&quot; title=&quot;一本一本下载速度太慢&quot;&gt;&lt;/a&gt;一本一本下载速度太慢&lt;/h4&gt;&lt;p&gt;这个只能果断上多线程了。。。&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;download_work&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    f = open(&lt;span class=&quot;string&quot;&gt;&quot;../data/detailurl.txt&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;r&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    books = []&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    destDir = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tmp = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; line &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; f:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;not&lt;/span&gt; (line.strip()).startswith(&lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            tmp += &lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt; + line.strip()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            destDir = tmp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;# desDir&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            book = Book(destDir, line.strip())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            books.append(book)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            tmp = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pool = threadpool.ThreadPool(conf_thread_count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    reqs = threadpool.makeRequests(&lt;span class=&quot;keyword&quot;&gt;lambda&lt;/span&gt; book: book.download(), books)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    [pool.putRequest(req) &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; req &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; reqs]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pool.wait()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;无法展示下载书的具体信息&quot;&gt;&lt;a href=&quot;#无法展示下载书的具体信息&quot; class=&quot;headerlink&quot; title=&quot;无法展示下载书的具体信息&quot;&gt;&lt;/a&gt;无法展示下载书的具体信息&lt;/h4&gt;&lt;p&gt;除了将书下载下来，还想将书的一些基本信息保存下来，比如:作者，简洁，出版年份，封面，标签等等。。最好可以根据作者，题目进行搜索。本来想自己写个网站出来，但是又没有时间。还好之前学叔推荐过django，用django搭个管理后台简直不要太方便好么，配置nginx，supervisor的时间都比写代码的时间长👅，还可以很方便定义想搜索的字段和想展示的字段。样式是丑了一丢丢，但自己用也无所谓。&lt;/p&gt;
-&lt;h3 id=&quot;成品&quot;&gt;&lt;a href=&quot;#成品&quot; class=&quot;headerlink&quot; title=&quot;成品&quot;&gt;&lt;/a&gt;成品&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/images/admin.jpg&quot; alt=&quot;admin&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Summary&quot;&gt;&lt;a href=&quot;#Summary&quot; class=&quot;headerlink&quot; title=&quot;Summary&quot;&gt;&lt;/a&gt;Summary&lt;/h3&gt;&lt;p&gt;依靠空闲时间可以做点想做的事，也是蛮好的~~。用python写脚本真的很方便，基本不用自己造轮子，用它自带的模块就可以完成了。用django搭管理后台也是快的不要不要的。一周多的时间换4000+的书很值啊，但是。。。。服务器+存储平均一天的成本就要10块。。。是不是得想个法子，看能不能用这些电子书挣点钱啊。。。。想到这。。。突然没那么开心了。。。&lt;br&gt;&lt;img src=&quot;/images/lingluan.jpg&quot; alt=&quot;lingluan&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;在找matering elasticsearch second edition这本书的时候，在许多可以免费下电子书的网站都没有找到，所以就买了&lt;a href=&quot;https://www.geekbooks.me/category&quot;&gt;Geekbook&lt;/a&gt;一个月的会员，为了不浪费充会员的钱，决定撸个脚本把全站的书都下下来,并用django搭个管理后台。和&lt;a href=&quot;https://github.com/KevinOfNeu&quot;&gt;洪菊&lt;/a&gt;，&lt;a href=&quot;https://github.com/stephenluu&quot;&gt;卢神&lt;/a&gt;利用空闲时间忙活了快两周，终于有了自己的图书小金库，5000+的优质英文原版电子书，哇咔咔咔咔，这辈子的书都有了，放了一部分到github上。&lt;br&gt;geekbook千万不要怪我们啊，谁让你不封我们的~~。&lt;br&gt;&lt;strong&gt;项目地址：&lt;/strong&gt;&lt;div id=&quot;badge-container-giraffe0813-GeekBook-3d83e8f&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
-&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-  loadStyle(&quot;/hexo-github/style.css&quot;);
-  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
-  new Badge(&quot;#badge-container-giraffe0813-GeekBook-3d83e8f&quot;, &quot;giraffe0813&quot;, &quot;GeekBook&quot;, &quot;3d83e8f&quot;, false);
-&lt;/script&gt;
-&lt;br&gt;&lt;strong&gt;部分电子书地址:&lt;/strong&gt; &lt;div id=&quot;badge-container-Geek-Organization-geek-programming-books-643e0bd&quot; class=&quot;hexo-github&quot; style=&quot;width: 100%&quot;&gt;&lt;/div&gt;
-&lt;script src=&quot;/hexo-github/badge.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-  loadStyle(&quot;/hexo-github/style.css&quot;);
-  loadStyle(&quot;/hexo-github/octicons/octicons.css&quot;);
-  new Badge(&quot;#badge-container-Geek-Organization-geek-programming-books-643e0bd&quot;, &quot;Geek-Organization&quot;, &quot;geek-programming-books&quot;, &quot;643e0bd&quot;, false);
-&lt;/script&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="http://yemengying.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yemengying.com/tags/python/"/>
-    
-      <category term="爬虫" scheme="http://yemengying.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="django" scheme="http://yemengying.com/tags/django/"/>
     
   </entry>
   
