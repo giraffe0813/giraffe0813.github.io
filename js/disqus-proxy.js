@@ -70,7 +70,7 @@ function dateFormat(raw) {
 
 document.addEventListener('DOMContentLoaded', function() {
   var $commentsContainer = document.querySelector('#disqus_thread');
-  
+
   var xhr = new XMLHttpRequest();
   var $style = document.createElement('style');
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var raw = JSON.parse(xhr.responseText);
       var $container = document.createElement('ul');
 
-      
+
       $container.classList.add('disqus_lists');
 
       raw.response.forEach(function(comment) {
@@ -100,9 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function postComment() {
-    xhr.open('post', 'http://xiaoming.io/disqus/comment');  
+    xhr.open('post', 'http://xiaoming.io/disqus/comment');
     xhr.send(JSON.stringify({
-      email: document.querySelector('#input-email').value,       
+      email: document.querySelector('#input-email').value,
       comment: document.querySelector('#input-comment').value,
       name: document.querySelector('#input-name').value
     }));
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var $username = document.createElement('span');
     var $date = document.createElement('span');
     var $comment = document.createElement('p');
-    
+
     $itemContainer.classList.add('disqus_comment');
     $avatar.classList.add('avatar');
     $username.classList.add('username');
@@ -143,8 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
     $itemContainer.appendChild($comment);
 
     if (comment.media.length) {
-      var $commentImg = document.createElement('img');  
- 
+      var $commentImg = document.createElement('img');
+
       $commentImg.classList.add('disqus_comment_img');
       $commentImg.src = comment.media[0].location;
       $itemContainer.appendChild($commentImg);
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var $inputPost = document.createElement('input');
     var $inputEmail = document.createElement('input');
     var $inputName = document.createElement('input');
-    var $inputBtn = document.createElement('button'); 
+    var $inputBtn = document.createElement('button');
 
     $form.classList.add('disqus_form');
 
