@@ -142,6 +142,14 @@ document.addEventListener('DOMContentLoaded', function() {
     $itemContainer.appendChild($date);
     $itemContainer.appendChild($comment);
 
+    if (comment.media.length) {
+      var $commentImg = document.createElement('img');  
+ 
+      $commentImg.classList.add('disqus_comment_img');
+      $commentImg.src = comment.media[0].location;
+      $itemContainer.appendChild($commentImg);
+    }
+
     return $itemContainer;
   }
 
