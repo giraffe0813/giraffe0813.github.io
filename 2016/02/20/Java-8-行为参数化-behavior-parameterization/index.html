@@ -19,7 +19,7 @@
 
 题外话：要时刻谨记 Later equals never,Later equals never,Later equals never！！！！！">
 <meta property="og:image" content="http://yemengying.com/images/thumbnail6.jpg">
-<meta property="og:updated_time" content="2016-04-22T13:44:59.000Z">
+<meta property="og:updated_time" content="2016-09-05T04:58:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 8 --行为参数化(behavior parameterization)">
 <meta name="twitter:description" content="根据书 &amp;lt;&amp;lt; Java 8 in action &amp;gt;&amp;gt;第二章的一个例子整理。书中通过一个例子，讲述了如何利用behavior parameterization来应对不停变化的需求。想想之前自己写的工具类，真是大写的Low啊。。。。
@@ -309,7 +309,7 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Apple&gt; result = filterApples(inventory,(Apple apple) -&gt; <span class="string">"red"</span>.equals(apple.getColor()));</span><br></pre></td></tr></table></figure>
 <h4 id="最终版-：-使用泛型，抽象列表的类型"><a href="#最终版-：-使用泛型，抽象列表的类型" class="headerlink" title="最终版 ： 使用泛型，抽象列表的类型"></a>最终版 ： 使用泛型，抽象列表的类型</h4><p>我们可以继续做一些抽象。目前，filterApples方法只可以过滤元素类型为Apple的List。我们可以将列表的类型抽象出来，使得我们的过滤方法变得更加通用，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pucblic <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">filter</span><span class="params">(List&lt;T&gt; list, Predicate&lt;T&gt; p)</span></span>&#123;</span><br><span class="line">	List&lt;T&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span>(T e: list)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p.test(e))&#123;</span><br><span class="line">			result.add(e);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这样就可以对多种类型的list进行过滤了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Apple&gt; redApples = filter(inventory, (Apple apple) -&gt; <span class="string">"red"</span>.equals(apple.getColor()));</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; evenNumber = filter(numbers, (Integer i) -&gt; i%<span class="number">2</span> == <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Apple&gt; redApples = filter(inventory, (Apple apple) -&gt; <span class="string">"red"</span>.equals(apple.getColor()));</span><br><span class="line"></span><br><span class="line">List&lt;Integer&gt; evenNumber = filter(numbers, (Integer i) -&gt; i%<span class="number">2</span> == <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 <p>终于over了，拖延癌果真已经到了晚期。。。。。</p>
 <p><img src="/images/delay.jpg" alt="do it now"></p>
 
@@ -322,7 +322,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/02/20/Java-8-行为参数化-behavior-parameterization/" data-id="cisl70ugq0006ay9lyntdjp4n" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/02/20/Java-8-行为参数化-behavior-parameterization/" data-id="cispkuukj0006qx9lne2bvrln" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

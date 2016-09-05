@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/</loc>
+        <lastmod>2016-09-05T04:58:32.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/06/05/interview/</loc>
         <lastmod>2016-09-02T02:46:56.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -201,14 +209,6 @@
     <url>
         <loc>http://yemengying.com/2015/11/01/Java-8%E4%B8%AD%E7%9A%84%E6%89%A9%E5%B1%95-Default-Defender-Extension-%E6%96%B9%E6%B3%95/</loc>
         <lastmod>2016-04-22T13:45:06.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/</loc>
-        <lastmod>2016-04-22T13:44:59.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
