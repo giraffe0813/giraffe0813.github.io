@@ -618,7 +618,7 @@
     <link href="http://yemengying.com/2016/05/13/jvm-GC/"/>
     <id>http://yemengying.com/2016/05/13/jvm-GC/</id>
     <published>2016-05-13T15:28:15.000Z</published>
-    <updated>2016-05-14T08:07:49.000Z</updated>
+    <updated>2016-09-07T15:21:35.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;感觉人生就是while(true){一个选择接着一个选择接着一个选择;},好怕自己一不小心就做了错误的决定啊😭。堵上全部人品,希望新公司技术氛围浓厚,有大牛带我,切拜🙊🙏。&lt;/p&gt;
@@ -633,7 +633,7 @@
 &lt;li&gt;在Java中，对象实例都是在堆上创建。一些类信息，常量，静态变量等存储在方法区。堆和方法区都是线程共享的。&lt;/li&gt;
 &lt;li&gt;GC机制是由JVM提供，用来清理需要清除的对象，回收堆内存。&lt;/li&gt;
 &lt;li&gt;GC机制将Java程序员从内存管理中解放了出来，可以更关注于业务逻辑。&lt;/li&gt;
-&lt;li&gt;在Java中，GC是由一个被称为垃圾回收器的守护进程执行的。&lt;/li&gt;
+&lt;li&gt;在Java中，GC是由一个被称为垃圾回收器的守护线程执行的。&lt;/li&gt;
 &lt;li&gt;在从内存回收一个对象之前会调用对象的finalize()方法。&lt;/li&gt;
 &lt;li&gt;作为一个Java开发者不能强制JVM执行GC；GC的触发由JVM依据堆内存的大小来决定。&lt;/li&gt;
 &lt;li&gt;System.gc()和Runtime.gc()会向JVM发送执行GC的请求，但是JVM不保证一定会执行GC。&lt;/li&gt;
