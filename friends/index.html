@@ -262,7 +262,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/friends/index.html" data-id="cissge88d0008ot9ldz602n91" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/friends/index.html" data-id="cissghbdi0002q19lpoipzh4v" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -376,6 +376,10 @@ var _hmt = _hmt || [];
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
+    dsq.onload = function() {
+        clearTimeout(timer); 
+    }
+    timer = setTimeout(proxyDisqus, 3000);
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
