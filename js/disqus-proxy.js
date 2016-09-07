@@ -68,9 +68,9 @@ function dateFormat(raw) {
   return year + '.' + month + '.' + day;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+window.proxyDisqus = function() {
   var $commentsContainer = document.querySelector('#disqus_thread');
-  
+
   var xhr = new XMLHttpRequest();
   var $style = document.createElement('style');
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var raw = JSON.parse(xhr.responseText);
       var $container = document.createElement('ul');
 
-      
+
       $container.classList.add('disqus_lists');
 
       raw.response.forEach(function(comment) {
@@ -100,9 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function postComment() {
-    xhr.open('post', 'http://xiaoming.io/disqus/comment');  
+    xhr.open('post', 'http://xiaoming.io/disqus/comment');
     xhr.send(JSON.stringify({
-      email: document.querySelector('#input-email').value,       
+      email: document.querySelector('#input-email').value,
       comment: document.querySelector('#input-comment').value,
       name: document.querySelector('#input-name').value
     }));
@@ -110,10 +110,10 @@ document.addEventListener('DOMContentLoaded', function() {
     xhr.onreadystatechange = function() {
       if (+xhr.readyState === 4) {
         var raw = JSON.parse(xhr.responseText);
-        if (raw.code !== 0) {
-          alert(JSON.stringify(raw))
+        if (+raw.code !== 0) {
+          alert(JSON.stringify(raw));
         } else {
-          window.reload()
+          alert('博主已经收到了你的评论，请耐心等待审核通过');
         }
       }
     }
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var $username = document.createElement('span');
     var $date = document.createElement('span');
     var $comment = document.createElement('p');
-    
+
     $itemContainer.classList.add('disqus_comment');
     $avatar.classList.add('avatar');
     $username.classList.add('username');
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var $inputPost = document.createElement('input');
     var $inputEmail = document.createElement('input');
     var $inputName = document.createElement('input');
-    var $inputBtn = document.createElement('button'); 
+    var $inputBtn = document.createElement('button');
 
     $form.classList.add('disqus_form');
 
@@ -205,4 +205,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     return $form;
   }
-});
+}
+
