@@ -765,6 +765,20 @@ code {
   position: absolute;
   z-index: 2;
 }
+#profile .recent-comments-title {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px;
+}
+#profile .recent-comments-container li {
+  margin-bottom: 15px;
+}
+#profile .recent-comments-container .recent-comments-content {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 #profile.card {
   top: 50px;
   right: 20px;
