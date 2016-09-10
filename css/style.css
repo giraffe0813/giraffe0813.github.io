@@ -622,6 +622,20 @@ code {
   max-width: 300px;
   line-height: 1.5em;
 }
+#profile .recent-comments-title {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px;
+}
+#profile .recent-comments-container li {
+  margin-bottom: 15px;
+}
+#profile .recent-comments-container .recent-comments-content {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .profile-block {
   padding: 15px 20px;
   border-bottom: 1px solid #eceff2;

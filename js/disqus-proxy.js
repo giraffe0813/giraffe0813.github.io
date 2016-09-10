@@ -68,34 +68,85 @@ function dateFormat(raw) {
   return year + '.' + month + '.' + day;
 }
 
-window.proxyDisqus = function() {
-  var $commentsContainer = document.querySelector('#disqus_thread');
-
+function getRecentComments() {
+  var $recentCommentsContainer = document.querySelector('#recent-comments');
   var xhr = new XMLHttpRequest();
-  var $style = document.createElement('style');
 
-  $style.type = 'text/css';
-  $style.appendChild(document.createTextNode(disqusCSS));
-
-  document.head.appendChild($style);
-
-  xhr.open('get', 'http://xiaoming.io/disqus/comments');
+  xhr.open('get', '//xiaoming.io/disqus/comments/recent');
   xhr.send();
 
   xhr.onreadystatechange = function() {
     if (+xhr.readyState === 4) {
       var raw = JSON.parse(xhr.responseText);
-      var $container = document.createElement('ul');
-
-
-      $container.classList.add('disqus_lists');
 
       raw.response.forEach(function(comment) {
-        $container.appendChild(createComment(comment));
-      });
+        var $commentContainer = document.createElement('li');
+        var $commentLink = document.createElement('a');
+        var $commentName = document.createElement('span');
+        var $commentDate = document.createElement('span');
+        var $commentContent = document.createElement('p');
 
-      $commentsContainer.appendChild($container);
-      $commentsContainer.appendChild(createForm());
+        $commentName.classList.add('recent-comments-name');
+        $commentContent.classList.add('recent-comments-content');
+
+        $commentName.style.display = 'inline-block';
+        $commentName.style.marginBottom = '5px';
+        $commentDate.style.float = 'right';
+
+        $commentDate.appendChild(document.createTextNode(dateFormat(comment.createdAt)));
+        $commentName.appendChild(document.createTextNode((comment.author.username || comment.author.name) + '：'));
+        $commentContent.appendChild(document.createTextNode(comment.raw_message));
+
+        $commentLink.appendChild($commentContent);
+        $commentContainer.appendChild($commentName);
+        $commentContainer.appendChild($commentDate);
+        $commentContainer.appendChild($commentLink);
+
+        $commentLink.href = comment.url;
+
+        $recentCommentsContainer.appendChild($commentContainer);
+      });
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  getRecentComments();
+});
+
+window.proxyDisqus = function() {
+  +function() {
+    getComments();
+  }();
+
+  function getComments() {
+    var $commentsContainer = document.querySelector('#disqus_thread');
+
+    var xhr = new XMLHttpRequest();
+    var $style = document.createElement('style');
+
+    $style.type = 'text/css';
+    $style.appendChild(document.createTextNode(disqusCSS));
+
+    document.head.appendChild($style);
+
+    xhr.open('get', 'http://xiaoming.io/disqus/comments');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+      if (+xhr.readyState === 4) {
+        var raw = JSON.parse(xhr.responseText);
+        var $container = document.createElement('ul');
+
+        $container.classList.add('disqus_lists');
+
+        raw.response.forEach(function(comment) {
+          $container.appendChild(createComment(comment));
+        });
+
+        $commentsContainer.appendChild($container);
+        $commentsContainer.appendChild(createForm());
+      }
     }
   }
 
@@ -118,6 +169,8 @@ window.proxyDisqus = function() {
       }
     }
   }
+
+
 
   function createComment(comment) {
     var $itemContainer = document.createElement('li');
@@ -143,8 +196,8 @@ window.proxyDisqus = function() {
     $itemContainer.appendChild($comment);
 
     if (comment.media.length) {
-      var $commentImg = document.createElement('img');  
- 
+      var $commentImg = document.createElement('img');
+
       $commentImg.classList.add('disqus_comment_img');
       $commentImg.src = comment.media[0].location;
       $itemContainer.appendChild($commentImg);
