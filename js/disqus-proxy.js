@@ -151,7 +151,6 @@ window.proxyDisqus = function() {
   }
 
   function postComment() {
-    var xhr = new XMLHttpRequest();
     xhr.open('post', 'http://xiaoming.io/disqus/comment');
     xhr.send(JSON.stringify({
       email: document.querySelector('#input-email').value,
