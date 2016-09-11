@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>【译】SOLID Go Design--上 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】SOLID Go Design--上">
+<meta property="og:url" content="http://yemengying.com/2016/09/11/solid-go-design-1/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
+<meta property="og:image" content="http://yemengying.com/images/think1.png">
+<meta property="og:updated_time" content="2016-09-11T07:31:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】SOLID Go Design--上">
+<meta name="twitter:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
+<meta name="twitter:image" content="http://yemengying.com/images/think1.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/favicon.png" />
+    
+    <script src="/js/disqus-proxy.js"></script>
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/zootopia/judy.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/zootopia/judy.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                40
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                32
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2016/09/11/solid-go-design-1/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            【译】SOLID Go Design--上
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/09/11/solid-go-design-1/">
+            <time datetime="2016-09-11T07:09:18.000Z" itemprop="datePublished">2016-09-11</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/go/">go</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/go/">go</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#世界上有多少个-Go-语言开发者？"><span class="toc-number">1.</span> <span class="toc-text">世界上有多少个 Go 语言开发者？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Code-review"><span class="toc-number">2.</span> <span class="toc-text">Code review</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bad-code"><span class="toc-number">3.</span> <span class="toc-text">Bad code</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Good-design"><span class="toc-number">4.</span> <span class="toc-text">Good design</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SOLID"><span class="toc-number">5.</span> <span class="toc-text">SOLID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单一责任原则"><span class="toc-number">6.</span> <span class="toc-text">单一责任原则</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#耦合-amp-内聚"><span class="toc-number">6.1.</span> <span class="toc-text">耦合 & 内聚</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#包名"><span class="toc-number">6.2.</span> <span class="toc-text">包名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#不好的包名"><span class="toc-number">6.3.</span> <span class="toc-text">不好的包名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Go-中的-UNIX-哲学"><span class="toc-number">6.4.</span> <span class="toc-text">Go 中的 UNIX 哲学</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开放封闭原则"><span class="toc-number">7.</span> <span class="toc-text">开放封闭原则</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p>最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的<a href="https://www.youtube.com/watch?v=zzAdEt3xZ1M" target="_blank" rel="external">演讲</a>所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才算是好代码，当然 SOLID 原则也适用于其他语言。原文比较长，所以准备分成上下两部分，也有十分非常以及特别大的可能是上中下(捂脸)。</p>
+</blockquote>
+<a id="more"></a>
+<p>原文链接：<a href="http://dave.cheney.net/2016/08/20/solid-go-design?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website" target="_blank" rel="external">http://dave.cheney.net/2016/08/20/solid-go-design?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website</a><br>原文作者：<a href="http://dave.cheney.net/about" target="_blank" rel="external">Dave Cheney</a></p>
+<h4 id="世界上有多少个-Go-语言开发者？"><a href="#世界上有多少个-Go-语言开发者？" class="headerlink" title="世界上有多少个 Go 语言开发者？"></a>世界上有多少个 Go 语言开发者？</h4><p>介个世界上有多少 Go 开发者捏？在脑海中想一个数字，我们会在最后回到这个话题。<br><img src="/images/think1.png" alt="thinking"></p>
+<h4 id="Code-review"><a href="#Code-review" class="headerlink" title="Code review"></a>Code review</h4><p>有多少人将 code review 当做自己工作的一部分?[听演讲的人都举起了手]。为什么要做 code review？[一些人回答为了阻止不好的代码]</p>
+<p>如果 code review 是为了捕捉到不好的代码，那么问题来了，你怎么判断你正在 review 的代码是好还是不好呢？</p>
+<p>我们可以很容易的说出“这代码好辣眼睛”或者“这源码写的太吊了”，就像说“这画真美”，“这屋子真大气”一样。但是这些都是主观的，我希望找到一些客观的方法来衡量代码是好还是不好。</p>
+<h4 id="Bad-code"><a href="#Bad-code" class="headerlink" title="Bad code"></a>Bad code</h4><p>下面看一下在 code review 中，一段代码有哪些特点会被认为是不好的代码。</p>
+<ul>
+<li>Rigid 代码是不是很僵硬？是否由于严格的类型和参数导致修改代码的成本提高</li>
+<li>Fragile 代码是不是很脆弱？是否一点小的改动就会造成巨大的破坏？</li>
+<li>Immobile 代码是否难以重构？</li>
+<li>Complex 代码是否是过度设计？</li>
+<li>Verbose 当你读这段代码时，能否清楚的知道它是做什么的？</li>
+</ul>
+<p>👆这些都不是什么好听的词，没有人希望在别人 review 自己代码时听到这些词。</p>
+<h4 id="Good-design"><a href="#Good-design" class="headerlink" title="Good design"></a>Good design</h4><p>了解了什么是不好的代码之后，我们可以说“我不喜欢这段代码因为它不易于修改”或者“这段代码并没有清晰的告诉我它要做什么”。但这些并没有带来积极的引导。</p>
+<p>如果我们不仅仅可以描述不好的设计，还可以客观的描述好的设计，是不是更有助于提高呢。<br><img src="/images/excited.jpg" alt="excited"></p>
+<h4 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a>SOLID</h4><p>2002年，Robert Martin 出版了《敏捷软件开发:原则、模式与实践》一书，在书中他描述了可重用软件设计的五个原则，他称之为 <strong>SOLID</strong> 原则(每个原则的首字母组合在一起)。</p>
+<ul>
+<li>单一责任原则</li>
+<li>开放封闭原则</li>
+<li>里氏替换原则</li>
+<li>接口分离原则</li>
+<li>依赖倒置原则</li>
+</ul>
+<p>这本书有点过时了，书中谈论的语言都已经超过了十年之久。尽管如此，在谈论什么样的 Go 代码才是好代码时，SOLID 的原则依然可以给我们一些启发。</p>
+<p>So，这也就是我花时间想在本文和大家一起讨论的。</p>
+<h4 id="单一责任原则"><a href="#单一责任原则" class="headerlink" title="单一责任原则"></a>单一责任原则</h4><p>SOLID 原则中的第一个原则就是单一责任原则。Robert C Martin 说过 A class should have one, and only one, reason to change(修改某个类的时候，原因有且只有一个)，说白了就是，一个类只负责一项职责。</p>
+<p>虽然 Go 语言中并没有类的概念–但我们有更鹅妹子嘤的 composition (组合)的特性。</p>
+<p>为什么修改一段代码只负责一项职责如此重要呢？如果一个类有两个职责R1，R2，那么修改R1时，可能会导致也要修改R2。修改代码是痛苦的，但更痛苦的是修改代码的原因是由于修改其他代码引起的。</p>
+<p>所以当一个类只负责一个功能领域中的相应职责时，可以修改的它的原因也就最大限度的变少了。</p>
+<h5 id="耦合-amp-内聚"><a href="#耦合-amp-内聚" class="headerlink" title="耦合 &amp; 内聚"></a>耦合 &amp; 内聚</h5><p>这两个词是用来形容一段代码是否易于修改的。</p>
+<p>耦合是指两个东西需要一起修改—对其中一个的改动会影响到另一个。</p>
+<p>另一个相关但独立的概念是内聚，一般指相互吸引的迷之力量。</p>
+<p>在软件开发领域中，内聚常常用来描述一段代码内各个元素彼此结合的紧密程度。</p>
+<p>下面我准备从 Go 的包模型开始，聊聊 Go 开发中的耦合与内聚。</p>
+<h5 id="包名"><a href="#包名" class="headerlink" title="包名"></a>包名</h5><p>在Go中，所有代码都必须有一个所属的包。一个包名要描述它的用途，同时也是命名空间的前缀。下面是 Go 标准库中一些好的包名：</p>
+<ul>
+<li>net/http，提供 http 的客户端和服务端。</li>
+<li>os/exec，可以运行运行外部命令。</li>
+<li>encoding/json，实现了 JSON 文件的编码和解码。</li>
+</ul>
+<h5 id="不好的包名"><a href="#不好的包名" class="headerlink" title="不好的包名"></a>不好的包名</h5><p>现在让我们来喷一些不好的包名。这些包名并没有很好的展现出它们的用途，当然了前提是它们有-_-|||。</p>
+<ul>
+<li>package server 是提供什么？。。。好吧就当是提供一个服务端吧，但是是什么协议呢?</li>
+<li>package private 是提供什么？一些我不应该看👀的东西？</li>
+<li>还有 package common， package utils，同样无法清楚的表达它们的用途，开发者也不易保持它们功能的专一性。</li>
+</ul>
+<p>上面这些包很快就会变成堆放杂七杂八代码的垃圾堆，而且会由于功能太杂乱而频繁修改。</p>
+<h5 id="Go-中的-UNIX-哲学"><a href="#Go-中的-UNIX-哲学" class="headerlink" title="Go 中的 UNIX 哲学"></a>Go 中的 UNIX 哲学</h5><p>在我看来，任何关于解耦设计的讨论如果没有提到 Doug McIlroy 的 UNIX 哲学都是不完整的。UNIX 哲学就是主张将若干简洁，清晰的模块组合起来完成复杂的任务，而且通常情况下这个任务都不是原作者所能预想到的。</p>
+<p>我想 Go 中的包正体现了 UNIX 哲学的精神。因为每一个包都是一个拥有单一责任的简洁的 Go 程序。</p>
+<h4 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h4><p>第二个原则，也就是 SOLID 当中的 O，是由 Bertrand Meyer 提出的开放封闭原则。1988年，Bertrand Mey 在他的著作《面向对象软件构造》一书中写道：Software entities should be open for extension,but closed for modification（软件实体应当对扩展开放，对修改关闭）。</p>
+<p>那么这个n年前的建议在 Go 语言中是如何应用的呢？<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> A <span class="keyword">struct</span> &#123;</span><br><span class="line">	year <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (a A) Greet() &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Hello GolangUK"</span>, a.year)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B <span class="keyword">struct</span> &#123;</span><br><span class="line">	A</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (b B) Greet() &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Welcome to GolangUK"</span>, b.year)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	<span class="keyword">var</span> a A</span><br><span class="line">	a.year = <span class="number">2016</span></span><br><span class="line">	<span class="keyword">var</span> b B</span><br><span class="line">	b.year = <span class="number">2016</span></span><br><span class="line">	a.Greet()<span class="comment">//Hello GolangUK 2016</span></span><br><span class="line">	b.Greet()<span class="comment">//Welcome to GolangUK 2016</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中，我们有类型A，包含属性 year 和一个方法 Greet。我们还有类型B，B中嵌入(embedding)了类型A，并且B提供了他自己的 Greet 方法，覆盖了A的。</p>
+<p>嵌入不仅仅是针对方法，还可以使用通过嵌入使用被嵌入类型的属性。我们可以看到，在上面的例子中，因为A和B定义在同一个包中，所以B可以像使用自己定义的属性一样使用A中的 private 的属性 year。</p>
+<p>所以，嵌入是实现 Go 类型对扩展开放非常鹅妹子嘤的手段。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Cat <span class="keyword">struct</span>&#123;</span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (c Cat) Legs() <span class="keyword">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (c Cat) PrintLegs() &#123;</span><br><span class="line">	fmt.Printf(<span class="string">"I have %d legs\n"</span>, c.Legs())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> OctoCat <span class="keyword">struct</span> &#123;</span><br><span class="line">	Cat</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (c OctoCat) Legs() <span class="keyword">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line">	<span class="keyword">var</span> octo OctoCat</span><br><span class="line">	fmt.Printf(<span class="string">"I have %d legs\n"</span>, octo.Legs())<span class="comment">// I have 5 legs</span></span><br><span class="line">	octo.PrintLegs()<span class="comment">// I have 4 legs</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个例子中，我们有一个 Cat 类型，它拥有一个 Legs 方法可以获得腿的数目。我们将 Cat 类型嵌入到一个新类型 OctoCat 中，然后声明 Octocat 有5条腿。然而，尽管 OctoCat 定义了它自己的 Legs 方法返回5，在调用 PrintLegs 方法时依旧会打印“I have 4 legs”。</p>
+<p>这是因为 PrintLegs 方法是定义在 Cat 类型中的，它将 Cat 作为接受者，所以会调用 Cat 类型的 Legs 方法。Cat 类型并不会感知到它被嵌入的类型，所以它的方法也不会被更改。</p>
+<p>所以，我们可以说 Go 的类型是对扩展开放，对修改关闭的。<br>——————————————别看我，我只是个傲娇的分割线———————————————————————</p>
+<blockquote>
+<p>终于完成了上的部分↖(^ω^)↗，尽量在下周完成下。由于并不了解 Go 难免会有错误或翻译生硬的地方，欢迎指正错误，欢迎一起讨论~(≧▽≦)/~。</p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="cisyaycq0001dtl7b1a0f5d5w" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/09/11/solid-go-design-1/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/09/11/solid-go-design-1/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/08/23/how-to-get-pm-sense/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何快速拥有产品的sense</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2016/09/11/solid-go-design-1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.onload = function() {
+        clearTimeout(timer); 
+    }
+    timer = setTimeout(proxyDisqus, 3000);
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

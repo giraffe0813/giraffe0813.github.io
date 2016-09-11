@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/09/11/solid-go-design-1/</loc>
+        <lastmod>2016-09-11T07:31:33.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/05/13/jvm-GC/</loc>
         <lastmod>2016-09-07T15:21:35.000Z</lastmod>
         <changefreq>weekly</changefreq>
