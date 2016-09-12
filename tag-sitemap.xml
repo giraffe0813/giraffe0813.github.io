@@ -135,22 +135,8 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/hashMap/</loc>
-        <lastmod>2016-05-09T13:32:54.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/redis/</loc>
         <lastmod>2016-05-14T09:30:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/annotation/</loc>
-        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -164,6 +150,13 @@
 
     <url>
         <loc>http://yemengying.com/tags/reflection/</loc>
+        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/annotation/</loc>
         <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -220,7 +213,14 @@
 
     <url>
         <loc>http://yemengying.com/tags/java/</loc>
-        <lastmod>2016-09-12T02:41:01.000Z</lastmod>
+        <lastmod>2016-09-12T07:18:52.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/hashMap/</loc>
+        <lastmod>2016-09-12T07:18:52.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
