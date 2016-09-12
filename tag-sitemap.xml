@@ -142,6 +142,13 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/tags/annotation/</loc>
+        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yemengying.com/tags/mybatis/</loc>
         <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -150,13 +157,6 @@
 
     <url>
         <loc>http://yemengying.com/tags/reflection/</loc>
-        <lastmod>2016-05-24T13:45:38.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/annotation/</loc>
         <lastmod>2016-05-24T13:45:38.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -198,29 +198,29 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
-        <lastmod>2016-09-11T07:31:33.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/go/</loc>
-        <lastmod>2016-09-11T07:31:33.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/java/</loc>
-        <lastmod>2016-09-12T07:18:52.000Z</lastmod>
+        <lastmod>2016-09-12T07:19:22.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/tags/hashMap/</loc>
-        <lastmod>2016-09-12T07:18:52.000Z</lastmod>
+        <lastmod>2016-09-12T07:19:22.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
+        <lastmod>2016-09-12T09:49:23.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/go/</loc>
+        <lastmod>2016-09-12T09:49:23.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

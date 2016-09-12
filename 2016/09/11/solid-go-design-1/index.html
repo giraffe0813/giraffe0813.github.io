@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
 <meta property="og:image" content="http://yemengying.com/images/think1.png">
-<meta property="og:updated_time" content="2016-09-11T07:31:33.000Z">
+<meta property="og:updated_time" content="2016-09-12T09:49:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】SOLID Go Design--上">
 <meta name="twitter:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
@@ -293,7 +293,7 @@ var _hmt = _hmt || [];
 <p>👆这些都不是什么好听的词，没有人希望在别人 review 自己代码时听到这些词。</p>
 <h4 id="Good-design"><a href="#Good-design" class="headerlink" title="Good design"></a>Good design</h4><p>了解了什么是不好的代码之后，我们可以说“我不喜欢这段代码因为它不易于修改”或者“这段代码并没有清晰的告诉我它要做什么”。但这些并没有带来积极的引导。</p>
 <p>如果我们不仅仅可以描述不好的设计，还可以客观的描述好的设计，是不是更有助于提高呢。<br><img src="/images/excited.jpg" alt="excited"></p>
-<h4 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a>SOLID</h4><p>2002年，Robert Martin 出版了《敏捷软件开发:原则、模式与实践》一书，在书中他描述了可重用软件设计的五个原则，他称之为 <strong>SOLID</strong> 原则(每个原则的首字母组合在一起)。</p>
+<h4 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a>SOLID</h4><p>2002年，<code>Robert Martin</code> 出版了《敏捷软件开发:原则、模式与实践》一书，在书中他描述了可重用软件设计的五个原则，他称之为 <strong>SOLID</strong> 原则(每个原则的首字母组合在一起)。</p>
 <ul>
 <li>单一责任原则</li>
 <li>开放封闭原则</li>
@@ -303,13 +303,13 @@ var _hmt = _hmt || [];
 </ul>
 <p>这本书有点过时了，书中谈论的语言都已经超过了十年之久。尽管如此，在谈论什么样的 Go 代码才是好代码时，SOLID 的原则依然可以给我们一些启发。</p>
 <p>So，这也就是我花时间想在本文和大家一起讨论的。</p>
-<h4 id="单一责任原则"><a href="#单一责任原则" class="headerlink" title="单一责任原则"></a>单一责任原则</h4><p>SOLID 原则中的第一个原则就是单一责任原则。Robert C Martin 说过 A class should have one, and only one, reason to change(修改某个类的时候，原因有且只有一个)，说白了就是，一个类只负责一项职责。</p>
-<p>虽然 Go 语言中并没有类的概念–但我们有更鹅妹子嘤的 composition (组合)的特性。</p>
+<h4 id="单一责任原则"><a href="#单一责任原则" class="headerlink" title="单一责任原则"></a>单一责任原则</h4><p>SOLID 原则中的第一个原则就是<code>单一责任原则</code>。<code>Robert C Martin</code> 说过 A class should have one, and only one, reason to change(修改某个类的时候，原因有且只有一个)，说白了就是，一个类只负责一项职责。</p>
+<p>虽然 Go 语言中并没有类的概念–但我们有更鹅妹子嘤的 <code>composition</code> (组合)的特性。</p>
 <p>为什么修改一段代码只负责一项职责如此重要呢？如果一个类有两个职责R1，R2，那么修改R1时，可能会导致也要修改R2。修改代码是痛苦的，但更痛苦的是修改代码的原因是由于修改其他代码引起的。</p>
 <p>所以当一个类只负责一个功能领域中的相应职责时，可以修改的它的原因也就最大限度的变少了。</p>
 <h5 id="耦合-amp-内聚"><a href="#耦合-amp-内聚" class="headerlink" title="耦合 &amp; 内聚"></a>耦合 &amp; 内聚</h5><p>这两个词是用来形容一段代码是否易于修改的。</p>
-<p>耦合是指两个东西需要一起修改—对其中一个的改动会影响到另一个。</p>
-<p>另一个相关但独立的概念是内聚，一般指相互吸引的迷之力量。</p>
+<p><code>耦合</code>是指两个东西需要一起修改—对其中一个的改动会影响到另一个。</p>
+<p>另一个相关但独立的概念是<code>内聚</code>，一般指相互吸引的迷之力量。</p>
 <p>在软件开发领域中，内聚常常用来描述一段代码内各个元素彼此结合的紧密程度。</p>
 <p>下面我准备从 Go 的包模型开始，聊聊 Go 开发中的耦合与内聚。</p>
 <h5 id="包名"><a href="#包名" class="headerlink" title="包名"></a>包名</h5><p>在Go中，所有代码都必须有一个所属的包。一个包名要描述它的用途，同时也是命名空间的前缀。下面是 Go 标准库中一些好的包名：</p>
@@ -325,9 +325,9 @@ var _hmt = _hmt || [];
 <li>还有 package common， package utils，同样无法清楚的表达它们的用途，开发者也不易保持它们功能的专一性。</li>
 </ul>
 <p>上面这些包很快就会变成堆放杂七杂八代码的垃圾堆，而且会由于功能太杂乱而频繁修改。</p>
-<h5 id="Go-中的-UNIX-哲学"><a href="#Go-中的-UNIX-哲学" class="headerlink" title="Go 中的 UNIX 哲学"></a>Go 中的 UNIX 哲学</h5><p>在我看来，任何关于解耦设计的讨论如果没有提到 Doug McIlroy 的 UNIX 哲学都是不完整的。UNIX 哲学就是主张将若干简洁，清晰的模块组合起来完成复杂的任务，而且通常情况下这个任务都不是原作者所能预想到的。</p>
+<h5 id="Go-中的-UNIX-哲学"><a href="#Go-中的-UNIX-哲学" class="headerlink" title="Go 中的 UNIX 哲学"></a>Go 中的 UNIX 哲学</h5><p>在我看来，任何关于解耦设计的讨论如果没有提到 <code>Doug McIlroy</code> 的 <code>UNIX 哲学</code>都是不完整的。UNIX 哲学就是主张将若干简洁，清晰的模块组合起来完成复杂的任务，而且通常情况下这个任务都不是原作者所能预想到的。</p>
 <p>我想 Go 中的包正体现了 UNIX 哲学的精神。因为每一个包都是一个拥有单一责任的简洁的 Go 程序。</p>
-<h4 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h4><p>第二个原则，也就是 SOLID 当中的 O，是由 Bertrand Meyer 提出的开放封闭原则。1988年，Bertrand Mey 在他的著作《面向对象软件构造》一书中写道：Software entities should be open for extension,but closed for modification（软件实体应当对扩展开放，对修改关闭）。</p>
+<h4 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h4><p>第二个原则，也就是 SOLID 当中的 O，是由 <code>Bertrand Meyer</code> 提出的<code>开放封闭原则</code>。1988年，Bertrand Mey 在他的著作《面向对象软件构造》一书中写道：Software entities should be open for extension,but closed for modification（软件实体应当对扩展开放，对修改关闭）。</p>
 <p>那么这个n年前的建议在 Go 语言中是如何应用的呢？<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> A <span class="keyword">struct</span> &#123;</span><br><span class="line">	year <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (a A) Greet() &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Hello GolangUK"</span>, a.year)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B <span class="keyword">struct</span> &#123;</span><br><span class="line">	A</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> (b B) Greet() &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Welcome to GolangUK"</span>, b.year)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	<span class="keyword">var</span> a A</span><br><span class="line">	a.year = <span class="number">2016</span></span><br><span class="line">	<span class="keyword">var</span> b B</span><br><span class="line">	b.year = <span class="number">2016</span></span><br><span class="line">	a.Greet()<span class="comment">//Hello GolangUK 2016</span></span><br><span class="line">	b.Greet()<span class="comment">//Welcome to GolangUK 2016</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上面的代码中，我们有类型A，包含属性 year 和一个方法 Greet。我们还有类型B，B中嵌入(embedding)了类型A，并且B提供了他自己的 Greet 方法，覆盖了A的。</p>
 <p>嵌入不仅仅是针对方法，还可以使用通过嵌入使用被嵌入类型的属性。我们可以看到，在上面的例子中，因为A和B定义在同一个包中，所以B可以像使用自己定义的属性一样使用A中的 private 的属性 year。</p>
@@ -349,7 +349,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="ciszpy2cz001vl59lj3t4zp8h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="ciszvbuye0016iy9l1oefamyn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
