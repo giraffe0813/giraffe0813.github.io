@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
 <meta property="og:image" content="http://yemengying.com/images/think1.png">
-<meta property="og:updated_time" content="2016-09-13T15:54:33.000Z">
+<meta property="og:updated_time" content="2016-09-13T15:57:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】SOLID Go Design--上">
 <meta name="twitter:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
@@ -336,9 +336,10 @@ var _hmt = _hmt || [];
 <p>在这个例子中，我们有一个 Cat 类型，它拥有一个 Legs 方法可以获得腿的数目。我们将 Cat 类型嵌入到一个新类型 OctoCat 中，然后声明 Octocat 有5条腿。然而，尽管 OctoCat 定义了它自己的 Legs 方法返回5，在调用 PrintLegs 方法时依旧会打印“I have 4 legs”。</p>
 <p>这是因为 PrintLegs 方法是定义在 Cat 类型中的，它将 Cat 作为接收者，所以会调用 Cat 类型的 Legs 方法。Cat 类型并不会感知到它被嵌入到其他类型中，所以它的方法也不会被更改。</p>
 <p>所以，我们可以说 Go 的类型是对扩展开放，对修改关闭的。</p>
-<p>实际上，Go 类型中的方法比普通函数多了一点语法糖—-将接收者作为一个预先声明的形参。(译者注：这块理解了好久。。。，不懂得可以看这篇<a href="https://tiancaiamao.gitbooks.io/go-internals/content/zh/07.3.html" target="_blank" rel="external">参考文档</a>)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> (c Cat) PrintLegs() &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"I have %d legs\n"</span>, c.Legs())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> PrintLegs(c Cat) &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"I have %d legs\n"</span>, c.Legs())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实际上，Go 类型中的方法比普通函数多了一点语法糖—-将接收者作为一个预先声明的形参。(译者注：这块理解了好久😖。。。，不懂得可以看这篇<a href="https://tiancaiamao.gitbooks.io/go-internals/content/zh/07.3.html" target="_blank" rel="external">参考文档</a>)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> (c Cat) PrintLegs() &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"I have %d legs\n"</span>, c.Legs())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> PrintLegs(c Cat) &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"I have %d legs\n"</span>, c.Legs())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>由于 Go 并不支持函数重载，所以 OctoCat 类型并不能替代 Cat 类型。这也将引出下一个原则—里氏替换原则。</p>
-<p>且听下回分解。。。。。。。<br>——————————————别看我，我只是个傲娇的分割线———————————————————————</p>
+<p>且听下回分解。。。。。。。</p>
+<p>——————————————别看我，我只是个傲娇的分割线———————————————————————</p>
 <blockquote>
 <p>终于完成了上的部分↖(^ω^)↗，尽量在下周完成下。由于并不了解 Go 难免会有错误或翻译生硬的地方，欢迎指正错误，欢迎一起讨论~(≧▽≦)/~。</p>
 </blockquote>
@@ -352,7 +353,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="cit1nsx810010ix7b8e4d6m17" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="cit1nw574001fk27b83785sdm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
