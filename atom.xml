@@ -390,7 +390,7 @@
     <link href="http://yemengying.com/2016/06/05/interview/"/>
     <id>http://yemengying.com/2016/06/05/interview/</id>
     <published>2016-06-05T02:12:59.000Z</published>
-    <updated>2016-09-02T02:46:56.000Z</updated>
+    <updated>2016-09-16T03:51:14.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;从决定离职开始，前前后后面试了几家公司，把还能记得住的面试问题总结一下，帮小伙伴们查漏补缺吧，希望小伙伴们可以一举拿下offer。会简要写一下我觉得问题的关键点，不过有的可能并不是正确的答案，有的问题我到现在也还没明白。。。~~&lt;/p&gt;
@@ -489,6 +489,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;面试真真是件很心累的事情，每次面完都感觉被拔了层皮，希望两年内不要在面试了😂。后天就要入职了，想想还有点小紧张呢，去看学叔推荐的美剧压压惊。。。&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;都看到这了，关注个公众号再走吧🙈&lt;br&gt;&lt;img src=&quot;/images/qrcode.jpg&quot; alt=&quot;Running Geek&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -800,7 +801,7 @@
     <link href="http://yemengying.com/2016/05/07/threadsafe-hashmap/"/>
     <id>http://yemengying.com/2016/05/07/threadsafe-hashmap/</id>
     <published>2016-05-07T09:21:06.000Z</published>
-    <updated>2016-09-12T07:19:22.000Z</updated>
+    <updated>2016-09-16T03:51:34.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一场面试，经历了笔试+3轮面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair!!!。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。&lt;/p&gt;
@@ -846,6 +847,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;欢迎指正错误，欢迎一起讨论。另外，针对提离职当天发生的一个小插曲，真真是给我上了一课，不是所有人都能接受实话的，只想引用欢乐颂里安迪的一句话:常与同好争高下,不与傻瓜论短长。&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;都看到这了，关注个公众号再走吧🙈&lt;br&gt;&lt;img src=&quot;/images/qrcode.jpg&quot; alt=&quot;Running Geek&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -1132,9 +1134,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -1702,7 +1704,7 @@
     <link href="http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/"/>
     <id>http://yemengying.com/2016/02/20/Java-8-行为参数化-behavior-parameterization/</id>
     <published>2016-02-20T11:33:21.000Z</published>
-    <updated>2016-09-12T03:37:07.000Z</updated>
+    <updated>2016-09-16T03:51:46.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;根据书 &amp;lt;&amp;lt; Java 8 in action &amp;gt;&amp;gt;第二章的一个例子整理。书中通过一个例子，讲述了如何利用behavior parameterization来应对不停变化的需求。想想之前自己写的工具类，真是大写的Low啊。。。。&lt;/p&gt;

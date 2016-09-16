@@ -7,6 +7,30 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/</loc>
+        <lastmod>2016-09-16T03:51:46.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/2016/05/07/threadsafe-hashmap/</loc>
+        <lastmod>2016-09-16T03:51:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/2016/06/05/interview/</loc>
+        <lastmod>2016-09-16T03:51:14.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/06/25/cleanCode4naming/</loc>
         <lastmod>2016-09-16T03:48:02.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,32 +47,8 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/05/07/threadsafe-hashmap/</loc>
-        <lastmod>2016-09-12T07:19:22.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/</loc>
-        <lastmod>2016-09-12T03:37:07.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yemengying.com/2016/05/13/jvm-GC/</loc>
         <lastmod>2016-09-07T15:21:35.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/06/05/interview/</loc>
-        <lastmod>2016-09-02T02:46:56.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
