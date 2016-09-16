@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-09-14T15:38:08.000Z</updated>
+  <updated>2016-09-15T05:34:00.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/09/11/solid-go-design-1/"/>
     <id>http://yemengying.com/2016/09/11/solid-go-design-1/</id>
     <published>2016-09-11T07:09:18.000Z</published>
-    <updated>2016-09-14T15:38:08.000Z</updated>
+    <updated>2016-09-15T05:34:00.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的&lt;a href=&quot;https://www.youtube.com/watch?v=zzAdEt3xZ1M&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;演讲&lt;/a&gt;所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才算是好代码，当然 SOLID 原则也适用于其他语言。原文比较长，所以准备分成上下两部分，也有十分非常以及特别大的可能是上中下(捂脸)。&lt;/p&gt;
@@ -306,7 +306,7 @@
     <link href="http://yemengying.com/2016/06/25/cleanCode4naming/"/>
     <id>http://yemengying.com/2016/06/25/cleanCode4naming/</id>
     <published>2016-06-25T08:23:39.000Z</published>
-    <updated>2016-06-26T08:02:48.000Z</updated>
+    <updated>2016-09-16T03:48:02.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。&lt;/p&gt;
@@ -367,6 +367,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;欢迎指正错误，欢迎一起讨论~~~&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;都看到这了，关注个公众号再走吧🙈&lt;br&gt;&lt;img src=&quot;/images/qrcode.jpg&quot; alt=&quot;Running Geek&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
