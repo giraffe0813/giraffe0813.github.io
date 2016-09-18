@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/09/11/solid-go-design-1/</loc>
+        <lastmod>2016-09-18T02:06:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/</loc>
         <lastmod>2016-09-16T03:51:46.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -33,14 +41,6 @@
     <url>
         <loc>http://yemengying.com/2016/06/25/cleanCode4naming/</loc>
         <lastmod>2016-09-16T03:48:02.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/09/11/solid-go-design-1/</loc>
-        <lastmod>2016-09-15T05:34:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

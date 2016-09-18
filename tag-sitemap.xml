@@ -191,20 +191,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/go/</loc>
-        <lastmod>2016-09-15T05:34:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
-        <lastmod>2016-09-16T03:48:02.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/</loc>
         <lastmod>2016-09-16T03:51:14.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -221,6 +207,20 @@
     <url>
         <loc>http://yemengying.com/tags/java/</loc>
         <lastmod>2016-09-16T03:51:46.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
+        <lastmod>2016-09-18T02:06:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/go/</loc>
+        <lastmod>2016-09-18T02:06:29.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
