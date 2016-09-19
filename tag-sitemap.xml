@@ -2,20 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://yemengying.com/tags/transaction/</loc>
-        <lastmod>2016-02-03T07:38:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/spring-aop/</loc>
-        <lastmod>2016-02-03T07:38:24.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/%E7%94%B5%E5%BD%B1/</loc>
         <lastmod>2016-03-15T13:08:24.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -177,13 +163,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/spring/</loc>
-        <lastmod>2016-07-27T13:27:48.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/jvm/</loc>
         <lastmod>2016-09-07T15:21:35.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -205,13 +184,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/java/</loc>
-        <lastmod>2016-09-16T03:51:46.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/</loc>
         <lastmod>2016-09-18T06:24:59.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -221,6 +193,34 @@
     <url>
         <loc>http://yemengying.com/tags/go/</loc>
         <lastmod>2016-09-18T06:24:59.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/java/</loc>
+        <lastmod>2016-09-19T02:54:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/spring/</loc>
+        <lastmod>2016-09-19T02:54:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/transaction/</loc>
+        <lastmod>2016-09-19T02:54:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/tags/spring-aop/</loc>
+        <lastmod>2016-09-19T02:54:34.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
