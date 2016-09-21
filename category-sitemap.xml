@@ -7,13 +7,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/thread/</loc>
-        <lastmod>2016-02-03T09:59:21.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/java/list/</loc>
         <lastmod>2016-04-22T13:44:02.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -21,85 +14,92 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/python/</loc>
-        <lastmod>2016-04-23T01:59:14.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/categories/angularJs/</loc>
-        <lastmod>2016-04-23T02:08:57.000Z</lastmod>
+        <loc>http://yemengying.com/categories/go/</loc>
+        <lastmod>2016-09-21T08:24:15.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/categories/linux/</loc>
-        <lastmod>2016-05-09T12:47:45.000Z</lastmod>
+        <lastmod>2016-09-21T08:28:44.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/elasticsearch/</loc>
-        <lastmod>2016-05-09T12:54:33.000Z</lastmod>
+        <loc>http://yemengying.com/categories/java/thread/</loc>
+        <lastmod>2016-09-21T08:29:34.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/redis/</loc>
-        <lastmod>2016-05-14T09:30:03.000Z</lastmod>
+        <loc>http://yemengying.com/categories/python/</loc>
+        <lastmod>2016-09-21T08:30:09.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/MySQL/</loc>
-        <lastmod>2016-05-29T12:34:18.000Z</lastmod>
+        <loc>http://yemengying.com/categories/angularJs/</loc>
+        <lastmod>2016-09-21T08:31:17.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/categories/Clean-Code/</loc>
-        <lastmod>2016-09-16T03:48:02.000Z</lastmod>
+        <lastmod>2016-09-21T08:31:56.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2016-09-16T03:51:14.000Z</lastmod>
+        <loc>http://yemengying.com/categories/elasticsearch/</loc>
+        <lastmod>2016-09-21T08:32:26.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/hashmap/</loc>
-        <lastmod>2016-09-16T03:51:34.000Z</lastmod>
+        <loc>http://yemengying.com/categories/MySQL/</loc>
+        <lastmod>2016-09-21T08:35:11.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/</loc>
-        <lastmod>2016-09-16T03:51:46.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/categories/go/</loc>
-        <lastmod>2016-09-18T06:24:59.000Z</lastmod>
+        <loc>http://yemengying.com/categories/redis/</loc>
+        <lastmod>2016-09-21T08:35:31.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yemengying.com/categories/spring/</loc>
-        <lastmod>2016-09-19T02:54:34.000Z</lastmod>
+        <lastmod>2016-09-21T08:36:20.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/java/</loc>
+        <lastmod>2016-09-21T08:36:52.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/java/hashmap/</loc>
+        <lastmod>2016-09-21T08:36:52.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
+        <lastmod>2016-09-21T08:43:47.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

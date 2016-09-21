@@ -14,18 +14,18 @@
 <meta property="og:url" content="http://yemengying.com/2016/07/25/spring-xml/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="先请看下左上角，hiahia，新logo，si不si很漂酿，有个会设计的表哥就是好，又好又快，还不用钱。">
-<meta property="og:image" content="http://yemengying.com/images/renxing.jpeg">
-<meta property="og:updated_time" content="2016-07-27T13:27:48.000Z">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/image/renxing.jpeg">
+<meta property="og:updated_time" content="2016-09-21T08:36:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Spring】Xml解析相关">
 <meta name="twitter:description" content="先请看下左上角，hiahia，新logo，si不si很漂酿，有个会设计的表哥就是好，又好又快，还不用钱。">
-<meta name="twitter:image" content="http://yemengying.com/images/renxing.jpeg">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/image/renxing.jpeg">
     
 
     
 
     
-        <link rel="icon" href="/images/favicon.png" />
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
     
     <script src="/js/disqus-proxy.js"></script>
 
@@ -98,7 +98,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/images/zootopia/judy.jpg" />
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/image/judy.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="/images/zootopia/judy.jpg" />
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/image/judy.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -281,7 +281,7 @@ var _hmt = _hmt || [];
 <h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-spring-resource/" target="_blank" rel="external">Spring 资源访问剖析和策略模式应用</a></p>
 <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>先说个在看源码时，发现的一个以前没有关注过的点。大神们在创建集合的时候，大多数都设置了一个预估的初始容量(2的幂数)，而不是直接采用默认的初始容量( HashMap 中是16)，就像下面这样:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Map from dependency type to corresponding autowired value */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Class&lt;?&gt;, Object&gt; resolvableDependencies = <span class="keyword">new</span> ConcurrentHashMap&lt;Class&lt;?&gt;, Object&gt;(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Map of bean definition objects, keyed by bean name */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, BeanDefinition&gt; beanDefinitionMap = <span class="keyword">new</span> ConcurrentHashMap&lt;String, BeanDefinition&gt;(<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Map of singleton and non-singleton bean names, keyed by dependency type */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Class&lt;?&gt;, String[]&gt; allBeanNamesByType = <span class="keyword">new</span> ConcurrentHashMap&lt;Class&lt;?&gt;, String[]&gt;(<span class="number">64</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Map of singleton-only bean names, keyed by dependency type */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Class&lt;?&gt;, String[]&gt; singletonBeanNamesByType = <span class="keyword">new</span> ConcurrentHashMap&lt;Class&lt;?&gt;, String[]&gt;(<span class="number">64</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** List of bean definition names, in registration order */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> List&lt;String&gt; beanDefinitionNames = <span class="keyword">new</span> ArrayList&lt;String&gt;(<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** List of names of manually registered singletons, in registration order */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> Set&lt;String&gt; manualSingletonNames = <span class="keyword">new</span> LinkedHashSet&lt;String&gt;(<span class="number">16</span>);</span><br></pre></td></tr></table></figure></p>
 <p>大神们这样写肯定是有好处的。不太了解其它集合类的实现，就以 HashMap 为例看一下。HashMap 底层的存储结构是一个 Entry 对象的数组(Java 8中是 Node 对象的数组)，默认初始容量是16，负载因子是0.75。也就是说当元素个数超过16*0.75=12时，就要进行扩容，将数组大小扩大一倍，并计算元素在新数组中的位置，这个过程是比较耗费性能的。所以，个人觉得大神们这样写是因为如果直接采用默认的初始容量，那么在元素个数较少时，会浪费空间；元素个数较多时，又会造成频繁的扩容，耗费性能。</p>
-<p>想起上次的需求，明明确定一定以及肯定评分只有5个，还是new了个默认容量(16)的map。<br><img src="/images/renxing.jpeg" alt="ren xing"></p>
+<p>想起上次的需求，明明确定一定以及肯定评分只有5个，还是new了个默认容量(16)的map。<br><img src="http://oduh99f02.bkt.clouddn.com/image/renxing.jpeg" alt="ren xing"></p>
 <h3 id="相关接口"><a href="#相关接口" class="headerlink" title="相关接口"></a>相关接口</h3><p>先理一理加载xml配置文件的相关接口<br><strong>1.Resource</strong>：采用了策略模式，是 Spring 资源访问策略的抽象，该接口有多种实现类，每个实现类代表一种资源访问策略，负责具体的资源访问。<br><strong>2.ResourceLoader</strong>：该接口的实现类可以获得一个 Resource 的实例。<br><strong>3.BeanDefinitionReader</strong>： 根据指定的 Resource 加载bean definition. </p>
 <p>未完待续。。。。。。</p>
 <p>本来是想多整理一点的，但是。。。听说新一期RM主角是wuli光洙，这还能忍，滚去看RM了。。。。</p>
@@ -295,7 +295,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/07/25/spring-xml/" data-id="cit9fq82c001mq39l4m4437b2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/07/25/spring-xml/" data-id="citco4p26001x4o9l8l9c9z4t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

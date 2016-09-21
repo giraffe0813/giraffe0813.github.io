@@ -18,20 +18,20 @@
 <meta property="og:description" content="原文来自一个java大牛的技术博客 地址http://javarevisited.blogspot.com/2015/07/how-to-use-wait-notify-and-notifyall-in.html 博客以生产者和消费者为例 讲解了如何使用wait,notify,notifyAll进行多个线程之间的通信。下面是原文的翻译。
 
 在Java中可以利用use,notify,notifyA">
-<meta property="og:image" content="http://yemengying.com/images/wait1.jpg">
-<meta property="og:updated_time" content="2016-02-03T09:59:21.000Z">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/image/wait1.jpg">
+<meta property="og:updated_time" content="2016-09-21T08:29:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】以生产者消费者为例阐述如何使用wait，notify和notifyAll">
 <meta name="twitter:description" content="原文来自一个java大牛的技术博客 地址http://javarevisited.blogspot.com/2015/07/how-to-use-wait-notify-and-notifyall-in.html 博客以生产者和消费者为例 讲解了如何使用wait,notify,notifyAll进行多个线程之间的通信。下面是原文的翻译。
 
 在Java中可以利用use,notify,notifyA">
-<meta name="twitter:image" content="http://yemengying.com/images/wait1.jpg">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/image/wait1.jpg">
     
 
     
 
     
-        <link rel="icon" href="/images/favicon.png" />
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
     
     <script src="/js/disqus-proxy.js"></script>
 
@@ -104,7 +104,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/images/zootopia/judy.jpg" />
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/image/judy.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="/images/zootopia/judy.jpg" />
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/image/judy.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -284,7 +284,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <p>在Java中可以利用use,notify,notifyAll来完成线程之间的通信。举个例子，假设你的程序中有两个线程(eg:<code>Producer</code>(生产者)和<code>Consumer</code>(消费者))，Producer要和Consumer通信，通知Consumer队列中有元素了可以开始消费。相似的，Consumer也需要通知Producer队列中有空闲可以插入元素了。一个线程可以可以在一定条件下调用wait方法暂停什么都不做。比如，在Producer和consumer的问题中，当队列满了时Producer需要调用wait，当队列为空时Consumer需要调用wait方法。如果一些线程在等待某些条件变为真，可以在条件改变时使用notify和notifyAll通知他们并唤醒他们。Notify方法和NotifyAll方法都可以发送通知，不同的是，notify只能向等待的线程中的一个发送通知，不保证接受到通知的是哪个线程，而NotifyAll会向所有线程发送通知。所以如果只有一个线程等待对象锁，notify和notifyAll都会通知到它。在这个java多线程的教程中，将利用生产者，消费者的例子讲述在Java中如何使用wait，notify和notifyAll实现线程内部通信。另外，如果大家对掌握多线程和并发很感兴趣，强烈建议大家阅读<code>Brian Goetz</code>写的<code>Java Concurrency in Practice</code>。如果没看过这本书，你的Java多线程之旅是不完整的🙀。</p>
 <a id="more"></a>
-<h3 id="在代码中展示如何使用wait和notify"><a href="#在代码中展示如何使用wait和notify" class="headerlink" title="在代码中展示如何使用wait和notify"></a>在代码中展示如何使用wait和notify</h3><p>尽管wait和notify是相当基础的概念，并且他们定义在<code>Object</code>类中，但要想在代码中使用他们并非易事。你可以在面试中让面试者通过手写代码解决Producer者和Consumer者问题来验证，我相信大多数人都会犯在错误的地方同步，没有在正确的对象上调用wait之类的错。讲真，这些常常会困惑许多程序员。第一个困惑点来自怎样调用wait方法，因为wait方法并不是定义在Thread类中，所以不能简单的Thread.wait()。而许多Java开发者习惯于Thread.sleep(),所以常常错误的想用同样的方式调用wait。实际上，wait()方法需要在一个被两个线程共享的对象上调用，例如在Producer者和消费Consumer的问题中，两个线程共享对象是一个队列。第二个困惑点来自wait方法应该在同步块还是同步方法中调用？如果使用同步块，那么哪个对象应该放到同步块中？这个对象和你想要获得锁的对象应该是同一个。在我们的例子中，这个对象就是两个线程共享的队列。<br><img src="/images/wait1.jpg" alt="image"></p>
+<h3 id="在代码中展示如何使用wait和notify"><a href="#在代码中展示如何使用wait和notify" class="headerlink" title="在代码中展示如何使用wait和notify"></a>在代码中展示如何使用wait和notify</h3><p>尽管wait和notify是相当基础的概念，并且他们定义在<code>Object</code>类中，但要想在代码中使用他们并非易事。你可以在面试中让面试者通过手写代码解决Producer者和Consumer者问题来验证，我相信大多数人都会犯在错误的地方同步，没有在正确的对象上调用wait之类的错。讲真，这些常常会困惑许多程序员。第一个困惑点来自怎样调用wait方法，因为wait方法并不是定义在Thread类中，所以不能简单的Thread.wait()。而许多Java开发者习惯于Thread.sleep(),所以常常错误的想用同样的方式调用wait。实际上，wait()方法需要在一个被两个线程共享的对象上调用，例如在Producer者和消费Consumer的问题中，两个线程共享对象是一个队列。第二个困惑点来自wait方法应该在同步块还是同步方法中调用？如果使用同步块，那么哪个对象应该放到同步块中？这个对象和你想要获得锁的对象应该是同一个。在我们的例子中，这个对象就是两个线程共享的队列。<br><img src="http://oduh99f02.bkt.clouddn.com/image/wait1.jpg" alt="image"></p>
 <h3 id="在循环中使用wait和notify，而不是If代码块中"><a href="#在循环中使用wait和notify，而不是If代码块中" class="headerlink" title="在循环中使用wait和notify，而不是If代码块中"></a>在循环中使用wait和notify，而不是If代码块中</h3><p>在你已经了解需要在一个共享的对象上调用wait方法后，接下来就是学会避免许多java开发者犯的错—在If代码块中调用wait而不是while循环中。因为需要在一定的条件下调用wait，比如Producer线程要在队列满了的情况下调用wait，所以第一反应都是使用If语句。但是，在If代码块中调用wait会产生<code>bug</code>，因为线程存在一定的可能在等待条件没有改变的情况下<code>假唤醒(spurious wake up)</code>。所以如果没有使用循环在线程唤醒后检查等待条件，可能会造成尝试在已经满了的队列中插入元素或者在空了的队列中取元素。这就是为什么我们要在while循环中调用wait而不是if。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">// The standard idiom for calling the wait method in Java</span></span><br><span class="line">  <span class="keyword">synchronized</span> (sharedObject) &#123;</span><br><span class="line">        <span class="keyword">while</span> (condition) &#123;</span><br><span class="line">            sharedObject.wait();<span class="comment">// (Releases lock, and reacquires on wakeup)</span></span><br><span class="line">         &#125; </span><br><span class="line">        ...<span class="comment">// do action based upon condition e.g. take or put into queue</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>正如我建议的，我们应该在一个循环中调用wait。这个循环用于在线程休眠之前和之后检查condition。</p>
@@ -298,7 +298,7 @@ var _hmt = _hmt || [];
 <li>在线程共享的对象上调用wait</li>
 <li>偏向选择notifyAll，而不是notify，原因在这篇<a href="http://javarevisited.blogspot.sg/2012/10/difference-between-notify-and-notifyall-java-example.html" target="_blank" rel="external">文章</a>里</li>
 </ul>
-<p><img src="/images/wait2.jpg" alt="image"></p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/image/wait2.jpg" alt="image"></p>
 
         
         </div>
@@ -309,7 +309,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="cit9fq83j002uq39lfq4cwobe" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="citco4p2y002y4o9lh1su8v0o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
