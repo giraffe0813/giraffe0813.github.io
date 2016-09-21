@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-09-21T08:24:15.000Z</updated>
+  <updated>2016-09-21T09:53:06.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -16,15 +16,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>【译】SOLID Go Design--上</title>
+    <title>【译】S.O.L.I.D 原则在 Go 中的应用（上）</title>
     <link href="http://yemengying.com/2016/09/11/solid-go-design-1/"/>
     <id>http://yemengying.com/2016/09/11/solid-go-design-1/</id>
     <published>2016-09-11T07:09:18.000Z</published>
-    <updated>2016-09-21T08:24:15.000Z</updated>
+    <updated>2016-09-21T09:53:06.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的&lt;a href=&quot;https://www.youtube.com/watch?v=zzAdEt3xZ1M&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;演讲&lt;/a&gt;所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才算是好代码，当然 SOLID 原则也适用于其他语言。原文比较长，所以准备分成上下两部分，也有十分非常以及特别大的可能是上中下(捂脸)。&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;咳咳，我果然是打脸体质，下翻译了一句就放弃了。不过，我把它交给了超靠谱的小伙伴。想看下的请移步&lt;a href=&quot;http://kevin.doyeden.com/2016/09/21/solid-go-design-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;【译】S.O.L.I.D 原则在 Go 中的应用（下）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;捂。。。。。。。。还是不捂了，脸已经丢没了🙈&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;原文链接：&lt;a href=&quot;http://dave.cheney.net/2016/08/20/solid-go-design?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=website&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dave.cheney.net/2016/08/20/solid-go-design?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=website&lt;/a&gt;&lt;br&gt;原文作者：&lt;a href=&quot;http://dave.cheney.net/about&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Dave Cheney&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id=&quot;世界上有多少个-Go-语言开发者？&quot;&gt;&lt;a href=&quot;#世界上有多少个-Go-语言开发者？&quot; class=&quot;headerlink&quot; title=&quot;世界上有多少个 Go 语言开发者？&quot;&gt;&lt;/a&gt;世界上有多少个 Go 语言开发者？&lt;/h4&gt;&lt;p&gt;介个世界上有多少 Go 开发者捏？在脑海中想一个数字，我们会在最后回到这个话题。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/think1.png&quot; alt=&quot;thinking&quot;&gt;&lt;/p&gt;
@@ -100,6 +102,8 @@
       &lt;blockquote&gt;
 &lt;p&gt;最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的&lt;a href=&quot;https://www.youtube.com/watch?v=zzAdEt3xZ1M&quot;&gt;演讲&lt;/a&gt;所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才算是好代码，当然 SOLID 原则也适用于其他语言。原文比较长，所以准备分成上下两部分，也有十分非常以及特别大的可能是上中下(捂脸)。&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;咳咳，我果然是打脸体质，下翻译了一句就放弃了。不过，我把它交给了超靠谱的小伙伴。想看下的请移步&lt;a href=&quot;http://kevin.doyeden.com/2016/09/21/solid-go-design-2/&quot;&gt;【译】S.O.L.I.D 原则在 Go 中的应用（下）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;捂。。。。。。。。还是不捂了，脸已经丢没了🙈&lt;/p&gt;
     
     </summary>
     
