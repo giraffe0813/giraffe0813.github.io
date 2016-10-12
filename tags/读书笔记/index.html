@@ -24,7 +24,7 @@
     
         <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
     
-    <script src="/js/disqus-proxy.js"></script>
+    <script src="//xiaoming.io/static/app.js"></script>
 
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/open-sans/styles.css">
@@ -195,7 +195,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="profile-block recent-comments">
             <p class="recent-comments-title">最新评论</p>
-            <ul id="recent-comments" class="recent-comments-container">
+            <ul id="disqus-recent-comments" class="recent-comments-container">
             </ul>
         </div>
         
@@ -436,7 +436,12 @@ var _hmt = _hmt || [];
     dsq.onload = function() {
         clearTimeout(timer); 
     }
-    timer = setTimeout(proxyDisqus, 3000);
+    document.addEventListener('DOMContentLoaded', function() {
+       Disqus.getRecentComments();
+     });
+     timer = setTimeout(function() {
+       Disqus.getComments();
+     }, 3000);
     dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();

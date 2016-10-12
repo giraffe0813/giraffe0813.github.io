@@ -27,7 +27,7 @@
     
         <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
     
-    <script src="/js/disqus-proxy.js"></script>
+    <script src="//xiaoming.io/static/app.js"></script>
 
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/open-sans/styles.css">
@@ -198,7 +198,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="profile-block recent-comments">
             <p class="recent-comments-title">最新评论</p>
-            <ul id="recent-comments" class="recent-comments-container">
+            <ul id="disqus-recent-comments" class="recent-comments-container">
             </ul>
         </div>
         
@@ -321,7 +321,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="citcqfh5w001rqq9l4a87e1qt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="ciu6jyeq3001wzy9l9kdmvev5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -457,7 +457,12 @@ var _hmt = _hmt || [];
     dsq.onload = function() {
         clearTimeout(timer); 
     }
-    timer = setTimeout(proxyDisqus, 3000);
+    document.addEventListener('DOMContentLoaded', function() {
+       Disqus.getRecentComments();
+     });
+     timer = setTimeout(function() {
+       Disqus.getComments();
+     }, 3000);
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
