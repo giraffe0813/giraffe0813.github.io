@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-10-19T08:57:42.000Z</updated>
+  <updated>2016-10-19T09:01:38.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yemengying.com/2016/10/15/javaConfig-vs-XML/"/>
     <id>http://yemengying.com/2016/10/15/javaConfig-vs-XML/</id>
     <published>2016-10-15T07:20:20.000Z</published>
-    <updated>2016-10-19T08:57:42.000Z</updated>
+    <updated>2016-10-19T09:01:38.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;Long long time ago, 在《Spring In Action》一书中看到这么一句话&lt;strong&gt; JavaConfig is the preferred option for explicit configuration because it’s more powerful, type-safe, and refactor-friendly &lt;/strong&gt;。不过当时并不知道 &lt;code&gt;JavaConfig&lt;/code&gt; 是神马东东就选择性忽略了。最近新的项目采用了 Spring Boot + JavaConfig ,接触了一个星期的 JavaConfig，感觉还不错，简单比较下它和 XML。由于接连看了 4 部韩国灾难片心情比较蓝瘦，就暂时不要指正错误了，错就错吧(づ｡◕‿‿◕｡)づ&lt;/p&gt;
@@ -56,8 +56,7 @@
 &lt;li&gt;《Spring Boot 揭秘》&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;——————————————-片 尾 彩 蛋 🎉🎉🎉—————————————————&lt;br&gt;咳咳，预警预警！！！下面的部分与本文主旨无关。&lt;/p&gt;
-&lt;p&gt;首先，换了个新锅，可以预约煮粥，再也不用早起煮粥了，幸福感提升 200%。&lt;/p&gt;
-&lt;p&gt;其次，在匿名人士的帮助下上线了新版未翻墙模式下的评论，优化了样式。唉，这是谁的男朋友这么有才华，好羡慕她哦︿(￣︶￣)︿&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/envy.png&quot; alt=&quot;&amp;lt;(￣︶￣)&amp;gt;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;首先，换了个新锅，可以预约煮粥，再也不用早起煮粥了，幸福感提升 200%。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/guo.jpg&quot; alt=&quot;我是锅&quot;&gt;&lt;br&gt;其次，在匿名人士的帮助下上线了新版未翻墙模式下的评论，优化了样式。唉，这是谁的男朋友这么有才华，好羡慕她哦︿(￣︶￣)︿&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/envy.png&quot; alt=&quot;&amp;lt;(￣︶￣)&amp;gt;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;最后，嘿嘿，关注个公众号再走吧(&lt;em&gt;^__^&lt;/em&gt;)&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/qrcode.jpg&quot; alt=&quot;Running Geek&quot;&gt;&lt;/p&gt;
 </content>
     
