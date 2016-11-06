@@ -84,13 +84,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2016-09-21T08:43:47.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/go/</loc>
         <lastmod>2016-09-21T09:53:06.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -100,6 +93,13 @@
     <url>
         <loc>http://yemengying.com/categories/java/</loc>
         <lastmod>2016-10-19T09:01:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
+        <lastmod>2016-11-06T13:33:58.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
