@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-11-06T13:58:40.000Z</updated>
+  <updated>2016-11-14T16:45:13.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Something about Spring Transaction</title>
+    <link href="http://yemengying.com/2016/11/14/something-about-spring-transaction/"/>
+    <id>http://yemengying.com/2016/11/14/something-about-spring-transaction/</id>
+    <published>2016-11-14T13:30:34.000Z</published>
+    <updated>2016-11-14T16:45:13.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;记录一个上周遇到的小问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;后端开发免不了要和事务打交道，比较常用的就是利用 Spring 框架的声明式事务管理，简单的说就是在需要事务管理的类或方法上添加 &lt;code&gt;@Transactional&lt;/code&gt; 注解，然后在配置类上添加 &lt;code&gt;@EnableTransactionManagement&lt;/code&gt;注解(这里配置采用 JavaConfig 的方式，如果是 XML， 是要在 XML 文件中添加&lt;code&gt;&amp;lt;tx:annotation-driven/&amp;gt;&lt;/code&gt;)。然后 Spring 框架会利用 AOP 在相关方法调用的前后进行事务管理。&lt;/p&gt;
+&lt;p&gt;一直以来也没出什么岔子，直到。。。。。。。。&lt;/p&gt;
+&lt;p&gt;上周写了段大概长下面样纸的代码。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;GiraffeServiceImpl&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;GiraffeService&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(List&amp;lt;Giraffe&amp;gt; giraffes)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (Giraffe giraffe : giraffes) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      B(giraffe);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;meta&quot;&gt;@Transactional&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;transactionManager&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Giraffe giraffe)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;// Step 1: update something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;// Step 2: insert something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;// Step 3: update something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;大概就是 Service 中有一个方法 A，会内部调用方法 B， 方法 A 没有事务管理，方法 B 采用了声明式事务，通过在方法上声明 Transactional 的注解来做事务管理。&lt;/p&gt;
+&lt;p&gt;然鹅，通过下面的 Junit 测试方法 A 的时候发现方法 B 的事务并没有开启， 而直接调用方法 B 事务是正常开启的。 &lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;GiraffeServiceTest&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;meta&quot;&gt;@Autowired&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; GiraffeService giraffeService;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 没有开启事务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;meta&quot;&gt;@Test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;testA&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	giraffeService.A();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 正常开启事务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;meta&quot;&gt;@Test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;testB&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	giraffeService.B();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/lei.jpg&quot; alt=&quot;T^T&quot;&gt;&lt;/p&gt;
+&lt;p&gt;问了下明佳和超哥之后，终于有点明白了🤔&lt;/p&gt;
+&lt;p&gt;Spring 在加载目标 Bean 的时候，会为声明了 @Transactional 的 目标 Bean 创造一个代理类，而&lt;code&gt;目标类本身并不能感知到代理类的存在&lt;/code&gt;。调用通过 Spring 上下文注入的 Bean 的方法， 并不是直接调用目标类的方法。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/direct-call.png&quot; alt=&quot;不是&quot;&gt;&lt;br&gt;而是先调用代理类的方法，再调用目标类的。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/proxy-call.png&quot; alt=&quot;是&quot;&gt;&lt;/p&gt;
+&lt;p&gt;对于加了@Transactional注解的方法来说，在调用代理类的方法时，会先通过拦截器&lt;code&gt;TransactionInterceptor&lt;/code&gt;开启事务，然后在调用目标类的方法，最后在调用结束后，TransactionInterceptor 会提交或回滚事务，大致流程如下图。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/transactionManager.png&quot; alt=&quot;transaction manager&quot;&gt;&lt;/p&gt;
+&lt;p&gt;而对于第一段的代码，我在方法 A 中调用方法 B，实际上是通过“this”的引用，也就是直接调用了目标类的方法，而非通过 Spring 上下文获得的代理类，所以。。。事务是不会开启滴。&lt;/p&gt;
+&lt;p&gt;解决办法也蛮简单，通过实现ApplicationContextAware接口获得 Spring 的上下文，然后获得目标类的代理类，通过代理类的对象，调用方法 B，即可。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;GiraffeServiceImpl&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;GiraffeService&lt;/span&gt;,&lt;span class=&quot;title&quot;&gt;ApplicationContextAware&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;meta&quot;&gt;@Setter&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; ApplicationContext applicationContext;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(List&amp;lt;Giraffe&amp;gt; giraffes)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    GiraffeService service = applicationContext.getBean(GiraffeService.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (Giraffe giraffe : giraffes) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      service.B(giraffe);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;meta&quot;&gt;@Transactional&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;transactionManager&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Giraffe giraffe)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;// Step 1: update something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;// Step 2: insert something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;// Step 3: update something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;stackoverflow 上也有相关的问题:&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/1099025/spring-transactional-what-happens-in-background&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@Transactional - What happens in background?&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/23931698/spring-transactional-annotation-self-invocation&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@Transactional Annotation : Self Invocation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;唉，都快写完了，还没等来 wuli 悦儿&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/72bace62ed926caa5fb52a9ecca08e61.png?imageMogr2/thumbnail/500x350!&quot; alt=&quot;wuli 悦儿&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;记录一个上周遇到的小问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="spring" scheme="http://yemengying.com/tags/spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Running Man 7012</title>
@@ -1789,49 +1834,6 @@
     
     
       <category term="elasticsearch" scheme="http://yemengying.com/tags/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>疯狂动物城</title>
-    <link href="http://yemengying.com/2016/03/15/zootopia/"/>
-    <id>http://yemengying.com/2016/03/15/zootopia/</id>
-    <published>2016-03-15T04:44:12.000Z</published>
-    <updated>2016-09-21T08:43:47.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;真的是太喜欢疯狂动物城这部电影了，二刷之后还是想去电影院接着看，对这种毛茸茸的小动物真是一点抵抗力都没有，尤其是苏苏的狐尼克。放点网上搜来的图(权侵删)，方便看到它们，哇咔咔咔咔。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;110&quot; src=&quot;http://music.163.com/outchain/player?type=1&amp;id=3443094&amp;auto=0&amp;height=90&quot;&gt;&lt;/iframe&gt;
-
-
-&lt;p&gt;&lt;strong&gt;蠢萌蠢萌，慢的出奇，戳中笑点的树懒flash&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/flash1.gif&quot; alt=&quot;flash 1&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/flash2.gif&quot; alt=&quot;flash 2&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/flash3.gif&quot; alt=&quot;flash 3&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;被圈饭的兔狐CP&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/nick&amp;amp;judy2.gif&quot; alt=&quot;狐尼克&amp;amp;兔朱迪&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/nick&amp;amp;judy1.gif&quot; alt=&quot;狐尼克&amp;amp;兔朱迪&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/nick&amp;amp;judy3.gif&quot; alt=&quot;狐尼克&amp;amp;兔朱迪&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;最爱的狐尼克&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/nick2.jpg&quot; alt=&quot;狐尼克&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;勇敢的兔朱迪&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/judy1.gif&quot; alt=&quot;兔朱迪&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;致敬教父的Mr. Big&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/MrBig.jpg&quot; alt=&quot;Mr Big&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;少女心的豹警官&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/bao1.gif&quot; alt=&quot;萌萌的豹豹1&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/bao2.gif&quot; alt=&quot;萌萌的豹豹2&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;大合照&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/zootopia.jpg&quot; alt=&quot;zootopia&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;从冰雪奇缘到超能陆战队再到疯狂动物城，不得不说迪斯尼的动画越来越好看了。好的动画片真的是老少皆宜的，让人在捧腹大笑的同时又能有所思考，不管是关于消除偏见，梦想还是成长~~~~。&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;真的是太喜欢疯狂动物城这部电影了，二刷之后还是想去电影院接着看，对这种毛茸茸的小动物真是一点抵抗力都没有，尤其是苏苏的狐尼克。放点网上搜来的图(权侵删)，方便看到它们，哇咔咔咔咔。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-      <category term="电影" scheme="http://yemengying.com/tags/%E7%94%B5%E5%BD%B1/"/>
     
   </entry>
   
