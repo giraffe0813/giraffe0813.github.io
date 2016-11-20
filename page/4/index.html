@@ -185,7 +185,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                44
+                45
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -225,6 +225,140 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2015/11/23/读书笔记-Linux-Bible-9th-Edition/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/11/23/读书笔记-Linux-Bible-9th-Edition/">读书笔记-Linux Bible 9th Edition之使用shell</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/23/读书笔记-Linux-Bible-9th-Edition/">
+            <time datetime="2015-11-23T08:23:32.000Z" itemprop="datePublished">2015-11-23</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/linux/">linux</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/linux/">linux</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>其实也不算读书笔记 主要是想整理一下常用的一些linux命令 </p>
+</blockquote>
+<p> 相关博客:<br> <a href="http://yemengying.com/2015/11/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E7%8E%A9%E8%BD%AC%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/">Linux Bible 9th Edition之玩转文本文件</a><br> <a href="http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">Linux Bible 9th Edition之文件系统</a><br> <a href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/">Linux Bible 9th Edition之进程大法好</a></p></p>
+            <p class="article-more-link">
+                <a href="/2015/11/23/读书笔记-Linux-Bible-9th-Edition/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" data-id="civqcpgxx0039vf9ld04wjmw3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -301,7 +435,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="civovyk9n00033b9l0f9i5c4k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="civqcpguf0006vf9lbi9c8c4k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -435,7 +569,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/12/读书笔记-深入理解Java虚拟机1/" data-id="civovyke300423b9l1c46ehhd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/12/读书笔记-深入理解Java虚拟机1/" data-id="civqcpgy8003ovf9l84vadzki" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -568,7 +702,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="civovykd0002t3b9l028c22eb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="civqcpgxf002lvf9lbfvu5ite" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -702,7 +836,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="civovyka100093b9lnwu407rs" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="civqcpguw000fvf9ll6x5rx1f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -836,7 +970,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="civovykdr003p3b9lk74es80h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="civqcpgy4003kvf9lmilbvs25" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -976,7 +1110,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="civovykd600313b9lu3jrdm95" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="civqcpgxt0034vf9likkl6j1f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1111,7 +1245,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="civovykdn003k3b9l35bpi99h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="civqcpgy2003hvf9lvs4sb8as" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1349,7 +1483,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="civovykbg00163b9lj3attzx7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="civqcpgvn0014vf9ltqdzfefh" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1481,7 +1615,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/26/cleancode-builder/" data-id="civovykan000n3b9l2nqq29j5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/26/cleancode-builder/" data-id="civqcpgv6000ovf9l21zrgkh3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1550,140 +1684,6 @@ var _hmt = _hmt || [];
             
     
         <a href="http://yemengying.com/2015/09/26/cleancode-builder/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/09/26/cleancode-builder/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="2015/09/19/spring-rabbitmq-demo/" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/09/19/spring-rabbitmq-demo/">spring结合rabbitmq---简单的demo</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/09/19/spring-rabbitmq-demo/">
-            <time datetime="2015-09-19T06:55:43.000Z" itemprop="datePublished">2015-09-19</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/spring/">spring</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/rabbitMq/">rabbitMq</a>, <a class="tag-link" href="/tags/spring/">spring</a>
-    </div>
-
-                </div>
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><blockquote>
-<p>在做搜索服务时，当业务方数据源改变时，需要改变搜索引擎中索引的数据。可以<code>定时拉取</code>也可以<code>实时推送</code>。为了实现同步更新，选择了实时推送。实时推送也有两种方式，一种是提供索引更新接口供业务方调用，在接口中将变化的数据更新到搜索引擎中；另一种是使用消息队列，业务方在数据改变时，将改变的数据插入队列，服务端的消费者实时监听队列，并进行索引更新。考虑到使用消息队列有三点好处，选择了第二种方式。<code>使用消息队列的好处</code>: 一，使用消息队列可以异步处理更新操作降低接口响应时间；二，对于消费端由于不可预测原因导致消息无法处理时，数据可以暂存在队列中，等消费者服务恢复后可以继续处理历史数据,提高可用性；三，将业务方的服务和索引更新服务解耦。下面简单记录一下一个简单的spring+rabbitmq的demo实现，只实现了简单的消息生产和消费。</p>
-</blockquote>
-<p>参考了下面几篇博客：<br><a href="http://syntx.io/getting-started-with-rabbitmq-using-the-spring-framework/">http://syntx.io/getting-started-with-rabbitmq-using-the-spring-framework/</a><br><a href="https://blog.codecentric.de/en/2011/04/amqp-messaging-with-rabbitmq/">https://blog.codecentric.de/en/2011/04/amqp-messaging-with-rabbitmq/</a><br><a href="http://wb284551926.iteye.com/blog/2212869">http://wb284551926.iteye.com/blog/2212869</a></p></p>
-            <p class="article-more-link">
-                <a href="/2015/09/19/spring-rabbitmq-demo/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="civovykcf00273b9lvue5p1xt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/">评论</a>
     
 
         </footer>

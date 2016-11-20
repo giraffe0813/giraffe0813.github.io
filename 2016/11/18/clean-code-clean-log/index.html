@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>Clean Code, Clean Log | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clean Code, Clean Log">
+<meta property="og:url" content="http://yemengying.com/2016/11/18/clean-code-clean-log/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/moon.jpeg?imageMogr2/thumbnail/200x200!">
+<meta property="og:updated_time" content="2016-11-20T07:57:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Clean Code, Clean Log">
+<meta name="twitter:description" content="最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/moon.jpeg?imageMogr2/thumbnail/200x200!">
+    
+
+    
+
+    
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+    
+    <script src="//xiaoming.io/static/app.js"></script>
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/image/judy.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/image/judy.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                45
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                33
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2016/11/18/clean-code-clean-log/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Clean Code, Clean Log
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/18/clean-code-clean-log/">
+            <time datetime="2016-11-18T03:14:13.000Z" itemprop="datePublished">2016-11-18</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/随笔/">随笔</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。</p>
+</blockquote>
+<a id="more"></a>
+<p>在程序中的适当位置打 Log 的重要性就不用多说了，很多人应该都体会过线上有 Bug 却由于没有打 log 而不好 troubleshooting 的经历。</p>
+<h3 id="相关文档（康桑哈密达）"><a href="#相关文档（康桑哈密达）" class="headerlink" title="相关文档（康桑哈密达）"></a>相关文档（康桑哈密达）</h3><ul>
+<li><a href="http://www.nurkiewicz.com/2010/05/clean-code-clean-logs-use-appropriate.html" target="_blank" rel="external">Clean code, clean logs</a>(👍很赞)</li>
+</ul>
+<h3 id="SLF4J-VS-Log4J"><a href="#SLF4J-VS-Log4J" class="headerlink" title="SLF4J VS Log4J"></a>SLF4J VS Log4J</h3><p>有很多关于打 Log 的第三方库，也没有多研究过，接触过的就是 <code>SLF4J</code> 和 <code>Log4J</code> 了，不过墙裂建议用 <a href="http://www.slf4j.org/manual.html" target="_blank" rel="external">SLF4J</a>，使用占位符 {} 真的比加号拼接字符串可读性提高N倍啊！！！</p>
+<p>感受一下&lt;(￣︶￣)&gt;<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SLF4J, good</span></span><br><span class="line">log.error(<span class="string">"Invest loan failed, loan Id: &#123;&#125;, error: &#123;&#125;"</span>, loanId, errorMsg);</span><br><span class="line"><span class="comment">// Log4J, bad</span></span><br><span class="line">log.error(<span class="string">"Invest loan failed, loan Id:"</span> + loanId + <span class="string">" error: "</span> + errorMsg);</span><br></pre></td></tr></table></figure></p>
+<p>当然，SLF4J 还有其他的优点，比如不用字符串拼接，节省了创建 String 对象所耗费的资源之类的。不过我最看重的就是可读性高了。☆´∀｀☆</p>
+<h3 id="Logging-Level"><a href="#Logging-Level" class="headerlink" title="Logging Level"></a>Logging Level</h3><ul>
+<li>ERROR - 记录一些比较严重的错误，比如一些严重异常，数据库链接不可用等等</li>
+<li>WARN - 记录一些系统可以容忍的异常，或者是一些警示信息。比如:”Current data unavailable, using cached values”。</li>
+<li>INFO - 记录一些比较重要的操作，能反映程序运行状态的。比如:”[Who] booked ticket from [Where] to [Where]”</li>
+<li>DEBUG - 一些帮助调试的信息</li>
+<li>TRACE - 嗯，这个级别俺也没用过。</li>
+</ul>
+<h3 id="Pay-attention"><a href="#Pay-attention" class="headerlink" title="Pay attention"></a>Pay attention</h3><ul>
+<li><p>Log 信息首字母大写<br>这点完全是为了看上去舒服，至于到底需不需要大写，见仁见智吧~，不过我还是要注意一下，要大写。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line">log.error(<span class="string">"Invest loan failed, loan Id: &#123;&#125;, error: &#123;&#125;"</span>, loanId, errorMsg);</span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">log.error(<span class="string">"invest loan failed, loan Id: &#123;&#125;, error: &#123;&#125;"</span>, loanId, errorMsg);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>避免 Log 中的 NullPointerException<br>如果像下面这样记 Log，要注意确保 loan 不会为null, 不然打 Log 时抛个 NPE，想想就蛋疼。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log.info(<span class="string">"Invest loan : &#123;&#125;"</span>, loan.getId());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Log 的信息简洁有用<br>Log 的内容一定要是有用的，能反映出程序的运行状态，能帮助定位错误。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line">log.info(<span class="string">"Invest loan with id:&#123;&#125;"</span>, loanId);</span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">log.info(<span class="string">"Invest loan"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>记录某些方法的入参和出参</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>合适的记录异常<br>大家都知道要在记录程序运行中抛出的异常，但有的时候方式可能是不对的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">   <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Just for test"</span>);</span><br><span class="line"> &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">   log.error(e);        <span class="comment">//A </span></span><br><span class="line">   log.error(e, e);        <span class="comment">//B </span></span><br><span class="line">   log.error(<span class="string">""</span> + e);        <span class="comment">//C java.lang.NullPointerException: Just for test</span></span><br><span class="line">   log.error(e.toString());        <span class="comment">//D java.lang.NullPointerException: Just for test</span></span><br><span class="line">   log.error(e.getMessage());        <span class="comment">//E Just for test</span></span><br><span class="line">   log.error(<span class="keyword">null</span>, e);        <span class="comment">//F null java.lang.NullPointerException: Just for test + 异常堆栈</span></span><br><span class="line">   log.error(<span class="string">""</span>, e);        <span class="comment">//G</span></span><br><span class="line">   log.error(<span class="string">"&#123;&#125;"</span>, e);        <span class="comment">//H &#123;&#125; java.lang.NullPointerException: Just for test + 异常堆栈</span></span><br><span class="line">   log.error(<span class="string">"&#123;&#125;"</span>, e.getMessage());        <span class="comment">//I Just for test</span></span><br><span class="line">   log.error(<span class="string">"Error reading configuration file: "</span> + e);        <span class="comment">//J Error reading configuration file:java.lang.NullPointerException: Just for test</span></span><br><span class="line">   log.error(<span class="string">"Error reading configuration file: "</span> + e.getMessage());        <span class="comment">//K Error reading configuration file: Just for test</span></span><br><span class="line">   log.error(<span class="string">"Error reading configuration file"</span>, e);        <span class="comment">//L</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>在上面 12 种打印异常的方式中，只有 G 和 L是正确的。A 和 B 在使用 SLF4J 时会编译不通过， 其他的几种要么不会打印异常堆栈，要么会打印出不正确的信息。比如，E 的方式只会打印”Just for test”的信息，而不会打印异常类型和异常堆栈。在 SLF4J 中，第一个参数是文本信息，简单描述一下异常；第二个参数要传异常本身，而不是<code>e.getMessage()</code>或<code>e.toString()</code>,这样才能打印出异常堆栈，方便定位问题。</p>
+</li>
+</ul>
+<p>希望可以消灭和 Log 有关的 Comment。<br><img src="http://oduh99f02.bkt.clouddn.com/moon.jpeg?imageMogr2/thumbnail/200x200!" alt="biu biu biu~"></p>
+<blockquote>
+<p>欢迎指正错误，欢迎一起讨论~(≧▽≦)/~。</p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/11/18/clean-code-clean-log/" data-id="civqcpgv4000mvf9lvh8nshp5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/11/18/clean-code-clean-log/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/11/18/clean-code-clean-log/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/11/15/i-love-eve/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">【转】EVE 早期成员面基</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2016/11/18/clean-code-clean-log/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.onload = function() {
+        clearTimeout(timer); 
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+       Disqus.getRecentComments();
+     });
+     timer = setTimeout(function() {
+       Disqus.getComments();
+     }, 3000);
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

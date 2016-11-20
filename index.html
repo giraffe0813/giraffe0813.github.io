@@ -185,7 +185,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                44
+                45
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -225,6 +225,139 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2016/11/18/clean-code-clean-log/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/11/18/clean-code-clean-log/">Clean Code, Clean Log</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/18/clean-code-clean-log/">
+            <time datetime="2016-11-18T03:14:13.000Z" itemprop="datePublished">2016-11-18</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/随笔/">随笔</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。</p>
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2016/11/18/clean-code-clean-log/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/11/18/clean-code-clean-log/" data-id="civqcpgv4000mvf9lvh8nshp5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/11/18/clean-code-clean-log/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/11/18/clean-code-clean-log/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="2016/11/15/i-love-eve/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -280,7 +413,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/11/15/i-love-eve/" data-id="civovykbb00133b9l2v2w0vqs" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/11/15/i-love-eve/" data-id="civqcpgvj0010vf9ljua9zlmd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -413,7 +546,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/11/14/something-about-spring-transaction/" data-id="civovykcc00223b9lj0t52gk5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/11/14/something-about-spring-transaction/" data-id="civqcpgxz003cvf9l604ckgxk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -546,7 +679,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/10/27/runningman-7012/" data-id="civovykc6001u3b9lw45a9lrp" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/10/27/runningman-7012/" data-id="civqcpgw7001lvf9lyufnt1eb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -679,7 +812,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/10/15/javaConfig-vs-XML/" data-id="civovykbq001e3b9lvowig074" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/10/15/javaConfig-vs-XML/" data-id="civqcpgw0001dvf9l9va3h71a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -814,7 +947,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="civovykca001z3b9lqe8z3k68" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="civqcpgwe001ovf9lxts9rg5c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -947,7 +1080,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/08/23/how-to-get-pm-sense/" data-id="civovykb7000z3b9liy5fz4xf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/08/23/how-to-get-pm-sense/" data-id="civqcpgvh000yvf9lu49a7lgc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1080,7 +1213,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/07/25/spring-xml/" data-id="civovykcq002g3b9lrxfjkhdm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/07/25/spring-xml/" data-id="civqcpgx5002dvf9lu9otw1zj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1213,7 +1346,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/07/14/spring-bean-life-cycle/" data-id="civovykci002a3b9ldtx44u39" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/07/14/spring-bean-life-cycle/" data-id="civqcpgwr0020vf9los8aox78" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1346,7 +1479,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/07/03/keep-going/" data-id="civovykbw001m3b9ls6pchs5c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/07/03/keep-going/" data-id="civqcpgys0048vf9l6t3aopgn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1415,139 +1548,6 @@ var _hmt = _hmt || [];
             
     
         <a href="http://yemengying.com/2016/07/03/keep-going/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/07/03/keep-going/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="2016/06/25/cleanCode4naming/" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/06/25/cleanCode4naming/">【译】如何给变量取个简短且无歧义的名字</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/06/25/cleanCode4naming/">
-            <time datetime="2016-06-25T08:23:39.000Z" itemprop="datePublished">2016-06-25</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Clean-Code/">Clean Code</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/翻译/">翻译</a>
-    </div>
-
-                </div>
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><blockquote>
-<p>湾区日报上分享的一篇文章，文章的作者在Google设计Dart语言，就变量命名方面给了4点建议，文中也列出了好变量名、坏变量名的对比。不管作者的看法与你实际中的命名习惯是否一致，看完这篇文章，相信可以在变量命名方面有一些新的思考。</p>
-</blockquote></p>
-            <p class="article-more-link">
-                <a href="/2016/06/25/cleanCode4naming/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yemengying.com/2016/06/25/cleanCode4naming/" data-id="civovykak000l3b9lfu2gzngp" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yemengying.com/2016/06/25/cleanCode4naming/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/06/25/cleanCode4naming/">评论</a>
     
 
         </footer>

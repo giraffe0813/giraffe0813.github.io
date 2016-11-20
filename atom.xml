@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-11-16T03:14:26.000Z</updated>
+  <updated>2016-11-20T07:57:37.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Clean Code, Clean Log</title>
+    <link href="http://yemengying.com/2016/11/18/clean-code-clean-log/"/>
+    <id>http://yemengying.com/2016/11/18/clean-code-clean-log/</id>
+    <published>2016-11-18T03:14:13.000Z</published>
+    <updated>2016-11-20T07:57:37.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;在程序中的适当位置打 Log 的重要性就不用多说了，很多人应该都体会过线上有 Bug 却由于没有打 log 而不好 troubleshooting 的经历。&lt;/p&gt;
+&lt;h3 id=&quot;相关文档（康桑哈密达）&quot;&gt;&lt;a href=&quot;#相关文档（康桑哈密达）&quot; class=&quot;headerlink&quot; title=&quot;相关文档（康桑哈密达）&quot;&gt;&lt;/a&gt;相关文档（康桑哈密达）&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.nurkiewicz.com/2010/05/clean-code-clean-logs-use-appropriate.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Clean code, clean logs&lt;/a&gt;(👍很赞)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;SLF4J-VS-Log4J&quot;&gt;&lt;a href=&quot;#SLF4J-VS-Log4J&quot; class=&quot;headerlink&quot; title=&quot;SLF4J VS Log4J&quot;&gt;&lt;/a&gt;SLF4J VS Log4J&lt;/h3&gt;&lt;p&gt;有很多关于打 Log 的第三方库，也没有多研究过，接触过的就是 &lt;code&gt;SLF4J&lt;/code&gt; 和 &lt;code&gt;Log4J&lt;/code&gt; 了，不过墙裂建议用 &lt;a href=&quot;http://www.slf4j.org/manual.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SLF4J&lt;/a&gt;，使用占位符 {} 真的比加号拼接字符串可读性提高N倍啊！！！&lt;/p&gt;
+&lt;p&gt;感受一下&amp;lt;(￣︶￣)&amp;gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// SLF4J, good&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;log.error(&lt;span class=&quot;string&quot;&gt;&quot;Invest loan failed, loan Id: &amp;#123;&amp;#125;, error: &amp;#123;&amp;#125;&quot;&lt;/span&gt;, loanId, errorMsg);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Log4J, bad&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;log.error(&lt;span class=&quot;string&quot;&gt;&quot;Invest loan failed, loan Id:&quot;&lt;/span&gt; + loanId + &lt;span class=&quot;string&quot;&gt;&quot; error: &quot;&lt;/span&gt; + errorMsg);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;当然，SLF4J 还有其他的优点，比如不用字符串拼接，节省了创建 String 对象所耗费的资源之类的。不过我最看重的就是可读性高了。☆´∀｀☆&lt;/p&gt;
+&lt;h3 id=&quot;Logging-Level&quot;&gt;&lt;a href=&quot;#Logging-Level&quot; class=&quot;headerlink&quot; title=&quot;Logging Level&quot;&gt;&lt;/a&gt;Logging Level&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;ERROR - 记录一些比较严重的错误，比如一些严重异常，数据库链接不可用等等&lt;/li&gt;
+&lt;li&gt;WARN - 记录一些系统可以容忍的异常，或者是一些警示信息。比如:”Current data unavailable, using cached values”。&lt;/li&gt;
+&lt;li&gt;INFO - 记录一些比较重要的操作，能反映程序运行状态的。比如:”[Who] booked ticket from [Where] to [Where]”&lt;/li&gt;
+&lt;li&gt;DEBUG - 一些帮助调试的信息&lt;/li&gt;
+&lt;li&gt;TRACE - 嗯，这个级别俺也没用过。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Pay-attention&quot;&gt;&lt;a href=&quot;#Pay-attention&quot; class=&quot;headerlink&quot; title=&quot;Pay attention&quot;&gt;&lt;/a&gt;Pay attention&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Log 信息首字母大写&lt;br&gt;这点完全是为了看上去舒服，至于到底需不需要大写，见仁见智吧~，不过我还是要注意一下，要大写。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// good&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;log.error(&lt;span class=&quot;string&quot;&gt;&quot;Invest loan failed, loan Id: &amp;#123;&amp;#125;, error: &amp;#123;&amp;#125;&quot;&lt;/span&gt;, loanId, errorMsg);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// bad&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;log.error(&lt;span class=&quot;string&quot;&gt;&quot;invest loan failed, loan Id: &amp;#123;&amp;#125;, error: &amp;#123;&amp;#125;&quot;&lt;/span&gt;, loanId, errorMsg);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;避免 Log 中的 NullPointerException&lt;br&gt;如果像下面这样记 Log，要注意确保 loan 不会为null, 不然打 Log 时抛个 NPE，想想就蛋疼。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;log.info(&lt;span class=&quot;string&quot;&gt;&quot;Invest loan : &amp;#123;&amp;#125;&quot;&lt;/span&gt;, loan.getId());&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Log 的信息简洁有用&lt;br&gt;Log 的内容一定要是有用的，能反映出程序的运行状态，能帮助定位错误。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// good&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;log.info(&lt;span class=&quot;string&quot;&gt;&quot;Invest loan with id:&amp;#123;&amp;#125;&quot;&lt;/span&gt;, loanId);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// bad&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;log.info(&lt;span class=&quot;string&quot;&gt;&quot;Invest loan&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;记录某些方法的入参和出参&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;invest&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// do something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;合适的记录异常&lt;br&gt;大家都知道要在记录程序运行中抛出的异常，但有的时候方式可能是不对的。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; NullPointerException(&lt;span class=&quot;string&quot;&gt;&quot;Just for test&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (Exception e)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(e);        &lt;span class=&quot;comment&quot;&gt;//A &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(e, e);        &lt;span class=&quot;comment&quot;&gt;//B &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt; + e);        &lt;span class=&quot;comment&quot;&gt;//C java.lang.NullPointerException: Just for test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(e.toString());        &lt;span class=&quot;comment&quot;&gt;//D java.lang.NullPointerException: Just for test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(e.getMessage());        &lt;span class=&quot;comment&quot;&gt;//E Just for test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;, e);        &lt;span class=&quot;comment&quot;&gt;//F null java.lang.NullPointerException: Just for test + 异常堆栈&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;, e);        &lt;span class=&quot;comment&quot;&gt;//G&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;&amp;#123;&amp;#125;&quot;&lt;/span&gt;, e);        &lt;span class=&quot;comment&quot;&gt;//H &amp;#123;&amp;#125; java.lang.NullPointerException: Just for test + 异常堆栈&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;&amp;#123;&amp;#125;&quot;&lt;/span&gt;, e.getMessage());        &lt;span class=&quot;comment&quot;&gt;//I Just for test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;Error reading configuration file: &quot;&lt;/span&gt; + e);        &lt;span class=&quot;comment&quot;&gt;//J Error reading configuration file:java.lang.NullPointerException: Just for test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;Error reading configuration file: &quot;&lt;/span&gt; + e.getMessage());        &lt;span class=&quot;comment&quot;&gt;//K Error reading configuration file: Just for test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   log.error(&lt;span class=&quot;string&quot;&gt;&quot;Error reading configuration file&quot;&lt;/span&gt;, e);        &lt;span class=&quot;comment&quot;&gt;//L&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在上面 12 种打印异常的方式中，只有 G 和 L是正确的。A 和 B 在使用 SLF4J 时会编译不通过， 其他的几种要么不会打印异常堆栈，要么会打印出不正确的信息。比如，E 的方式只会打印”Just for test”的信息，而不会打印异常类型和异常堆栈。在 SLF4J 中，第一个参数是文本信息，简单描述一下异常；第二个参数要传异常本身，而不是&lt;code&gt;e.getMessage()&lt;/code&gt;或&lt;code&gt;e.toString()&lt;/code&gt;,这样才能打印出异常堆栈，方便定位问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;希望可以消灭和 Log 有关的 Comment。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/moon.jpeg?imageMogr2/thumbnail/200x200!&quot; alt=&quot;biu biu biu~&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;欢迎指正错误，欢迎一起讨论~(≧▽≦)/~。&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>【转】EVE 早期成员面基</title>
@@ -1358,132 +1424,9 @@
       <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
     
     
-      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
     
-  </entry>
-  
-  <entry>
-    <title>[Elasticsearch配置项(二)]Node,Threadpool模块配置</title>
-    <link href="http://yemengying.com/2016/03/21/elasticsearch-settings2/"/>
-    <id>http://yemengying.com/2016/03/21/elasticsearch-settings2/</id>
-    <published>2016-03-21T13:32:41.000Z</published>
-    <updated>2016-09-21T08:32:10.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;接上文。。。。。。按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项。先整理了Node，ThreadPool两个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含两个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;相关博客：&lt;a href=&quot;http://yemengying.com/2016/03/18/Elasticsearch%E9%85%8D%E7%BD%AE%E9%A1%B9-Local-gateway-HTTP-Indices-Network-Settings%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE/&quot;&gt;elasticsearch 配置项(一)&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;wuli光洙镇楼~~&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/guangzhu.jpg&quot; alt=&quot;hahaha&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;参考文档（万分感谢）&quot;&gt;&lt;a href=&quot;#参考文档（万分感谢）&quot; class=&quot;headerlink&quot; title=&quot;参考文档（万分感谢）&quot;&gt;&lt;/a&gt;参考文档（万分感谢）&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.opscoder.info/es_threadpool.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.opscoder.info/es_threadpool.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.voidcn.com/blog/BrotherDong90/article/p-3851633.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.voidcn.com/blog/BrotherDong90/article/p-3851633.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;Node-节点&quot;&gt;&lt;a href=&quot;#Node-节点&quot; class=&quot;headerlink&quot; title=&quot;Node(节点)&quot;&gt;&lt;/a&gt;Node(节点)&lt;/h3&gt;&lt;p&gt;每当启动一个Es实例，就是启动了一个节点。多个连接在一起的节点组成的集合就是集群。&lt;br&gt;默认情况下，每个节点都可以通过HTTP和Transport通信。每个节点都知道集群中的其他节点，可以将客户端的请求转发到合适的节点。除此之外，每个节点还有着以下一种或多种具体角色。&lt;br&gt;&lt;strong&gt; Master-eligible node (候选主节点) &lt;/strong&gt;&lt;br&gt;当一个节点的&lt;code&gt;node.master&lt;/code&gt;被设置为&lt;code&gt;true&lt;/code&gt;(默认为true)时，该节点就有资格被选为master节点，控制集群。&lt;br&gt;&lt;strong&gt; Data node (数据节点) &lt;/strong&gt;&lt;br&gt;配置项&lt;code&gt;node.data&lt;/code&gt;设置为true的节点称为数据节点。数据节点存储数据并且处理和数据相关的一些操作，比如CRUD，查找和聚合等。&lt;br&gt;&lt;strong&gt; Client node (客户端节点) &lt;/strong&gt;&lt;br&gt;当一个节点的&lt;code&gt;node.master&lt;/code&gt;和&lt;code&gt;node.data&lt;/code&gt;均被设置为&lt;code&gt;false&lt;/code&gt;时，它既不能存储数据也不能作为一个主节点。它被看做一个“路由器”，负责将集群层面的请求转发到主节点，将数据相关的请求转发到数据节点。&lt;br&gt;&lt;strong&gt; Tribe node (部落节点) &lt;/strong&gt;&lt;br&gt;部落节点是一种特殊类型的客户端节点，可通过&lt;code&gt;tribe.*&lt;/code&gt;配置项配置。部落节点可以连接多个集群，并且可以跨集群执行查找和其他操作。&lt;/p&gt;
-&lt;p&gt;默认情况下，每个节点即是主节点也是数据节点。但是当集群扩大后，更好的做法是将主节点和数据节点独立开。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Coordinating node(协调节点)：一些请求可能会涉及到多个数据节点，比如搜索或批量索引。搜索请求一般分为两个阶段，由接受客户端请求的节点做协调，称为协调节点。在搜索的第一阶段协调节点会将请求转发到数据节点，每个节点在本地执行请求，并将结果返给协调节点。在第二阶段，协调节点会将各个结果汇总在一起。这意味着负责接受请求的客户端节点(也就是协调节点)需要用足够的内存和CPU来处理查询结果的汇总。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&quot;Master-eligible-node-候选主节点&quot;&gt;&lt;a href=&quot;#Master-eligible-node-候选主节点&quot; class=&quot;headerlink&quot; title=&quot;Master-eligible node(候选主节点)&quot;&gt;&lt;/a&gt;Master-eligible node(候选主节点)&lt;/h4&gt;&lt;p&gt;主节点主要负责创建索引，删除索引，追踪集群中的节点，分配分片等，所以有一个稳定的主节点对于集群来说非常重要，非常重要，非常重要（说三遍，哈哈哈）。集群中任何有资格成为主节点的节点都可能被选为主节点。&lt;br&gt;由于索引和搜索会对节点资源造成压力，在集群比较大时，最好将主节点和数据节点的角色区分，即不要让主节点同时也是数据节点。&lt;br&gt;通过下面的配置可以设置一个专门的主节点(只是主节点不是数据节点)。&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;node.master: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;node.data: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt; 通过minimum_master_nodes来避免脑裂现象 &lt;/strong&gt;&lt;br&gt;&lt;code&gt;discovery.zen.minimum_master_nodes&lt;/code&gt;配置项说明形成集群时，集群中有资格成为主节点的节点数最少是多少，默认为1.&lt;br&gt;脑裂现象：假设集群中有两个有资格成为主节点的候选主节点，&lt;code&gt;discovery.zen.minimum_master_nodes&lt;/code&gt;配置默认为1。当由于网络问题中断了两个节点间的通信，这时两个节点都只会发现一个有资格成为主节点的节点（自己本身）， 根据配置(minimum_master_nodes = 1),符合组成一个集群的条件，所以每个节点都会成为新的master节点，从而导致形成了两个集群，也就是脑裂。直到其中一个节点重启，才会重新形成集群，并且写入重启节点的数据会丢失。假设集群中有三个有资格成为主节点的候选主节点，而这时&lt;code&gt;minimum_master_nodes&lt;/code&gt;设置为2，如果一个节点与其他两个失去了通信，被独立的节点会发现不满足设置的条件(有两个候选主节点)，所以不会选举自己为主节点。而剩下两个节点会选举出一个新的主节点，确保正常运行。&lt;br&gt;&lt;code&gt;discovery.zen.minimum_master_nodes&lt;/code&gt;最好设置为(候选主节点数/2) + 1, 举个例子，当有三个候选主节点时，该配置项的值为(3/2)+1=2。&lt;br&gt;也可以通过下面的API动态的更新这个值：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PUT _cluster/settings&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;transient&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;discovery.zen.minimum_master_nodes&quot;: 2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;Data-node-数据节点&quot;&gt;&lt;a href=&quot;#Data-node-数据节点&quot; class=&quot;headerlink&quot; title=&quot;Data node(数据节点)&quot;&gt;&lt;/a&gt;Data node(数据节点)&lt;/h4&gt;&lt;p&gt;数据节点包含着索引文档的分片，负责处理和数据相关的操作，比如CRUD，搜索和聚合。这些操作会涉及到IO,内存和CPU，所以要注意监控这些资源，添加更多的数据节点以防负载过重。通过下面的配置可以设置一个专门的数据节点(只是数据节点不是主节点)。&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;node.master: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;node.data: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;Client-node-客户端节点&quot;&gt;&lt;a href=&quot;#Client-node-客户端节点&quot; class=&quot;headerlink&quot; title=&quot;Client node(客户端节点)&quot;&gt;&lt;/a&gt;Client node(客户端节点)&lt;/h4&gt;&lt;p&gt;客户端节点主要负责路由请求，汇总搜索结果等，本质上来看，客户端节点更像一个负载均衡器。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注意：集群中添加过多的客户端节点会增加整个集群的负担。所以不要过大夸大客户端节点的好处，数据节点也可以像客户端节点一样服务。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt; 通过下面的配置可以设置一个专门的客户端节点(不是数据节点也不是主节点)。&lt;br&gt; &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;node.master: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;node.data: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;设置节点的数据路径&quot;&gt;&lt;a href=&quot;#设置节点的数据路径&quot; class=&quot;headerlink&quot; title=&quot;设置节点的数据路径&quot;&gt;&lt;/a&gt;设置节点的数据路径&lt;/h4&gt;&lt;p&gt;&lt;code&gt;path.data&lt;/code&gt;&lt;br&gt;每个数据节点和主节点都需要在文件中存储一些关于分片，索引和集群的元数据。&lt;code&gt;elasticsearch.yml&lt;/code&gt;文件中的&lt;code&gt;path.data&lt;/code&gt;可以配置文件的绝对路径或相对路径，默认值是&lt;code&gt;$ES_HOME/data&lt;/code&gt;，也可以通过命令配置。&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;./bin/elasticsearch --path.data /var/elasticsearch/data&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;node.max_local_storage-nodes&lt;/code&gt;&lt;br&gt;上面的设置可以被不同的节点共享（在生产环境下建议一个服务器只运行一个节点）。为了避免多个节点共享同一个路径，可以在&lt;code&gt;elasticsearch.yml&lt;/code&gt;中添加如下配置。&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;node.max_&lt;span class=&quot;built_in&quot;&gt;local&lt;/span&gt;_storage_nodes: 1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注意，不要将不同类型节点的信息存储到同一个目录下，可能会造称数据丢失。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;Thread-Pool-线程池&quot;&gt;&lt;a href=&quot;#Thread-Pool-线程池&quot; class=&quot;headerlink&quot; title=&quot;Thread Pool(线程池)&quot;&gt;&lt;/a&gt;Thread Pool(线程池)&lt;/h3&gt;&lt;p&gt;为了提升线程内存消耗的管理，每个Es节点都有多个线程池。&lt;/p&gt;
-&lt;h4 id=&quot;线程池类型&quot;&gt;&lt;a href=&quot;#线程池类型&quot; class=&quot;headerlink&quot; title=&quot;线程池类型&quot;&gt;&lt;/a&gt;线程池类型&lt;/h4&gt;&lt;p&gt;下面介绍一下线程池的三种类型和各自的一些参数：&lt;br&gt;&lt;strong&gt;cached&lt;/strong&gt;:&lt;br&gt;    &lt;code&gt;cached&lt;/code&gt;类型的线程池没有限制大小，当有pending的请求时就会创建一个线程。这类线程池可以防止请求阻塞或被拒绝。未使用的线程会在过期(默认5分钟)之后消亡。&lt;code&gt;cache&lt;/code&gt;类型专门为&lt;code&gt;generic&lt;/code&gt;线程池保留的。&lt;br&gt;    &lt;code&gt;keep_alive&lt;/code&gt;参数定义了未使用的线程的存活时间。&lt;br&gt;    &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;threadpool:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   generic:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       keep_alive: 2m&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;fixed&lt;/strong&gt;:&lt;br&gt;    &lt;code&gt;fixed&lt;/code&gt;类型的线程池持有固定个数的线程处理请求队列。&lt;code&gt;size&lt;/code&gt;参数用来控制线程的个数，默认为cpu核心数的5倍。&lt;code&gt;queue_size&lt;/code&gt;参数用来控制请求队列的大小。默认值为-1，意味着无上限。如果请求队列已满，那么接下来到来的请求会被终止。&lt;br&gt;    &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;threadpool:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   index:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       size: 30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       queue_size: 1000&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;scaling&lt;/strong&gt;:&lt;br&gt;    &lt;code&gt;scaling&lt;/code&gt;线程池中线程数可动态变化。线程数在1和&lt;code&gt;size&lt;/code&gt;参数值的中间。&lt;br&gt;    &lt;code&gt;keep_alive&lt;/code&gt;参数定义了未使用的线程的存活时间。&lt;br&gt;    &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;threadpool:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   warmer:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       size: 8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       keep_alive: 2m&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h4 id=&quot;Es中重要的线程池&quot;&gt;&lt;a href=&quot;#Es中重要的线程池&quot; class=&quot;headerlink&quot; title=&quot;Es中重要的线程池&quot;&gt;&lt;/a&gt;Es中重要的线程池&lt;/h4&gt;&lt;p&gt;以下是Es中几个比较重要的线程池及他们的类型:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;线程池&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;作用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;generic&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责一些诸如发现节点之类的通用操作。该线程池类型为&lt;code&gt;cache&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;index&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责索引数据/删除数据操作，类型为&lt;code&gt;fixed&lt;/code&gt;，默认线程数为&lt;code&gt;available processors&lt;/code&gt;,队列大小为&lt;code&gt;200&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;search&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责统计/搜索操作，类型为&lt;code&gt;fixed&lt;/code&gt;,默认线程数为&lt;code&gt;int((available_processors * 3) / 2) + 1&lt;/code&gt;,队列大小为&lt;code&gt;1000&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;suggest&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责获取提示操作，类型为&lt;code&gt;fixed&lt;/code&gt;,默认线程数为&lt;code&gt;available processors&lt;/code&gt;,队列大小为&lt;code&gt;1000&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;get&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责get操作，类型为&lt;code&gt;fixed&lt;/code&gt;,默认线程数为&lt;code&gt;available processors&lt;/code&gt;,队列大小为&lt;code&gt;1000&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;bulk&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责批量操作，类型为&lt;code&gt;fixed&lt;/code&gt;,默认线程数为&lt;code&gt;available processors&lt;/code&gt;,队列大小为&lt;code&gt;50&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;percolate&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责过滤操作，类型为&lt;code&gt;fixed&lt;/code&gt;,默认线程数为&lt;code&gt;available processors&lt;/code&gt;,队列大小为&lt;code&gt;1000&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;snapshot&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责快照/恢复操作，类型为&lt;code&gt;scaling&lt;/code&gt;,默认线程数为&lt;code&gt;min(5, (available processors)/2)&lt;/code&gt;,默认未使用线程的存活时间为&lt;code&gt;5m&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;warmer&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责warm-up操作，类型为&lt;code&gt;scaling&lt;/code&gt;,默认线程数为&lt;code&gt;min(5, (available processors)/2)&lt;/code&gt;,默认未使用线程的存活时间为&lt;code&gt;5m&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;refresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责更新操作，类型为&lt;code&gt;scaling&lt;/code&gt;,默认线程数为&lt;code&gt;min(10, (available processors)/2)&lt;/code&gt;,默认未使用线程的存活时间为&lt;code&gt;5m&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;listener&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;负责java client的执行，类型为&lt;code&gt;scaling&lt;/code&gt;,默认线程数为&lt;code&gt;min(10, (available processors)/2)&lt;/code&gt;,默认未使用线程的存活时间为&lt;code&gt;5m&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&quot;处理器设置&quot;&gt;&lt;a href=&quot;#处理器设置&quot; class=&quot;headerlink&quot; title=&quot;处理器设置&quot;&gt;&lt;/a&gt;处理器设置&lt;/h4&gt;&lt;p&gt;Es可以自动检测处理器的数量，线程池的配置也会基于这个值。可能存在检测失败的情况，这是可以通过&lt;code&gt;processors&lt;/code&gt;配置显式设置这个值。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注意以上这些配置如果不是很了解，还是不要轻易改动，使用默认配置即可。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;看累了吧，分享个觉得还不错的TED视频~~&lt;/p&gt;
-&lt;object width=&quot;640&quot; height=&quot;360&quot;&gt;&lt;param name=&quot;movie&quot; value=&quot;http://swf.ws.126.net/openplayer/v02/-0-2_MBFLN6BJF_MBFLNJGFE-vimg1_ws_126_net//image/snapshot_movie/2016/2/F/F/MBFLNJGFF-1423031805654.swf?isTEDPlay=1&quot;&gt;&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot;&gt;&lt;param name=&quot;wmode&quot; value=&quot;transparent&quot;&gt;&lt;embed src=&quot;http://swf.ws.126.net/openplayer/v02/-0-2_MBFLN6BJF_MBFLNJGFE-vimg1_ws_126_net//image/snapshot_movie/2016/2/F/F/MBFLNJGFF-1423031805654.swf?isTEDPlay=1&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;640&quot; height=&quot;360&quot; allowfullscreen=&quot;true&quot; wmode=&quot;transparent&quot; allowscriptaccess=&quot;always&quot;&gt;&lt;/object&gt;
-
-
-
-
-
-
-
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;接上文。。。。。。按照官方文档(版本2.2)和一些参考资料整理一下elasticsearch的可配置项。先整理了Node，ThreadPool两个模块的可配置项，其他模块(比如Cluster)会在之后慢慢整理的。本文只包含两个模块可用配置项的含义及用法，并不涉及应该如何优化，这是为什么呢？因为俺也不会。。。。。(欢迎指正错误，康桑阿米达)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;相关博客：&lt;a href=&quot;http://yemengying.com/2016/03/18/Elasticsearch%E9%85%8D%E7%BD%AE%E9%A1%B9-Local-gateway-HTTP-Indices-Network-Settings%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE/&quot;&gt;elasticsearch 配置项(一)&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="elasticsearch" scheme="http://yemengying.com/categories/elasticsearch/"/>
-    
-    
-      <category term="elasticsearch" scheme="http://yemengying.com/tags/elasticsearch/"/>
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
