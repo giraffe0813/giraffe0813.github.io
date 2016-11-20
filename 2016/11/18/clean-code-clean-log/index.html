@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。">
 <meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/giraffe/chuilei.gif">
-<meta property="og:updated_time" content="2016-11-20T08:51:23.000Z">
+<meta property="og:updated_time" content="2016-11-20T08:58:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Clean Code, Clean Log">
 <meta name="twitter:description" content="最近提的 PR 都有关于 Log 的 comment，不能忍，以下内容总结整理自明佳的 Comment 和网络资料，只是为了以后提 PR 之前过来扫一眼，尽量避免 Log 上的疏忽，不一定适用于所有人。">
@@ -297,7 +297,7 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line">log.info(<span class="string">"Invest loan with id:&#123;&#125;"</span>, loanId);</span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">log.info(<span class="string">"Invest loan"</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>记录某些方法的入参和出参<br>记录方法的入参和出参，也可以帮助我们定位问题。特别是调用提供接口给其他系统调用的时候，记录入参可以帮助分辨到底是谁的锅🌚。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printDocument</span><span class="params">(Document doc, Mode mode)</span> </span>&#123;</span><br><span class="line">	log.debug(<span class="string">"Entering printDocument(doc=&#123;&#125;, mode=&#123;&#125;)"</span>, doc, mode);</span><br><span class="line">  String id = <span class="comment">//Lengthy printing operation</span></span><br><span class="line">  log.debug(<span class="string">"Leaving printDocument(): &#123;&#125;"</span>, id);</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printDocument</span><span class="params">(Document doc, Mode mode)</span> </span>&#123;</span><br><span class="line">log.debug(<span class="string">"Entering printDocument(doc=&#123;&#125;, mode=&#123;&#125;)"</span>, doc, mode);</span><br><span class="line">  String id = <span class="comment">//Lengthy printing operation</span></span><br><span class="line">  log.debug(<span class="string">"Leaving printDocument(): &#123;&#125;"</span>, id);</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
@@ -320,7 +320,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/11/18/clean-code-clean-log/" data-id="civqemmmn000e199l8zd6op2f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/11/18/clean-code-clean-log/" data-id="civqevd2b000j2c9l6veowu8r" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
