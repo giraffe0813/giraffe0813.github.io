@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/</loc>
+        <lastmod>2016-12-18T09:18:43.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/11/18/clean-code-clean-log/</loc>
         <lastmod>2016-11-20T09:14:08.000Z</lastmod>
         <changefreq>weekly</changefreq>
