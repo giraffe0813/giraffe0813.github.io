@@ -190,11 +190,11 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                46
+                47
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                33
+                34
                 <span>标签</span>
             </div>
         </div>
@@ -230,6 +230,140 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/">读书笔记-Linux Bible 9th Edition之玩转文本文件</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/">
+            <time datetime="2015-11-30T07:04:46.000Z" itemprop="datePublished">2015-11-30</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/linux/">linux</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/linux/">linux</a>, <a class="tag-link" href="/tags/读书笔记/">读书笔记</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>根据书的第5章整理一下关于操作文本文件的常用命令。在Linux系统中许多信息都是在文本文件中管理的,所以熟练掌握对文本文件的更改，查找是很重要的。这一点，在出bug查找服务器日志时真是深有体会啊！😼😼</p>
+</blockquote>
+<p>相关博客:<br> <a href="http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/">Linux Bible 9th Edition之使用shell</a><br> <a href="http://yemengying.com/2015/11/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">Linux Bible 9th Edition之文件系统</a><br> <a href="http://yemengying.com/2015/12/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%A4%A7%E6%B3%95%E5%A5%BD/">Linux Bible 9th Edition之进程大法好</a></p></p>
+            <p class="article-more-link">
+                <a href="/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/" data-id="cixof8ub0004auk9l3h4evpx6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -287,7 +421,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" data-id="cix43cmr60040n57b7h0klttb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" data-id="cixof8uam003yuk9lzkwv4lp6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -421,7 +555,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" data-id="cix43cmr5003xn57bn4tta5zo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" data-id="cixof8uap0042uk9lhaidhmp4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -575,7 +709,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="cix43cmo90003n57bnlratwxf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="cixof8u5t0002uk9ljqk87y6a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -709,7 +843,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/12/读书笔记-深入理解Java虚拟机1/" data-id="cix43cmrd004an57b91ze8xma" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/12/读书笔记-深入理解Java虚拟机1/" data-id="cixof8ub4004iuk9lgtnmt6va" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -842,7 +976,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="cix43cmqq0031n57bfw46b4az" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="cixof8ua0003cuk9lv737j10g" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -976,7 +1110,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="cix43cmok0009n57b230fjnxo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="cixof8u6e0008uk9l43ggfnl0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1110,7 +1244,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="cix43cmr0003pn57bvcajzjih" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="cixof8ua3003euk9lh5d1nyip" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1250,7 +1384,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cix43cmqt0039n57bq2giohnx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cixof8ua8003muk9lf0aonvp2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1385,7 +1519,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cix43cmr3003sn57bcfeido7u" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cixof8uas0045uk9lcht8t1m2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1463,244 +1597,6 @@ var _hmt = _hmt || [];
 
 
 
-    <article id="2015/10/23/idea-sts/" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/10/23/idea-sts/">Mac系统下Idea和STS的快捷键对比</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/10/23/idea-sts/">
-            <time datetime="2015-10-23T08:15:42.000Z" itemprop="datePublished">2015-10-23</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/IDE/">IDE</a>, <a class="tag-link" href="/tags/java/">java</a>
-    </div>
-
-                </div>
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <blockquote>
-<p>又被朋友安利了一遍Idea 所以决定尝试着把IDE由STS切换成Idea。不过发现好多快捷键都不一致，所以在熟悉Idea的过程中顺便记录一下两者的常用快捷键对比</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>STS(Spring Tool Suite)</th>
-<th>Idea</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Run</td>
-<td>shift+command+F11</td>
-<td>shift + control + r</td>
-</tr>
-<tr>
-<td>Debug</td>
-<td>command + F11</td>
-<td>shift + control + d</td>
-</tr>
-<tr>
-<td>复制当前行</td>
-<td>alt + command + 向下方向键</td>
-<td>command + d</td>
-</tr>
-<tr>
-<td>剪贴当前行</td>
-<td>command + x</td>
-<td>command + x</td>
-</tr>
-<tr>
-<td>删除当前行</td>
-<td>command + d</td>
-<td>command + x</td>
-</tr>
-<tr>
-<td>搜索</td>
-<td>command + f</td>
-<td>command + f</td>
-</tr>
-<tr>
-<td>搜索替换</td>
-<td>command + f</td>
-<td>command + r</td>
-</tr>
-<tr>
-<td>Preferences</td>
-<td>command + ,</td>
-<td>command + ,</td>
-</tr>
-<tr>
-<td>光标移到代码块最后</td>
-<td></td>
-<td>option+command+]</td>
-</tr>
-<tr>
-<td>光标移到代码块最前</td>
-<td></td>
-<td>option+command+[</td>
-</tr>
-<tr>
-<td>Rename</td>
-<td>alt+command+r</td>
-<td>shift+F6</td>
-</tr>
-<tr>
-<td>所选语句上移</td>
-<td>option+向上方向键</td>
-<td>shift+command+向上方向键</td>
-</tr>
-<tr>
-<td>所选语句下移</td>
-<td>option+向下方向键</td>
-<td>shift+command+向下方向键</td>
-</tr>
-<tr>
-<td>选择实现父类的方法</td>
-<td></td>
-<td>control+o</td>
-</tr>
-<tr>
-<td>generate(setter/constructor/toString)</td>
-<td>option+command+s</td>
-<td>command+n</td>
-</tr>
-<tr>
-<td>step over</td>
-<td>F6</td>
-<td>F8</td>
-</tr>
-<tr>
-<td>step into</td>
-<td>F5</td>
-<td>F7</td>
-</tr>
-<tr>
-<td>step out</td>
-<td>F7</td>
-<td>shift+F8</td>
-</tr>
-<tr>
-<td>stop</td>
-<td>option+command+s</td>
-<td>command+F2</td>
-</tr>
-</tbody>
-</table>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="cix43cmpi001an57b14we7pi0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yemengying.com/2015/10/23/idea-sts/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/10/23/idea-sts/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
     </nav>
@@ -1710,7 +1606,7 @@ var _hmt = _hmt || [];
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2016 Mengying Ye<br>
+            &copy; 2017 Mengying Ye<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
         </div>
     </div>

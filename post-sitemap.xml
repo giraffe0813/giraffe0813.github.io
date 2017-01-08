@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2017/01/03/rabbitmq-classMapper/</loc>
+        <lastmod>2017-01-08T08:52:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/</loc>
         <lastmod>2016-12-18T09:18:43.000Z</lastmod>
         <changefreq>weekly</changefreq>

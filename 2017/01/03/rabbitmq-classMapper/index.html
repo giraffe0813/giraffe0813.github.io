@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="新年第一篇~~ 🐣🐥🐤🐔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper">
+<meta property="og:url" content="http://yemengying.com/2017/01/03/rabbitmq-classMapper/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="新年第一篇~~ 🐣🐥🐤🐔">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!">
+<meta property="og:updated_time" content="2017-01-08T08:52:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper">
+<meta name="twitter:description" content="新年第一篇~~ 🐣🐥🐤🐔">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!">
+    
+
+    
+
+    
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+    
+    <script src="//xiaoming.io/static/app.js"></script>
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <canvas id="snow"></canvas><script>(function(){var a=document.getElementById("snow"),c=a.getContext("2d"),e=[];a.style.pointerEvents="none";a.style.position="fixed";a.style.top=0;a.style.left=0;a.style.width="100vw";a.style.zIndex=1;a.style.height="100vh";a.style.userSelect="none";a.height=a.offsetHeight;a.width=a.offsetWidth;window.onresize=function(){a.height=a.offsetHeight;a.width=a.offsetWidth};var d=Math;setInterval(function(){c.clearRect(0,0,a.width,a.height);c.beginPath();var f=d.random(),g=.05+.95*f;flake={};flake.x=1.5*a.width*d.random()-.5*a.width;flake.y=-9;flake.b=2*g*(d.random()/2+.5);flake.c=(4+2*d.random())*g;flake.a=d.pow(5*f,2)/5;flake.update=function(){this.x+=this.b;this.y+=this.c;c.beginPath();c.arc(this.x,this.y,this.a,0,2*d.PI,!1);c.fillStyle="#FFF";c.fill()};e.push(flake);for(b=0;b<e.length;b++)e[b].y>a.height?e.splice(b,1):e[b].update()},16)})();</script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                47
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                34
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/01/03/rabbitmq-classMapper/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/01/03/rabbitmq-classMapper/">
+            <time datetime="2017-01-03T14:40:30.000Z" itemprop="datePublished">2017-01-03</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/rabbitmq/">rabbitmq</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/rabbitmq/">rabbitmq</a>, <a class="tag-link" href="/tags/spring/">spring</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>新年第一篇~~ 🐣🐥🐤🐔</p>
+</blockquote>
+<a id="more"></a>
+<p>消息队列算是各个系统间通信比较常见的方式了。我们公司用的是是基于 AMQP 协议的 <a href="http://www.rabbitmq.com/" target="_blank" rel="external">RabbitMq</a>。在 Spring-AMQP 中比较重要的类就是 <code>Message</code>，因为要发送的消息必须要构造成一个 Message 对象来进行传输。Message 对象包括两部分 Body 和 Properties，Body 就是真正要发送的消息内容，Properties 就是和消息相关的一些属性(消息头，要发送的交换机，routingKey等等)，主要结构如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> MessageProperties messageProperties;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">byte</span>[] body;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>消息生产者构造好 Message 之后，就会将 Message 发送到指定的 Exchange (交换机)，再根据 Exchange 的类型及 routing-key 将消息路由到相应的 queue 中，最后被监听该 queue 的消费者消费，大致如下图：</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!" alt="流程1"></p>
+<p>不过每次发消息都要自己构造 Message 对象比较麻烦。Spring-AMQP 允许我们直接使用自定义的类，然后会利用指定好的 <code>MessageConverter</code> 将自定义的类转换为 Message 进行发送，在接收时也会利用 MessageConverter 将接收到的 Message 对象转成需要的对象。Spring-AMQP 提供了多种 MessageConverter，比如 SimpleMessageConverter，SerializerMessageConverter，Jackson2JsonMessageConverter，MarshallingMessageConverter等等，如果发送的消息对象不是 Message 实例，并且没有指定 MessageConverter 的话，默认用 SimpleMessageConverter。以上各种 MessageConverter 归根结底都是实现了 MessageConverter 接口，该接口只有两个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MessageConverter</span> </span>&#123;</span><br><span class="line">	<span class="function">Message <span class="title">toMessage</span><span class="params">(Object object, MessageProperties messageProperties)</span> <span class="keyword">throws</span> MessageConversionException</span>;</span><br><span class="line">	<span class="function">Object <span class="title">fromMessage</span><span class="params">(Message message)</span> <span class="keyword">throws</span> MessageConversionException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这两个方法一个是在发送消息时将我们的消息对象转换成标准的 Message 对象，另一个是在接受消息时将 Message 对象转换为相应的对象。<br>比较常用的 Converter 就是 Jackson2JsonMessageConverter(以下简称 JsonMessageConverter)，在发送消息时，它会先将自定义的消息类序列化成json格式，再转成byte构造 Message，在接收消息时，会将接收到的 Message 再反序列化成自定义的类。大致流程如下图：<br><img src="http://oduh99f02.bkt.clouddn.com/2017-01-08-3.pic_hd.jpg" alt="流程2"></p>
+<p>不过使用 JsonMessageConverter 时有一个小问题，在<code>不对它进行任何改造的前提下</code>，发送消息的类和接受消息的类必须是一样的，不仅是要里面的字段一样，类名一样，连类的包路径都要一样。</p>
+<p>所以当系统1使用 JsonMessageConverter 发送消息类A给系统2时，系统2可以有如下几种方式来接收：</p>
+<ul>
+<li>1.依赖系统1的jar包,直接使用类A来接收 </li>
+<li>2.不依赖系统1的jar包，自己建一个和A一模一样的类，连名称，包路径都一样</li>
+<li>3.负责监听 queue 的类实现 MessageListener 接口，直接接收 Message 类，再自己转换 </li>
+</ul>
+<p>上面三个方法都不是很好，按照正常的想法，我们肯定是期望系统2直接使用自己的类来接收就可以了，只要与A类的字段名一样即可。那有没有方法可以让系统2既不依赖无用的jar包，也不用建立个与自己命名规范不相符的类， 也无需自己转换呢?</p>
+<p>要解决这个问题，就要先看看 JsonMessageConverter 是如何将 Message 进行反序列化的。<br>在 JsonMessageConverter 的 fromMessage 方法中有这么一段:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getClassMapper() == <span class="keyword">null</span>) &#123;</span><br><span class="line">	JavaType targetJavaType = getJavaTypeMapper()</span><br><span class="line">		.toJavaType(message.getMessageProperties());</span><br><span class="line">	content = convertBytesToObject(message.getBody(), encoding, targetJavaType);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	Class&lt;?&gt; targetClass = getClassMapper().toClass(</span><br><span class="line">		message.getMessageProperties());</span><br><span class="line">	content = convertBytesToObject(message.getBody(), encoding, targetClass);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>就是说默认情况下，JsonMessageConverter 使用的 ClassMapper 是 <code>DefaultJackson2JavaTypeMapper</code>，在转换时通过 Message 的 Properties 来获取要转换的目标类的类型。通过 Debug 可以发现，目标类的类型是存储在 Message 的 Proterties 的 一个 headers 的 Map 中，Key 叫“__TypeId__”。所以只要想办法在传输消息时更改__TypeId__的值即可。</p>
+<p>下面是解决办法，在消息的生产者端为 JsonMessageConverter， 设置一个自定义的 ClassMapper，重写 fromClass 方法，将 __TypeId__ 的值设为消费端用来接收的类的路径+名称。当然了，也可以在消费者端重写toClass方法，直接返回想要转换的目标类的类类型。两种选一种就可以。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Jackson2JsonMessageConverter <span class="title">customConverter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Jackson2JsonMessageConverter converter = <span class="keyword">new</span> Jackson2JsonMessageConverter();</span><br><span class="line">  converter.setClassMapper(<span class="keyword">new</span> ClassMapper() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;?&gt; toClass(MessageProperties properties) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"this mapper is only for outbound, do not use for receive message"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fromClass</span><span class="params">(Class&lt;?&gt; clazz, MessageProperties properties)</span> </span>&#123;</span><br><span class="line">      properties.setHeader(<span class="string">"__TypeId__"</span>, <span class="string">"com.xxx.B"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> converter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>感觉自己语言组织能力退化了。。。。。</p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/01/03/rabbitmq-classMapper/" data-id="cixof8u8c001puk9l1ado6g1t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/01/03/rabbitmq-classMapper/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/01/03/rabbitmq-classMapper/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/12/18/log4j-not-printing-stacktrace-for-eception/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">log 不打印异常堆栈</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2017/01/03/rabbitmq-classMapper/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.onload = function() {
+        clearTimeout(timer); 
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+       Disqus.getRecentComments();
+     });
+     timer = setTimeout(function() {
+       Disqus.getComments();
+     }, 3000);
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

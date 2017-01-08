@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2016-12-18T09:18:43.000Z</updated>
+  <updated>2017-01-08T08:52:34.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper</title>
+    <link href="http://yemengying.com/2017/01/03/rabbitmq-classMapper/"/>
+    <id>http://yemengying.com/2017/01/03/rabbitmq-classMapper/</id>
+    <published>2017-01-03T14:40:30.000Z</published>
+    <updated>2017-01-08T08:52:34.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;新年第一篇~~ 🐣🐥🐤🐔&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;消息队列算是各个系统间通信比较常见的方式了。我们公司用的是是基于 AMQP 协议的 &lt;a href=&quot;http://www.rabbitmq.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;RabbitMq&lt;/a&gt;。在 Spring-AMQP 中比较重要的类就是 &lt;code&gt;Message&lt;/code&gt;，因为要发送的消息必须要构造成一个 Message 对象来进行传输。Message 对象包括两部分 Body 和 Properties，Body 就是真正要发送的消息内容，Properties 就是和消息相关的一些属性(消息头，要发送的交换机，routingKey等等)，主要结构如下：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Message&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; MessageProperties messageProperties;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[] body;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;消息生产者构造好 Message 之后，就会将 Message 发送到指定的 Exchange (交换机)，再根据 Exchange 的类型及 routing-key 将消息路由到相应的 queue 中，最后被监听该 queue 的消费者消费，大致如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!&quot; alt=&quot;流程1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;不过每次发消息都要自己构造 Message 对象比较麻烦。Spring-AMQP 允许我们直接使用自定义的类，然后会利用指定好的 &lt;code&gt;MessageConverter&lt;/code&gt; 将自定义的类转换为 Message 进行发送，在接收时也会利用 MessageConverter 将接收到的 Message 对象转成需要的对象。Spring-AMQP 提供了多种 MessageConverter，比如 SimpleMessageConverter，SerializerMessageConverter，Jackson2JsonMessageConverter，MarshallingMessageConverter等等，如果发送的消息对象不是 Message 实例，并且没有指定 MessageConverter 的话，默认用 SimpleMessageConverter。以上各种 MessageConverter 归根结底都是实现了 MessageConverter 接口，该接口只有两个方法：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MessageConverter&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;Message &lt;span class=&quot;title&quot;&gt;toMessage&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Object object, MessageProperties messageProperties)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; MessageConversionException&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;Object &lt;span class=&quot;title&quot;&gt;fromMessage&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Message message)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; MessageConversionException&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这两个方法一个是在发送消息时将我们的消息对象转换成标准的 Message 对象，另一个是在接受消息时将 Message 对象转换为相应的对象。&lt;br&gt;比较常用的 Converter 就是 Jackson2JsonMessageConverter(以下简称 JsonMessageConverter)，在发送消息时，它会先将自定义的消息类序列化成json格式，再转成byte构造 Message，在接收消息时，会将接收到的 Message 再反序列化成自定义的类。大致流程如下图：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-01-08-3.pic_hd.jpg&quot; alt=&quot;流程2&quot;&gt;&lt;/p&gt;
+&lt;p&gt;不过使用 JsonMessageConverter 时有一个小问题，在&lt;code&gt;不对它进行任何改造的前提下&lt;/code&gt;，发送消息的类和接受消息的类必须是一样的，不仅是要里面的字段一样，类名一样，连类的包路径都要一样。&lt;/p&gt;
+&lt;p&gt;所以当系统1使用 JsonMessageConverter 发送消息类A给系统2时，系统2可以有如下几种方式来接收：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.依赖系统1的jar包,直接使用类A来接收 &lt;/li&gt;
+&lt;li&gt;2.不依赖系统1的jar包，自己建一个和A一模一样的类，连名称，包路径都一样&lt;/li&gt;
+&lt;li&gt;3.负责监听 queue 的类实现 MessageListener 接口，直接接收 Message 类，再自己转换 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面三个方法都不是很好，按照正常的想法，我们肯定是期望系统2直接使用自己的类来接收就可以了，只要与A类的字段名一样即可。那有没有方法可以让系统2既不依赖无用的jar包，也不用建立个与自己命名规范不相符的类， 也无需自己转换呢?&lt;/p&gt;
+&lt;p&gt;要解决这个问题，就要先看看 JsonMessageConverter 是如何将 Message 进行反序列化的。&lt;br&gt;在 JsonMessageConverter 的 fromMessage 方法中有这么一段:&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (getClassMapper() == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	JavaType targetJavaType = getJavaTypeMapper()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		.toJavaType(message.getMessageProperties());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	content = convertBytesToObject(message.getBody(), encoding, targetJavaType);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Class&amp;lt;?&amp;gt; targetClass = getClassMapper().toClass(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		message.getMessageProperties());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	content = convertBytesToObject(message.getBody(), encoding, targetClass);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;就是说默认情况下，JsonMessageConverter 使用的 ClassMapper 是 &lt;code&gt;DefaultJackson2JavaTypeMapper&lt;/code&gt;，在转换时通过 Message 的 Properties 来获取要转换的目标类的类型。通过 Debug 可以发现，目标类的类型是存储在 Message 的 Proterties 的 一个 headers 的 Map 中，Key 叫“__TypeId__”。所以只要想办法在传输消息时更改__TypeId__的值即可。&lt;/p&gt;
+&lt;p&gt;下面是解决办法，在消息的生产者端为 JsonMessageConverter， 设置一个自定义的 ClassMapper，重写 fromClass 方法，将 __TypeId__ 的值设为消费端用来接收的类的路径+名称。当然了，也可以在消费者端重写toClass方法，直接返回想要转换的目标类的类类型。两种选一种就可以。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Bean&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; Jackson2JsonMessageConverter &lt;span class=&quot;title&quot;&gt;customConverter&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  Jackson2JsonMessageConverter converter = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Jackson2JsonMessageConverter();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  converter.setClassMapper(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ClassMapper() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; Class&amp;lt;?&amp;gt; toClass(MessageProperties properties) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; UnsupportedOperationException(&lt;span class=&quot;string&quot;&gt;&quot;this mapper is only for outbound, do not use for receive message&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;fromClass&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Class&amp;lt;?&amp;gt; clazz, MessageProperties properties)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      properties.setHeader(&lt;span class=&quot;string&quot;&gt;&quot;__TypeId__&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;com.xxx.B&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; converter;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;感觉自己语言组织能力退化了。。。。。&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;新年第一篇~~ 🐣🐥🐤🐔&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="rabbitmq" scheme="http://yemengying.com/categories/rabbitmq/"/>
+    
+    
+      <category term="spring" scheme="http://yemengying.com/tags/spring/"/>
+    
+      <category term="rabbitmq" scheme="http://yemengying.com/tags/rabbitmq/"/>
+    
+  </entry>
   
   <entry>
     <title>log 不打印异常堆栈</title>
@@ -1240,148 +1290,6 @@
     
     
       <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis相关---Redis持久化(AOF&amp;Snapshot)</title>
-    <link href="http://yemengying.com/2016/04/24/Redis-Persistence/"/>
-    <id>http://yemengying.com/2016/04/24/Redis-Persistence/</id>
-    <published>2016-04-24T07:09:18.000Z</published>
-    <updated>2016-09-21T08:35:31.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看Redis吧，整理下Redis持久化的相关内容，加深下印象。不想看文字的可直接看下面的图😂。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/persistent.png&quot; alt=&quot;概要&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;AOF持久化&quot;&gt;&lt;a href=&quot;#AOF持久化&quot; class=&quot;headerlink&quot; title=&quot;AOF持久化&quot;&gt;&lt;/a&gt;AOF持久化&lt;/h3&gt;&lt;p&gt;AOF(append-only file只追加文件)持久化会将执行的写命令追加到AOF文件的末尾。在恢复数据时，只要从头到尾的执行AOF文件中包含的所有写命令即可&lt;/p&gt;
-&lt;h4 id=&quot;AOF可用配置&quot;&gt;&lt;a href=&quot;#AOF可用配置&quot; class=&quot;headerlink&quot; title=&quot;AOF可用配置&quot;&gt;&lt;/a&gt;AOF可用配置&lt;/h4&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;配置项&lt;/th&gt;
-&lt;th&gt;含义&lt;/th&gt;
-&lt;th&gt;可选值 &lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;appendonly&lt;/td&gt;
-&lt;td&gt;是否开启AOF持久化&lt;/td&gt;
-&lt;td&gt;no,yes &lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;appendfsync&lt;/td&gt;
-&lt;td&gt;将写命令同步到硬盘的间隔&lt;/td&gt;
-&lt;td&gt;everysec,always,no&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;no-appendfsync-on-rewrite&lt;/td&gt;
-&lt;td&gt;对文件进行压缩时能否执行同步操作&lt;/td&gt;
-&lt;td&gt;no,yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;auto-aof-rewrite-percentage&lt;/td&gt;
-&lt;td&gt;当前文件大小是上一次压缩后AOF文件大小的多少时执行自动压缩&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;auto-aof-rewrite-min-size&lt;/td&gt;
-&lt;td&gt;当前文件大小是多少时执行自动压缩&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;dir path/to/appendonly.aof&lt;/td&gt;
-&lt;td&gt;文件存放位置&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;其实主要的就是appendfsync配置项，有三个可选值，&lt;code&gt;always&lt;/code&gt;(每次执行写操作都要同步写入硬盘),&lt;code&gt;everysec&lt;/code&gt;(每秒执行一次同步),&lt;code&gt;no&lt;/code&gt;(让系统决定何时执行同步)。虽然选择&lt;code&gt;always&lt;/code&gt;可将数据丢失减少到最少，但这种策略会对硬盘进行大量的写入操作，处理命令速度受到硬盘限制。建议选择&lt;code&gt;everysec&lt;/code&gt;。&lt;/p&gt;
-&lt;h4 id=&quot;AOF优缺点&quot;&gt;&lt;a href=&quot;#AOF优缺点&quot; class=&quot;headerlink&quot; title=&quot;AOF优缺点&quot;&gt;&lt;/a&gt;AOF优缺点&lt;/h4&gt;&lt;p&gt;优点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;比快照方式可靠，默认每秒同步一次，意味着最多丢失一秒的数据&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;缺点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;相同数据集大小，AOF文件会比快照文件大&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;AOF文件格式&quot;&gt;&lt;a href=&quot;#AOF文件格式&quot; class=&quot;headerlink&quot; title=&quot;AOF文件格式&quot;&gt;&lt;/a&gt;AOF文件格式&lt;/h4&gt;&lt;p&gt;一开始以为Redis就是将写命令原封不动的存储到AOF文件中，自己试了一下才知道，AOF文件是使用Redis网络通讯协议的格式来保存这些命令。&lt;br&gt;举个🌰：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;127.0.0.1:6379&amp;gt; &lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; number 21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;OK&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;将上面的命令存储到AOF文件就是下面的样子（select 0命令是代表选择id为0的数据库）：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;*2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SET&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;variable&quot;&gt;$2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;来看下AOF文件的格式，了解它的格式可以让我们很容易的解析它，指不定哪天能用到啊🌝。*号代表命令参数的个数(在上面的例子中参数为set、number、21,共3个)，$号代表第N个参数的长度，在上面的例子中，三个参数的长度分别为3，6，2。&lt;/p&gt;
-&lt;h4 id=&quot;压缩AOF文件&quot;&gt;&lt;a href=&quot;#压缩AOF文件&quot; class=&quot;headerlink&quot; title=&quot;压缩AOF文件&quot;&gt;&lt;/a&gt;压缩AOF文件&lt;/h4&gt;&lt;p&gt;Redis可以自动压缩(也可以叫重写)AOF文件，用户也可以通过&lt;code&gt;BGREWRITEAOF&lt;/code&gt;命令来压缩AOF文件。这里的压缩，不是平时说的压缩的意思，是指创建一个新的文件来替换旧的文件，两个文件保存的数据状态完全一致。如果在本地手动执行&lt;code&gt;BGREWRITEAOF&lt;/code&gt;命令，可以看到会生成一个temp-rewriteaof-*.aof的临时文件，在结束后替换appendonly.aof文件，从而减小appendonly.aof文件的大小。我知道这样说其实还是不好理解，还是上图吧。为了方便画图，我就默默假装Redis直接将命令按输入的样子存储到AOF文件中，不要拆穿我🙈。&lt;br&gt;假设执行的写命令是下面的样子：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/write.png&quot; alt=&quot;执行的写操作&quot;&gt;&lt;br&gt;那么看看在压缩前AOF文件的样子(就是存储了除get命令外的所有写命令)：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/aof.png&quot; alt=&quot;压缩前的AOF文件&quot;&gt;&lt;br&gt;接着执行BGREWRITEAOF命令，Redis会生成一个新的文件来替换旧的AOF文件，从而达到压缩的目的：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/yasuo.png&quot; alt=&quot;压缩后的AOF文件&quot;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到压缩前文件中存储了7条写命令，压缩后只存储一条。而且执行set number 1和6次incr number命令 ，与执行set number 7命令效果是一样的。从而即保证了数据的正确性又压缩了文件的大小。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;需要注意的是，Redis是启用子进程来进行AOF文件的压缩，在这期间主进程还是可以继续处理请求的，如果这时请求有写操作就可能导致当前数据库与压缩后的AOF不一致。Redis增加了一个缓存来解决这个问题，主进程在接收到新的写操作命令之后，会将命令写入现有的AOF文件和缓存中。在子进程完成新的AOF文件之后会将缓存的内容写入到新的AOF文件中，并改名覆盖旧的AOF文件。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;快照持久化&quot;&gt;&lt;a href=&quot;#快照持久化&quot; class=&quot;headerlink&quot; title=&quot;快照持久化&quot;&gt;&lt;/a&gt;快照持久化&lt;/h3&gt;&lt;h4 id=&quot;快照可用配置&quot;&gt;&lt;a href=&quot;#快照可用配置&quot; class=&quot;headerlink&quot; title=&quot;快照可用配置&quot;&gt;&lt;/a&gt;快照可用配置&lt;/h4&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;配置项&lt;/th&gt;
-&lt;th&gt;含义&lt;/th&gt;
-&lt;th&gt;可选值 &lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;save m n&lt;/td&gt;
-&lt;td&gt;m秒内有n次写入时创建快照&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;stop-writes-on-bgsave-error&lt;/td&gt;
-&lt;td&gt;创建快照失败后是否继续执行写命令&lt;/td&gt;
-&lt;td&gt;no,yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;rdbcomression&lt;/td&gt;
-&lt;td&gt;是否压缩快照文件&lt;/td&gt;
-&lt;td&gt;no,yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;dbfilename&lt;/td&gt;
-&lt;td&gt;命名快照文件&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;dir path/to/dump.rdb&lt;/td&gt;
-&lt;td&gt;文件存放位置&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&quot;RDB文件结构&quot;&gt;&lt;a href=&quot;#RDB文件结构&quot; class=&quot;headerlink&quot; title=&quot;RDB文件结构&quot;&gt;&lt;/a&gt;RDB文件结构&lt;/h4&gt;&lt;p&gt;RDB文件是一个经过压缩的二进制文件，不同类型的键值对会采用不同的方式来保存它们。具体的结构我也还没理清楚。。可以参考这篇文章&lt;a href=&quot;http://redisbook.com/preview/rdb/rdb_struct.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redisbook.com/preview/rdb/rdb_struct.html&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;创建快照&quot;&gt;&lt;a href=&quot;#创建快照&quot; class=&quot;headerlink&quot; title=&quot;创建快照&quot;&gt;&lt;/a&gt;创建快照&lt;/h4&gt;&lt;p&gt;创建快照的方式有以下几种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;客户端发送&lt;code&gt;BGSAVE&lt;/code&gt;命令。与压缩AOF文件一样，Redis会fork出一个子进程，由子进程负责将快照写入硬盘。&lt;/li&gt;
-&lt;li&gt;客户端发送&lt;code&gt;SAVE&lt;/code&gt;命令。Redis会开始创建快照，并且在快照创建完成之前不再处理其他命令。不常使用&lt;code&gt;SAVE&lt;/code&gt;命令&lt;/li&gt;
-&lt;li&gt;在满足配置的save m n选项时。比如，配置了save 60 1000,会在满足60秒内有1000次写入的时候开始创建快照。&lt;/li&gt;
-&lt;li&gt;当接收到&lt;code&gt;SHUTDOWN&lt;/code&gt;请求时，Redis会执行&lt;code&gt;SAVE&lt;/code&gt;命令,并且不再执行任何其他命令。&lt;/li&gt;
-&lt;li&gt;当从服务器向主服务器发送SYNC命令时，如果主服务器不是刚刚执行过&lt;code&gt;BGSAVE&lt;/code&gt;命令,就会开始执行&lt;code&gt;BGSAVE&lt;/code&gt;来创建快照。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;快照优缺点&quot;&gt;&lt;a href=&quot;#快照优缺点&quot; class=&quot;headerlink&quot; title=&quot;快照优缺点&quot;&gt;&lt;/a&gt;快照优缺点&lt;/h4&gt;&lt;p&gt;优点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;文件紧凑,适用于做不同版本的数据备份&lt;/li&gt;
-&lt;li&gt;与AOF相比在恢复大数据集时，更快&lt;/li&gt;
-&lt;li&gt;很方便传送到另一个数据中心&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;缺点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一旦Redis出现问题，上一次创建快照之后的数据就丢失了&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;参考文档&quot;&gt;&lt;a href=&quot;#参考文档&quot; class=&quot;headerlink&quot; title=&quot;参考文档&quot;&gt;&lt;/a&gt;参考文档&lt;/h3&gt;&lt;p&gt;《Redis In Action》&lt;br&gt;&lt;a href=&quot;http://www.redis.cn/topics/persistence.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.redis.cn/topics/persistence.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://redisbook.readthedocs.org/en/latest/internal/aof.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redisbook.readthedocs.org/en/latest/internal/aof.html&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;恩，先说点题外话。上周被小虐了一丢丢,但有很大收获,了解了自己的不足,知道了自己还在哪些方面有欠缺。更坚定了一直以来的想法,应届生或者工作时间不长的人找工作公司规模，福利薪资都是浮云，跟对人才是最重要的,非常及其以及特别的重要,一个人好技术牛的部门leader绝对抵得上5K的薪资。这也完美解释了为何部门拆分,老大和磊哥走了之后这么不舒服,这尼玛相当于给我减了5K的工资啊,扯远了。。。。还是来看Redis吧，整理下Redis持久化的相关内容，加深下印象。不想看文字的可直接看下面的图😂。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="redis" scheme="http://yemengying.com/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="http://yemengying.com/tags/redis/"/>
     
   </entry>
   
