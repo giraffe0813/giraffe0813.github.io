@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2017-01-08T08:52:34.000Z</updated>
+  <updated>2017-01-27T11:51:17.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RabbitMq 如何处理异常</title>
+    <link href="http://yemengying.com/2017/01/27/how-does-rabbitmq-handle-exception/"/>
+    <id>http://yemengying.com/2017/01/27/how-does-rabbitmq-handle-exception/</id>
+    <published>2017-01-27T11:37:21.000Z</published>
+    <updated>2017-01-27T11:51:17.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="rabbitmq" scheme="http://yemengying.com/categories/rabbitmq/"/>
+    
+    
+      <category term="rabbitmq" scheme="http://yemengying.com/tags/rabbitmq/"/>
+    
+      <category term="spring" scheme="http://yemengying.com/tags/spring/"/>
+    
+  </entry>
   
   <entry>
     <title>为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper</title>
@@ -59,9 +81,9 @@
       <category term="rabbitmq" scheme="http://yemengying.com/categories/rabbitmq/"/>
     
     
-      <category term="spring" scheme="http://yemengying.com/tags/spring/"/>
-    
       <category term="rabbitmq" scheme="http://yemengying.com/tags/rabbitmq/"/>
+    
+      <category term="spring" scheme="http://yemengying.com/tags/spring/"/>
     
   </entry>
   
@@ -1244,52 +1266,6 @@
       <category term="java" scheme="http://yemengying.com/tags/java/"/>
     
       <category term="hashMap" scheme="http://yemengying.com/tags/hashMap/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>觉得还不错的网站</title>
-    <link href="http://yemengying.com/2016/04/24/good-website/"/>
-    <id>http://yemengying.com/2016/04/24/good-website/</id>
-    <published>2016-04-24T13:35:44.000Z</published>
-    <updated>2016-09-21T08:32:38.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;整理下收藏夹中觉得还不错的网站或资料，不涉及订阅的博客，主要是因为一开始收藏夹并没有分类所以就乱了，不方便找😂，嫑吐槽我。。。。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h3 id=&quot;镇楼&quot;&gt;&lt;a href=&quot;#镇楼&quot; class=&quot;headerlink&quot; title=&quot;镇楼&quot;&gt;&lt;/a&gt;镇楼&lt;/h3&gt;&lt;p&gt;1.&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.google.com&lt;/a&gt;&lt;br&gt;2.&lt;a href=&quot;http://stackoverflow.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/&lt;/a&gt;&lt;br&gt;3.&lt;a href=&quot;https://github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/&lt;/a&gt;&lt;br&gt;这三个大家都懂。。把它们放上来的主要目的是。。。撑场子。。。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/liguangzhu3.jpg&quot; alt=&quot;哈哈哈&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Redis相关&quot;&gt;&lt;a href=&quot;#Redis相关&quot; class=&quot;headerlink&quot; title=&quot;Redis相关&quot;&gt;&lt;/a&gt;Redis相关&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;官网&lt;br&gt;1.&lt;a href=&quot;http://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redis.io/&lt;/a&gt;(英文版)&lt;br&gt;2.&lt;a href=&quot;http://www.redis.cn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.redis.cn/&lt;/a&gt;(中文版)    &lt;/li&gt;
-&lt;li&gt;其它网站&lt;br&gt;1.&lt;a href=&quot;http://try.redis.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://try.redis.io/&lt;/a&gt;(可以在线练习redis常用命令)&lt;br&gt;2.&lt;a href=&quot;http://redisdoc.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redisdoc.com/&lt;/a&gt;(查找redis命令的详细信息 包括查看命令的返回值和时间复杂度)&lt;/li&gt;
-&lt;li&gt;一本短小精悍的电子书&lt;br&gt;1.&lt;a href=&quot;https://github.com/karlseguin/the-little-redis-book&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/karlseguin/the-little-redis-book&lt;/a&gt;(英文原版)&lt;br&gt;2.&lt;a href=&quot;https://github.com/JasonLai256/the-little-redis-book/blob/master/cn/redis.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/JasonLai256/the-little-redis-book/blob/master/cn/redis.md&lt;/a&gt;(中文译版)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;算法和数据结构相关&quot;&gt;&lt;a href=&quot;#算法和数据结构相关&quot; class=&quot;headerlink&quot; title=&quot;算法和数据结构相关&quot;&gt;&lt;/a&gt;算法和数据结构相关&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;公开课&lt;br&gt;&lt;a href=&quot;http://open.163.com/special/opencourse/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://open.163.com/special/opencourse/&lt;/a&gt;(网易公开课上的麻省理工算法导论课程)&lt;/li&gt;
-&lt;li&gt;做题&lt;br&gt;&lt;a href=&quot;https://leetcode.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://leetcode.com/&lt;/a&gt;(leetcode,类似网站有好几个，有选择恐惧症就放一个吧）&lt;/li&gt;
-&lt;li&gt;其它网站&lt;br&gt;&lt;a href=&quot;http://algorithms.tutorialhorizon.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://algorithms.tutorialhorizon.com/&lt;/a&gt;(最近特别爱的一个网站，讲解各种算法的，有图解，有code，简直不能更赞，只能意会不可言传，点进去看看吧)&lt;br&gt;&lt;a href=&quot;http://visualgo.net/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://visualgo.net/&lt;/a&gt; （一个通过动图帮助理解数据结构的网站 比较适合初学者 英文版）&lt;br&gt;&lt;a href=&quot;http://zh.visualgo.net/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://zh.visualgo.net/&lt;/a&gt;（上面网站的中文版）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;什么都能学&quot;&gt;&lt;a href=&quot;#什么都能学&quot; class=&quot;headerlink&quot; title=&quot;什么都能学&quot;&gt;&lt;/a&gt;什么都能学&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;教程网站&lt;br&gt;1.&lt;a href=&quot;http://tutorials.jenkov.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://tutorials.jenkov.com/&lt;/a&gt;(关于Java，Web ，Mobile and so on)&lt;br&gt;2.&lt;a href=&quot;http://www.sitepoint.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.sitepoint.com&lt;/a&gt;(感觉是个不错的网站，不过关于Java的内容不太多，所以也没常看)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;不知道怎么分类&quot;&gt;&lt;a href=&quot;#不知道怎么分类&quot; class=&quot;headerlink&quot; title=&quot;不知道怎么分类&quot;&gt;&lt;/a&gt;不知道怎么分类&lt;/h3&gt;&lt;p&gt;1.&lt;a href=&quot;http://overapi.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://overapi.com/&lt;/a&gt;(网站收集了很多很有用的手册，开发时可以节省很多时间)&lt;br&gt;2.&lt;a href=&quot;https://www.reddit.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.reddit.com/&lt;/a&gt;(信息量比较大的网站，比较喜欢去上面看些搞笑的图片)&lt;br&gt;3.&lt;a href=&quot;https://news.ycombinator.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://news.ycombinator.com/&lt;/a&gt;(不是很喜欢它的页面。。。)&lt;br&gt;4.&lt;a href=&quot;https://www.v2ex.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.v2ex.com/&lt;/a&gt;（可以上去找工作 哈哈）&lt;br&gt;5.&lt;a href=&quot;https://wanqu.co/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://wanqu.co/&lt;/a&gt;(湾区日报 每天推送5篇优质英文文章)&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;突然发现目前最幸福的事就是在重看以前的Running Man时，发现有一集没看过😜。。不写了 去看wuli光洙了😍&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;整理下收藏夹中觉得还不错的网站或资料，不涉及订阅的博客，主要是因为一开始收藏夹并没有分类所以就乱了，不方便找😂，嫑吐槽我。。。。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
