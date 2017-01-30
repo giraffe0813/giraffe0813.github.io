@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>RabbitMq 如何处理异常 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMq 如何处理异常">
+<meta property="og:url" content="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
+<meta property="og:updated_time" content="2017-01-30T15:43:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMq 如何处理异常">
+<meta name="twitter:description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
+    
+
+    
+
+    
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+    
+    <script src="//xiaoming.io/static/app.js"></script>
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <canvas id="snow"></canvas><script>(function(){var a=document.getElementById("snow"),c=a.getContext("2d"),e=[];a.style.pointerEvents="none";a.style.position="fixed";a.style.top=0;a.style.left=0;a.style.width="100vw";a.style.zIndex=1;a.style.height="100vh";a.style.userSelect="none";a.height=a.offsetHeight;a.width=a.offsetWidth;window.onresize=function(){a.height=a.offsetHeight;a.width=a.offsetWidth};var d=Math;setInterval(function(){c.clearRect(0,0,a.width,a.height);c.beginPath();var f=d.random(),g=.05+.95*f;flake={};flake.x=1.5*a.width*d.random()-.5*a.width;flake.y=-9;flake.b=2*g*(d.random()/2+.5);flake.c=(4+2*d.random())*g;flake.a=d.pow(5*f,2)/5;flake.update=function(){this.x+=this.b;this.y+=this.c;c.beginPath();c.arc(this.x,this.y,this.a,0,2*d.PI,!1);c.fillStyle="#FFF";c.fill()};e.push(flake);for(b=0;b<e.length;b++)e[b].y>a.height?e.splice(b,1):e[b].update()},16)})();</script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                48
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                34
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/01/30/how-does-rabbitmq-handle-exception/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            RabbitMq 如何处理异常
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/01/30/how-does-rabbitmq-handle-exception/">
+            <time datetime="2017-01-30T11:37:21.000Z" itemprop="datePublished">2017-01-30</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/rabbitmq/">rabbitmq</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/rabbitmq/">rabbitmq</a>, <a class="tag-link" href="/tags/spring/">spring</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    
+                </div>
+            
+            <blockquote>
+<p>这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧  </p>
+</blockquote>
+<a id="more"></a>
+<p>在消费 RabbitMq 中的 Message 时，常常会出现异常，可能是 Message 本身格式不对，或者由于某些原因无法被处理。我一般都是 catch 异常然后抛个 <code>AmqpRejectAndDontRequeueException</code>  (以下简称 ARADRE )，也出啥问题，不过还是仔细看下，rabbitmq 是如何对待消费消息时出现的异常，是会将消息直接丢弃还是有其他操作。</p>
+<p>其实 Spring-amqp <a href="http://docs.spring.io/spring-amqp/reference/html/_reference.html#exception-handling" target="_blank" rel="external">官方文档</a>上对于 RabbitMq 是如何处理异常的说的已经很明白了，不过都是大段的文字可能不太好理解，还是配着代码看一下。</p>
+<p>代码版本： 1.6.3.RELEASE</p>
+<p>根据官方文档，当 listener 在消费消息时抛出一个异常的时候，该异常会被包装在 <code>ListenerExecutionFailedException</code> 中抛出，并根据 <code>listenerContainer</code> 中 <code>defaultRequeueRejected</code> 设定的值来决定是否将该消息重新加入队列，默认是会重新加入队列。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!" alt="ListenerExecutionFailedException结构"></p>
+<p>需要注意的是，如果抛出的异常是 ARADRE 或其他被 RabbitMq 认为是致命错误的异常，即便 defaultRequeueRejected 的值为 true ， 该消息也不会重新加入队列，而是会被直接丢弃或加入 dead-letter-exchange 中(如果有配置 dead-letter-exchange)。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-01-30-dead-letters.jpeg?imageMogr2/thumbnail/400x300!" alt="来源https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/"></p>
+<p>在 1.6.3. RELEASE 中被 RabbitMq 认为是致命错误的异常有以下 6 种：</p>
+<ul>
+<li>o.s.amqp…MessageConversionException</li>
+<li>o.s.messaging…MessageConversionException</li>
+<li>o.s.messaging…MethodArgumentNotValidException</li>
+<li>o.s.messaging…MethodArgumentTypeMismatchException</li>
+<li>java.lang.NoSuchMethodException</li>
+<li>java.lang.ClassCastException</li>
+</ul>
+<p>也就是说，当抛出以上异常及 ARADRE 时，该消息一定不会重新入队，即便 defaultRequeueRejected 的值为 true。</p>
+<p>下面看看 Spring-RabbitMq 是如何实现的：</p>
+<p>在源码中，异常在 <code>AbstractMessageListenerContainer</code> 中被包装在 ListenerExecutionFailedException 中之后还会经由 <code>ErrorHandler</code> 的 <code>handleError</code> 方法处理， 默认的 ErrorHandler 是 <code>ConditionalRejectingErrorHandler</code> 。 </p>
+<p>我们也可以实现自己的 ErrorHandler 来控制需要丢弃消息的异常，只要实现  <code>org.springframework.util.ErrorHandler</code> 接口，然后将<code>listenerContainer</code> 中的 <code>errorHandler</code> 参数指定我们自定义的 handler 即可。 </p>
+<p>ConditionalRejectingErrorHandler 中配置有 <code>FatalExceptionStrategy</code>，会调用 FatalExceptionStrategy 中的 isFatal 方法来判断异常是不是属于致命异常。</p>
+<p>ConditionalRejectingErrorHandler 的具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConditionalRejectingErrorHandler</span> <span class="keyword">implements</span> <span class="title">ErrorHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> FatalExceptionStrategy exceptionStrategy;	</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.logger.isWarnEnabled()) &#123;</span><br><span class="line">		<span class="keyword">this</span>.logger.warn(<span class="string">"Execution of Rabbit message listener failed."</span>, t);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 如果是致命异常，则转为 AmqpRejectAndDontRequeueException 抛出</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="keyword">this</span>.causeChainContainsARADRE(t) &amp;&amp; <span class="keyword">this</span>.exceptionStrategy.isFatal(t)) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> AmqpRejectAndDontRequeueException(<span class="string">"Error Handler converted exception to fatal"</span>, t);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@return</span> true if the cause chain already contains an</span><br><span class="line"> * &#123;<span class="doctag">@link</span> AmqpRejectAndDontRequeueException&#125;.</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">causeChainContainsARADRE</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">	Throwable cause = t.getCause();</span><br><span class="line">	<span class="keyword">while</span> (cause != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (cause <span class="keyword">instanceof</span> AmqpRejectAndDontRequeueException) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		cause = cause.getCause();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Default implementation of &#123;<span class="doctag">@link</span> FatalExceptionStrategy&#125;.</span><br><span class="line"> * <span class="doctag">@since</span> 1.6.3</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultExceptionStrategy</span> <span class="keyword">implements</span> <span class="title">FatalExceptionStrategy</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 判断传入参数 是不是 致命异常</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFatal</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (t <span class="keyword">instanceof</span> ListenerExecutionFailedException</span><br><span class="line">				&amp;&amp; isCauseFatal(t.getCause())) &#123;</span><br><span class="line">			<span class="keyword">if</span> (ConditionalRejectingErrorHandler.<span class="keyword">this</span>.logger.isWarnEnabled()) &#123;</span><br><span class="line">				ConditionalRejectingErrorHandler.<span class="keyword">this</span>.logger.warn(</span><br><span class="line">							<span class="string">"Fatal message conversion error; message rejected; "</span></span><br><span class="line">							+ <span class="string">"it will be dropped or routed to a dead letter exchange, if so configured: "</span></span><br><span class="line">							+ ((ListenerExecutionFailedException) t).getFailedMessage());</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isCauseFatal</span><span class="params">(Throwable cause)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> cause <span class="keyword">instanceof</span> MessageConversionException</span><br><span class="line">				|| cause <span class="keyword">instanceof</span> org.springframework.messaging.converter.MessageConversionException</span><br><span class="line">				|| cause <span class="keyword">instanceof</span> MethodArgumentNotValidException</span><br><span class="line">				|| cause <span class="keyword">instanceof</span> MethodArgumentTypeMismatchException</span><br><span class="line">				|| cause <span class="keyword">instanceof</span> NoSuchMethodException</span><br><span class="line">				|| cause <span class="keyword">instanceof</span> ClassCastException</span><br><span class="line">				|| isUserCauseFatal(cause);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 通过重写该方法来添加自定义的异常</span><br><span class="line">	 * Subclasses can override this to add custom exceptions.</span><br><span class="line">	 * <span class="doctag">@param</span> cause the cause</span><br><span class="line">	 * <span class="doctag">@return</span> true if the cause is fatal.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isUserCauseFatal</span><span class="params">(Throwable cause)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码比较长，简单来说，就是 ConditionalRejectingErrorHandler 的 handleError 会先判断接到的异常中的 cause 是不是 ARADRE，如果不是再调用 FatalExceptionStrategy 的 isFatal 方法，判断是不是致命异常中的一种，如果是，则将异常转为 ARADRE 抛出，该消息也就不会重新入队。</p>
+<p>如果想要把自定义的异常加入到 fatalException， 一个简单的办法就是提供新的 FatalExceptionStrategy ，只要继承 ConditionalRejectingErrorHandler.DefaultExceptionStrategy 并重写 isUserCauseFatal(Throwable cause) 方法，在方法里对于需要丢弃消息的异常返回 true即可。</p>
+<p>再简单看下，RabbitMq 判断是否需要将消息重入队列的部分逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// We should always requeue if the container was stopping</span></span><br><span class="line"><span class="keyword">boolean</span> shouldRequeue = <span class="keyword">this</span>.defaultRequeuRejected || ex <span class="keyword">instanceof</span> MessageRejectedWhileStoppingException;</span><br><span class="line">Throwable t = ex;</span><br><span class="line"><span class="keyword">while</span> (shouldRequeue &amp;&amp; t != <span class="keyword">null</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (t <span class="keyword">instanceof</span> AmqpRejectAndDontRequeueException) &#123;</span><br><span class="line">			shouldRequeue = <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	t = t.getCause();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据上面的代码，如果处理消息时出现异常，在判断是否需要入队时，会将 shouldRequeue 变量等于 this.defaultRequeuRejected ||ex instanceof MessageRejectedWhileStoppingException 的值，然后如果异常是 ARADRE， 不管之前 shouldRequeue 的值是什么，都会被置为 false。最后根据 shouldRequeue 的值来决定是否需要重新入队。 </p>
+<p>本来还想画个图的，不过要去和 cookie 玩会，有空再补吧~~</p>
+<p>最后。。Cookie 宝宝祝大家新春快乐~~<br><img src="http://oduh99f02.bkt.clouddn.com/2017-01-28-1.pic.jpg?imageMogr2/thumbnail/500x800!" alt="cookie 宝宝"></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/" data-id="ciyk9nb7n00106hfyz8adfuv9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/01/03/rabbitmq-classMapper/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.onload = function() {
+        clearTimeout(timer); 
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+       Disqus.getRecentComments();
+     });
+     timer = setTimeout(function() {
+       Disqus.getComments();
+     }, 3000);
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

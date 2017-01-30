@@ -226,15 +226,15 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/spring/</loc>
-        <lastmod>2017-01-08T08:52:34.000Z</lastmod>
+        <loc>http://yemengying.com/tags/rabbitmq/</loc>
+        <lastmod>2017-01-30T15:43:19.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/rabbitmq/</loc>
-        <lastmod>2017-01-08T08:52:34.000Z</lastmod>
+        <loc>http://yemengying.com/tags/spring/</loc>
+        <lastmod>2017-01-30T15:43:19.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
