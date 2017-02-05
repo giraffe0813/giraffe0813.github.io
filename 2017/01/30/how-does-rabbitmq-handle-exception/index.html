@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
 <meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
-<meta property="og:updated_time" content="2017-01-30T15:43:19.000Z">
+<meta property="og:updated_time" content="2017-02-05T07:55:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMq 如何处理异常">
 <meta name="twitter:description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
@@ -311,7 +311,7 @@ var _hmt = _hmt || [];
 <p>再简单看下，RabbitMq 判断是否需要将消息重入队列的部分逻辑。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// We should always requeue if the container was stopping</span></span><br><span class="line"><span class="keyword">boolean</span> shouldRequeue = <span class="keyword">this</span>.defaultRequeuRejected || ex <span class="keyword">instanceof</span> MessageRejectedWhileStoppingException;</span><br><span class="line">Throwable t = ex;</span><br><span class="line"><span class="keyword">while</span> (shouldRequeue &amp;&amp; t != <span class="keyword">null</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (t <span class="keyword">instanceof</span> AmqpRejectAndDontRequeueException) &#123;</span><br><span class="line">			shouldRequeue = <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	t = t.getCause();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>根据上面的代码，如果处理消息时出现异常，在判断是否需要入队时，会将 shouldRequeue 变量等于 this.defaultRequeuRejected ||ex instanceof MessageRejectedWhileStoppingException 的值，然后如果异常是 ARADRE， 不管之前 shouldRequeue 的值是什么，都会被置为 false。最后根据 shouldRequeue 的值来决定是否需要重新入队。 </p>
-<p>本来还想画个图的，不过要去和 cookie 玩会，有空再补吧~~</p>
+<p>可以用下图总结一下：<br><img src="http://oduh99f02.bkt.clouddn.com/2017-02-05-j%20-1-.png?imageMogr2/thumbnail/667x618!" alt="总结"></p>
 <p>最后。。Cookie 宝宝祝大家新春快乐~~<br><img src="http://oduh99f02.bkt.clouddn.com/2017-01-28-1.pic.jpg?imageMogr2/thumbnail/500x800!" alt="cookie 宝宝"></p>
 
         
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/" data-id="ciys9qcqu0012tn9ledq2q5kw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/" data-id="ciysdk8fq0011mr9llchsi14c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
