@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    <script src="http://xiaoming.io/static/app.js"></script>
+    
+
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>谈谈 NoSuchBeanDefinitionException | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="这篇博客是来自对两篇文章的翻译，原文链接如下。这两篇文章都总结了在使用 Spring 框架时可能造成 NoSuchBeanDefinitionException 的情况，以及应该如何解决。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈 NoSuchBeanDefinitionException">
+<meta property="og:url" content="http://yemengying.com/2017/02/18/something-about-noSuchBeanDefinitionException/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="这篇博客是来自对两篇文章的翻译，原文链接如下。这两篇文章都总结了在使用 Spring 框架时可能造成 NoSuchBeanDefinitionException 的情况，以及应该如何解决。">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-02-18-145102.jpg">
+<meta property="og:updated_time" content="2017-02-18T14:51:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈 NoSuchBeanDefinitionException">
+<meta name="twitter:description" content="这篇博客是来自对两篇文章的翻译，原文链接如下。这两篇文章都总结了在使用 Spring 框架时可能造成 NoSuchBeanDefinitionException 的情况，以及应该如何解决。">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-02-18-145102.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+    
+
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                49
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                34
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/02/18/something-about-noSuchBeanDefinitionException/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            谈谈 NoSuchBeanDefinitionException
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/18/something-about-noSuchBeanDefinitionException/">
+            <time datetime="2017-02-18T07:55:50.000Z" itemprop="datePublished">2017-02-18</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/spring/">spring</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/spring/">spring</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>这篇博客是来自对两篇文章的翻译，原文链接如下。这两篇文章都总结了在使用 Spring 框架时可能造成 <code>NoSuchBeanDefinitionException</code> 的情况，以及应该如何解决。 </p>
+</blockquote>
+<a id="more"></a>  
+<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p><a href="http://stackoverflow.com/questions/39173982/what-is-a-nosuchbeandefinitionexception-and-how-do-i-fix-it" target="_blank" rel="external">java - What is a NoSuchBeanDefinitionException and how do I fix it? - Stack Overflow</a><br><a href="http://www.baeldung.com/spring-nosuchbeandefinitionexception" target="_blank" rel="external">Spring NoSuchBeanDefinitionException | Baeldung</a></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><code>org.springframework.beans.factory.NoSuchBeanDefinitionException</code> 是很常见的异常，可以说绝大多数使用过 Spring 的人都曾遇到过它。本文旨在总结下NoSuchBeanDefinitionException（以下简称 NSBDE）的含义，哪些情况下可能抛出 NSBDE，和如何解决（文中配置均用 JavaConfig）。</p>
+<h2 id="什么是-NoSuchBeanDefinitionException"><a href="#什么是-NoSuchBeanDefinitionException" class="headerlink" title="什么是 NoSuchBeanDefinitionException"></a>什么是 NoSuchBeanDefinitionException</h2><p>从字面其实就很好理解，NoSuchBeanDefinitionException 就是没有找到指定 Bean 的 Definition。NoSuchBeanDefinitionException 的 JavaDoc是这样定义的：</p>
+<blockquote>
+<p>Exception thrown when a BeanFactory is asked for a bean instance for which it cannot find a definition. This may point to a non-existing bean, a non-unique bean, or a manually registered singleton instance without an associated bean definition.</p>
+</blockquote>
+<p>下面看看可能抛出 NSBDE 的一些情况。</p>
+<h2 id="情况1-No-qualifying-bean-of-type-…-found-for-dependency"><a href="#情况1-No-qualifying-bean-of-type-…-found-for-dependency" class="headerlink" title="情况1: No qualifying bean of type […] found for dependency"></a>情况1: No qualifying bean of type […] found for dependency</h2><p>最常见的抛出 NSBDE 的情况就是在一个 BeanA 中注入 BeanB 时找不到  BeanB 的定义。例子如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanA</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BeanB dependency;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当在 BeanA 中注入 BeanB 时，如果在 Spring 上下文中找不到 BeanB 的定义，就会抛出 NSBDE。异常信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.beans.factory.NoSuchBeanDefinitionException: </span><br><span class="line">No qualifying bean of type [org.baeldung.packageB.BeanB]</span><br><span class="line">  found for dependency: </span><br><span class="line">expected at least 1 bean which qualifies as</span><br><span class="line">  autowire candidate for this dependency. </span><br><span class="line">Dependency annotations: </span><br><span class="line">  &#123;@org.springframework.beans.factory.annotation.Autowired(required=true)&#125;</span><br></pre></td></tr></table></figure></p>
+<p>抛异常的原因在异常信息中说的很清楚：<code>expected at least 1 bean which qualifies as autowire candidate for this dependency</code>。所以要么是 BeanB 不存在在 Spring 上下文中（比如没有标注 @ Component，@Repository，@Service, @Controller等注解） ，要么就是 BeanB 所在的包没有被 Spring 扫描到。</p>
+<p>解决办法就是先确认 BeanB 有没有被某些注解声明为 Bean：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.baeldung.packageB;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanB</span> </span>&#123; ...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果 BeanB 已经被声明为一个 Bean，就再确认 BeanB 所在的包有没有被扫描。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(<span class="string">"org.baeldung.packageB"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextWithJavaConfig</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="情况2-No-qualifying-bean-of-type-…-is-defined"><a href="#情况2-No-qualifying-bean-of-type-…-is-defined" class="headerlink" title="情况2: No qualifying bean of type […] is defined"></a>情况2: No qualifying bean of type […] is defined</h2><p>还有一种可能抛出 NSBDE 的情况是在上下文中存在着两个 Bean，比如有一个接口 IBeanB，它有两个实现类 BeanB1 和 BeanB2。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanB1</span> <span class="keyword">implements</span> <span class="title">IBeanB</span> </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanB2</span> <span class="keyword">implements</span> <span class="title">IBeanB</span> </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在，如果 BeanA 按照下面的方式注入，那么 Spring 将不知道要注入两个实现中的哪一个，就会抛出 NSBDE。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanA</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IBeanB dependency;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>异常信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: </span><br><span class="line">No qualifying bean of type</span><br><span class="line">  [org.baeldung.packageB.IBeanB] is defined: </span><br><span class="line">expected single matching bean but found 2: beanB1,beanB2</span><br></pre></td></tr></table></figure></p>
+<p>仔细看异常信息会发现，并不是直接抛出 NSBDE，而是它的子类 <code>NoUniqueBeanDefinitionException</code>，这是 Spring 3.2.1 之后引入的新异常，目的就是为了和第一种找不到 Bean Definition 的情况作区分。</p>
+<p>解决办法1就是利用 <code>@Qualifier</code> 注解，明确指定要注入的 Bean 的名字(BeanB2 默认的名字就是 beanB2)。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanA</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="meta">@Qualifier</span>(<span class="string">"beanB2"</span>)</span><br><span class="line">    <span class="keyword">private</span> IBeanB dependency;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>除了指定名字，我们还可以将其中一个 Bean 加上 <code>@Primary</code>的注解,这样会选择加了 Primary 注解的 Bean 来注入，而不会抛异常：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanB1</span> <span class="keyword">implements</span> <span class="title">IBeanB</span> </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样 Spring 就能够知道到底应该注入哪个 Bean 了。</p>
+<h2 id="情况3-No-Bean-Named-…-is-defined"><a href="#情况3-No-Bean-Named-…-is-defined" class="headerlink" title="情况3: No Bean Named […] is defined"></a>情况3: No Bean Named […] is defined</h2><p>NSBDE 还可能在从 Spring 上下文中通过名字获取一个 Bean 时抛出。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanA</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ApplicationContext context;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        context.getBean(<span class="string">"someBeanName"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这种情况中，如果找不到指定名字 Bean 的 Definition，就会抛出如下异常：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: </span><br><span class="line">No bean named &apos;someBeanName&apos; is defined</span><br></pre></td></tr></table></figure></p>
+<h2 id="情况4-代理-Beans"><a href="#情况4-代理-Beans" class="headerlink" title="情况4: 代理 Beans"></a>情况4: 代理 Beans</h2><p>Spring 通过 <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html#aop-introduction-proxies" target="_blank" rel="external">AOP 代理</a> 实现了许多高级功能，比如：</p>
+<ul>
+<li>通过 <a href="http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" target="_blank" rel="external">@Transactional</a>完成 <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/transaction.html" target="_blank" rel="external">事务管理</a></li>
+<li>通过 <a href="http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/Cacheable.html" target="_blank" rel="external">@Cacheable</a>实现缓存</li>
+<li>通过 <a href="http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/annotation/Async.html" target="_blank" rel="external">@Async</a>和 <a href="http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/annotation/Scheduled.html" target="_blank" rel="external">@Scheduled</a>实现任务调度和异步执行</li>
+</ul>
+<p>Spring 有两种方式实现代理：</p>
+<ol>
+<li>利用 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html" target="_blank" rel="external">JDK 动态代理机制</a> ，在运行时为<code>实现了某些接口</code>的类动态创建一个实现了同样接口的代理对象。</li>
+<li>使用 <a href="https://github.com/cglib/cglib/wiki" target="_blank" rel="external">CGLIB</a>，CGLIB 可以在运行期扩展Java类与实现Java接口,也就是说当一个类没有实现接口时，必须用 CGLIB 生成代理对象。</li>
+</ol>
+<p>所以，当 Spring 上下文中的一个实现了某个接口的 Bean 通过JDK 动态代理机制被代理时，代理类并不是继承了目标类，而是实现同样的接口。</p>
+<p>也正因为如此，如果一个 Bean 通过接口注入时，可以成功被注入。但如果是通过真正的类注入，那么 Spring 将无法找到匹配这个类的 Definition——因为代理类并没有继承这个类。</p>
+<p>以 Spring 中比较常见的事务管理为例，假设 ServiceA 中要注入 ServiceB，两个 Service 均标注了 <code>@Transactional</code>注解来进行事务管理，那么下面的注入方式是不会正常 work 的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span> <span class="keyword">implements</span> <span class="title">IServiceA</span></span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span> <span class="keyword">implements</span> <span class="title">IServiceB</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解决办法就是通过接口来进行注入：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span> <span class="keyword">implements</span> <span class="title">IServiceA</span></span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IServiceB serviceB;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span> <span class="keyword">implements</span> <span class="title">IServiceB</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>今天天气好好啊~<br><img src="http://oduh99f02.bkt.clouddn.com/2017-02-18-145102.jpg" alt="小脑腐"></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/02/18/something-about-noSuchBeanDefinitionException/" data-id="cizbd4plj002fqn7botp28pff" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/02/18/something-about-noSuchBeanDefinitionException/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/02/18/something-about-noSuchBeanDefinitionException/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/01/30/how-does-rabbitmq-handle-exception/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">RabbitMq 如何处理异常</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'giraffe0813new';
+    
+    
+    var disqus_url = 'http://yemengying.com/2017/02/18/something-about-noSuchBeanDefinitionException/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.onload = function() {
+        clearTimeout(timer); 
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+       Disqus.getRecentComments();
+     });
+     timer = setTimeout(function() {
+       Disqus.getComments();
+     }, 3000);
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
