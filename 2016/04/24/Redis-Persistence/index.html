@@ -194,7 +194,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                49
+                50
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -333,9 +333,9 @@ var _hmt = _hmt || [];
 <ul>
 <li>相同数据集大小，AOF文件会比快照文件大</li>
 </ul>
-<h4 id="AOF文件格式"><a href="#AOF文件格式" class="headerlink" title="AOF文件格式"></a>AOF文件格式</h4><p>一开始以为Redis就是将写命令原封不动的存储到AOF文件中，自己试了一下才知道，AOF文件是使用Redis网络通讯协议的格式来保存这些命令。<br>举个🌰：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> number 21</span><br><span class="line">OK</span><br></pre></td></tr></table></figure></p>
+<h4 id="AOF文件格式"><a href="#AOF文件格式" class="headerlink" title="AOF文件格式"></a>AOF文件格式</h4><p>一开始以为Redis就是将写命令原封不动的存储到AOF文件中，自己试了一下才知道，AOF文件是使用Redis网络通讯协议的格式来保存这些命令。<br>举个🌰：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> number 21</div><div class="line">OK</div></pre></td></tr></table></figure></p>
 <p>将上面的命令存储到AOF文件就是下面的样子（select 0命令是代表选择id为0的数据库）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*2</span><br><span class="line"><span class="variable">$6</span></span><br><span class="line">SELECT</span><br><span class="line"><span class="variable">$1</span></span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line"><span class="variable">$3</span></span><br><span class="line">SET</span><br><span class="line"><span class="variable">$6</span></span><br><span class="line">number</span><br><span class="line"><span class="variable">$2</span></span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">*2</div><div class="line"><span class="variable">$6</span></div><div class="line">SELECT</div><div class="line"><span class="variable">$1</span></div><div class="line">0</div><div class="line">*3</div><div class="line"><span class="variable">$3</span></div><div class="line">SET</div><div class="line"><span class="variable">$6</span></div><div class="line">number</div><div class="line"><span class="variable">$2</span></div><div class="line">21</div></pre></td></tr></table></figure>
 <p>来看下AOF文件的格式，了解它的格式可以让我们很容易的解析它，指不定哪天能用到啊🌝。*号代表命令参数的个数(在上面的例子中参数为set、number、21,共3个)，$号代表第N个参数的长度，在上面的例子中，三个参数的长度分别为3，6，2。</p>
 <h4 id="压缩AOF文件"><a href="#压缩AOF文件" class="headerlink" title="压缩AOF文件"></a>压缩AOF文件</h4><p>Redis可以自动压缩(也可以叫重写)AOF文件，用户也可以通过<code>BGREWRITEAOF</code>命令来压缩AOF文件。这里的压缩，不是平时说的压缩的意思，是指创建一个新的文件来替换旧的文件，两个文件保存的数据状态完全一致。如果在本地手动执行<code>BGREWRITEAOF</code>命令，可以看到会生成一个temp-rewriteaof-*.aof的临时文件，在结束后替换appendonly.aof文件，从而减小appendonly.aof文件的大小。我知道这样说其实还是不好理解，还是上图吧。为了方便画图，我就默默假装Redis直接将命令按输入的样子存储到AOF文件中，不要拆穿我🙈。<br>假设执行的写命令是下面的样子：<br><img src="http://oduh99f02.bkt.clouddn.com/image/write.png" alt="执行的写操作"><br>那么看看在压缩前AOF文件的样子(就是存储了除get命令外的所有写命令)：<br><img src="http://oduh99f02.bkt.clouddn.com/image/aof.png" alt="压缩前的AOF文件"><br>接着执行BGREWRITEAOF命令，Redis会生成一个新的文件来替换旧的AOF文件，从而达到压缩的目的：<br><img src="http://oduh99f02.bkt.clouddn.com/image/yasuo.png" alt="压缩后的AOF文件"></p>
 <p>可以看到压缩前文件中存储了7条写命令，压缩后只存储一条。而且执行set number 1和6次incr number命令 ，与执行set number 7命令效果是一样的。从而即保证了数据的正确性又压缩了文件的大小。</p>
@@ -407,7 +407,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cizbdewuy000csd7b3zug2f10" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/04/24/Redis-Persistence/" data-id="cj0ep1rnr000aqr7bzo9p3u0h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

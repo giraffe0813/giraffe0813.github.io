@@ -91,13 +91,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/</loc>
-        <lastmod>2016-12-18T09:18:43.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/rabbitmq/</loc>
         <lastmod>2017-02-05T07:55:48.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -107,6 +100,13 @@
     <url>
         <loc>http://yemengying.com/categories/spring/</loc>
         <lastmod>2017-02-18T14:59:33.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/java/</loc>
+        <lastmod>2017-03-18T03:24:37.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

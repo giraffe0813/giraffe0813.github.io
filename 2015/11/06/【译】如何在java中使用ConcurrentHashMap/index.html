@@ -192,7 +192,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                49
+                50
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -292,7 +292,7 @@ var _hmt = _hmt || [];
 <p>另一个重要点是在迭代遍历CHM时，keySet返回的iterator是弱一致和<a href="http://javarevisited.blogspot.in/2012/02/fail-safe-vs-fail-fast-iterator-in-java.html" target="_blank" rel="external">fail-safe</a>的，可能不会返回某些最近的改变，并且在遍历过程中，如果已经遍历的数组上的内容变化了，不会抛出ConcurrentModificationExceptoin的异常。</p>
 <p>CHM默认的并发级别是16，但可以在创建CHM时通过构造函数改变。毫无疑问，并发级别代表着并发执行更新操作的数目，所以如果只有很少的线程会更新Map，那么建议设置一个低的并发级别。另外，CHM还使用了ReentrantLock来对segments加锁。</p>
 <h3 id="Java中ConcurrentHashMap-putifAbsent方法的例子"><a href="#Java中ConcurrentHashMap-putifAbsent方法的例子" class="headerlink" title="Java中ConcurrentHashMap putifAbsent方法的例子"></a>Java中ConcurrentHashMap putifAbsent方法的例子</h3><p>很多时候我们希望在元素不存在时插入元素，我们一般会像下面那样写代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(map)&#123;</span><br><span class="line">  <span class="keyword">if</span> (map.get(key) == <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> map.put(key, value);</span><br><span class="line">  &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> map.get(key);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">synchronized</span>(map)&#123;</div><div class="line">  <span class="keyword">if</span> (map.get(key) == <span class="keyword">null</span>)&#123;</div><div class="line">      <span class="keyword">return</span> map.put(key, value);</div><div class="line">  &#125; <span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">return</span> map.get(key);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上面这段代码在HashMap和HashTable中是好用的，但在CHM中是有出错的风险的。这是因为CHM在put操作时并没有对整个Map加锁，所以一个线程正在put(k,v)的时候，另一个线程调用get(k)会得到null，这就会造成一个线程put的值会被另一个线程put的值所覆盖。当然，你可以将代码封装到synchronized代码块中，这样虽然线程安全了，但会使你的代码变成了单线程。CHM提供的putIfAbsent(key,value)方法原子性的实现了同样的功能，同时避免了上面的线程竞争的风险。</p>
 <h3 id="什么时候使用ConcurrentHashMap"><a href="#什么时候使用ConcurrentHashMap" class="headerlink" title="什么时候使用ConcurrentHashMap"></a>什么时候使用ConcurrentHashMap</h3><p>CHM适用于读者数量超过写者时，当写者数量大于等于读者时，CHM的性能是低于Hashtable和synchronized Map的。这是因为当锁住了整个Map时，读操作要等待对同一部分执行写操作的线程结束。CHM适用于做cache,在程序启动时初始化，之后可以被多个请求线程访问。正如Javadoc说明的那样，CHM是HashTable一个很好的替代，但要记住，CHM的比HashTable的同步性稍弱。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>现在我们知道了什么是ConcurrentHashMap和什么时候该用ConcurrentHashMap，下面我们来复习一下CHM的一些关键点。</p>
@@ -317,7 +317,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="cizbdewy2003bsd7bh90hjax0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="cj0ep1rqk003gqr7brk3hde3z" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

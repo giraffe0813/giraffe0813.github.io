@@ -191,7 +191,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                49
+                50
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -231,6 +231,140 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/">【译】以生产者消费者为例阐述如何使用wait，notify和notifyAll</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/">
+            <time datetime="2015-10-29T06:34:55.000Z" itemprop="datePublished">2015-10-29</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/thread/">thread</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>原文来自一个java大牛的技术博客 地址<a href="http://javarevisited.blogspot.com/2015/07/how-to-use-wait-notify-and-notifyall-in.html">http://javarevisited.blogspot.com/2015/07/how-to-use-wait-notify-and-notifyall-in.html</a> 博客以生产者和消费者为例 讲解了如何使用wait,notify,notifyAll进行多个线程之间的通信。下面是原文的翻译。</p>
+</blockquote>
+<p>在Java中可以利用use,notify,notifyAll来完成线程之间的通信。举个例子，假设你的程序中有两个线程(eg:<code>Producer</code>(生产者)和<code>Consumer</code>(消费者))，Producer要和Consumer通信，通知Consumer队列中有元素了可以开始消费。相似的，Consumer也需要通知Producer队列中有空闲可以插入元素了。一个线程可以可以在一定条件下调用wait方法暂停什么都不做。比如，在Producer和consumer的问题中，当队列满了时Producer需要调用wait，当队列为空时Consumer需要调用wait方法。如果一些线程在等待某些条件变为真，可以在条件改变时使用notify和notifyAll通知他们并唤醒他们。Notify方法和NotifyAll方法都可以发送通知，不同的是，notify只能向等待的线程中的一个发送通知，不保证接受到通知的是哪个线程，而NotifyAll会向所有线程发送通知。所以如果只有一个线程等待对象锁，notify和notifyAll都会通知到它。在这个java多线程的教程中，将利用生产者，消费者的例子讲述在Java中如何使用wait，notify和notifyAll实现线程内部通信。另外，如果大家对掌握多线程和并发很感兴趣，强烈建议大家阅读<code>Brian Goetz</code>写的<code>Java Concurrency in Practice</code>。如果没看过这本书，你的Java多线程之旅是不完整的🙀。</p></p>
+            <p class="article-more-link">
+                <a href="/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="cj0ep1rr10042qr7bjo6fjslt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -293,7 +427,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cizbdewy7003jsd7b22tdy59w" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cj0ep1rqq003oqr7bu29djc7j" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -428,7 +562,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cizbdewyl0042sd7bsgc4hwuj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cj0ep1rr50046qr7bc0mp4cdq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -666,7 +800,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="cizbdeww3001dsd7baucls9qw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="cj0ep1rp0001gqr7bubcau8t6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -798,7 +932,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/26/cleancode-builder/" data-id="cizbdewvc000msd7bg7bcbqff" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/26/cleancode-builder/" data-id="cj0ep1roa000pqr7b830nzdq0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -932,7 +1066,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="cizbdewxj002osd7btd4op273" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="cj0ep1rq3002uqr7bpfvm6e38" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1066,7 +1200,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/12/spring-transaction/" data-id="cizbdewxn002ssd7b64bq7no2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/12/spring-transaction/" data-id="cj0ep1rq7002xqr7brvn2m19m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1200,7 +1334,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/11/cleancode-collection/" data-id="cizbdewvg000rsd7b8ciypi4t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/11/cleancode-collection/" data-id="cj0ep1rod000qqr7bjsvhbhl9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1334,7 +1468,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cizbdewy5003gsd7bds34qsi7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cj0ep1rqm003jqr7bu186iy0g" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1465,7 +1599,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/" data-id="cizbdewv4000fsd7bwnx8buq8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/" data-id="cj0ep1rny000hqr7b9v5o7pyt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

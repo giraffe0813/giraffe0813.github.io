@@ -203,7 +203,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                49
+                50
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -297,18 +297,18 @@ var _hmt = _hmt || [];
 <h3 id="理解进程"><a href="#理解进程" class="headerlink" title="理解进程"></a>理解进程</h3><p>一个进程是一个命令正在运行的实例。比如，系统中有一个<strong>vi</strong>命令，如果<strong>vi</strong>命令正在被15个不同的用户运行，那么就对应了15个不同的运行进程。<br>一个进程在系统中通过进程Id(process ID)来标识，在当前系统中进程Id是独一无二的。换句话说，如果一个进程正在运行，那么其他进程都不能使用它的进程Id的数字作为自己的进程Id。但如果这个进程已经结束，那么他的进程Id可以被重新使用当做其他进程的进程Id。<br>除了进程Id，进程还有一些其他属性。每个运行的进程都会关联一个指定的用户账号和用户组，这个账号决定了进程可以访问哪些系统资源。所以root用户运行的进程能比普通用户的进程访问更多的文件。<br>对于一个Linux的管理员来说，管理进程的能力至关重要。因为有时，一些运行的进程会严重影响系统的性能，这一章会讲述如果根据内存和CPU的使用情况，定位和处理这些进程。</p>
 <h4 id="列出进程"><a href="#列出进程" class="headerlink" title="列出进程"></a>列出进程</h4><p>如果使用命令行列出当前系统运行的进程，<strong>ps</strong>命令是最老也是最常用的命令，而<strong>top</strong>命令不仅可以列出进程还可以更改进程的状态。如果使用的是GNOME，可以使用<strong>gnome-system-monitor</strong>来通过图形界面管理进程。</p>
 <h5 id="通过ps命令列出进程"><a href="#通过ps命令列出进程" class="headerlink" title="通过ps命令列出进程"></a>通过ps命令列出进程</h5><p>最常用的查看正在运行进程的工具就是ps命令，通过ps命令，我们可以查看正在运行的进程，它们使用的资源以及运行它们的用户。下面是ps命令的一个例子:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ps u</span><br><span class="line">USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND </span><br><span class="line">jake 2147 0.0 0.7 1836 1020 tty1 S+ 14:50 0:00 -bash </span><br><span class="line">jake 2310 0.0 0.7 2592 912 tty1 R+ 18:22 0:00 ps u</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ ps u</div><div class="line">USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND </div><div class="line">jake 2147 0.0 0.7 1836 1020 tty1 S+ 14:50 0:00 -bash </div><div class="line">jake 2310 0.0 0.7 2592 912 tty1 R+ 18:22 0:00 ps u</div></pre></td></tr></table></figure>
 <p>在上面的命令中，使用u选项会显示用户名和一些其他信息，比如进程是什么时候开始运行的，进程占用的内存和Cpu，命令运行的位置(TTY)等。上面的第一个进程说明了jake用户在登录之后打开了一个bash shell。第二进程显示了jake用户正在运行ps u命令。终端设备<strong>tty1</strong>正在被登录会话使用着。<strong>STAT</strong>这一列代表了进程的状态，R代表进程正在运行，S代表进程处于休眠状态。</p>
 <blockquote>
 <p>STAT除了R和S之外还可以有别的值，D代表不可中断，R运行，S中断/休眠，T停止，Z僵死。如果后面有+号，代表在前台运行的进程。</p>
 </blockquote>
 <p><strong>USER</strong>列显示了运行这个进程的用户。<strong>PID</strong>列是进程的进程Id，每个进程都有一个独一无二的进程Id，在需要杀死一个进程或者为进程发送信号时使用。<strong>%CPU</strong>和<strong>%MEN</strong>两列显示了进程占用的CPU百分比和内存百分比。<br><strong>VSZ</strong>(virtual set size)展示了虚拟内存占用大小(单位：kb/kilobytes),<strong>RSS</strong>(reside set size)展示了实际内存占用大小(单位：kb/kilobytes)。VSZ和RSS的值可能不一样，因为VSZ是分配给进程的内存大小，而RSS是进程实际使用的内存大小，代表了不可交换的物理内存。<strong>START</strong>代表了进程启动的时间，<strong>TIME</strong>执行累计时间(如果占用cpu时间非常短不到一秒，会显示 0:00)。<br>在Linux中，有些运行的进程是与终端无关的，这些进程通常在系统启动时开始运行，并且会持续运行，直到系统关闭。可以使用x选项查看与终端无关的进程。</p>
 <p>分页查看与当前用户有关的所有运行进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps ux | less</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ps ux | less</div></pre></td></tr></table></figure>
 <p>分页查看所有用户的运行的进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | less</span><br></pre></td></tr></table></figure>
-<p>管道符(“|”)会将第一个命令的输出当做第二个命令的输入，上面的例子中ps命令的输出会当做less命令的输入，这样就可以分页查看信息了。按空格键换页，按q退出。<br>我们还可以自定义ps命令展示的信息，并按其中一列排序。使用-o选项，可以通过关键字指定想要展示的列。下面的例子就是指定ps展示进程Id(pid),用户名(username),用户Id(uid),用户组(group),组Id(gid),分配的虚拟内存(vsz),实际使用内存(rss),运行的命令(comm),默认情况下按进程Id排序。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ps -eo pid,user,uid,group,gid,vsz,rss,comm | less  PID USER GROUP GID VSZ   RSS   COMMAND</span><br><span class="line">  1   root  root  0  19324 1320   init </span><br><span class="line">  2   root  root  0  0       0    kthreadd</span><br></pre></td></tr></table></figure></p>
-<p>如果想要按其他列排序可以使用sort=选项。例如，想查看那个进程占用了最多的内存，可以按rss排列，会按rss从低到高展示进程，如果想从高到底可以在前面加连字符。下面是例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ps -eo pid,user,group,gid,vsz,rss,comm --sort=-rss | less</span><br><span class="line">PID     USER     GROUP     GID     VSZ       RSS       COMMAND</span><br><span class="line">12005   cnegus   cnegus   13597   1271008    522192    firefox</span><br><span class="line">5412    cnegus   cnegus   13597   949584     157268 thunderbird-bin</span><br><span class="line">25870   cnegus   cnegus   13597   1332492    112952 swriter.bin</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ps aux | less</div></pre></td></tr></table></figure>
+<p>管道符(“|”)会将第一个命令的输出当做第二个命令的输入，上面的例子中ps命令的输出会当做less命令的输入，这样就可以分页查看信息了。按空格键换页，按q退出。<br>我们还可以自定义ps命令展示的信息，并按其中一列排序。使用-o选项，可以通过关键字指定想要展示的列。下面的例子就是指定ps展示进程Id(pid),用户名(username),用户Id(uid),用户组(group),组Id(gid),分配的虚拟内存(vsz),实际使用内存(rss),运行的命令(comm),默认情况下按进程Id排序。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ps -eo pid,user,uid,group,gid,vsz,rss,comm | less  PID USER GROUP GID VSZ   RSS   COMMAND</div><div class="line">  1   root  root  0  19324 1320   init </div><div class="line">  2   root  root  0  0       0    kthreadd</div></pre></td></tr></table></figure></p>
+<p>如果想要按其他列排序可以使用sort=选项。例如，想查看那个进程占用了最多的内存，可以按rss排列，会按rss从低到高展示进程，如果想从高到底可以在前面加连字符。下面是例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ps -eo pid,user,group,gid,vsz,rss,comm --sort=-rss | less</div><div class="line">PID     USER     GROUP     GID     VSZ       RSS       COMMAND</div><div class="line">12005   cnegus   cnegus   13597   1271008    522192    firefox</div><div class="line">5412    cnegus   cnegus   13597   949584     157268 thunderbird-bin</div><div class="line">25870   cnegus   cnegus   13597   1332492    112952 swriter.bin</div></pre></td></tr></table></figure></p>
 <h5 id="通过top命令列出进程-修改进程"><a href="#通过top命令列出进程-修改进程" class="headerlink" title="通过top命令列出进程,修改进程"></a>通过top命令列出进程,修改进程</h5><p>使用top命令，会默认按占用CPU的时间展示进程，也可以按其他指标排序。如果定位到了一个异常的进程，可以使用top终止(kill)进程或修改其优先级(reprioritize)。如果想要能够终止所有的进程或更改所有进程优先级需要使用root user来运行top命令。如果只是想要展示进程，或者更改自己的进程，那么可以使用普通用户的身份。下图是使用top的例子，最上面列出了系统的基本信息，下面是每个运行进程的信息。从最上面的输出信息你可以知道系统启动了多长时间，目前用多少用户登入，在过去的1,5,10分钟内分别运行了多少条命令。除此之外还包括了当前有多少进程在运行，CPU占用多少，用多少可用的Swap和RAM。紧接着列出了每个进程的基本信息，按进程占用cpu百分比排列，默认情况下所有信息5秒钟刷新一次。<br><img src="http://oduh99f02.bkt.clouddn.com/image/top.png" alt="top"></p>
 <p>下面列出了在用top展示、修改进程时可用的一些操作：</p>
 <ul>
@@ -345,7 +345,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/" data-id="cizbdewyy004hsd7b2m6xkv92" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/" data-id="cj0ep1rrh004mqr7broznuys8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
