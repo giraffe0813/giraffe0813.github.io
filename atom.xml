@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2017-03-18T03:24:37.000Z</updated>
+  <updated>2017-05-18T14:45:35.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL 唯一性约束与 Null</title>
+    <link href="http://yemengying.com/2017/05/18/mysql-unique-key-null/"/>
+    <id>http://yemengying.com/2017/05/18/mysql-unique-key-null/</id>
+    <published>2017-05-18T14:35:54.000Z</published>
+    <updated>2017-05-18T14:45:35.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;很久之前的一个 bug 了，简单记录下。。。 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;之前做的一个需求，简化描述下就是接受其他组的 MQ 的消息，然后在数据库里插入一条记录。为了防止他们重复发消息，插入多条重复记录，所以在表中的几个列上加了个唯一性索引。&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;UNIQUE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;INDEX&lt;/span&gt; IDX_UN_LOAN_PLAN_APP &lt;span class=&quot;keyword&quot;&gt;ON&lt;/span&gt; testTable (A, B, C);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这时 A,B,C 三列都是不允许 NULL 值的，唯一性约束也是 work 的。&lt;br&gt;后来由于需求的变化，修改了以前的唯一性约束，又多加了一列。(至于为什么加就不赘述了)。&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;ALTER&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;TABLE&lt;/span&gt; testTable&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;DROP&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;INDEX&lt;/span&gt; IDX_UN_LOAN_PLAN_APP,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;ADD&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;UNIQUE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;KEY&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;`IDX_UN_LOAN_PLAN_APP`&lt;/span&gt; (A, B, C, D);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;新加的 D 是类型是 datetime, 允许为NULL，默认值为 NULL。之所以默认值为 NULL，是考虑到不是所有记录都有这个时间的， 如果强行设置一个 Magic Value (比如’1970-01-01 08:00:00‘)当做默认值，看起来很奇怪。&lt;/p&gt;
+&lt;p&gt;蓝后。。。就出问题了。加了 D 之后，唯一性约束基本就失效了。&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; testTable (A,B,C,D) &lt;span class=&quot;keyword&quot;&gt;VALUES&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;--- OK&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; testTable (A,B,C,D) &lt;span class=&quot;keyword&quot;&gt;VALUES&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;--- OK&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; testTable (A,B,C,D) &lt;span class=&quot;keyword&quot;&gt;VALUES&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;--- OK&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面的三条 SQL 都是可以执行成功的，数据库中会有多条一样的记录。可按照我们以前的构想，在执行后两条 SQL 时 应该抛出 ‘Duplicate key’的异常的。&lt;/p&gt;
+&lt;p&gt;后来查了一下，才发现其实 MySQL 官方文档上已经明确说了这一点， 唯一性索引是允许多个 NULL 值的存在的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index allows multiple NULL values for columns that can contain NULL.  &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;从下表中也可以看出来不管是采用什么类型的存储引擎，在建立 unique key 的时候都是允许多个 NULL 存在的。。。。&lt;br&gt;￼&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!&quot; alt=&quot;index&quot;&gt;&lt;br&gt;细想想，其实也蛮合理，毕竟在 MySQL 中认为 NULL 代表着“未知”。 在 SQL 中，任何值与 NULL 的比较返回值都是 NULL 而不是 TRUE, 就算NULL 与 NULL 的比较也是返回 NULL。&lt;/p&gt;
+&lt;p&gt;所以只能 fix 了。。。解决办法也蛮简单粗暴的，直接把线上数据刷了一遍，将“1970-01-01 08:00:00”作为默认值，然后把那列改为不允许为 NULL 的了，咳咳。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-05-18-58cb8a3cc0ba5.jpg&quot; alt=&quot;wuli 滚滚&quot;&gt;&lt;/p&gt;
+&lt;p&gt;MySQL 官网上也有蛮多人讨论过这个问题，一部分人认为这是 MySQL 的bug， 另一部分则认为是一个 feature，附上链接。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://bugs.mysql.com/bug.php?id=8173&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MySQL Bugs: #8173: unique index allows duplicates with null values&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;很久之前的一个 bug 了，简单记录下。。。 &lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="http://yemengying.com/categories/MySQL/"/>
+    
+    
+      <category term="MySQL" scheme="http://yemengying.com/tags/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title>【译】Executor, ExecutorService 和 Executors 间的不同</title>
@@ -1261,50 +1304,6 @@
     
     
       <category term="MySQL" scheme="http://yemengying.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谈谈破窗理论</title>
-    <link href="http://yemengying.com/2016/05/15/broken-window-theory/"/>
-    <id>http://yemengying.com/2016/05/15/broken-window-theory/</id>
-    <published>2016-05-15T06:02:14.000Z</published>
-    <updated>2016-09-21T08:31:27.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;在湾区日报上看到篇关于破窗理论(Broken Window Theory)的&lt;a href=&quot;http://blog.codinghorror.com/the-broken-window-theory/?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=ios&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;文章&lt;/a&gt;，真是颇有感触，所以决定写篇博客，结合这几个月开发代理商网站的心(keng)路(die)历程,谈谈为何不能忽视一点点糟糕的代码或者不好的设计。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h3 id=&quot;破窗理论&quot;&gt;&lt;a href=&quot;#破窗理论&quot; class=&quot;headerlink&quot; title=&quot;破窗理论&quot;&gt;&lt;/a&gt;破窗理论&lt;/h3&gt;&lt;p&gt;先简单解释下什么是“破窗理论”，“破窗理论”是指：如果有人打坏了一幢建筑物的窗户玻璃，而这扇窗户又得不到及时的维修，别人就可能受到某些暗示性的纵容去打烂更多的窗户。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/broken-window.jpg&quot; alt=&quot;破窗理论&quot;&gt;&lt;br&gt;湾区日报上的文章中是这样描述破窗理论的：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Don’t leave “broken windows” (bad designs, wrong decisions, or poor code) unrepaired. Fix each one as soon as it is discovered. If there is insufficient time to fix it properly, then board it up. Perhaps you can comment out the offending code, or display a “Not Implemented” message, or substitute dummy data instead. Take some action to prevent further damage and to show that you’re on top of the situation.&lt;br&gt;We’ve seen clean, functional systems deteriorate pretty quickly once windows start breaking. There are other factors that can contribute to software rot, and we’ll touch on some of them elsewhere, but neglect accelerates the rot faster than any other factor.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;简单翻译一下就是：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;不要放任“破窗户”(不好的设计，错误的决定或糟糕的代码)不管。要尽量在发现时立刻修复。如果没有足够的时间进行适当的修复，就先把它保留起来。可以把出问题的代码放到注释中，或是显示“未实现”消息，也可用虚拟数据加以替代。总之，要采取一些措施，防止进一步的恶化。表明局势尚在掌控之中。有许多整洁良好的系统在出现“破窗”之后立马崩溃。虽然促使软件崩溃的原因还有其他因素（我们将在其他地方接触到），但对“破窗”置之不理，肯定会更快地加速系统崩溃。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;亲身感受&quot;&gt;&lt;a href=&quot;#亲身感受&quot; class=&quot;headerlink&quot; title=&quot;亲身感受&quot;&gt;&lt;/a&gt;亲身感受&lt;/h3&gt;&lt;p&gt;先说说背景，故事要从三个月前开始讲起了，当时刚刚转去搜索组做部门内部的搜索，组内总共3个人。本以为可以远离业务代码，专心技术，可万万没想到Elasticsearch的书还没焐热就被部门leader叫去开会，说要做一个代理商系统，很紧急，是公司P0级别的项目，全公司的资源都要给我们让路(事实证明只是画饼，因为现在连一个固定前端都没了)。其实这个项目一听就是个深坑，从头发到脚都是拒绝的。因为主数据（餐厅，活动，订单）全在别的部门，85%的功能都依赖于其他部门的接口(si不si很神奇)，所以做这个项目主要工作就是。。。。。通过SOA或者Thrift调别人的接口。不过即便知道是坑也没办法，只有搜索组刚刚成立比较闲，只能我们做-_-|||。当时部门leader的要求是封闭开发一周半，拿出个可用的版本就行，一定要快！！。所以我们搜索组的三个人加上从别的组借调的两个实习生再加上两个前端就搬去了小黑屋，开始了近两周的封闭开发。&lt;/p&gt;
-&lt;p&gt;好了，背景聊完了，进入正题，聊聊代理商是怎么变得越来越难维护的。代理商的开发leader是个搜索大牛，但没做过Web开发，对Java Web开发并不是十分了解。因为部门leader要求快快快，所以将许多必要的步骤省略了。比如定义方法参数命名规范，定义api规范，代码review等等。。。每天就是划分下接口，每人开发几个接口，和前端定义接口文档，就开始开发提测了。讲真，其实所有人都是有责任的，可能是对这个项目一开始就很反感，有抵触心理，所以从内心就没打算好好做，一些觉得可以改进的地方也就得过且过了。后面的事实证明，当觉得设计或规范有不合理的时候，一定要及时提出来，不能忍，忍的后果就是一次一次降低自己的底线，然后亲手造就一个难维护的系统，到时候即便有心想重构也是心有余力不足了。&lt;/p&gt;
-&lt;p&gt;公司项目就不贴实际代码了，简单举几个例子，看看开发前定义必要的规范是多么的重要。由于代理商没有事先规定api的定义要符合RESTFul的规范，所以项目中api的风格有两种，符合RESTFul的和不符合的。比如获取餐厅信息的api定义是&lt;code&gt;GET /restaurant/{id}&lt;/code&gt;，而创建餐厅的api定义是&lt;code&gt;POST /restaurant/create&lt;/code&gt;，so。。。如果后面的人想设计更新餐厅信息的api是&lt;code&gt;PUT /restaurant/{id}&lt;/code&gt;还是&lt;code&gt;PUT /restaurant/update&lt;/code&gt;呢，真是一脸懵逼。接口的命名就更是五花八门了，因为大家是来自不同组，而且也没有定义统一的命名的规范，比如：一个简单的获取信息，获取餐厅信息的接口是&lt;code&gt;getRestaurant&lt;/code&gt;,获取活动信息是&lt;code&gt;activityInfo&lt;/code&gt;,获取代理商信息接口是&lt;code&gt;getAgentDto&lt;/code&gt;，获取订单信息又变成了&lt;code&gt;getOrderData&lt;/code&gt;,so。。。谁能告诉我之后想添加个获取信息的接口到底该叫什么。。。估计只能看当时的心情随便取了。。。还有就是项目中存在大量重复代码，获取餐厅管理员信息基本上每个人都写了一遍，因为管理员的信息在获取餐厅，活动信息时都用的到，由于没有代码review，所以一开始大家也不知道，就各写各的，也是蛮醉的。&lt;/p&gt;
-&lt;p&gt;上面的例子只是一点点，实际还有很多很多很多的槽点，都是泪啊。由于第一版本为了压缩工时(至今也不明白为啥要那么急。。。)就这样草草交工，导致后面的几个迭代开发也随之变得越来越随意，随意命名，随意定义api，缺乏junit测试，越来越不上心。听说代理商要移交给BD组，但估计情况也只会越来越糟，因为没人愿意去整理一坨坨糟糕的代码，只会在出现问题的时候，随意的打补丁。。。&lt;/p&gt;
-&lt;h3 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h3&gt;&lt;p&gt;其实也没啥好总结的，一句话，以后一定要写干净，整洁的代码，注意规范，不能忽视一点点糟糕的代码或者设计对项目带来的负面影响。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;欢迎一起讨论~~&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;在湾区日报上看到篇关于破窗理论(Broken Window Theory)的&lt;a href=&quot;http://blog.codinghorror.com/the-broken-window-theory/?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=ios&quot;&gt;文章&lt;/a&gt;，真是颇有感触，所以决定写篇博客，结合这几个月开发代理商网站的心(keng)路(die)历程,谈谈为何不能忽视一点点糟糕的代码或者不好的设计。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://yemengying.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   

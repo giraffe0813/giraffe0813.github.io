@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    <script src="http://xiaoming.io/static/app.js"></script>
+    
+
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>MySQL 唯一性约束与 Null | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="很久之前的一个 bug 了，简单记录下。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 唯一性约束与 Null">
+<meta property="og:url" content="http://yemengying.com/2017/05/18/mysql-unique-key-null/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="很久之前的一个 bug 了，简单记录下。。。">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!">
+<meta property="og:updated_time" content="2017-05-18T14:45:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 唯一性约束与 Null">
+<meta name="twitter:description" content="很久之前的一个 bug 了，简单记录下。。。">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!">
+    
+
+    
+
+    
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+    
+
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
+    <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.4/index.js"></script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                51
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                34
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/05/18/mysql-unique-key-null/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            MySQL 唯一性约束与 Null
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/05/18/mysql-unique-key-null/">
+            <time datetime="2017-05-18T14:35:54.000Z" itemprop="datePublished">2017-05-18</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>很久之前的一个 bug 了，简单记录下。。。 </p>
+</blockquote>
+<a id="more"></a>
+<p>之前做的一个需求，简化描述下就是接受其他组的 MQ 的消息，然后在数据库里插入一条记录。为了防止他们重复发消息，插入多条重复记录，所以在表中的几个列上加了个唯一性索引。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> IDX_UN_LOAN_PLAN_APP <span class="keyword">ON</span> testTable (A, B, C);</div></pre></td></tr></table></figure></p>
+<p>这时 A,B,C 三列都是不允许 NULL 值的，唯一性约束也是 work 的。<br>后来由于需求的变化，修改了以前的唯一性约束，又多加了一列。(至于为什么加就不赘述了)。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> testTable</div><div class="line"><span class="keyword">DROP</span> <span class="keyword">INDEX</span> IDX_UN_LOAN_PLAN_APP,</div><div class="line"><span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`IDX_UN_LOAN_PLAN_APP`</span> (A, B, C, D);</div></pre></td></tr></table></figure></p>
+<p>新加的 D 是类型是 datetime, 允许为NULL，默认值为 NULL。之所以默认值为 NULL，是考虑到不是所有记录都有这个时间的， 如果强行设置一个 Magic Value (比如’1970-01-01 08:00:00‘)当做默认值，看起来很奇怪。</p>
+<p>蓝后。。。就出问题了。加了 D 之后，唯一性约束基本就失效了。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> testTable (A,B,C,D) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NULL</span>); <span class="comment">--- OK</span></div><div class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> testTable (A,B,C,D) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NULL</span>); <span class="comment">--- OK</span></div><div class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> testTable (A,B,C,D) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NULL</span>); <span class="comment">--- OK</span></div></pre></td></tr></table></figure>
+<p>上面的三条 SQL 都是可以执行成功的，数据库中会有多条一样的记录。可按照我们以前的构想，在执行后两条 SQL 时 应该抛出 ‘Duplicate key’的异常的。</p>
+<p>后来查了一下，才发现其实 MySQL 官方文档上已经明确说了这一点， 唯一性索引是允许多个 NULL 值的存在的：</p>
+<blockquote>
+<p>A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index allows multiple NULL values for columns that can contain NULL.  </p>
+</blockquote>
+<p>从下表中也可以看出来不管是采用什么类型的存储引擎，在建立 unique key 的时候都是允许多个 NULL 存在的。。。。<br>￼<br><img src="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!" alt="index"><br>细想想，其实也蛮合理，毕竟在 MySQL 中认为 NULL 代表着“未知”。 在 SQL 中，任何值与 NULL 的比较返回值都是 NULL 而不是 TRUE, 就算NULL 与 NULL 的比较也是返回 NULL。</p>
+<p>所以只能 fix 了。。。解决办法也蛮简单粗暴的，直接把线上数据刷了一遍，将“1970-01-01 08:00:00”作为默认值，然后把那列改为不允许为 NULL 的了，咳咳。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-05-18-58cb8a3cc0ba5.jpg" alt="wuli 滚滚"></p>
+<p>MySQL 官网上也有蛮多人讨论过这个问题，一部分人认为这是 MySQL 的bug， 另一部分则认为是一个 feature，附上链接。</p>
+<p><a href="https://bugs.mysql.com/bug.php?id=8173" target="_blank" rel="external">MySQL Bugs: #8173: unique index allows duplicates with null values</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/05/18/mysql-unique-key-null/" data-id="cj2uj3thf0028dl9lj91esw5x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/05/18/mysql-unique-key-null/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/05/18/mysql-unique-key-null/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/03/17/difference-between-executor-executorService/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">【译】Executor, ExecutorService 和 Executors 间的不同</div>
+        </a>
+    
+</nav>
+
+
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+   <script>
+   DisqusJS.getRecentComments(document.querySelector('#disqus-recent-comments'));
+   </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

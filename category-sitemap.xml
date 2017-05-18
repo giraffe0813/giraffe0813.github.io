@@ -56,13 +56,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/MySQL/</loc>
-        <lastmod>2016-09-21T08:35:11.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/redis/</loc>
         <lastmod>2016-09-21T08:35:31.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -107,6 +100,13 @@
     <url>
         <loc>http://yemengying.com/categories/java/</loc>
         <lastmod>2017-03-18T03:24:37.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/MySQL/</loc>
+        <lastmod>2017-05-18T14:45:35.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

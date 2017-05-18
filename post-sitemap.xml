@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2017/05/18/mysql-unique-key-null/</loc>
+        <lastmod>2017-05-18T14:45:35.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2017/03/17/difference-between-executor-executorService/</loc>
         <lastmod>2017-03-18T03:24:37.000Z</lastmod>
         <changefreq>weekly</changefreq>

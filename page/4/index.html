@@ -194,7 +194,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                50
+                51
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -234,6 +234,142 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">[译]Java 8中HashMap和LinkedHashMap如何解决冲突</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">
+            <time datetime="2016-02-03T08:23:39.000Z" itemprop="datePublished">2016-02-03</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/hashmap/">hashmap</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>原文来自一个java大牛的博客 原文地址<a href="http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html">http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html</a> 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。</p>
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/" data-id="cj2uj3tif0044dl9lnxpl4g71" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+
     <article id="2016/01/19/最近看的书/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -290,7 +426,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/01/19/最近看的书/" data-id="cj2lo29j3003ydh9lohl2jz35" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/01/19/最近看的书/" data-id="cj2uj3tie0041dl9lxs0thfcj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -440,7 +576,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/01/09/拥有自己的图书小金库/" data-id="cj2lo29ix003jdh9lmu3tb7f3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/01/09/拥有自己的图书小金库/" data-id="cj2uj3tic003ydl9ll8dvw940" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -578,7 +714,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/" data-id="cj2lo29jf004gdh9lvot570wf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/12/24/读书笔记-Linux-Bible-9th-Edition之进程大法好/" data-id="cj2uj3tis004qdl9lz8rokmcu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -715,7 +851,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/" data-id="cj2lo29ja0049dh9l2boo7edr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/30/读书笔记-Linux-Bible-9th-Edition之玩转文本文件/" data-id="cj2uj3tiq004mdl9l84a0osj0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -853,7 +989,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" data-id="cj2lo29j80045dh9lfnvtw6r0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/26/读书笔记-Linux-Bible-9th-Edition之文件系统/" data-id="cj2uj3tip004jdl9l9hbnft8v" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -990,7 +1126,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" data-id="cj2lo29j60041dh9lu8oqqopj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/23/读书笔记-Linux-Bible-9th-Edition/" data-id="cj2uj3tim004fdl9lxro8fyar" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1147,7 +1283,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="cj2lo29g90002dh9lgawnpdgi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/19/EsGiraffe-利用注解和反射拼接Elasticsearch查询语句/" data-id="cj2uj3tei0003dl9lins6whbl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1284,7 +1420,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/12/读书笔记-深入理解Java虚拟机1/" data-id="cj2lo29jd004ddh9lq1rkwdb9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/12/读书笔记-深入理解Java虚拟机1/" data-id="cj2uj3tiu004tdl9lv5n9fcab" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1420,7 +1556,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="cj2lo29is0038dh9l2ogxsm9s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/11/06/【译】如何在java中使用ConcurrentHashMap/" data-id="cj2uj3ti6003mdl9lcxev7lnc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1501,145 +1637,8 @@ var _hmt = _hmt || [];
 
 
 
-    <article id="2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">【译】Java8中的扩展(default/extension)方法</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">
-            <time datetime="2015-11-01T14:11:06.000Z" itemprop="datePublished">2015-11-01</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/interface/">interface</a>, <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
-    </div>
-
-                </div>
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><blockquote>
-<p>原文来自一个java大牛的技术博客 地址<a href="http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results">http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results</a> 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。</p>
-</blockquote>
-<p>Java 8允许开发者使用<code>default</code>和<code>static</code>两个关键字在接口中加入非抽象的方法。带有default关键字的方法在Java中也被称作defender方法或defaul方法。在Java 8之前，想要改变一个已经发布的接口几乎是不可能的，任何改动(例如增加一个新的方法)都会影响该接口现有的实现类。这也是为什么在Java 8想要改变内部iterator的实现，使用forEach()方法时面临了一个巨大的挑战，因为这会破坏了现有的Iterable接口的实现类。毫无疑问，向后兼容是Java工程师最优先考虑的事，所以要破坏现有的实现类是不可行的。因此，他们提出了一个解决办法，引入default方法。这是一个绝妙的想法，因为现在你可以用扩展现有的接口。JDK本身也使用了许多default方法,java.util.Map接口扩展了许多default方法，例如replaceAll(),putIfAbsent(Key k,Value v)….。另外，由于default方法可以扩展现有的接口也被称作extension方法。一个接口中的default方法是数量不受限制的。我相信，在这次改变之后，将不再需要抽象类来提供骨架实现(skeletal implementation),例如List接口有AbstractList，Collection接口有AbstractCollection，Set接口有AbstractSet，Map接口有AbstractMap。我们可以通过在接口中定义default方法来替代创建一个新的抽象类。相似的，static方法的引入也使得接口的工具类变得冗余。例如，Collection接口的Collections类，Path接口的Paths类，因为你可以直接在接口中定义静态工具方法。如果你想了解更多关于Java 8的新特性，我建议阅读Cay S. Horstmann写的Java SE 8 Really Impatient。这是我最喜欢的关于Java 8的书之一，它详细的介绍了Java7与Java 8不同的特性。</p></p>
-            <p class="article-more-link">
-                <a href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="cj2lo29gt000cdh9l0iu7ics4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-    <script>
-   DisqusJS.getArticleComments();
-   </script>
-</article>
-
-
-
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
     </nav>
 </section>
             

@@ -194,7 +194,7 @@ var _hmt = _hmt || [];
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                50
+                51
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -234,6 +234,143 @@ var _hmt = _hmt || [];
 
             
             <section id="main">
+    <article id="2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">【译】Java8中的扩展(default/extension)方法</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">
+            <time datetime="2015-11-01T14:11:06.000Z" itemprop="datePublished">2015-11-01</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/java/">java</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/interface/">interface</a>, <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>原文来自一个java大牛的技术博客 地址<a href="http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results">http://javarevisited.blogspot.hk/2014/07/default-defender-or-extension-method-of-Java8-example-tutorial.html#uds-search-results</a> 博客讲解了Java 8中新引入的可以在接口中定义扩展方法。下面是原文的翻译。</p>
+</blockquote>
+<p>Java 8允许开发者使用<code>default</code>和<code>static</code>两个关键字在接口中加入非抽象的方法。带有default关键字的方法在Java中也被称作defender方法或defaul方法。在Java 8之前，想要改变一个已经发布的接口几乎是不可能的，任何改动(例如增加一个新的方法)都会影响该接口现有的实现类。这也是为什么在Java 8想要改变内部iterator的实现，使用forEach()方法时面临了一个巨大的挑战，因为这会破坏了现有的Iterable接口的实现类。毫无疑问，向后兼容是Java工程师最优先考虑的事，所以要破坏现有的实现类是不可行的。因此，他们提出了一个解决办法，引入default方法。这是一个绝妙的想法，因为现在你可以用扩展现有的接口。JDK本身也使用了许多default方法,java.util.Map接口扩展了许多default方法，例如replaceAll(),putIfAbsent(Key k,Value v)….。另外，由于default方法可以扩展现有的接口也被称作extension方法。一个接口中的default方法是数量不受限制的。我相信，在这次改变之后，将不再需要抽象类来提供骨架实现(skeletal implementation),例如List接口有AbstractList，Collection接口有AbstractCollection，Set接口有AbstractSet，Map接口有AbstractMap。我们可以通过在接口中定义default方法来替代创建一个新的抽象类。相似的，static方法的引入也使得接口的工具类变得冗余。例如，Collection接口的Collections类，Path接口的Paths类，因为你可以直接在接口中定义静态工具方法。如果你想了解更多关于Java 8的新特性，我建议阅读Cay S. Horstmann写的Java SE 8 Really Impatient。这是我最喜欢的关于Java 8的书之一，它详细的介绍了Java7与Java 8不同的特性。</p></p>
+            <p class="article-more-link">
+                <a href="/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/" data-id="cj2uj3tf50009dl9lfh2eqxi8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/11/01/Java-8中的扩展-Default-Defender-Extension-方法/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+
     <article id="2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -290,7 +427,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="cj2lo29j1003qdh9lb4gblnzc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/29/译-以生产者消费者为例阐述如何使用wait，notify和notifyAll/" data-id="cj2uj3tih0047dl9lb0jntshi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -433,7 +570,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cj2lo29iu003cdh9lo88tgqdu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/28/基于注解的mybatis插入对象时利用反射生成sql语句/" data-id="cj2uj3tia003udl9ldhc3t7fd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -571,7 +708,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cj2lo29j2003udh9lc2ny6nzb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/26/译-如何重置一个ArrayList-clear-vs-removeAll/" data-id="cj2uj3tik004bdl9ld1fuzyel" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -812,7 +949,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="cj2lo29hm001gdh9l2kinhcv6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/10/23/idea-sts/" data-id="cj2uj3tgx001fdl9lahh7rdsj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -947,7 +1084,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/26/cleancode-builder/" data-id="cj2lo29h3000mdh9l4jpxgfa0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/26/cleancode-builder/" data-id="cj2uj3tfs000odl9lylc6gajw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1084,7 +1221,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="cj2lo29if002odh9lg58wewhk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/" data-id="cj2uj3thu0031dl9lcrvr1osp" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1221,7 +1358,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/12/spring-transaction/" data-id="cj2lo29id002ldh9lxw1my534" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/12/spring-transaction/" data-id="cj2uj3thw0034dl9l1os6gj75" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1358,7 +1495,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/11/cleancode-collection/" data-id="cj2lo29h4000ndh9luyjcthp1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/11/cleancode-collection/" data-id="cj2uj3tg1000tdl9lsszhcyp6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1495,7 +1632,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cj2lo29iv003gdh9lqs3s2uue" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2015/09/10/使代码更简洁-一-List相关/" data-id="cj2uj3ti8003rdl9l9gmqh9xv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1576,142 +1713,8 @@ var _hmt = _hmt || [];
 
 
 
-    <article id="2015/09/08/angularjs-bootstrap-ngDialog/" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/09/08/angularjs-bootstrap-ngDialog/">angularjs+bootstrap+ngDialog实现模式对话框</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/09/08/angularjs-bootstrap-ngDialog/">
-            <time datetime="2015-09-08T06:07:54.000Z" itemprop="datePublished">2015-09-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/angularJs/">angularJs</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/angularJs/">angularJs</a>, <a class="tag-link" href="/tags/bootstrap/">bootstrap</a>, <a class="tag-link" href="/tags/ngDialog/">ngDialog</a>
-    </div>
-
-                </div>
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>在完成一个后台管理系统时，需要用表格显示注册用户的信息。但是用户地址太长了，不好显示。所以想做一个模式对话框，点击详细地址按钮时，弹出对话框，显示地址。<br></p>
-            <p class="article-more-link">
-                <a href="/2015/09/08/angularjs-bootstrap-ngDialog/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/" data-id="cj2lo29gl0007dh9lyihtwwod" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-    <script>
-   DisqusJS.getArticleComments();
-   </script>
-</article>
-
-
-
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/4/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+        <a class="extend prev" rel="prev" href="/page/4/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">下一页 &raquo;</a>
     </nav>
 </section>
             
