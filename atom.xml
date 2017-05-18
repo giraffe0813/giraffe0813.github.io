@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2017-05-18T14:45:35.000Z</updated>
+  <updated>2017-05-18T14:47:01.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>MySQL 唯一性约束与 Null</title>
+    <title>MySQL 唯一性约束与 NULL</title>
     <link href="http://yemengying.com/2017/05/18/mysql-unique-key-null/"/>
     <id>http://yemengying.com/2017/05/18/mysql-unique-key-null/</id>
     <published>2017-05-18T14:35:54.000Z</published>
-    <updated>2017-05-18T14:45:35.000Z</updated>
+    <updated>2017-05-18T14:47:01.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;很久之前的一个 bug 了，简单记录下。。。 &lt;/p&gt;
@@ -28,18 +28,18 @@
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;之前做的一个需求，简化描述下就是接受其他组的 MQ 的消息，然后在数据库里插入一条记录。为了防止他们重复发消息，插入多条重复记录，所以在表中的几个列上加了个唯一性索引。&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;UNIQUE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;INDEX&lt;/span&gt; IDX_UN_LOAN_PLAN_APP &lt;span class=&quot;keyword&quot;&gt;ON&lt;/span&gt; testTable (A, B, C);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;这时 A,B,C 三列都是不允许 NULL 值的，唯一性约束也是 work 的。&lt;br&gt;后来由于需求的变化，修改了以前的唯一性约束，又多加了一列。(至于为什么加就不赘述了)。&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;ALTER&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;TABLE&lt;/span&gt; testTable&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;DROP&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;INDEX&lt;/span&gt; IDX_UN_LOAN_PLAN_APP,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;ADD&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;UNIQUE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;KEY&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;`IDX_UN_LOAN_PLAN_APP`&lt;/span&gt; (A, B, C, D);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;新加的 D 是类型是 datetime, 允许为NULL，默认值为 NULL。之所以默认值为 NULL，是考虑到不是所有记录都有这个时间的， 如果强行设置一个 Magic Value (比如’1970-01-01 08:00:00‘)当做默认值，看起来很奇怪。&lt;/p&gt;
+&lt;p&gt;新加的 D 是类型是 datetime, 允许为 NULL，默认值为 NULL。之所以默认值为 NULL，是考虑到不是所有记录都有这个时间的， 如果强行设置一个 Magic Value (比如’1970-01-01 08:00:00‘)当做默认值，看起来很奇怪。&lt;/p&gt;
 &lt;p&gt;蓝后。。。就出问题了。加了 D 之后，唯一性约束基本就失效了。&lt;/p&gt;
 &lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; testTable (A,B,C,D) &lt;span class=&quot;keyword&quot;&gt;VALUES&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;--- OK&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; testTable (A,B,C,D) &lt;span class=&quot;keyword&quot;&gt;VALUES&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;--- OK&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;into&lt;/span&gt; testTable (A,B,C,D) &lt;span class=&quot;keyword&quot;&gt;VALUES&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;--- OK&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面的三条 SQL 都是可以执行成功的，数据库中会有多条一样的记录。可按照我们以前的构想，在执行后两条 SQL 时 应该抛出 ‘Duplicate key’的异常的。&lt;/p&gt;
+&lt;p&gt;上面的三条 SQL 都是可以执行成功的，数据库中会有多条一样的记录。可按照我们以前的构想，在执行后两条 SQL 时 应该抛出 ‘Duplicate key’ 的异常的。&lt;/p&gt;
 &lt;p&gt;后来查了一下，才发现其实 MySQL 官方文档上已经明确说了这一点， 唯一性索引是允许多个 NULL 值的存在的：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index allows multiple NULL values for columns that can contain NULL.  &lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;从下表中也可以看出来不管是采用什么类型的存储引擎，在建立 unique key 的时候都是允许多个 NULL 存在的。。。。&lt;br&gt;￼&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!&quot; alt=&quot;index&quot;&gt;&lt;br&gt;细想想，其实也蛮合理，毕竟在 MySQL 中认为 NULL 代表着“未知”。 在 SQL 中，任何值与 NULL 的比较返回值都是 NULL 而不是 TRUE, 就算NULL 与 NULL 的比较也是返回 NULL。&lt;/p&gt;
+&lt;p&gt;从下表中也可以看出来不管是采用什么类型的存储引擎，在建立 unique key 的时候都是允许多个 NULL 存在的。。。。&lt;br&gt;￼&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!&quot; alt=&quot;index&quot;&gt;&lt;br&gt;细想想，其实也蛮合理，毕竟在 MySQL 中认为 NULL 代表着“未知”。 在 SQL 中，任何值与 NULL 的比较返回值都是 NULL 而不是 TRUE, 就算 NULL 与 NULL 的比较也是返回 NULL。&lt;/p&gt;
 &lt;p&gt;所以只能 fix 了。。。解决办法也蛮简单粗暴的，直接把线上数据刷了一遍，将“1970-01-01 08:00:00”作为默认值，然后把那列改为不允许为 NULL 的了，咳咳。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-05-18-58cb8a3cc0ba5.jpg&quot; alt=&quot;wuli 滚滚&quot;&gt;&lt;/p&gt;
-&lt;p&gt;MySQL 官网上也有蛮多人讨论过这个问题，一部分人认为这是 MySQL 的bug， 另一部分则认为是一个 feature，附上链接。&lt;/p&gt;
+&lt;p&gt;MySQL 官网上也有蛮多人讨论过这个问题，一部分人认为这是 MySQL 的 bug， 另一部分则认为是一个 feature，附上链接。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://bugs.mysql.com/bug.php?id=8173&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MySQL Bugs: #8173: unique index allows duplicates with null values&lt;/a&gt;&lt;/p&gt;
 </content>
     

@@ -8,18 +8,18 @@
     <meta name="baidu-site-verification" content="lt822VnP06" />
     <meta name="baidu-site-verification" content="0Ajixw1Puk" />
     <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
-    <title>MySQL 唯一性约束与 Null | Giraffe&#39;s Home</title>
+    <title>MySQL 唯一性约束与 NULL | Giraffe&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="很久之前的一个 bug 了，简单记录下。。。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 唯一性约束与 Null">
+<meta property="og:title" content="MySQL 唯一性约束与 NULL">
 <meta property="og:url" content="http://yemengying.com/2017/05/18/mysql-unique-key-null/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="很久之前的一个 bug 了，简单记录下。。。">
 <meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!">
-<meta property="og:updated_time" content="2017-05-18T14:45:35.000Z">
+<meta property="og:updated_time" content="2017-05-18T14:47:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL 唯一性约束与 Null">
+<meta name="twitter:title" content="MySQL 唯一性约束与 NULL">
 <meta name="twitter:description" content="很久之前的一个 bug 了，简单记录下。。。">
 <meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!">
     
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            MySQL 唯一性约束与 Null
+            MySQL 唯一性约束与 NULL
         </h1>
     
 
@@ -283,18 +283,18 @@ var _hmt = _hmt || [];
 <a id="more"></a>
 <p>之前做的一个需求，简化描述下就是接受其他组的 MQ 的消息，然后在数据库里插入一条记录。为了防止他们重复发消息，插入多条重复记录，所以在表中的几个列上加了个唯一性索引。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> IDX_UN_LOAN_PLAN_APP <span class="keyword">ON</span> testTable (A, B, C);</div></pre></td></tr></table></figure></p>
 <p>这时 A,B,C 三列都是不允许 NULL 值的，唯一性约束也是 work 的。<br>后来由于需求的变化，修改了以前的唯一性约束，又多加了一列。(至于为什么加就不赘述了)。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> testTable</div><div class="line"><span class="keyword">DROP</span> <span class="keyword">INDEX</span> IDX_UN_LOAN_PLAN_APP,</div><div class="line"><span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`IDX_UN_LOAN_PLAN_APP`</span> (A, B, C, D);</div></pre></td></tr></table></figure></p>
-<p>新加的 D 是类型是 datetime, 允许为NULL，默认值为 NULL。之所以默认值为 NULL，是考虑到不是所有记录都有这个时间的， 如果强行设置一个 Magic Value (比如’1970-01-01 08:00:00‘)当做默认值，看起来很奇怪。</p>
+<p>新加的 D 是类型是 datetime, 允许为 NULL，默认值为 NULL。之所以默认值为 NULL，是考虑到不是所有记录都有这个时间的， 如果强行设置一个 Magic Value (比如’1970-01-01 08:00:00‘)当做默认值，看起来很奇怪。</p>
 <p>蓝后。。。就出问题了。加了 D 之后，唯一性约束基本就失效了。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> testTable (A,B,C,D) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NULL</span>); <span class="comment">--- OK</span></div><div class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> testTable (A,B,C,D) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NULL</span>); <span class="comment">--- OK</span></div><div class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> testTable (A,B,C,D) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NULL</span>); <span class="comment">--- OK</span></div></pre></td></tr></table></figure>
-<p>上面的三条 SQL 都是可以执行成功的，数据库中会有多条一样的记录。可按照我们以前的构想，在执行后两条 SQL 时 应该抛出 ‘Duplicate key’的异常的。</p>
+<p>上面的三条 SQL 都是可以执行成功的，数据库中会有多条一样的记录。可按照我们以前的构想，在执行后两条 SQL 时 应该抛出 ‘Duplicate key’ 的异常的。</p>
 <p>后来查了一下，才发现其实 MySQL 官方文档上已经明确说了这一点， 唯一性索引是允许多个 NULL 值的存在的：</p>
 <blockquote>
 <p>A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index allows multiple NULL values for columns that can contain NULL.  </p>
 </blockquote>
-<p>从下表中也可以看出来不管是采用什么类型的存储引擎，在建立 unique key 的时候都是允许多个 NULL 存在的。。。。<br>￼<br><img src="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!" alt="index"><br>细想想，其实也蛮合理，毕竟在 MySQL 中认为 NULL 代表着“未知”。 在 SQL 中，任何值与 NULL 的比较返回值都是 NULL 而不是 TRUE, 就算NULL 与 NULL 的比较也是返回 NULL。</p>
+<p>从下表中也可以看出来不管是采用什么类型的存储引擎，在建立 unique key 的时候都是允许多个 NULL 存在的。。。。<br>￼<br><img src="http://oduh99f02.bkt.clouddn.com/2017-05-17-EB4C5F99-9D5F-45BD-B322-BB9E12D27052.png?imageMogr2/thumbnail/500x600!" alt="index"><br>细想想，其实也蛮合理，毕竟在 MySQL 中认为 NULL 代表着“未知”。 在 SQL 中，任何值与 NULL 的比较返回值都是 NULL 而不是 TRUE, 就算 NULL 与 NULL 的比较也是返回 NULL。</p>
 <p>所以只能 fix 了。。。解决办法也蛮简单粗暴的，直接把线上数据刷了一遍，将“1970-01-01 08:00:00”作为默认值，然后把那列改为不允许为 NULL 的了，咳咳。</p>
 <p><img src="http://oduh99f02.bkt.clouddn.com/2017-05-18-58cb8a3cc0ba5.jpg" alt="wuli 滚滚"></p>
-<p>MySQL 官网上也有蛮多人讨论过这个问题，一部分人认为这是 MySQL 的bug， 另一部分则认为是一个 feature，附上链接。</p>
+<p>MySQL 官网上也有蛮多人讨论过这个问题，一部分人认为这是 MySQL 的 bug， 另一部分则认为是一个 feature，附上链接。</p>
 <p><a href="https://bugs.mysql.com/bug.php?id=8173" target="_blank" rel="external">MySQL Bugs: #8173: unique index allows duplicates with null values</a></p>
 
         
@@ -306,7 +306,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2017/05/18/mysql-unique-key-null/" data-id="cj2uj3thf0028dl9lj91esw5x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2017/05/18/mysql-unique-key-null/" data-id="cj2uj5oe80021ey7bj08s9hne" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
