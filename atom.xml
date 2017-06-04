@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2017-05-18T14:47:01.000Z</updated>
+  <updated>2017-06-04T14:27:18.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【译】Reddit如何统计每个帖子的浏览量</title>
+    <link href="http://yemengying.com/2017/06/04/reddit-view-counting/"/>
+    <id>http://yemengying.com/2017/06/04/reddit-view-counting/</id>
+    <published>2017-06-04T05:26:17.000Z</published>
+    <updated>2017-06-04T14:27:18.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;之前没听过也没了解过 HyperLogLog，通过翻译这篇文章正好简单学习下。欢迎指正错误~&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;a href=&quot;https://redditblog.com/2017/05/24/view-counting-at-reddit/?utm_source=wanqu.co&amp;amp;utm_campaign=Wanqu+Daily&amp;amp;utm_medium=website&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;原文链接&lt;/a&gt;😁🤗😉&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-06-04-content-view-header.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们想要更好的向用户展示 Reddit 的规模。为了这一点，投票和评论数是一个帖子最重要的指标。然而，在 Reddit 上有相当多的用户只浏览内容，既不投票也不评论。所以我们想要建立一个能够计算一个帖子浏览数的系统。这一数字会被展示给帖子的创作者和版主，以便他们更好的了解某个帖子的活跃程度。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-05-31-cvcs-neeson-fix.png?imageMogr2/thumbnail/350x650!&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在这篇博客中，我们将讨论我们是如何实现超大数据量的计数。&lt;/p&gt;
+&lt;h2 id=&quot;计数机制&quot;&gt;&lt;a href=&quot;#计数机制&quot; class=&quot;headerlink&quot; title=&quot;计数机制&quot;&gt;&lt;/a&gt;计数机制&lt;/h2&gt;&lt;p&gt;对于计数系统我们主要有四种需求:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;帖子浏览数必须是实时或者近实时的，而不是每天或者每小时汇总。&lt;/li&gt;
+&lt;li&gt;同一用户在短时间内多次访问帖子，只算一个浏览量&lt;/li&gt;
+&lt;li&gt;显示的浏览量与真实浏览量间允许有小百分之几的误差&lt;/li&gt;
+&lt;li&gt;Reddit 是全球访问量第八的网站，系统要能在生产环境的规模上正常运行，仅允许几秒的延迟&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;要全部满足以上四个需求的困难远远比听上去大的多。为了实时精准计数，我们需要知道某个用户是否曾经访问过这篇帖子。想要知道这个信息，我们就要为每篇帖子维护一个访问用户的集合，然后在每次计算浏览量时检查集合。一个 naive 的实现方式就是将访问用户的集合存储在内存的 hashMap 中，以帖子 Id 为 key。&lt;/p&gt;
+&lt;p&gt;这种实现方式对于访问量低的帖子是可行的，但一旦一个帖子变得流行，访问量剧增时就很难控制了。甚至有的帖子有超过 100 万的独立访客！ 对于这样的帖子，存储独立访客的 ID  并且频繁查询某个用户是否之前曾访问过会给内存和 CPU 造成很大的负担。&lt;/p&gt;
+&lt;p&gt;因为我们不能提供准确的计数，我们查看了几种不同的&lt;a href=&quot;https://en.wikipedia.org/wiki/Count-distinct_problem&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;基数估计算法&lt;/a&gt;。有两个符合我们需求的选择：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一是线性概率计数法，很准确，但当计数集合变大时所需内存会线性变大。&lt;/li&gt;
+&lt;li&gt;二是基于 &lt;a href=&quot;http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HyperLogLog&lt;/a&gt; (以下简称 HLL )的计数法。 HLL 空间复杂度较低，但是精确度不如线性计数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面看下 HLL 会节省多少内存。如果我们需要存储 100 万个独立访客的 ID, 每个用户 ID 8 字节长，那么为了存储一篇帖子的独立访客我们就需要 8 M的内存。反之，如果采用 HLL  会显著减少内存占用。不同的 HLL 实现方式消耗的内存不同。如果采用&lt;a href=&quot;http://antirez.com/news/75&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这篇文章&lt;/a&gt;的实现方法，那么存储 100 万个 ID 仅需 12 KB，是原来的 0.15%！！&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Big Data Counting: How to count a billion distinct objects using only 1.5KB of Memory - High Scalability -&lt;/a&gt;这篇文章很好的总结了上面的算法。&lt;/p&gt;
+&lt;p&gt;许多 HLL 的实现都是结合了上面两种算法。在集合小的时候采用线性计数，当集合大小到达一定的阈值后切换到 HLL。前者通常被成为 ”稀疏“(sparse) HLL，后者被称为”稠密“(dense) HLL。这种结合了两种算法的实现有很大的好处，因为它对于小集合和大集合都能够保证精确度，同时保证了适度的内存增长。可以在 google 的这篇&lt;a href=&quot;https://stefanheule.com/papers/edbt13-hyperloglog.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;论文&lt;/a&gt;中了解这种实现的详细内容。&lt;/p&gt;
+&lt;p&gt;现在我们已经确定要采用 HLL 算法了，不过在选择具体的实现时，我们考虑了以下三种不同的实现。因为我们的数据工程团队使用 Java 和 Scala，所以我们只考虑 Java 和 Scala 的实现。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Twitter 提供的 &lt;a href=&quot;https://twitter.github.io/algebird/datatypes/approx/hyperloglog.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Algebird&lt;/a&gt;，采用 Scala 实现。Algebird 有很好的文档，但他们对于 sparse 和 dense HLL 的实现细节不是很容易理解。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/addthis/stream-lib&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;stream-lib&lt;/a&gt;中提供的 HyperLogLog++， 采用 Java 实现。stream-lib 中的代码文档齐全，但有些难理解如何合适的使用并且改造的符合我们的需求。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://antirez.com/news/75&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Redis HLL 实现&lt;/a&gt;，这是我们最终选择的。我们认为 Redis 中 HLLs 的实现文档齐全、容易配置，提供的相关 API 也很容易集成。还有一个好处是，我们可以用一台专门的服务器部署，从而减轻性能上的压力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-06-03-Screen%20Shot%202017-06-03%20at%207.58.59%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Reddit 的数据管道依赖于 Kafka。当一个用户访问了一篇博客，会触发一个事件，事件会被发送到事件收集服务器，并被持久化在 Kafka 中。&lt;/p&gt;
+&lt;p&gt;之后，计数系统会依次顺序运行两个组件。在我们的计数系统架构中，第一部分是一个 Kafka 的消费者，我们称之为 Nazar。Nazar 会从 Kafka 中读取每个事件，并将它通过一系列配置的规则来判断该事件是否需要被计数。我们取这个名字仅仅是因为 Nazar 是一个眼睛形状的护身符，而 ”Nazar“ 系统就像眼睛一样使我们的计数系统远离不怀好意者的破坏。其中一个我们不将一个事件计算在内的原因就是同一个用户在很短时间内重复访问。Nazar 会修改事件，加上个标明是否应该被计数的布尔标识，并将事件重新放入 Kafka。&lt;/p&gt;
+&lt;p&gt;下面就到了系统的第二个部分。我们将第二个 Kafka 的消费者称作 Abacus，用来进行真正浏览量的计算，并且将计算结果显示在网站或客户端。Abacus 从 Kafka 中读取经过 Nazar 处理过的事件，并根据 Nazar 的处理结果决定是跳过这个事件还是将其加入计数。如果 Nazar 中的处理结果是可以加入计数，那么 Abacus 首先会检查这个事件所关联的帖子在 Redis 中是否已经存在了一个 HLL 计数器。如果已经存在，Abacus 会给 Redis 发送个 PFADD 的请求。如果不存在，那么 Abacus 会给 Cassandra 集群发送个请求（Cassandra 用来持久化 HLL 计数器和 计数值的），然后向 Redis 发送 &lt;a href=&quot;https://redis.io/commands/set&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SET&lt;/a&gt;  请求。这通常会发生在网友访问较老帖子的时候，这时该帖子的计数器很可能已经在 Redis 中过期了。&lt;/p&gt;
+&lt;p&gt;为了存储存在 Redis 中的计数器过期的老帖子的浏览量。Abacus 会周期性的将 Redis 中全部的 HLL 和 每篇帖子的浏览量写入到 Cassandra 集群中。为了避免集群过载，我们以 10 秒为周期批量写入。&lt;/p&gt;
+&lt;p&gt;下图是事件流的大致流程：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-06-04-1.pic.jpg?imageMogr2/thumbnail/500x700!&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;p&gt;我们希望浏览量可以让发帖者了解帖子全部的访问量，也帮助版主快速定位自己社区中高访问量的帖子。在未来，我们计划利用我们数据管道在实时方面的潜力来为 Reddit 的用户提供更多的有用的反馈。&lt;/p&gt;
+&lt;p&gt;————————————————————分割线———————————————————-&lt;/p&gt;
+&lt;p&gt;这周一定要看完《地球上的星星》💪&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2017-06-04-18bd58d83cb78ac9fbeb7676c109cda1.jpg?imageMogr2/thumbnail/300x400!&quot; alt=&quot;Like stars on earth&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;之前没听过也没了解过 HyperLogLog，通过翻译这篇文章正好简单学习下。欢迎指正错误~&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="翻译" scheme="http://yemengying.com/categories/%E7%BF%BB%E8%AF%91/"/>
+    
+    
+      <category term="翻译" scheme="http://yemengying.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL 唯一性约束与 NULL</title>
@@ -1186,116 +1251,6 @@
     
       &lt;blockquote&gt;
 &lt;p&gt;一道面试的问题，当MySQL表中有数据量很大的时候如何做分页。。。。当时只知道在数据量很大的时候可以分表，但不知道不分表时可以怎么做。。。。唉，谁让代理商就那么几条数据，一个简单的limit，offset就完全hold住了(捂脸🙈)。。。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="MySQL" scheme="http://yemengying.com/categories/MySQL/"/>
-    
-    
-      <category term="MySQL" scheme="http://yemengying.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL调优</title>
-    <link href="http://yemengying.com/2016/05/24/mysql-tuning/"/>
-    <id>http://yemengying.com/2016/05/24/mysql-tuning/</id>
-    <published>2016-05-24T13:16:33.000Z</published>
-    <updated>2016-09-21T08:34:58.000Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;啦啦啦，啦啦啦，我是卖报的小行家~~&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;先分享个脑洞打开的mv，coldplay新单up&amp;amp;up，看看会飞的海龟🐢，一点也不精彩，就看了30多遍而已😂。&lt;/p&gt;
-&lt;embed src=&quot;http://player.video.qiyi.com/977853bfe26ef11b25e524a983e72c30/0/0/w_19rt2btvq9.swf-albumId=5831552909-tvId=5831552909-isPurchase=0-cnId=5&quot; allowfullscreen=&quot;true&quot; quality=&quot;high&quot; width=&quot;480&quot; height=&quot;350&quot; align=&quot;middle&quot; allowscriptaccess=&quot;always&quot; type=&quot;application/x-shockwave-flash&quot;&gt;
-
-
-&lt;p&gt;———————————-我是预示画风转变分割线————————————————————————-&lt;br&gt;根据视频(&lt;a href=&quot;http://www.imooc.com/learn/194&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;链接&lt;/a&gt;)整理。&lt;/p&gt;
-&lt;h3 id=&quot;为什么要进行优化？&quot;&gt;&lt;a href=&quot;#为什么要进行优化？&quot; class=&quot;headerlink&quot; title=&quot;为什么要进行优化？&quot;&gt;&lt;/a&gt;为什么要进行优化？&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;避免由数据库链接timeout产生页面5xx的错误&lt;/li&gt;
-&lt;li&gt;避免由于慢查询造成页面无法加载&lt;/li&gt;
-&lt;li&gt;避免由于阻塞造成数据无法提交&lt;/li&gt;
-&lt;li&gt;优化用户体验&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;可以从哪几个方面进行数据库优化？&quot;&gt;&lt;a href=&quot;#可以从哪几个方面进行数据库优化？&quot; class=&quot;headerlink&quot; title=&quot;可以从哪几个方面进行数据库优化？&quot;&gt;&lt;/a&gt;可以从哪几个方面进行数据库优化？&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/mysql.png&quot; alt=&quot;image&quot;&gt;&lt;br&gt;从图中可以看出，SQL及索引的优化是最重要的，成本最低效果最好。&lt;br&gt;下面分别来看看如何优化SQL和索引。&lt;/p&gt;
-&lt;h3 id=&quot;SQL优化&quot;&gt;&lt;a href=&quot;#SQL优化&quot; class=&quot;headerlink&quot; title=&quot;SQL优化&quot;&gt;&lt;/a&gt;SQL优化&lt;/h3&gt;&lt;h4 id=&quot;慢查询日志配置&quot;&gt;&lt;a href=&quot;#慢查询日志配置&quot; class=&quot;headerlink&quot; title=&quot;慢查询日志配置&quot;&gt;&lt;/a&gt;慢查询日志配置&lt;/h4&gt;&lt;p&gt;可以使用慢查询日志对有效率问题的SQL进行监控。下面是关于如何开启慢查询日志和慢查询日志的一些配置。&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;show variables like &lt;span class=&quot;string&quot;&gt;&#39;slow_query_log&#39;&lt;/span&gt;; //查看是否开启了慢查询&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; global slow_query_log_file=&lt;span class=&quot;string&quot;&gt;&#39;/home/mysql/sql_log/mysql-slow.log&#39;&lt;/span&gt;; //设置慢查询日志的位置&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; global log_queries_not_using_indexes=ON; //是否记录未使用索引的查询&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; global long_query_time=1;//设置记录超过多长时间的SQL语句&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; global slow_query_log=ON;//设置慢查询日志是否开启&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;慢查询日志的格式：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/mysql2.png&quot; alt=&quot;慢查询日志的格式&quot;&gt;&lt;br&gt;详细看一下每一行都是什么意思。&lt;br&gt;查询的执行时间 Time:140606 12:30:17&lt;br&gt;执行SQL的主机信息 User@Host:root[root] @ localhost []&lt;br&gt;SQL的执行信息 Query_time: 0.000024 Lock_time:0.000000 Rows_sent:0 Rows_examined: 0&lt;br&gt;SQL执行时间 SET timestamp=1402389328&lt;br&gt;SQL的内容:show tables&lt;/p&gt;
-&lt;h4 id=&quot;分析慢查日志的工具&quot;&gt;&lt;a href=&quot;#分析慢查日志的工具&quot; class=&quot;headerlink&quot; title=&quot;分析慢查日志的工具&quot;&gt;&lt;/a&gt;分析慢查日志的工具&lt;/h4&gt;&lt;p&gt;1.mysqldumpslow&lt;br&gt;可以使用MySQL自带的慢查询分析工具&lt;code&gt;mysqldumpslow&lt;/code&gt;，可以通过&lt;code&gt;mysqldumpslow -h&lt;/code&gt;来查看具体的使用方法。&lt;br&gt;eg:mysqldumpslow -t 3 /path/to/mysql-slow-query.log | more&lt;br&gt;上面的命令会列出查询时间top 3的SQL语句，具体格式如下图，会列出SQL执行的次数，SQL来执行的时间，锁定的时间，发送的函数，由谁在哪个服务器上执行的和具体的SQL内容。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/mysql3.png&quot; alt=&quot;mysqldumpslow格式&quot;&gt;&lt;br&gt;mysqldumpslow是比较常用的慢查询日志分析工具，但是分析结果包含的信息比较少，对于SQL优化来说可能还不太够。下面看看另一种分析工具。&lt;/p&gt;
-&lt;p&gt;2.pt-query-digest&lt;br&gt;&lt;code&gt;pt-query-digest&lt;/code&gt;支持将分析结果保存到文件或数据表中。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;输出到文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;pt-query-digest slow.log &amp;gt; slow_log.report&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;输出到数据库表&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;pt-query-digest slow.log -review \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;h=127.0.0.1,D=test,p=root,P=3306,u=root,t=query_review \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;--creat-reviewtable \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;--review-history t=hostname_slow&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;通过&lt;code&gt;pt-query-digest --help&lt;/code&gt;可以查看具体的使用方式。&lt;br&gt;eg: pt-query-digest /home/mysql/data/mysql-slow.log | more&lt;br&gt;通过上面的命令，会列出慢查询日志的分析结果，分为三个部分。&lt;br&gt;第一部分中包含日志中有多少个SQL，多少个不同的SQL，SQL执行的时间范围，总的执行时间，最短的执行时间，最长的执行时间，平均执行时间，总锁定时间，总发送行数，总检索行数等等。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/pt1.png&quot; alt=&quot;pt-query-digest格式&quot;&gt;&lt;br&gt;第二部分包含关于  表和执行语句的统计，可以看到哪个表的哪个操作的实行时间是最多的，也可以看到对应的响应时间和调用次数。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/pt2.png&quot; alt=&quot;pt-query-digest格式&quot;&gt;&lt;br&gt;第三部分就是具体的SQL的分析，包括对应语句执行时间，锁定时间，发送行数，检索行数等等。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/pt3.png&quot; alt=&quot;pt-query-digest格式&quot;&gt;&lt;/p&gt;
-&lt;h4 id=&quot;定位有问题的SQL&quot;&gt;&lt;a href=&quot;#定位有问题的SQL&quot; class=&quot;headerlink&quot; title=&quot;定位有问题的SQL&quot;&gt;&lt;/a&gt;定位有问题的SQL&lt;/h4&gt;&lt;p&gt;通过上面的慢查询日志分析我们可以定位需要优化的SQL,通常有三种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;查询次数多且每次查询占用时间长的SQL：通常为pt-query-digest分析的前几个查询。&lt;/li&gt;
-&lt;li&gt;IO大的SQL：注意pt-query-digest分析中的Rows examine项&lt;/li&gt;
-&lt;li&gt;未命中索引的SQL： 注意pt-query-digest分析中Rows examine和Rows Send的对比。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;通过Explain查询和分析SQL的执行计划&quot;&gt;&lt;a href=&quot;#通过Explain查询和分析SQL的执行计划&quot; class=&quot;headerlink&quot; title=&quot;通过Explain查询和分析SQL的执行计划&quot;&gt;&lt;/a&gt;通过Explain查询和分析SQL的执行计划&lt;/h4&gt;&lt;p&gt;可以通过Explain查询SQL的执行计划，例子如下：&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/image/explain.png&quot; alt=&quot;Explain&quot;&gt;&lt;br&gt;explain返回的各列的含义：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;列&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;含义&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;table&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;显示查询是关于哪个表的&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;type&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;很重要的列，显示连接使用了何种类型。从最好到最差的连接类型为const、eq_reg、ref、range、index和ALL&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;possible_keys&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;显示可能应用在这张表中的索引。如果为空，没有可能应用的索引&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;key&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;实际使用的索引。如果为NULL，则没有使用索引&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;key_len&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;使用的索引的长度。在不损失精确性的情况下，长度越短越好&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ref&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;显示索引的哪一列被使用了&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;rows&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;MYSQL认为必须检查的用来返回请求的行数&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;extra&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;当这一列的值是Using filesort或Using temporary时，说明查询需要优化了&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&quot;索引优化&quot;&gt;&lt;a href=&quot;#索引优化&quot; class=&quot;headerlink&quot; title=&quot;索引优化&quot;&gt;&lt;/a&gt;索引优化&lt;/h3&gt;&lt;h4 id=&quot;如何选择合适的列来建立索引&quot;&gt;&lt;a href=&quot;#如何选择合适的列来建立索引&quot; class=&quot;headerlink&quot; title=&quot;如何选择合适的列来建立索引&quot;&gt;&lt;/a&gt;如何选择合适的列来建立索引&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;在where从句，group by从句，order by从句，on从句中出现的列&lt;/li&gt;
-&lt;li&gt;索引的字段越小越好&lt;/li&gt;
-&lt;li&gt;在建立联合索引时，离散度大的列放大联合索引的前面&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;如何维护和优化索引&quot;&gt;&lt;a href=&quot;#如何维护和优化索引&quot; class=&quot;headerlink&quot; title=&quot;如何维护和优化索引&quot;&gt;&lt;/a&gt;如何维护和优化索引&lt;/h4&gt;&lt;p&gt;要避免重复及冗余索引，重复索引是指相同的列以相同的顺序建立的同类型的索引。冗余索引是指多个索引的前缀列相同，或是在联合索引中包含了主键的索引。&lt;br&gt;可以使用&lt;code&gt;pt-duplicate-key-checker&lt;/code&gt;工具可以检查重复及冗余索引。&lt;br&gt;同时还要注意及时删除由于业务变更不再使用的索引。目前MySQL中还没有记录索引的使用情况，但在PerconMuSQL和MariaDB中可以通过INDEX_STATISTICS表来查看哪些索引未使用，在MySQL中目前只能通过慢查询日志配合pt-index-usage工具来进行索引的使用情况的分析。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;欢迎指正错误，欢迎一起讨论~~&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;啦啦啦，啦啦啦，我是卖报的小行家~~&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>

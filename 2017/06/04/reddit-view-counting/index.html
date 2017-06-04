@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    <script src="http://xiaoming.io/static/app.js"></script>
+    
+
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>【译】Reddit如何统计每个帖子的浏览量 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="之前没听过也没了解过 HyperLogLog，通过翻译这篇文章正好简单学习下。欢迎指正错误~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Reddit如何统计每个帖子的浏览量">
+<meta property="og:url" content="http://yemengying.com/2017/06/04/reddit-view-counting/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="之前没听过也没了解过 HyperLogLog，通过翻译这篇文章正好简单学习下。欢迎指正错误~">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-06-04-content-view-header.png">
+<meta property="og:updated_time" content="2017-06-04T14:27:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Reddit如何统计每个帖子的浏览量">
+<meta name="twitter:description" content="之前没听过也没了解过 HyperLogLog，通过翻译这篇文章正好简单学习下。欢迎指正错误~">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-06-04-content-view-header.png">
+    
+
+    
+
+    
+        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+    
+
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
+    <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.4/index.js"></script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                52
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                34
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/06/04/reddit-view-counting/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            【译】Reddit如何统计每个帖子的浏览量
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/06/04/reddit-view-counting/">
+            <time datetime="2017-06-04T05:26:17.000Z" itemprop="datePublished">2017-06-04</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/翻译/">翻译</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>之前没听过也没了解过 HyperLogLog，通过翻译这篇文章正好简单学习下。欢迎指正错误~</p>
+</blockquote>
+<a id="more"></a>
+<p><a href="https://redditblog.com/2017/05/24/view-counting-at-reddit/?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website" target="_blank" rel="external">原文链接</a>😁🤗😉</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-06-04-content-view-header.png" alt=""></p>
+<p>我们想要更好的向用户展示 Reddit 的规模。为了这一点，投票和评论数是一个帖子最重要的指标。然而，在 Reddit 上有相当多的用户只浏览内容，既不投票也不评论。所以我们想要建立一个能够计算一个帖子浏览数的系统。这一数字会被展示给帖子的创作者和版主，以便他们更好的了解某个帖子的活跃程度。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-05-31-cvcs-neeson-fix.png?imageMogr2/thumbnail/350x650!" alt=""></p>
+<p>在这篇博客中，我们将讨论我们是如何实现超大数据量的计数。</p>
+<h2 id="计数机制"><a href="#计数机制" class="headerlink" title="计数机制"></a>计数机制</h2><p>对于计数系统我们主要有四种需求:</p>
+<ul>
+<li>帖子浏览数必须是实时或者近实时的，而不是每天或者每小时汇总。</li>
+<li>同一用户在短时间内多次访问帖子，只算一个浏览量</li>
+<li>显示的浏览量与真实浏览量间允许有小百分之几的误差</li>
+<li>Reddit 是全球访问量第八的网站，系统要能在生产环境的规模上正常运行，仅允许几秒的延迟</li>
+</ul>
+<p>要全部满足以上四个需求的困难远远比听上去大的多。为了实时精准计数，我们需要知道某个用户是否曾经访问过这篇帖子。想要知道这个信息，我们就要为每篇帖子维护一个访问用户的集合，然后在每次计算浏览量时检查集合。一个 naive 的实现方式就是将访问用户的集合存储在内存的 hashMap 中，以帖子 Id 为 key。</p>
+<p>这种实现方式对于访问量低的帖子是可行的，但一旦一个帖子变得流行，访问量剧增时就很难控制了。甚至有的帖子有超过 100 万的独立访客！ 对于这样的帖子，存储独立访客的 ID  并且频繁查询某个用户是否之前曾访问过会给内存和 CPU 造成很大的负担。</p>
+<p>因为我们不能提供准确的计数，我们查看了几种不同的<a href="https://en.wikipedia.org/wiki/Count-distinct_problem" target="_blank" rel="external">基数估计算法</a>。有两个符合我们需求的选择：</p>
+<ul>
+<li>一是线性概率计数法，很准确，但当计数集合变大时所需内存会线性变大。</li>
+<li>二是基于 <a href="http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf" target="_blank" rel="external">HyperLogLog</a> (以下简称 HLL )的计数法。 HLL 空间复杂度较低，但是精确度不如线性计数。</li>
+</ul>
+<p>下面看下 HLL 会节省多少内存。如果我们需要存储 100 万个独立访客的 ID, 每个用户 ID 8 字节长，那么为了存储一篇帖子的独立访客我们就需要 8 M的内存。反之，如果采用 HLL  会显著减少内存占用。不同的 HLL 实现方式消耗的内存不同。如果采用<a href="http://antirez.com/news/75" target="_blank" rel="external">这篇文章</a>的实现方法，那么存储 100 万个 ID 仅需 12 KB，是原来的 0.15%！！</p>
+<p><a href="http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html" target="_blank" rel="external">Big Data Counting: How to count a billion distinct objects using only 1.5KB of Memory - High Scalability -</a>这篇文章很好的总结了上面的算法。</p>
+<p>许多 HLL 的实现都是结合了上面两种算法。在集合小的时候采用线性计数，当集合大小到达一定的阈值后切换到 HLL。前者通常被成为 ”稀疏“(sparse) HLL，后者被称为”稠密“(dense) HLL。这种结合了两种算法的实现有很大的好处，因为它对于小集合和大集合都能够保证精确度，同时保证了适度的内存增长。可以在 google 的这篇<a href="https://stefanheule.com/papers/edbt13-hyperloglog.pdf" target="_blank" rel="external">论文</a>中了解这种实现的详细内容。</p>
+<p>现在我们已经确定要采用 HLL 算法了，不过在选择具体的实现时，我们考虑了以下三种不同的实现。因为我们的数据工程团队使用 Java 和 Scala，所以我们只考虑 Java 和 Scala 的实现。</p>
+<ul>
+<li>Twitter 提供的 <a href="https://twitter.github.io/algebird/datatypes/approx/hyperloglog.html" target="_blank" rel="external">Algebird</a>，采用 Scala 实现。Algebird 有很好的文档，但他们对于 sparse 和 dense HLL 的实现细节不是很容易理解。</li>
+<li><a href="https://github.com/addthis/stream-lib" target="_blank" rel="external">stream-lib</a>中提供的 HyperLogLog++， 采用 Java 实现。stream-lib 中的代码文档齐全，但有些难理解如何合适的使用并且改造的符合我们的需求。</li>
+<li><a href="http://antirez.com/news/75" target="_blank" rel="external">Redis HLL 实现</a>，这是我们最终选择的。我们认为 Redis 中 HLLs 的实现文档齐全、容易配置，提供的相关 API 也很容易集成。还有一个好处是，我们可以用一台专门的服务器部署，从而减轻性能上的压力。</li>
+</ul>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-06-03-Screen%20Shot%202017-06-03%20at%207.58.59%20PM.png" alt=""></p>
+<p>Reddit 的数据管道依赖于 Kafka。当一个用户访问了一篇博客，会触发一个事件，事件会被发送到事件收集服务器，并被持久化在 Kafka 中。</p>
+<p>之后，计数系统会依次顺序运行两个组件。在我们的计数系统架构中，第一部分是一个 Kafka 的消费者，我们称之为 Nazar。Nazar 会从 Kafka 中读取每个事件，并将它通过一系列配置的规则来判断该事件是否需要被计数。我们取这个名字仅仅是因为 Nazar 是一个眼睛形状的护身符，而 ”Nazar“ 系统就像眼睛一样使我们的计数系统远离不怀好意者的破坏。其中一个我们不将一个事件计算在内的原因就是同一个用户在很短时间内重复访问。Nazar 会修改事件，加上个标明是否应该被计数的布尔标识，并将事件重新放入 Kafka。</p>
+<p>下面就到了系统的第二个部分。我们将第二个 Kafka 的消费者称作 Abacus，用来进行真正浏览量的计算，并且将计算结果显示在网站或客户端。Abacus 从 Kafka 中读取经过 Nazar 处理过的事件，并根据 Nazar 的处理结果决定是跳过这个事件还是将其加入计数。如果 Nazar 中的处理结果是可以加入计数，那么 Abacus 首先会检查这个事件所关联的帖子在 Redis 中是否已经存在了一个 HLL 计数器。如果已经存在，Abacus 会给 Redis 发送个 PFADD 的请求。如果不存在，那么 Abacus 会给 Cassandra 集群发送个请求（Cassandra 用来持久化 HLL 计数器和 计数值的），然后向 Redis 发送 <a href="https://redis.io/commands/set" target="_blank" rel="external">SET</a>  请求。这通常会发生在网友访问较老帖子的时候，这时该帖子的计数器很可能已经在 Redis 中过期了。</p>
+<p>为了存储存在 Redis 中的计数器过期的老帖子的浏览量。Abacus 会周期性的将 Redis 中全部的 HLL 和 每篇帖子的浏览量写入到 Cassandra 集群中。为了避免集群过载，我们以 10 秒为周期批量写入。</p>
+<p>下图是事件流的大致流程：<br><img src="http://oduh99f02.bkt.clouddn.com/2017-06-04-1.pic.jpg?imageMogr2/thumbnail/500x700!" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们希望浏览量可以让发帖者了解帖子全部的访问量，也帮助版主快速定位自己社区中高访问量的帖子。在未来，我们计划利用我们数据管道在实时方面的潜力来为 Reddit 的用户提供更多的有用的反馈。</p>
+<p>————————————————————分割线———————————————————-</p>
+<p>这周一定要看完《地球上的星星》💪<br><img src="http://oduh99f02.bkt.clouddn.com/2017-06-04-18bd58d83cb78ac9fbeb7676c109cda1.jpg?imageMogr2/thumbnail/300x400!" alt="Like stars on earth"></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/06/04/reddit-view-counting/" data-id="cj3it011x002i127bw55ngnqc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/06/04/reddit-view-counting/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/06/04/reddit-view-counting/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/05/18/mysql-unique-key-null/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MySQL 唯一性约束与 NULL</div>
+        </a>
+    
+</nav>
+
+
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+   <script>
+   DisqusJS.getRecentComments(document.querySelector('#disqus-recent-comments'));
+   </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
