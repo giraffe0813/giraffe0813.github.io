@@ -20,20 +20,20 @@
 <meta property="og:description" content="感觉人生就是while(true){一个选择接着一个选择接着一个选择;},好怕自己一不小心就做了错误的决定啊😭。堵上全部人品,希望新公司技术氛围浓厚,有大牛带我,切拜🙊🙏。
 
 不扯有的没的了，翻译一篇关于垃圾回收(以下简称GC)机制的博客(原文地址)。博客内容包括：Java中GC是如何工作的，常见的GC算法(比如:标记清除)，Java中不同的垃圾收集器(比如:serial)。">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/image/GC-Object.png">
-<meta property="og:updated_time" content="2016-09-21T08:34:03.000Z">
+<meta property="og:image" content="http://yemengying.com//yemengying.com/qiniu/image/image/GC-Object.png">
+<meta property="og:updated_time" content="2017-06-10T07:56:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】Java中的垃圾回收机制">
 <meta name="twitter:description" content="感觉人生就是while(true){一个选择接着一个选择接着一个选择;},好怕自己一不小心就做了错误的决定啊😭。堵上全部人品,希望新公司技术氛围浓厚,有大牛带我,切拜🙊🙏。
 
 不扯有的没的了，翻译一篇关于垃圾回收(以下简称GC)机制的博客(原文地址)。博客内容包括：Java中GC是如何工作的，常见的GC算法(比如:标记清除)，Java中不同的垃圾收集器(比如:serial)。">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/image/GC-Object.png">
+<meta name="twitter:image" content="http://yemengying.com//yemengying.com/qiniu/image/image/GC-Object.png">
     
 
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="https://yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 <body>
     <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
     <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
-    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.4/index.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.5/index.js"></script>
     <div id="container">
         <header id="header">
     <div id="header-main" class="header-inner">
@@ -111,7 +111,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -195,7 +195,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -307,12 +307,12 @@ var _hmt = _hmt || [];
 <li>System.gc()和Runtime.gc()会向JVM发送执行GC的请求，但是JVM不保证一定会执行GC。</li>
 <li>如果堆没有内存创建新的对象了，会抛出<code>OutOfMemoryError</code>。</li>
 </ul>
-<h3 id="GC针对什么对象？"><a href="#GC针对什么对象？" class="headerlink" title="GC针对什么对象？"></a>GC针对什么对象？</h3><p>了解GC机制的第一步就是理解什么样的对象会被回收。当一个对象通过一系列根对象(比如：静态属性引用的常量)都不可达时就会被回收。简而言之，当一个对象的所有引用都为null。循环依赖不算做引用，如果对象A有一个指向对象B的引用，对象B也有一个指向对象A的引用，除此之外，它们没有其他引用，那么对象A和对象B都、需要被回收(如下图,ObjA和ObjB需要被回收)。<br><img src="http://oduh99f02.bkt.clouddn.com/image/GC-Object.png" alt="GC回收对象"></p>
-<h3 id="堆内存是如何划分的？"><a href="#堆内存是如何划分的？" class="headerlink" title="堆内存是如何划分的？"></a>堆内存是如何划分的？</h3><p>Java中对象都在堆上创建。为了GC，堆内存分为三个部分，也可以说三代，分别称为新生代，老年代和永久代。其中新生代又进一步分为Eden区，Survivor 1区和Survivor 2区(如下图)。新创建的对象会分配在Eden区,在经历一次Minor GC后会被移到Survivor 1区，再经历一次Minor GC后会被移到Survivor 2区，直到升至老年代,需要注意的是，一些大对象(长字符串或数组)可能会直接存放到老年代。<br><img src="http://oduh99f02.bkt.clouddn.com/image/堆内存.png" alt="堆内存"><br>永久代有一些特殊，它用来存储类的元信息。对于GC是否发生在永久代有许多不同的看法，在我看来这取决于采用的JVM。大家可以通过创建大量的字符串来观察是发生了GC还是抛出了OutOfMemoryError。</p>
+<h3 id="GC针对什么对象？"><a href="#GC针对什么对象？" class="headerlink" title="GC针对什么对象？"></a>GC针对什么对象？</h3><p>了解GC机制的第一步就是理解什么样的对象会被回收。当一个对象通过一系列根对象(比如：静态属性引用的常量)都不可达时就会被回收。简而言之，当一个对象的所有引用都为null。循环依赖不算做引用，如果对象A有一个指向对象B的引用，对象B也有一个指向对象A的引用，除此之外，它们没有其他引用，那么对象A和对象B都、需要被回收(如下图,ObjA和ObjB需要被回收)。<br><img src="//yemengying.com/qiniu/image/image/GC-Object.png" alt="GC回收对象"></p>
+<h3 id="堆内存是如何划分的？"><a href="#堆内存是如何划分的？" class="headerlink" title="堆内存是如何划分的？"></a>堆内存是如何划分的？</h3><p>Java中对象都在堆上创建。为了GC，堆内存分为三个部分，也可以说三代，分别称为新生代，老年代和永久代。其中新生代又进一步分为Eden区，Survivor 1区和Survivor 2区(如下图)。新创建的对象会分配在Eden区,在经历一次Minor GC后会被移到Survivor 1区，再经历一次Minor GC后会被移到Survivor 2区，直到升至老年代,需要注意的是，一些大对象(长字符串或数组)可能会直接存放到老年代。<br><img src="//yemengying.com/qiniu/image/image/堆内存.png" alt="堆内存"><br>永久代有一些特殊，它用来存储类的元信息。对于GC是否发生在永久代有许多不同的看法，在我看来这取决于采用的JVM。大家可以通过创建大量的字符串来观察是发生了GC还是抛出了OutOfMemoryError。</p>
 <h3 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h3><ol>
-<li>标记清除算法<br>分为标记和清除两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。该算法的缺点是效率不高并且会产生不连续的内存碎片。<br><img src="http://oduh99f02.bkt.clouddn.com/image/sweep.jpg" alt="image"></li>
-<li>复制算法<br>把内存空间划为两个区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不会出现“碎片”问题。优点：实现简单，运行高效。缺点：会浪费一定的内存。一般新生代采用这种算法。<br><img src="http://oduh99f02.bkt.clouddn.com/image/copy.jpg" alt="image"></li>
-<li>标记整理算法<br>标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。<br><img src="http://oduh99f02.bkt.clouddn.com/image/compact.jpg" alt="image"></li>
+<li>标记清除算法<br>分为标记和清除两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。该算法的缺点是效率不高并且会产生不连续的内存碎片。<br><img src="//yemengying.com/qiniu/image/image/sweep.jpg" alt="image"></li>
+<li>复制算法<br>把内存空间划为两个区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不会出现“碎片”问题。优点：实现简单，运行高效。缺点：会浪费一定的内存。一般新生代采用这种算法。<br><img src="//yemengying.com/qiniu/image/image/copy.jpg" alt="image"></li>
+<li>标记整理算法<br>标记阶段与标记清除算法一样。但后续并不是直接对可回收的对象进行清理，而是让所有存活对象都想一端移动，然后清理。优点是不会造成内存碎片。<br><img src="//yemengying.com/qiniu/image/image/compact.jpg" alt="image"></li>
 </ol>
 <h3 id="Java中垃圾回收器的类型"><a href="#Java中垃圾回收器的类型" class="headerlink" title="Java中垃圾回收器的类型"></a>Java中垃圾回收器的类型</h3><p>Java提供多种类型的垃圾回收器。JVM中的垃圾收集一般都采用“分代收集”，不同的堆内存区域采用不同的收集算法，主要目的就是为了增加吞吐量或降低停顿时间。</p>
 <ul>
@@ -324,7 +324,7 @@ var _hmt = _hmt || [];
 <li>CMS（Concurrent Mark Sweep）收集器：老年代收集器，致力于获取最短回收停顿时间（即缩短垃圾回收的时间），使用标记清除算法，多线程，优点是并发收集（用户线程可以和GC线程同时工作），停顿小。使用-XX:+UseConcMarkSweepGC进行ParNew+CMS+Serial Old进行内存回收，优先使用ParNew+CMS（原因见Full GC和并发垃圾回收一节），当用户线程内存不足时，采用备用方案Serial Old收集。</li>
 </ul>
 <p>可以看<a href="http://www.amazon.com/dp/0137142528/?tag=javamysqlanta-20" target="_blank" rel="external">Java Performance</a>一书来获取更多关于GC调优的信息。</p>
-<h3 id="与GC有关的JVM参数"><a href="#与GC有关的JVM参数" class="headerlink" title="与GC有关的JVM参数"></a>与GC有关的JVM参数</h3><p>做GC调优需要大量的实践，耐心和对项目的分析。我曾经参与过高容量，低延迟的电商系统，在开发中我们需要通过分析造成Full GC的原因来提高系统性能，在这个过程中我发现做GC的调优很大程度上依赖于对系统的分析，系统拥有怎样的对象以及他们的平均生命周期。<br>举个例子，如果一个应用大多是短生命周期的对象，那么应该确保Eden区足够大，这样可以减少Minor GC的次数。可以通过<code>-XX:NewRatio</code>来控制新生代和老年代的比例，比如-XX:NewRatio=3代表新生代和老年代的比例为1：3。需要注意的是，扩大新生代的大小会减少老年代的大小，这会导致Major GC执行的更频繁，而Major GC可能会造成用户线程的停顿从而降低系统吞吐量。JVM中可以用NewSize和MaxNewSize参数来指定新生代内存最小和最大值，如果两个参数值一样，那么就相当于固定了新生代的大小。<br>个人建议，在做GC调优之前最好深入理解Java中GC机制，推荐阅读Sun Microsystems提供的有关GC的文档。这个<a href="http://www.oracle.com/technetwork/java/gc-tuning-5-138395.html" target="_blank" rel="external">链接</a>可能会对理解GC机制提供一些帮助。下面的图列出了各个区可用的一些JVM参数。<br><img src="http://oduh99f02.bkt.clouddn.com/image/jvm-parameter.png" alt="jvm参数"></p>
+<h3 id="与GC有关的JVM参数"><a href="#与GC有关的JVM参数" class="headerlink" title="与GC有关的JVM参数"></a>与GC有关的JVM参数</h3><p>做GC调优需要大量的实践，耐心和对项目的分析。我曾经参与过高容量，低延迟的电商系统，在开发中我们需要通过分析造成Full GC的原因来提高系统性能，在这个过程中我发现做GC的调优很大程度上依赖于对系统的分析，系统拥有怎样的对象以及他们的平均生命周期。<br>举个例子，如果一个应用大多是短生命周期的对象，那么应该确保Eden区足够大，这样可以减少Minor GC的次数。可以通过<code>-XX:NewRatio</code>来控制新生代和老年代的比例，比如-XX:NewRatio=3代表新生代和老年代的比例为1：3。需要注意的是，扩大新生代的大小会减少老年代的大小，这会导致Major GC执行的更频繁，而Major GC可能会造成用户线程的停顿从而降低系统吞吐量。JVM中可以用NewSize和MaxNewSize参数来指定新生代内存最小和最大值，如果两个参数值一样，那么就相当于固定了新生代的大小。<br>个人建议，在做GC调优之前最好深入理解Java中GC机制，推荐阅读Sun Microsystems提供的有关GC的文档。这个<a href="http://www.oracle.com/technetwork/java/gc-tuning-5-138395.html" target="_blank" rel="external">链接</a>可能会对理解GC机制提供一些帮助。下面的图列出了各个区可用的一些JVM参数。<br><img src="//yemengying.com/qiniu/image/image/jvm-parameter.png" alt="jvm参数"></p>
 <h3 id="Full-GC和并发垃圾回收"><a href="#Full-GC和并发垃圾回收" class="headerlink" title="Full GC和并发垃圾回收"></a>Full GC和并发垃圾回收</h3><p>并发垃圾回收器的内存回收过程是与用户线程一起并发执行的。通常情况下，并发垃圾回收器可以在用户线程运行的情况下完成大部分的回收工作，所以应用停顿时间很短。<br>但由于并发垃圾回收时用户线程还在运行，所以会有新的垃圾不断产生。作为担保，如果在老年代内存都被占用之前，如果并发垃圾回收器还没结束工作，那么应用会暂停，在所有用户线程停止的情况下完成回收。这种情况称作Full GC，这意味着需要调整有关并发回收的参数了。<br>由于Full GC很影响应用的性能，要尽量避免或减少。特别是如果对于高容量低延迟的电商系统，要尽量避免在交易时间段发生Full GC。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>为了分代垃圾回收，Java堆内存分为3代：新生代，老年代和永久代。</li>
@@ -345,7 +345,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>关于永久代到底有没有GC还是很懵逼，很多地方看到的说法都不一致。欢迎指正错误，欢迎一起讨论~~</p>
 </blockquote>
-<p>按国际惯例，wuli光洙结尾~~<br><img src="http://oduh99f02.bkt.clouddn.com/image/liguangzhu4.jpg" alt="李光洙"></p>
+<p>按国际惯例，wuli光洙结尾~~<br><img src="//yemengying.com/qiniu/image/image/liguangzhu4.jpg" alt="李光洙"></p>
 
         
         </div>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cj3it011h001t127bd7446qc0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/05/13/jvm-GC/" data-id="cj3r07ntx001uk39laz2i226v" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

@@ -16,18 +16,18 @@
 <meta property="og:url" content="http://yemengying.com/2016/09/11/solid-go-design-1/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/image/think1.png">
-<meta property="og:updated_time" content="2016-09-21T09:53:06.000Z">
+<meta property="og:image" content="http://yemengying.com//yemengying.com/qiniu/image/image/think1.png">
+<meta property="og:updated_time" content="2017-06-10T07:56:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】S.O.L.I.D 原则在 Go 中的应用（上）">
 <meta name="twitter:description" content="最近两个月没有好好的看书学习，导致博客也水了两个月没写什么正经的。上周收到仓鼠🐹君萌萌哒的邮件之后，又激起了我写博客的欲望。由于自己最近灵感枯竭，所以我决定翻译一篇别人的O(∩_∩)O~。作为一个一直想学 Go，但想了好久还没入门的人，我挑了篇写 Go 的，顺便帮自己熟悉一下 Go。原文是作者根据自己 GolangUK 的演讲所整理的，全文以 SOLID 原则为线路讲述了什么样的 Go 代码才">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/image/think1.png">
+<meta name="twitter:image" content="http://yemengying.com//yemengying.com/qiniu/image/image/think1.png">
     
 
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="https://yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -72,7 +72,7 @@ var _hmt = _hmt || [];
 <body>
     <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
     <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
-    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.4/index.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.5/index.js"></script>
     <div id="container">
         <header id="header">
     <div id="header-main" class="header-inner">
@@ -105,7 +105,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -189,7 +189,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -289,7 +289,7 @@ var _hmt = _hmt || [];
 <p>捂。。。。。。。。还是不捂了，脸已经丢没了🙈</p>
 <a id="more"></a>
 <p>原文链接：<a href="http://dave.cheney.net/2016/08/20/solid-go-design?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website" target="_blank" rel="external">http://dave.cheney.net/2016/08/20/solid-go-design?utm_source=wanqu.co&amp;utm_campaign=Wanqu+Daily&amp;utm_medium=website</a><br>原文作者：<a href="http://dave.cheney.net/about" target="_blank" rel="external">Dave Cheney</a></p>
-<h4 id="世界上有多少个-Go-语言开发者？"><a href="#世界上有多少个-Go-语言开发者？" class="headerlink" title="世界上有多少个 Go 语言开发者？"></a>世界上有多少个 Go 语言开发者？</h4><p>介个世界上有多少 Go 开发者捏？在脑海中想一个数字，我们会在最后回到这个话题。<br><img src="http://oduh99f02.bkt.clouddn.com/image/think1.png" alt="thinking"></p>
+<h4 id="世界上有多少个-Go-语言开发者？"><a href="#世界上有多少个-Go-语言开发者？" class="headerlink" title="世界上有多少个 Go 语言开发者？"></a>世界上有多少个 Go 语言开发者？</h4><p>介个世界上有多少 Go 开发者捏？在脑海中想一个数字，我们会在最后回到这个话题。<br><img src="//yemengying.com/qiniu/image/image/think1.png" alt="thinking"></p>
 <h4 id="Code-review"><a href="#Code-review" class="headerlink" title="Code review"></a>Code review</h4><p>有多少人将 code review 当做自己工作的一部分?[听演讲的人都举起了手]。为什么要做 code review？[一些人回答为了阻止不好的代码]</p>
 <p>如果 code review 是为了捕捉到不好的代码，那么问题来了，你怎么判断你正在 review 的代码是好还是不好呢？</p>
 <p>我们可以很容易的说出“这代码好辣眼睛”或者“这源码写的太吊了”，就像说“这画真美”，“这屋子真大气”一样。但是这些都是主观的，我希望找到一些客观的方法来衡量代码是好还是不好。</p>
@@ -303,7 +303,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>👆这些都不是什么好听的词，没有人希望在别人 review 自己代码时听到这些词。</p>
 <h4 id="Good-design"><a href="#Good-design" class="headerlink" title="Good design"></a>Good design</h4><p>了解了什么是不好的代码之后，我们可以说“我不喜欢这段代码因为它不易于修改”或者“这段代码并没有清晰的告诉我它要做什么”。但这些并没有带来积极的引导。</p>
-<p>如果我们不仅仅可以描述不好的设计，还可以客观的描述好的设计，是不是更有助于提高呢。<br><img src="http://oduh99f02.bkt.clouddn.com/image/excited.jpg" alt="excited"></p>
+<p>如果我们不仅仅可以描述不好的设计，还可以客观的描述好的设计，是不是更有助于提高呢。<br><img src="//yemengying.com/qiniu/image/image/excited.jpg" alt="excited"></p>
 <h4 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a>SOLID</h4><p>2002年，<code>Robert Martin</code> 出版了《敏捷软件开发:原则、模式与实践》一书，在书中他描述了可重用软件设计的五个原则，他称之为 <strong>SOLID</strong> 原则(每个原则的首字母组合在一起)。</p>
 <ul>
 <li>单一责任原则</li>
@@ -314,7 +314,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>这本书有点过时了，书中谈论的语言都已经超过了十年之久。尽管如此，在谈论什么样的 Go 代码才是好代码时，SOLID 的原则依然可以给我们一些启发。</p>
 <p>So，这也就是我花时间想在本文和大家一起讨论的。</p>
-<h4 id="单一责任原则"><a href="#单一责任原则" class="headerlink" title="单一责任原则"></a>单一责任原则</h4><p><img src="http://oduh99f02.bkt.clouddn.com/image/single.png" alt="忙成狗"><br>SOLID 原则中的第一个原则就是<code>单一责任原则</code>。<code>Robert C Martin</code> 说过 A class should have one, and only one, reason to change(修改某个类的时候，原因有且只有一个)，说白了就是，一个类只负责一项职责。</p>
+<h4 id="单一责任原则"><a href="#单一责任原则" class="headerlink" title="单一责任原则"></a>单一责任原则</h4><p><img src="//yemengying.com/qiniu/image/image/single.png" alt="忙成狗"><br>SOLID 原则中的第一个原则就是<code>单一责任原则</code>。<code>Robert C Martin</code> 说过 A class should have one, and only one, reason to change(修改某个类的时候，原因有且只有一个)，说白了就是，一个类只负责一项职责。</p>
 <p>虽然 Go 语言中并没有类的概念–但我们有更鹅妹子嘤的 <code>composition</code> (组合)的特性。</p>
 <p>为什么修改一段代码只负责一项职责如此重要呢？如果一个类有两个职责R1，R2，那么修改R1时，可能会导致也要修改R2。修改代码是痛苦的，但更痛苦的是修改代码的原因是由于修改其他代码引起的。</p>
 <p>所以当一个类只负责一个功能领域中的相应职责时，可以修改的它的原因也就最大限度的变少了。</p>
@@ -338,7 +338,7 @@ var _hmt = _hmt || [];
 <p>上面这些包很快就会变成堆放杂七杂八代码的垃圾堆，而且会由于功能太杂乱而频繁修改。</p>
 <h5 id="Go-中的-UNIX-哲学"><a href="#Go-中的-UNIX-哲学" class="headerlink" title="Go 中的 UNIX 哲学"></a>Go 中的 UNIX 哲学</h5><p>在我看来，任何关于解耦设计的讨论如果没有提到 <code>Doug McIlroy</code> 的 <code>UNIX 哲学</code>都是不完整的。UNIX 哲学就是主张将若干简洁，清晰的模块组合起来完成复杂的任务，而且通常情况下这个任务都不是原作者所能预想到的。</p>
 <p>我想 Go 中的包正体现了 UNIX 哲学的精神。因为每一个包都是一个拥有单一责任的简洁的 Go 程序。</p>
-<h4 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h4><p><img src="http://oduh99f02.bkt.clouddn.com/image/open.png" alt="open or close"><br>第二个原则，也就是 SOLID 当中的 O，是由 <code>Bertrand Meyer</code> 提出的<code>开放封闭原则</code>。1988年，Bertrand Mey 在他的著作《面向对象软件构造》一书中写道：Software entities should be open for extension,but closed for modification（软件实体应当对扩展开放，对修改关闭）。</p>
+<h4 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h4><p><img src="//yemengying.com/qiniu/image/image/open.png" alt="open or close"><br>第二个原则，也就是 SOLID 当中的 O，是由 <code>Bertrand Meyer</code> 提出的<code>开放封闭原则</code>。1988年，Bertrand Mey 在他的著作《面向对象软件构造》一书中写道：Software entities should be open for extension,but closed for modification（软件实体应当对扩展开放，对修改关闭）。</p>
 <p>那么这个n年前的建议在 Go 语言中是如何应用的呢？<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> A <span class="keyword">struct</span> &#123;</div><div class="line">	year <span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a A)</span> <span class="title">Greet</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(<span class="string">"Hello GolangUK"</span>, a.year)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">type</span> B <span class="keyword">struct</span> &#123;</div><div class="line">	A</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b B)</span> <span class="title">Greet</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(<span class="string">"Welcome to GolangUK"</span>, b.year)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">var</span> a A</div><div class="line">	a.year = <span class="number">2016</span></div><div class="line">	<span class="keyword">var</span> b B</div><div class="line">	b.year = <span class="number">2016</span></div><div class="line">	a.Greet()<span class="comment">//Hello GolangUK 2016</span></div><div class="line">	b.Greet()<span class="comment">//Welcome to GolangUK 2016</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>上面的代码中，我们有类型A，包含属性 year 和一个方法 Greet。我们还有类型B，B中嵌入(embedding)了类型A，并且B提供了他自己的 Greet 方法，覆盖了A的。</p>
 <p>嵌入不仅仅是针对方法，还可以通过嵌入使用被嵌入类型的属性。我们可以看到，在上面的例子中，因为A和B定义在同一个包中，所以B可以像使用自己定义的属性一样使用A中的 private 的属性 year。</p>
@@ -354,7 +354,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>终于完成了上的部分↖(^ω^)↗，尽量在下周完成下。由于并不了解 Go 难免会有错误或翻译生硬的地方，欢迎指正错误，欢迎一起讨论~(≧▽≦)/~。</p>
 </blockquote>
-<p>都看到这了，关注个公众号再走吧🙈<br><img src="http://oduh99f02.bkt.clouddn.com/image/qrcode.jpg" alt="Running Geek"></p>
+<p>都看到这了，关注个公众号再走吧🙈<br><img src="//yemengying.com/qiniu/image/image/qrcode.jpg" alt="Running Geek"></p>
 
         
         </div>
@@ -365,7 +365,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="cj3it0120002p127b4l9lksqs" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/09/11/solid-go-design-1/" data-id="cj3r07nuh002qk39l17ryhgcm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

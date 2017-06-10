@@ -16,18 +16,18 @@
 <meta property="og:url" content="http://yemengying.com/2017/01/03/rabbitmq-classMapper/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="新年第一篇~~ 🐣🐥🐤🐔">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!">
-<meta property="og:updated_time" content="2017-01-08T08:52:34.000Z">
+<meta property="og:image" content="http://yemengying.com//yemengying.com/qiniu/image/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!">
+<meta property="og:updated_time" content="2017-06-10T07:56:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为Rabbitmq中的Jackson2JsonMessageConverter自定义ClassMapper">
 <meta name="twitter:description" content="新年第一篇~~ 🐣🐥🐤🐔">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!">
+<meta name="twitter:image" content="http://yemengying.com//yemengying.com/qiniu/image/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!">
     
 
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="https://yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -72,7 +72,7 @@ var _hmt = _hmt || [];
 <body>
     <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
     <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
-    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.4/index.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.5/index.js"></script>
     <div id="container">
         <header id="header">
     <div id="header-main" class="header-inner">
@@ -105,7 +105,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -189,7 +189,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2017-05-02-3.pic.jpg" />
+            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -283,9 +283,9 @@ var _hmt = _hmt || [];
 <a id="more"></a>
 <p>消息队列算是各个系统间通信比较常见的方式了。我们公司用的是是基于 AMQP 协议的 <a href="http://www.rabbitmq.com/" target="_blank" rel="external">RabbitMq</a>。在 Spring-AMQP 中比较重要的类就是 <code>Message</code>，因为要发送的消息必须要构造成一个 Message 对象来进行传输。Message 对象包括两部分 Body 和 Properties，Body 就是真正要发送的消息内容，Properties 就是和消息相关的一些属性(消息头，要发送的交换机，routingKey等等)，主要结构如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> MessageProperties messageProperties;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">byte</span>[] body;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>消息生产者构造好 Message 之后，就会将 Message 发送到指定的 Exchange (交换机)，再根据 Exchange 的类型及 routing-key 将消息路由到相应的 queue 中，最后被监听该 queue 的消费者消费，大致如下图：</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!" alt="流程1"></p>
+<p><img src="//yemengying.com/qiniu/image/2017-01-07-122.pic.jpg?imageMogr2/thumbnail/700x500!" alt="流程1"></p>
 <p>不过每次发消息都要自己构造 Message 对象比较麻烦。Spring-AMQP 允许我们直接使用自定义的类，然后会利用指定好的 <code>MessageConverter</code> 将自定义的类转换为 Message 进行发送，在接收时也会利用 MessageConverter 将接收到的 Message 对象转成需要的对象。Spring-AMQP 提供了多种 MessageConverter，比如 SimpleMessageConverter，SerializerMessageConverter，Jackson2JsonMessageConverter，MarshallingMessageConverter等等，如果发送的消息对象不是 Message 实例，并且没有指定 MessageConverter 的话，默认用 SimpleMessageConverter。以上各种 MessageConverter 归根结底都是实现了 MessageConverter 接口，该接口只有两个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MessageConverter</span> </span>&#123;</div><div class="line">	<span class="function">Message <span class="title">toMessage</span><span class="params">(Object object, MessageProperties messageProperties)</span> <span class="keyword">throws</span> MessageConversionException</span>;</div><div class="line">	<span class="function">Object <span class="title">fromMessage</span><span class="params">(Message message)</span> <span class="keyword">throws</span> MessageConversionException</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这两个方法一个是在发送消息时将我们的消息对象转换成标准的 Message 对象，另一个是在接受消息时将 Message 对象转换为相应的对象。<br>比较常用的 Converter 就是 Jackson2JsonMessageConverter(以下简称 JsonMessageConverter)，在发送消息时，它会先将自定义的消息类序列化成json格式，再转成byte构造 Message，在接收消息时，会将接收到的 Message 再反序列化成自定义的类。大致流程如下图：<br><img src="http://oduh99f02.bkt.clouddn.com/2017-01-08-3.pic_hd.jpg" alt="流程2"></p>
+<p>这两个方法一个是在发送消息时将我们的消息对象转换成标准的 Message 对象，另一个是在接受消息时将 Message 对象转换为相应的对象。<br>比较常用的 Converter 就是 Jackson2JsonMessageConverter(以下简称 JsonMessageConverter)，在发送消息时，它会先将自定义的消息类序列化成json格式，再转成byte构造 Message，在接收消息时，会将接收到的 Message 再反序列化成自定义的类。大致流程如下图：<br><img src="//yemengying.com/qiniu/image/2017-01-08-3.pic_hd.jpg" alt="流程2"></p>
 <p>不过使用 JsonMessageConverter 时有一个小问题，在<code>不对它进行任何改造的前提下</code>，发送消息的类和接受消息的类必须是一样的，不仅是要里面的字段一样，类名一样，连类的包路径都要一样。</p>
 <p>所以当系统1使用 JsonMessageConverter 发送消息类A给系统2时，系统2可以有如下几种方式来接收：</p>
 <ul>
@@ -311,7 +311,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2017/01/03/rabbitmq-classMapper/" data-id="cj3it011v002f127bi0wrgkzg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2017/01/03/rabbitmq-classMapper/" data-id="cj3r07nuc002gk39ly085u7mw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
