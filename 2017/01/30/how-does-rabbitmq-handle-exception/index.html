@@ -16,18 +16,18 @@
 <meta property="og:url" content="http://yemengying.com/2017/01/30/how-does-rabbitmq-handle-exception/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
+<meta property="og:image" content="//yemengying.com/qiniu/image/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
 <meta property="og:updated_time" content="2017-02-05T07:55:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMq 如何处理异常">
 <meta name="twitter:description" content="这应该是过年假期的最后一篇，如果不是，那你一定看到了假博客。(๑•̀ㅂ•́)و✧">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
+<meta name="twitter:image" content="//yemengying.com/qiniu/image/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!">
     
 
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="//yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <img class="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <img id="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -287,9 +287,9 @@ var _hmt = _hmt || [];
 <p>其实 Spring-amqp <a href="http://docs.spring.io/spring-amqp/reference/html/_reference.html#exception-handling" target="_blank" rel="external">官方文档</a>上对于 RabbitMq 是如何处理异常的说的已经很明白了，不过都是大段的文字可能不太好理解，还是配着代码看一下。</p>
 <p>代码版本： 1.6.3.RELEASE</p>
 <p>根据官方文档，当 listener 在消费消息时抛出一个异常的时候，该异常会被包装在 <code>ListenerExecutionFailedException</code> 中抛出，并根据 <code>listenerContainer</code> 中 <code>defaultRequeueRejected</code> 设定的值来决定是否将该消息重新加入队列，默认是会重新加入队列。</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!" alt="ListenerExecutionFailedException结构"></p>
+<p><img src="//yemengying.com/qiniu/image/2017-01-30-145142.jpg?imageMogr2/thumbnail/700x300!" alt="ListenerExecutionFailedException结构"></p>
 <p>需要注意的是，如果抛出的异常是 ARADRE 或其他被 RabbitMq 认为是致命错误的异常，即便 defaultRequeueRejected 的值为 true ， 该消息也不会重新加入队列，而是会被直接丢弃或加入 dead-letter-exchange 中(如果有配置 dead-letter-exchange)。</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2017-01-30-dead-letters.jpeg?imageMogr2/thumbnail/400x300!" alt="来源https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/"></p>
+<p><img src="//yemengying.com/qiniu/image/2017-01-30-dead-letters.jpeg?imageMogr2/thumbnail/400x300!" alt="来源https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/"></p>
 <p>在 1.6.3. RELEASE 中被 RabbitMq 认为是致命错误的异常有以下 6 种：</p>
 <ul>
 <li>o.s.amqp…MessageConversionException</li>
@@ -311,8 +311,8 @@ var _hmt = _hmt || [];
 <p>再简单看下，RabbitMq 判断是否需要将消息重入队列的部分逻辑。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// We should always requeue if the container was stopping</span></div><div class="line"><span class="keyword">boolean</span> shouldRequeue = <span class="keyword">this</span>.defaultRequeuRejected || ex <span class="keyword">instanceof</span> MessageRejectedWhileStoppingException;</div><div class="line">Throwable t = ex;</div><div class="line"><span class="keyword">while</span> (shouldRequeue &amp;&amp; t != <span class="keyword">null</span>) &#123;</div><div class="line">	<span class="keyword">if</span> (t <span class="keyword">instanceof</span> AmqpRejectAndDontRequeueException) &#123;</div><div class="line">			shouldRequeue = <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	t = t.getCause();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>根据上面的代码，如果处理消息时出现异常，在判断是否需要入队时，会将 shouldRequeue 变量等于 this.defaultRequeuRejected ||ex instanceof MessageRejectedWhileStoppingException 的值，然后如果异常是 ARADRE， 不管之前 shouldRequeue 的值是什么，都会被置为 false。最后根据 shouldRequeue 的值来决定是否需要重新入队。 </p>
-<p>可以用下图总结一下：<br><img src="http://oduh99f02.bkt.clouddn.com/2017-02-05-j%20-1-.png?imageMogr2/thumbnail/667x618!" alt="总结"></p>
-<p>最后。。Cookie 宝宝祝大家新春快乐~~<br><img src="http://oduh99f02.bkt.clouddn.com/2017-01-28-1.pic.jpg?imageMogr2/thumbnail/500x800!" alt="cookie 宝宝"></p>
+<p>可以用下图总结一下：<br><img src="//yemengying.com/qiniu/image/2017-02-05-j%20-1-.png?imageMogr2/thumbnail/667x618!" alt="总结"></p>
+<p>最后。。Cookie 宝宝祝大家新春快乐~~<br><img src="//yemengying.com/qiniu/image/2017-01-28-1.pic.jpg?imageMogr2/thumbnail/500x800!" alt="cookie 宝宝"></p>
 
         
         </div>

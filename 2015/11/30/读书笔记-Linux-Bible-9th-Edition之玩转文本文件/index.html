@@ -33,7 +33,7 @@
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="//yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -108,7 +108,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <img class="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -192,7 +192,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <img id="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -295,7 +295,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <p>从最常见的打开文件的开始了解vi<br>打开文件:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi <span class="built_in">test</span></div></pre></td></tr></table></figure>
-<p>如果这是一个空的文件，你会看到类似下图的东东。最上面闪烁的东东代表了光标的当前位置，最下面的一行显示了关于文件的一些信息,中间的”~”符号代表没有内容。<br><img src="http://oduh99f02.bkt.clouddn.com/image/vi1.jpg" alt="使用vi打开一个空文件"><br>当你看到这个界面可能会感觉不知所措，因为没有任何菜单，提示和图标来告诉你该做什么。更恐怖的是，你不能直接输入，否则会听见”嘟嘟”的声音。</p>
+<p>如果这是一个空的文件，你会看到类似下图的东东。最上面闪烁的东东代表了光标的当前位置，最下面的一行显示了关于文件的一些信息,中间的”~”符号代表没有内容。<br><img src="//yemengying.com/qiniu/image/image/vi1.jpg" alt="使用vi打开一个空文件"><br>当你看到这个界面可能会感觉不知所措，因为没有任何菜单，提示和图标来告诉你该做什么。更恐怖的是，你不能直接输入，否则会听见”嘟嘟”的声音。</p>
 <h4 id="添加文件内容"><a href="#添加文件内容" class="headerlink" title="添加文件内容"></a>添加文件内容</h4><p>不要怕,首先,需要了解两种主要的模式:命令模式(command)和编辑模式(input)。vi编辑器以命令模式启动，在添加或改变文本内容之前需输入命令来告诉vi你想要做什么(大小写敏感)。输入下面的命令就可以进入编辑模式，当编辑结束后，按<em>Esc</em>键就可以回到命令模式。</p>
 <table>
 <thead>
@@ -332,7 +332,7 @@ var _hmt = _hmt || [];
 </tbody>
 </table>
 <blockquote>
-<p><img src="http://oduh99f02.bkt.clouddn.com/image/tips.jpg" alt="提示"> 当进入编辑模式时，屏幕下方会出现– INSERT –；编辑结束后，按<em>Esc</em>键就可以回到命令模式。不过如果输入了”:”符号，需要按两下<em>Esc</em>键</p>
+<p><img src="//yemengying.com/qiniu/image/image/tips.jpg" alt="提示"> 当进入编辑模式时，屏幕下方会出现– INSERT –；编辑结束后，按<em>Esc</em>键就可以回到命令模式。不过如果输入了”:”符号，需要按两下<em>Esc</em>键</p>
 </blockquote>
 <h4 id="在文本中移动"><a href="#在文本中移动" class="headerlink" title="在文本中移动"></a>在文本中移动</h4><p>可以使用方向键可以在文本中移动光标，但还有一些小技巧可以让我们更方便的在文本中移动</p>
 <table>
@@ -585,7 +585,7 @@ var _hmt = _hmt || [];
 <p>大多数linux系统中，updatedb命令会每天执行一次，将系统中文件的名字存到数据库中。通过locate命令，我们可以查找存在在数据库中的文件的位置。相较于find命令，locate命令效率更高，因为它搜索数据库而不是整个文件系统。不过locate命令也有它的缺点，它并不能找到所有存放在系统的文件，因为并不是所有的文件都会存储于数据库中，/etc/updatedb.conf文件决定了哪些文件将存在于数据库中。另外，普通用户无法通过数据库查找那些他们在文件系统中没有权利查看的文件，比如，普通用户无法在/root目录下执行ls命令，那么他们也无法通过locate查找这个目录下的文件。如果用locate命令查找一个字符串，那么这个字符串可能出现在返回文件的路径的任意位置。举个栗子，查找passwd，结果可能为/etc/passwd,/usr/bin/passwd和其它路径包含passwd的文件。还需要注意的是，如果创建一个文件之后，希望立刻通过locate查找它，最好执行命令updatedb更新下数据库。</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$ locate .bashrc</div><div class="line">/etc/skel/.bashrc </div><div class="line">/home/cnegus/.bashrc</div><div class="line"></div><div class="line"><span class="comment"># locate ./bashrc (身份不同 查找结果不同)</span></div><div class="line">/etc/skel/.bashrc </div><div class="line">/home/bill/.bashrc </div><div class="line">/home/joe/.bashrc </div><div class="line">/root/.bashrc</div><div class="line"></div><div class="line">$ locate -i muttrc（-i 忽略大小写）/etc/Muttrc/etc/Muttrc.local /usr/share/doc/mutt-1.5.20/sample.muttrc</div><div class="line">$ locate services (查找的字符串可能出现在文件路径中)/etc/services/usr/share/services/bmp.kmgio /usr/share/services/data.kmgio</div></pre></td></tr></table></figure>
-<p>中场休息，看看我家光洙<br><img src="http://oduh99f02.bkt.clouddn.com/image/liguangzhu.gif" alt="李光珠"></p>
+<p>中场休息，看看我家光洙<br><img src="//yemengying.com/qiniu/image/image/liguangzhu.gif" alt="李光珠"></p>
 <h4 id="使用find命令查找文件"><a href="#使用find命令查找文件" class="headerlink" title="使用find命令查找文件"></a>使用find命令查找文件</h4><blockquote>
 <p>由于有许多不同的属性，find命令是查找文件的利器。当执行find命令时，它会搜索整个文件系统，这会造成find命令比locate命令耗时长，但同时也能让用户查找到系统中最新的文件。find命令最大的优点在于所有你能想到的文件的属性，都可以通过它查找，例如名字，拥有者，权限，大小，修改时间等等，也可以进行组合查找。</p>
 </blockquote>
@@ -593,7 +593,7 @@ var _hmt = _hmt || [];
 <p>find命令还有一个很棒的特性，可以使用-excute和-ok选项可以在查找到的任何文件上执行命令。excute选项会直接在每个找到的文件上执行命令，不会询问是否执行。而ok选项会在每个文件执行命令前询问是否执行。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ find /etc -iname iptables -exec <span class="built_in">echo</span> <span class="string">"I found &#123;&#125;"</span> \; </div><div class="line">I found /etc/bash_completion.d/iptablesI found /etc/sysconfig/iptables</div><div class="line"><span class="comment"># find /var/allusers/ -user joe -ok mv &#123;&#125; /tmp/joe/ \;</span></div><div class="line">mv ... /var/allusers/dict.dat &gt; ? ymv ... /var/allusers/five &gt; ? y</div></pre></td></tr></table></figure>
 <blockquote>
-<p><img src="http://oduh99f02.bkt.clouddn.com/image/tips.jpg" alt="提示"> 想了解更多关于find命令的信息，可以执行命令 man find</p>
+<p><img src="//yemengying.com/qiniu/image/image/tips.jpg" alt="提示"> 想了解更多关于find命令的信息，可以执行命令 man find</p>
 </blockquote>
 <h4 id="使用grep命令在文件中查找"><a href="#使用grep命令在文件中查找" class="headerlink" title="使用grep命令在文件中查找"></a>使用grep命令在文件中查找</h4><blockquote>
 <p>如果希望查找包含特定内容的文件，可以使用grep命令。通过grep命令，可以搜索单个文件，也可以递归搜索整个目录。默认情况下，grep命令是大小写敏感的</p>
@@ -601,7 +601,7 @@ var _hmt = _hmt || [];
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ grep desktop /etc/services </div><div class="line">desktop-dna 2763/tcp <span class="comment"># Desktop DNA </span></div><div class="line">desktop-dna 2763/udp <span class="comment"># Desktop DNA</span>$ grep -i desktop /etc/servicessco-dtmgr 617/tcp <span class="comment"># SCO Desktop Administration Server</span></div><div class="line">sco-dtmgr 617/udp <span class="comment"># SCO Desktop Administration Server</span></div><div class="line">airsync 2175/tcp  <span class="comment"># Microsoft Desktop AirSync Protocol</span></div></pre></td></tr></table></figure>
 <p>第一个例子，是在/etc/services文件中查找字符串desktop.第二个例子通过选项-i,在查找时大小写不敏感<br>-v 是查找不包含指定内容的行，-r是在目录中递归查找，-l是列出文件名 而不是包含内容的具体行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ grep -v desktop /etc/services</div><div class="line">$ grep -rli peerdns /usr/share/doc/ </div><div class="line">/usr/share/doc/dnsmasq-2.66/setup.html </div><div class="line">/usr/share/doc/initscripts-9.49.17/sysconfig.txt</div></pre></td></tr></table></figure>
-<p>以我大谢耳朵结尾吧，主要看气质，哈哈~~<br><img src="http://oduh99f02.bkt.clouddn.com/image/sheldon.jpg" alt="sheldon"></p>
+<p>以我大谢耳朵结尾吧，主要看气质，哈哈~~<br><img src="//yemengying.com/qiniu/image/image/sheldon.jpg" alt="sheldon"></p>
 
         
         </div>

@@ -16,18 +16,18 @@
 <meta property="og:url" content="http://yemengying.com/2015/09/19/spring-rabbitmq-demo/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="在做搜索服务时，当业务方数据源改变时，需要改变搜索引擎中索引的数据。可以定时拉取也可以实时推送。为了实现同步更新，选择了实时推送。实时推送也有两种方式，一种是提供索引更新接口供业务方调用，在接口中将变化的数据更新到搜索引擎中；另一种是使用消息队列，业务方在数据改变时，将改变的数据插入队列，服务端的消费者实时监听队列，并进行索引更新。考虑到使用消息队列有三点好处，选择了第二种方式。使用消息队列的好">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/image/spring-rabbit.jpg">
+<meta property="og:image" content="//yemengying.com/qiniu/image/image/spring-rabbit.jpg">
 <meta property="og:updated_time" content="2016-09-21T08:36:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring结合rabbitmq---简单的demo">
 <meta name="twitter:description" content="在做搜索服务时，当业务方数据源改变时，需要改变搜索引擎中索引的数据。可以定时拉取也可以实时推送。为了实现同步更新，选择了实时推送。实时推送也有两种方式，一种是提供索引更新接口供业务方调用，在接口中将变化的数据更新到搜索引擎中；另一种是使用消息队列，业务方在数据改变时，将改变的数据插入队列，服务端的消费者实时监听队列，并进行索引更新。考虑到使用消息队列有三点好处，选择了第二种方式。使用消息队列的好">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/image/spring-rabbit.jpg">
+<meta name="twitter:image" content="//yemengying.com/qiniu/image/image/spring-rabbit.jpg">
     
 
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="//yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <img class="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <img id="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -295,7 +295,7 @@ var _hmt = _hmt || [];
 <p>4.启动rabbitmq server 直接输入下面的命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-server</div></pre></td></tr></table></figure>
 <p>5.如果打印出下面的东东就是启动成功了，默认端口是5672</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/image/spring-rabbit.jpg" alt="spring-rabbitMq"></p>
+<p><img src="//yemengying.com/qiniu/image/image/spring-rabbit.jpg" alt="spring-rabbitMq"></p>
 <h2 id="实现demo"><a href="#实现demo" class="headerlink" title="实现demo"></a>实现demo</h2><p>首先要有个可以运行的spring + maven的项目</p>
 <h3 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h3><p>在pom文件中添加rabbitmq相关的依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.rabbitmq<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>amqp-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.amqp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-rabbit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>

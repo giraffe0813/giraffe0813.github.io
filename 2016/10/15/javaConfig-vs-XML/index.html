@@ -16,18 +16,18 @@
 <meta property="og:url" content="http://yemengying.com/2016/10/15/javaConfig-vs-XML/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="Long long time ago, 在《Spring In Action》一书中看到这么一句话 JavaConfig is the preferred option for explicit configuration because it’s more powerful, type-safe, and refactor-friendly 。不过当时并不知道 JavaConfig 是神马东东">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/alibaba.jpg">
+<meta property="og:image" content="//yemengying.com/qiniu/image/alibaba.jpg">
 <meta property="og:updated_time" content="2016-10-19T09:01:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="滚蛋吧~ XML 君">
 <meta name="twitter:description" content="Long long time ago, 在《Spring In Action》一书中看到这么一句话 JavaConfig is the preferred option for explicit configuration because it’s more powerful, type-safe, and refactor-friendly 。不过当时并不知道 JavaConfig 是神马东东">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/alibaba.jpg">
+<meta name="twitter:image" content="//yemengying.com/qiniu/image/alibaba.jpg">
     
 
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="//yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <img class="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <img id="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -283,7 +283,7 @@ var _hmt = _hmt || [];
 <p>Long long time ago, 在《Spring In Action》一书中看到这么一句话<strong> JavaConfig is the preferred option for explicit configuration because it’s more powerful, type-safe, and refactor-friendly </strong>。不过当时并不知道 <code>JavaConfig</code> 是神马东东就选择性忽略了。最近新的项目采用了 Spring Boot + JavaConfig ,接触了一个星期的 JavaConfig，感觉还不错，简单比较下它和 XML。由于接连看了 4 部韩国灾难片心情比较蓝瘦，就暂时不要指正错误了，错就错吧(づ｡◕‿‿◕｡)づ</p>
 </blockquote>
 <a id="more"></a>
-<p><img src="http://oduh99f02.bkt.clouddn.com/alibaba.jpg" alt="lalala"></p>
+<p><img src="//yemengying.com/qiniu/image/alibaba.jpg" alt="lalala"></p>
 <h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><p>虽然早在 Spring 3 中就开始支持以 <code>JavaConfig</code> 的方式配置项目，但感觉目前主流的还是以 <code>XML + Annotation</code> 的方式，很少见到使用 JavaConfig 的。可能有点以偏概全了，但在前司和前前司接触到的项目都是以 XML + Annotation 混合的方式配置的，即在 XML 配置文件中开启注解扫描, 业务 bean 的配置注入采用注解( @Serivce, @Autowire 等等)，全局的一些配置(如 MyBatis 的 DataSource,SqlSessionFactory ，web.xml 等等)使用 XML。</p>
 <p>虽然 XML + Annotation 的方式比纯用 XML 配置的方式少写了很多 XML，但本质上还是基于 XML 的。</p>
 <p>XML 的配置文件比较冗长，不易书写，而且可读性也不高。不知道大家感觉怎么样，反正我看着是挺头疼的╥﹏╥…</p>
@@ -307,14 +307,14 @@ var _hmt = _hmt || [];
 <p>对应的 JavaConfig 是酱紫的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataAccessConfig</span> <span class="keyword">extends</span> <span class="title">ConfigurationSupport</span> </span>&#123;</div><div class="line">  <span class="meta">@Bean</span>(name = <span class="string">"dataSource"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">mysqlDataSource</span><span class="params">(@Value(<span class="string">"$&#123;mysql.datasource.url&#125;"</span>)</span> String url,</span></div><div class="line">                                    @<span class="title">Value</span><span class="params">(<span class="string">"$&#123;mysql.datasource.username&#125;"</span>)</span> String username,</div><div class="line">                                    @<span class="title">Value</span><span class="params">(<span class="string">"$&#123;mysql.datasource.password&#125;"</span>)</span> String password,</div><div class="line">                                    @<span class="title">Value</span><span class="params">(<span class="string">"$&#123;mysql.datasource.driverClass&#125;"</span>)</span> String driver,</div><div class="line">                                    @<span class="title">Value</span><span class="params">(<span class="string">"$&#123;mysql.datasource.max-active&#125;"</span>)</span> <span class="keyword">int</span> maxActive) &#123;</div><div class="line"></div><div class="line">    DruidAbstractDataSource dataSource = <span class="keyword">new</span> DruidDataSource();</div><div class="line">    dataSource.setDriverClassName(driver);</div><div class="line">    dataSource.setUrl(url);</div><div class="line">    dataSource.setUsername(username);</div><div class="line">    dataSource.setPassword(password);</div><div class="line">    dataSource.setMaxActive(maxActive);</div><div class="line">    <span class="keyword">return</span> dataSource;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>虽然才接触了一周的 JavaConfig, 但是相见恨晚啊, 个人还是更喜欢 JavaConfig 的配置方式的。JavaConfig 的配置文件可读性更高也更容易学习，记住简单的几个注解即可；借助 IDE 的力量，更不容易出错；而且脑袋再也不用在 Java 和 XML 间来回切换了，在搭配上 Gradle 简直破费科特！！！！！</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/WechatIMG1.png" alt="开森"></p>
+<p><img src="//yemengying.com/qiniu/image/WechatIMG1.png" alt="开森"></p>
 <h3 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h3><ul>
 <li><a href="http://docs.spring.io/spring-javaconfig/docs/1.0.0.M4/reference/html/pr01.html" target="_blank" rel="external">Spring JavaConfig Document</a></li>
 <li>《Spring Boot 揭秘》</li>
 </ul>
 <p>——————————————-片 尾 彩 蛋 🎉🎉🎉—————————————————<br>咳咳，预警预警！！！下面的部分与本文主旨无关。</p>
-<p>首先，换了个新锅，可以预约煮粥，再也不用早起煮粥了，幸福感提升 200%。<br><img src="http://oduh99f02.bkt.clouddn.com/guo.jpg" alt="我是锅"><br>其次，在匿名人士的帮助下上线了新版未翻墙模式下的评论，优化了样式。唉，这是谁的男朋友这么有才华，好羡慕她哦︿(￣︶￣)︿<br><img src="http://oduh99f02.bkt.clouddn.com/envy.png" alt="&lt;(￣︶￣)&gt;"></p>
-<p>最后，嘿嘿，关注个公众号再走吧(<em>^__^</em>)<br><img src="http://oduh99f02.bkt.clouddn.com/image/qrcode.jpg" alt="Running Geek"></p>
+<p>首先，换了个新锅，可以预约煮粥，再也不用早起煮粥了，幸福感提升 200%。<br><img src="//yemengying.com/qiniu/image/guo.jpg" alt="我是锅"><br>其次，在匿名人士的帮助下上线了新版未翻墙模式下的评论，优化了样式。唉，这是谁的男朋友这么有才华，好羡慕她哦︿(￣︶￣)︿<br><img src="//yemengying.com/qiniu/image/envy.png" alt="&lt;(￣︶￣)&gt;"></p>
+<p>最后，嘿嘿，关注个公众号再走吧(<em>^__^</em>)<br><img src="//yemengying.com/qiniu/image/image/qrcode.jpg" alt="Running Geek"></p>
 
         
         </div>

@@ -27,7 +27,7 @@
     
 
     
-        <link rel="icon" href="http://oduh99f02.bkt.clouddn.com/image/favicon.png" />
+        <link rel="icon" href="//yemengying.com/qiniu/image/image/favicon.png" />
     
 
 
@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+                            <img class="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="http://oduh99f02.bkt.clouddn.com/2016-12-25-19.pic_hd.jpg" />
+            <img id="avatar" src="//yemengying.com/qiniu/image/2016-12-25-19.pic_hd.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -283,15 +283,15 @@ var _hmt = _hmt || [];
 <p>这周真是发生了不少事，脑袋和心里一直都很乱，周二参加了一场面试，经历了笔试+3轮面试，周五正式提交了离职申请。要开始新的征程了，意外的有些失落和不舍，毕竟是毕业后的第一份工作，毕竟在这认识了一群可爱的人，毕竟在这学到了很多东西,毕竟这有8000+的aeron chair!!!。可既然已经做了选择就没有退路了，勇敢往下走吧，希望接下来的三周可以把手头上的工作做好交接善始善终，也希望以后不会后悔今天的选择。</p>
 </blockquote>
 <a id="more"></a>
-<p><img src="http://oduh99f02.bkt.clouddn.com/image/fighting.jpg" alt="fighting！！！">    </p>
+<p><img src="//yemengying.com/qiniu/image/image/fighting.jpg" alt="fighting！！！">    </p>
 <p>进入正题，在周二面试时，一面的面试官有问到 HashMap 是否是线程安全的，如何在线程安全的前提下使用 HashMap,其实也就是 <code>HashMap</code>，<code>Hashtable</code>，<code>ConcurrentHashMap</code> 和 <code>synchronized Map</code> 的原理和区别。当时有些紧张只是简单说了下HashMap不是线程安全的；Hashtable 线程安全，但效率低，因为是 Hashtable 是使用 synchronized 的，所有线程竞争同一把锁；而 ConcurrentHashMap 不仅线程安全而且效率高，因为它包含一个 segment 数组，将数据分段存储，给每一段数据配一把锁，也就是所谓的锁分段技术。当时忘记了 synchronized Map 和解释一下 HashMap 为什么线程不安全。面试结束后问了下面试官哪里有些不足，面试官说上面这个问题的回答算过关，但可以在深入一些或者自己动手尝试一下。so~~~虽然拿到了 offer，但还是再整理一下，不能得过且过啊。</p>
 <h3 id="为什么HashMap是线程不安全的"><a href="#为什么HashMap是线程不安全的" class="headerlink" title="为什么HashMap是线程不安全的"></a>为什么HashMap是线程不安全的</h3><p>总说 HashMap 是线程不安全的，不安全的，不安全的，那么到底为什么它是线程不安全的呢？要回答这个问题就要先来简单了解一下 HashMap 源码中的使用的<code>存储结构</code>(这里引用的是 Java 8 的源码，与7是不一样的)和它的<code>扩容机制</code>。</p>
 <h4 id="HashMap的内部存储结构"><a href="#HashMap的内部存储结构" class="headerlink" title="HashMap的内部存储结构"></a>HashMap的内部存储结构</h4><p>下面是 HashMap 使用的存储结构:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> hash;</div><div class="line">        <span class="keyword">final</span> K key;</div><div class="line">        V value;</div><div class="line">        Node&lt;K,V&gt; next;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>可以看到 HashMap 内部存储使用了一个 Node 数组(默认大小是16)，而 Node 类包含一个类型为 Node 的 next 的变量，也就是相当于一个链表，所有根据 hash 值计算的 bucket 一样的 key 会存储到同一个链表里(即产生了冲突)，大概就是下面图的样子(顺便推荐个在线画图的网站<a href="http://creately.com/Draw-UML-and-Class-Diagrams-Online" target="_blank" rel="external">Creately</a>)。<br><img src="http://oduh99f02.bkt.clouddn.com/image/node1.png" alt="HashMap内部存储结果"></p>
+<p>可以看到 HashMap 内部存储使用了一个 Node 数组(默认大小是16)，而 Node 类包含一个类型为 Node 的 next 的变量，也就是相当于一个链表，所有根据 hash 值计算的 bucket 一样的 key 会存储到同一个链表里(即产生了冲突)，大概就是下面图的样子(顺便推荐个在线画图的网站<a href="http://creately.com/Draw-UML-and-Class-Diagrams-Online" target="_blank" rel="external">Creately</a>)。<br><img src="//yemengying.com/qiniu/image/image/node1.png" alt="HashMap内部存储结果"></p>
 <blockquote>
 <p>需要注意的是，在 Java 8 中如果 hash 值相同的 key 数量大于指定值(默认是8)时使用平衡树来代替链表，这会将get()方法的性能从O(n)提高到O(logn)。具体的可以看我的另一篇博客<a href="http://yemengying.com/2016/02/03/%E8%AF%91-Java%E4%B8%ADHashMap%E5%92%8CLinkedHashMap%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81/">Java 8中HashMap和LinkedHashMap如何解决冲突</a>。</p>
 </blockquote>
-<h4 id="HashMap的自动扩容机制"><a href="#HashMap的自动扩容机制" class="headerlink" title="HashMap的自动扩容机制"></a>HashMap的自动扩容机制</h4><p>HashMap 内部的 Node 数组默认的大小是16，假设有100万个元素，那么最好的情况下每个 hash 桶里都有62500个元素😱，这时get(),put(),remove()等方法效率都会降低。为了解决这个问题，HashMap 提供了自动扩容机制，当元素个数达到数组大小<em> loadFactor 后会扩大数组的大小，在默认情况下，数组大小为16，loadFactor 为0.75，也就是说当 HashMap 中的元素超过16\</em>0.75=12时，会把数组大小扩展为2*16=32，并且重新计算每个元素在新数组中的位置。如下图所示(<a href="http://coding-geek.com/how-does-a-hashmap-work-in-java/" target="_blank" rel="external">图片来源</a>，权侵删)。<br><img src="http://oduh99f02.bkt.clouddn.com/image/resizing_of_java_hashmap.jpg" alt="自动扩容"><br>从图中可以看到没扩容前，获取 EntryE 需要遍历5个元素，扩容之后只需要2次。</p>
+<h4 id="HashMap的自动扩容机制"><a href="#HashMap的自动扩容机制" class="headerlink" title="HashMap的自动扩容机制"></a>HashMap的自动扩容机制</h4><p>HashMap 内部的 Node 数组默认的大小是16，假设有100万个元素，那么最好的情况下每个 hash 桶里都有62500个元素😱，这时get(),put(),remove()等方法效率都会降低。为了解决这个问题，HashMap 提供了自动扩容机制，当元素个数达到数组大小<em> loadFactor 后会扩大数组的大小，在默认情况下，数组大小为16，loadFactor 为0.75，也就是说当 HashMap 中的元素超过16\</em>0.75=12时，会把数组大小扩展为2*16=32，并且重新计算每个元素在新数组中的位置。如下图所示(<a href="http://coding-geek.com/how-does-a-hashmap-work-in-java/" target="_blank" rel="external">图片来源</a>，权侵删)。<br><img src="//yemengying.com/qiniu/image/image/resizing_of_java_hashmap.jpg" alt="自动扩容"><br>从图中可以看到没扩容前，获取 EntryE 需要遍历5个元素，扩容之后只需要2次。</p>
 <h4 id="为什么线程不安全"><a href="#为什么线程不安全" class="headerlink" title="为什么线程不安全"></a>为什么线程不安全</h4><p>个人觉得 HashMap 在并发时可能出现的问题主要是两方面,首先如果多个线程同时使用put方法添加元素，而且假设正好存在两个 put 的 key 发生了碰撞(根据 hash 值计算的 bucket 一样)，那么根据 HashMap 的实现，这两个 key 会添加到数组的同一个位置，这样最终就会发生其中一个线程的 put 的数据被覆盖。第二就是如果多个线程同时检测到元素个数超过数组大小* loadFactor ，这样就会发生多个线程同时对 Node 数组进行扩容，都在重新计算元素位置以及复制数据，但是最终只有一个线程扩容后的数组会赋给 table，也就是说其他线程的都会丢失，并且各自线程 put 的数据也丢失。<br>关于 HashMap 线程不安全这一点，《Java并发编程的艺术》一书中是这样说的：</p>
 <blockquote>
 <p>HashMap 在并发执行 put 操作时会引起死循环，导致 CPU 利用率接近100%。因为多线程会导致 HashMap 的 Node 链表形成环形数据结构，一旦形成环形数据结构，Node 的 next 节点永远不为空，就会在获取 Node 时产生死循环。</p>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>欢迎指正错误，欢迎一起讨论。另外，针对提离职当天发生的一个小插曲，真真是给我上了一课，不是所有人都能接受实话的，只想引用欢乐颂里安迪的一句话:常与同好争高下,不与傻瓜论短长。</p>
 </blockquote>
-<p>都看到这了，关注个公众号再走吧🙈<br><img src="http://oduh99f02.bkt.clouddn.com/image/qrcode.jpg" alt="Running Geek"></p>
+<p>都看到这了，关注个公众号再走吧🙈<br><img src="//yemengying.com/qiniu/image/image/qrcode.jpg" alt="Running Geek"></p>
 
         
         </div>
