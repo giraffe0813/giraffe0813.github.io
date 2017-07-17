@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>小死锁 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="最近线上偶尔就会报个死锁问题，上周终于解决了,周末整理下。虽然问题解决了，但是trace file里的死锁图还是不太理解。要是有人能给我讲讲那真是极好的，要是没人的话我就。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。再翻翻文档。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小死锁">
+<meta property="og:url" content="http://yemengying.com/2017/07/15/deadlock-in-oracle/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="最近线上偶尔就会报个死锁问题，上周终于解决了,周末整理下。虽然问题解决了，但是trace file里的死锁图还是不太理解。要是有人能给我讲讲那真是极好的，要是没人的话我就。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。再翻翻文档。">
+<meta property="og:image" content="https://yemengying.com/qiniu/image/2017-07-17-12.pic_hd.jpg">
+<meta property="og:updated_time" content="2017-07-17T14:33:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小死锁">
+<meta name="twitter:description" content="最近线上偶尔就会报个死锁问题，上周终于解决了,周末整理下。虽然问题解决了，但是trace file里的死锁图还是不太理解。要是有人能给我讲讲那真是极好的，要是没人的话我就。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。再翻翻文档。">
+<meta name="twitter:image" content="https://yemengying.com/qiniu/image/2017-07-17-12.pic_hd.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="https://yemengying.com/qiniu/image/image/favicon.png" />
+    
+
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
+    <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.5/index.js"></script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-05-02-3.pic.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                53
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                35
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/07/15/deadlock-in-oracle/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            小死锁
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/15/deadlock-in-oracle/">
+            <time datetime="2017-07-15T14:52:22.000Z" itemprop="datePublished">2017-07-15</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Oracle/">Oracle</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Oracle/">Oracle</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题原因"><span class="toc-number">2.</span> <span class="toc-text">问题原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决办法"><span class="toc-number">3.</span> <span class="toc-text">解决办法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遗留问题"><span class="toc-number">5.</span> <span class="toc-text">遗留问题</span></a></li></ol>
+                </div>
+            
+            <blockquote>
+<p> 最近线上偶尔就会报个死锁问题，上周终于解决了,周末整理下。虽然问题解决了，但是trace file里的死锁图还是不太理解。要是有人能给我讲讲那真是极好的，要是没人的话我就。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。再翻翻文档。 </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>近一个月线上偶尔就会报死锁的问题，错误如下图：<br><img src="https://yemengying.com/qiniu/image/2017-07-17-12.pic_hd.jpg" alt=""></p>
+<p><code>“ORA-00060: deadlock detected while waiting for resource ”</code>这个错误说明Oracle 数据库监测到了死锁的存在。这时 Oracle 会回滚造成死锁的其中一个事务，另一个事务正常执行(不会察觉到发生了死锁)，并向执行了回滚的事务抛出上面的错误信息。</p>
+<p>在 DBA 的帮助下定位到了造成死锁的两块代码。由于项目有很多的悲观锁，即利用“SELECT…FOR UPDATE”对资源加排他行级锁，所以第一感觉就是看看这两段代码有没有按照相反的顺序对两个或多个资源进行加锁。</p>
+<p>不过分析过代码之后却没有立刻找到可能造成死锁的原因，两块代码对数据库资源的操作如下表。</p>
+<p><img src="https://yemengying.com/qiniu/image/2017-07-17-Screen%20Shot%202017-07-17%20at%2010.16.52%20PM.png" alt=""></p>
+<p>从表面上看Session 1貌似中只锁了 actor1 并更新，Session 2中依次锁了 actor2 和 actor1，不满足互相等待对方加锁的资源，就算是Session1持有actor1锁时间过长，导致 Session2 一直拿不到 actor1 的锁，也应该报“lock wait timeout”，而不是死锁。</p>
+<p>为了验证确实是这两段代码造成的死锁，写了测试代码，开了两个线程，模仿死锁的这两段代码，去掉了与数据库无关的业务逻辑，看看能否重现。毕竟心里还有点小怀疑，会不会是 DBA 搞错了，不是这两段代码的问题。<br>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringApplicationConfiguration</span>(classes = DeadLockTest.class)</div><div class="line"><span class="meta">@ImportAutoConfiguration</span>(&#123;CommonConfig.class&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> <span class="keyword">extends</span> <span class="title">BaseUnitDbTest</span> </span>&#123;</div><div class="line">  Long lenderId = <span class="number">16642L</span>;</div><div class="line">  Long borrowerId = <span class="number">16643L</span>;</div><div class="line">  <span class="meta">@Autowired</span></div><div class="line">  <span class="keyword">private</span> ActorService actorService;</div><div class="line">  <span class="meta">@Autowired</span></div><div class="line">  <span class="meta">@Qualifier</span>(CommonConfig.ORACLE_TRANSACTION_MANAGER_NAME)</div><div class="line">  <span class="keyword">private</span> PlatformTransactionManager platformTransactionManager;</div><div class="line">  <span class="keyword">private</span> ExecutorService es = Executors.newFixedThreadPool(<span class="number">5</span>, <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(<span class="string">"Test-Thread-%d"</span>).build());</div><div class="line"></div><div class="line">  <span class="meta">@Test</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRefreshAndLockActor</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    es.invokeAll(Lists.newArrayList(<span class="keyword">this</span>::lock1, <span class="keyword">this</span>::lock2));</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> Void <span class="title">lock1</span><span class="params">()</span> </span>&#123;</div><div class="line">    TransactionTemplate t = <span class="keyword">new</span> TransactionTemplate(platformTransactionManager);</div><div class="line">    t.execute((s) -&gt; &#123;</div><div class="line">      System.out.println(<span class="string">"Before Lock "</span> + Thread.currentThread().getName());</div><div class="line">      Actor lender = actorService.refreshAndLockActor(lenderId);</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        Thread.sleep(<span class="number">6000</span>);</div><div class="line">      &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">      &#125;</div><div class="line">      lender.setLockedForInv(BigDecimal.ONE);</div><div class="line">      actorService.update(lender);</div><div class="line">      System.out.println(<span class="string">"After Lock "</span> + Thread.currentThread().getName());</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> Void <span class="title">lock2</span><span class="params">()</span> </span>&#123;</div><div class="line">    TransactionTemplate t = <span class="keyword">new</span> TransactionTemplate(platformTransactionManager);</div><div class="line">    t.execute((s) -&gt; &#123;</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        Thread.sleep(<span class="number">1000</span>);</div><div class="line">      &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">      &#125;</div><div class="line">      System.out.println(<span class="string">"Before Lock "</span> + Thread.currentThread().getName());</div><div class="line">      Actor borrower = actorService.refreshAndLockActor(borrowerId);</div><div class="line">      Actor lender = actorService.refreshAndLockActor(lenderId);</div><div class="line">      System.out.println(<span class="string">"After Lock "</span> + Thread.currentThread().getName());</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果。。。真的报了死锁。。。。<br><img src="https://yemengying.com/qiniu/image/2017-07-15-images.jpeg" alt=""><br>控制台的报错如下图：<br><img src="https://yemengying.com/qiniu/image/2017-07-17-Screen%20Shot%202017-07-17%20at%2010.19.56%20PM.png" alt=""></p>
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>已经确定了造成死锁的两段代码，接下来就差找出原因了。<br><code>SELECT ... FOR UPDATE</code>比较直观，就是对资源加行级排他锁，应该没什么猫腻。那就肯定是在<code>UPDATE Actor1</code>的时候有什么不为人知的操作，导致 Session1 需要获取 Actor2 的锁，导致死锁。</p>
+<p>第一怀疑的是触发器，虽然目前公司已经禁止使用触发器了，但由于历史原因主库还是遗留着一些触发器。和明佳排查了所有相关的触发器之后，基本排除了是由触发器引起的。</p>
+<p>不过虽然这个问题不是触发器的锅，但还是提会到了，在涉及到触发器时，如果不是对系统特别熟，排查错误真的很困难。。。</p>
+<p>排除了触发器之后，DBA 提出那就只能是外键导致的了。在 DBA 把 dev环境数据库的外键去掉后，再次执行测试代码，果然就不再报死锁了。</p>
+<p>原来 Actor 表上的 refer_id 是一个关联 Actor 表主键的外键(Self-Referential Integrity Constraints)，而 actor1 的 refer_id 正好是 actor2 的 id，所以在更新 actor1 的全字段的时候，也更新了 refer_id(其实值没变)，由于外键的约束，在将 actor1 的 refer_id 更新为 actor2的 id 时，需要确保 actor2 是存在的，并且在更新过程中，不能被删除，所以 Session1 会申请 actor2 的锁(个人理解不一定准确)。而这时 actor2 的锁已经被 Session2 持有了，并且 Session2 正在等待 actor1 的锁，就发生了死锁。</p>
+<p>用图来描述下：<br><img src="https://yemengying.com/qiniu/image/2017-07-17-102519.jpg" alt="deadlock"></p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>费了一天多才把问题找出来，用了几分钟就 fix 了。其实我只是需要更新 Actor 上的两个字段，根本不需要更新全部字段，只是当时在写的时候已经有更新全字段的方法了，就偷了个懒。。。。。。</p>
+<p>所以解决办法就是不再调用更新全字段的方法，加了个只更新部分字段的方法，这样就不会在更新 actor1 的外键字段了，也就不会造成在更新 actor1 的时候去请求 actor2 的锁了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>虽然这个问题不是触发器引起的，但禁用触发器还是很有道理滴，不然出问题查到吐血</li>
+<li>外键这个东东，也能不用就不用吧，由程序控制。其实现在公司已经不让用外键和触发器了，不过由于历史原因，一些老系统只能慢慢重构了。查了下，由于外键引起的死锁还是蛮多的，比较常见的是外键列不加索引，导致更新主表字段时锁住了子表，下篇blog可以学习下外键和死锁不得不说的那些事。算了，还是不立 flag 了，基本上说了下篇要写啥的，都没有下篇了。。。。</li>
+<li>不要更新全字段。抛开这个死锁问题，更新全字段也是很影响效率的。还是只更新有改动的字段吧。</li>
+<li>不能偷懒，当时省了5分钟，找 bug 花了一天多。。。都是泪</li>
+</ul>
+<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>问题虽然解决了，但是还有点小疑问的。这个死锁在 trace file 中的死锁图如下：<br><img src="https://yemengying.com/qiniu/image/2017-07-17-3.pic.jpg" alt="trace file"></p>
+<p>那么问题来了，两个 session 持有两个资源的 X 锁还是好理解的，但他们等待的为什么是 S 锁呢？？？求好心人的解答。<br><img src="https://yemengying.com/qiniu/image/2017-07-17-Screen%20Shot%202017-07-14%20at%204.37.56%20PM.png?imageMogr2/thumbnail/300x250!" alt=""></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/07/15/deadlock-in-oracle/" data-id="cj5897efz000kfb9lkzp0ct72" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/07/15/deadlock-in-oracle/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/07/15/deadlock-in-oracle/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/06/04/reddit-view-counting/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">【译】Reddit如何统计每个帖子的浏览量</div>
+        </a>
+    
+</nav>
+
+
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+   <script>
+   DisqusJS.getRecentComments(document.querySelector('#disqus-recent-comments'));
+   </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
