@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="最近线上偶尔就会报个死锁问题，上周终于解决了,周末整理下。虽然问题解决了，但是trace file里的死锁图还是不太理解。要是有人能给我讲讲那真是极好的，要是没人的话我就。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。再翻翻文档。">
 <meta property="og:image" content="https://yemengying.com/qiniu/image/2017-07-17-12.pic_hd.jpg">
-<meta property="og:updated_time" content="2017-07-17T14:33:30.000Z">
+<meta property="og:updated_time" content="2017-07-17T14:49:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小死锁">
 <meta name="twitter:description" content="最近线上偶尔就会报个死锁问题，上周终于解决了,周末整理下。虽然问题解决了，但是trace file里的死锁图还是不太理解。要是有人能给我讲讲那真是极好的，要是没人的话我就。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。再翻翻文档。">
@@ -309,7 +309,7 @@ var _hmt = _hmt || [];
 <li>不能偷懒，当时省了5分钟，找 bug 花了一天多。。。都是泪</li>
 </ul>
 <h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>问题虽然解决了，但是还有点小疑问的。这个死锁在 trace file 中的死锁图如下：<br><img src="https://yemengying.com/qiniu/image/2017-07-17-3.pic.jpg" alt="trace file"></p>
-<p>那么问题来了，两个 session 持有两个资源的 X 锁还是好理解的，但他们等待的为什么是 S 锁呢？？？求好心人的解答。<br><img src="https://yemengying.com/qiniu/image/2017-07-17-Screen%20Shot%202017-07-14%20at%204.37.56%20PM.png?imageMogr2/thumbnail/300x250!" alt=""></p>
+<p>那么问题来了，两个 session 持有两个资源的 X 锁还是好理解的，但他们等待的为什么是 S 锁呢？？？至少 Session2 是在等待 actor1 的排他行级锁的，不应该是也是等待 X 么。求好心人的解答。<br><img src="https://yemengying.com/qiniu/image/2017-07-17-Screen%20Shot%202017-07-14%20at%204.37.56%20PM.png?imageMogr2/thumbnail/300x250!" alt=""></p>
 
         
         </div>
@@ -320,7 +320,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2017/07/15/deadlock-in-oracle/" data-id="cj5897efz000kfb9lkzp0ct72" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2017/07/15/deadlock-in-oracle/" data-id="cj589n1fy000sgl9l6pkat792" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
