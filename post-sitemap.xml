@@ -15,6 +15,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2015/11/19/EsGiraffe-%E5%88%A9%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84%E6%8B%BC%E6%8E%A5Elasticsearch%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/03/18/Elasticsearch%E9%85%8D%E7%BD%AE%E9%A1%B9-Local-gateway-HTTP-Indices-Network-Settings%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -24,14 +32,6 @@
 
     <url>
         <loc>http://yemengying.com/2016/02/20/Java-8-%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96-behavior-parameterization/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2015/11/19/EsGiraffe-%E5%88%A9%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84%E6%8B%BC%E6%8E%A5Elasticsearch%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -63,6 +63,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/06/25/cleanCode4naming/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/05/15/broken-window-theory/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,14 +80,6 @@
 
     <url>
         <loc>http://yemengying.com/2016/11/18/clean-code-clean-log/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/06/25/cleanCode4naming/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -167,7 +167,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/10/15/javaConfig-vs-XML/</loc>
+        <loc>http://yemengying.com/2016/05/13/jvm-GC/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -175,7 +175,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/05/13/jvm-GC/</loc>
+        <loc>http://yemengying.com/2016/10/15/javaConfig-vs-XML/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -279,7 +279,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/09/12/spring-transaction/</loc>
+        <loc>http://yemengying.com/2015/09/19/spring-rabbitmq-demo/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -287,7 +287,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/09/19/spring-rabbitmq-demo/</loc>
+        <loc>http://yemengying.com/2015/09/12/spring-transaction/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -311,7 +311,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/03/15/zootopia/</loc>
+        <loc>http://yemengying.com/2016/05/07/threadsafe-hashmap/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -319,7 +319,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/05/07/threadsafe-hashmap/</loc>
+        <loc>http://yemengying.com/2016/03/15/zootopia/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -335,7 +335,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/09/10/%E4%BD%BF%E4%BB%A3%E7%A0%81%E6%9B%B4%E7%AE%80%E6%B4%81-%E4%B8%80-List%E7%9B%B8%E5%85%B3/</loc>
+        <loc>http://yemengying.com/2015/10/28/%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84mybatis%E6%8F%92%E5%85%A5%E5%AF%B9%E8%B1%A1%E6%97%B6%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E7%94%9F%E6%88%90sql%E8%AF%AD%E5%8F%A5/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -343,7 +343,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/10/28/%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84mybatis%E6%8F%92%E5%85%A5%E5%AF%B9%E8%B1%A1%E6%97%B6%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E7%94%9F%E6%88%90sql%E8%AF%AD%E5%8F%A5/</loc>
+        <loc>http://yemengying.com/2015/09/10/%E4%BD%BF%E4%BB%A3%E7%A0%81%E6%9B%B4%E7%AE%80%E6%B4%81-%E4%B8%80-List%E7%9B%B8%E5%85%B3/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

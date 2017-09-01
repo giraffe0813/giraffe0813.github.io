@@ -149,6 +149,13 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/tags/rabbitMq/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yemengying.com/tags/transaction/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -163,7 +170,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/tags/rabbitMq/</loc>
+        <loc>http://yemengying.com/tags/hashMap/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -171,13 +178,6 @@
 
     <url>
         <loc>http://yemengying.com/tags/%E7%94%B5%E5%BD%B1/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/tags/hashMap/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
