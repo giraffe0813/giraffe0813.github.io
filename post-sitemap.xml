@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2017/09/04/oracle-foreignkey-lock/</loc>
+        <lastmod>2017-09-05T03:39:08.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2017/07/15/deadlock-in-oracle/</loc>
         <lastmod>2017-07-17T14:55:34.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -47,14 +55,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/11/18/clean-code-clean-log/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yemengying.com/2016/04/24/Redis-Persistence/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,6 +72,14 @@
 
     <url>
         <loc>http://yemengying.com/2016/05/15/broken-window-theory/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/2016/11/18/clean-code-clean-log/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -143,22 +151,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/06/05/interview/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/10/15/javaConfig-vs-XML/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yemengying.com/2016/11/15/i-love-eve/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -175,7 +167,15 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/07/03/keep-going/</loc>
+        <loc>http://yemengying.com/2016/06/05/interview/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/2016/10/15/javaConfig-vs-XML/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -191,7 +191,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/</loc>
+        <loc>http://yemengying.com/2016/07/03/keep-going/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -208,6 +208,14 @@
 
     <url>
         <loc>http://yemengying.com/2017/05/18/mysql-unique-key-null/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -239,6 +247,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/10/27/runningman-7012/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/09/11/solid-go-design-1/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -255,14 +271,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/10/27/runningman-7012/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yemengying.com/2016/11/14/something-about-spring-transaction/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -271,7 +279,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/09/19/spring-rabbitmq-demo/</loc>
+        <loc>http://yemengying.com/2016/07/14/spring-bean-life-cycle/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -279,7 +287,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/07/14/spring-bean-life-cycle/</loc>
+        <loc>http://yemengying.com/2015/09/19/spring-rabbitmq-demo/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -367,7 +375,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/10/29/%E8%AF%91-%E4%BB%A5%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%BA%E4%BE%8B%E9%98%90%E8%BF%B0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8wait%EF%BC%8Cnotify%E5%92%8CnotifyAll/</loc>
+        <loc>http://yemengying.com/2016/02/03/%E8%AF%91-Java%E4%B8%ADHashMap%E5%92%8CLinkedHashMap%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -375,7 +383,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/10/26/%E8%AF%91-%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AE%E4%B8%80%E4%B8%AAArrayList-clear-vs-removeAll/</loc>
+        <loc>http://yemengying.com/2015/10/29/%E8%AF%91-%E4%BB%A5%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%BA%E4%BE%8B%E9%98%90%E8%BF%B0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8wait%EF%BC%8Cnotify%E5%92%8CnotifyAll/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -391,7 +399,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/02/03/%E8%AF%91-Java%E4%B8%ADHashMap%E5%92%8CLinkedHashMap%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81/</loc>
+        <loc>http://yemengying.com/2015/10/26/%E8%AF%91-%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AE%E4%B8%80%E4%B8%AAArrayList-clear-vs-removeAll/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

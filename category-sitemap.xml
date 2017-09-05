@@ -21,13 +21,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/redis/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -36,6 +29,13 @@
 
     <url>
         <loc>http://yemengying.com/categories/angularJs/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yemengying.com/categories/%E9%9A%8F%E7%AC%94/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -105,13 +105,6 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/list/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yemengying.com/categories/linux/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -119,8 +112,15 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/categories/java/list/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yemengying.com/categories/Oracle/</loc>
-        <lastmod>2017-07-17T14:55:34.000Z</lastmod>
+        <lastmod>2017-09-05T03:39:08.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

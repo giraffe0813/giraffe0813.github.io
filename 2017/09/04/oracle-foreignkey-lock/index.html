@@ -7,20 +7,20 @@
     <meta name="baidu-site-verification" content="lt822VnP06" />
     <meta name="baidu-site-verification" content="0Ajixw1Puk" />
     <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
-    <title>[译]Java 8中HashMap和LinkedHashMap如何解决冲突 | Giraffe&#39;s Home</title>
+    <title>Oracle 中的外键与锁 | Giraffe&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="原文来自一个java大牛的博客 原文地址http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。">
+    <meta name="description" content="算是接上篇吧。。。 内容主要来自 Oracle 官方文档，自己重新画了下图。图中配色来自大神 draveness 的文章，小清新的配色真是美美哒。看来我在学画图的路上还要修炼很久啊。。。。。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[译]Java 8中HashMap和LinkedHashMap如何解决冲突">
-<meta property="og:url" content="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/index.html">
+<meta property="og:title" content="Oracle 中的外键与锁">
+<meta property="og:url" content="http://yemengying.com/2017/09/04/oracle-foreignkey-lock/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
-<meta property="og:description" content="原文来自一个java大牛的博客 原文地址http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。">
-<meta property="og:image" content="http://yemengying.com/images/thumbnail7.jpg">
-<meta property="og:updated_time" content="2017-06-10T07:56:03.000Z">
+<meta property="og:description" content="算是接上篇吧。。。 内容主要来自 Oracle 官方文档，自己重新画了下图。图中配色来自大神 draveness 的文章，小清新的配色真是美美哒。看来我在学画图的路上还要修炼很久啊。。。。。">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-09-04-unindexed.png">
+<meta property="og:updated_time" content="2017-09-05T03:39:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[译]Java 8中HashMap和LinkedHashMap如何解决冲突">
-<meta name="twitter:description" content="原文来自一个java大牛的博客 原文地址http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。">
-<meta name="twitter:image" content="http://yemengying.com/images/thumbnail7.jpg">
+<meta name="twitter:title" content="Oracle 中的外键与锁">
+<meta name="twitter:description" content="算是接上篇吧。。。 内容主要来自 Oracle 官方文档，自己重新画了下图。图中配色来自大神 draveness 的文章，小清新的配色真是美美哒。看来我在学画图的路上还要修炼很久啊。。。。。">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-09-04-unindexed.png">
     
 
     
@@ -235,7 +235,7 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="2017/09/04/oracle-foreignkey-lock/" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -244,7 +244,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            [译]Java 8中HashMap和LinkedHashMap如何解决冲突
+            Oracle 中的外键与锁
         </h1>
     
 
@@ -252,8 +252,8 @@ var _hmt = _hmt || [];
                     
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">
-            <time datetime="2016-02-03T08:23:39.000Z" itemprop="datePublished">2016-02-03</time>
+        <a href="/2017/09/04/oracle-foreignkey-lock/">
+            <time datetime="2017-09-04T10:31:07.000Z" itemprop="datePublished">2017-09-04</time>
         </a>
     </div>
 
@@ -261,13 +261,13 @@ var _hmt = _hmt || [];
                     
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/hashmap/">hashmap</a>
+        <a class="article-category-link" href="/categories/Oracle/">Oracle</a>
     </div>
 
                     
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+        <a class="tag-link" href="/tags/Oracle/">Oracle</a>
     </div>
 
                 </div>
@@ -278,27 +278,43 @@ var _hmt = _hmt || [];
             
                 <div id="toc" class="toc-article">
                 <strong class="toc-title">文章目录</strong>
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么时候会产生冲突"><span class="toc-number">1.</span> <span class="toc-text">什么时候会产生冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">2.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关阅读"><span class="toc-number">3.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#未加索引的外键与锁"><span class="toc-number">1.</span> <span class="toc-text">未加索引的外键与锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加索引的外键与锁"><span class="toc-number">2.</span> <span class="toc-text">加索引的外键与锁</span></a></li></ol>
                 </div>
             
             <blockquote>
-<p>原文来自一个java大牛的博客 原文地址<a href="http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html" target="_blank" rel="external">http://javarevisited.blogspot.jp/2016/01/how-does-java-hashmap-or-linkedhahsmap-handles.html</a> 博客讲解了Java 8中HashMap和LinkedHashMap是如何解决冲突的。</p>
+<p>算是接上篇吧。。。 内容主要来自 Oracle 官方文档，自己重新画了下图。图中配色来自大神 draveness 的<a href="http://draveness.me/mysql-innodb.html" target="_blank" rel="external">文章</a>，小清新的配色真是美美哒。看来我在学画图的路上还要修炼很久啊。。。。。  </p>
 </blockquote>
 <a id="more"></a>
-<p>在Java 8 之前，HashMap和其他基于map的类都是通过链地址法解决冲突，它们使用单向链表来存储相同索引值的元素。在最坏的情况下，这种方式会将HashMap的get方法的性能从O(1)降低到O(n)。为了解决在频繁冲突时hashmap性能降低的问题，Java 8中使用平衡树来替代链表存储冲突的元素。这意味着我们可以将最坏情况下的性能从O(n)提高到O(logn)。<br>在Java 8中使用常量<strong>TREEIFY_THRESHOLD</strong>来控制是否切换到平衡树来存储。目前，这个常量值是8，这意味着当有超过8个元素的索引一样时，HashMap会使用树来存储它们。<br>这一改变是为了继续优化常用类。大家可能还记得在Java 7中为了优化常用类对ArrayList和HashMap采用了延迟加载的机制，在有元素加入之前不会分配内存，这会减少空的链表和HashMap占用的内存。<br>这一动态的特性使得HashMap一开始使用链表，并在冲突的元素数量超过指定值时用平衡二叉树替换链表。不过这一特性在所有基于hash table的类中并没有，例如Hashtable和WeakHashMap。<br>目前，只有<strong>ConcurrentHashMap</strong>,<strong>LinkedHashMap</strong>和<strong>HashMap</strong>会在频繁冲突的情况下使用平衡树。</p>
-<h3 id="什么时候会产生冲突"><a href="#什么时候会产生冲突" class="headerlink" title="什么时候会产生冲突"></a>什么时候会产生冲突</h3><p>HashMap中调用<strong>hashCode()</strong>方法来计算hashCode。<br>由于在Java中两个不同的对象可能有一样的hashCode,所以不同的键可能有一样hashCode，从而导致冲突的产生。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>HashMap在处理冲突时使用链表存储相同索引的元素。</li>
-<li>从Java 8开始，HashMap，ConcurrentHashMap和LinkedHashMap在处理频繁冲突时将使用平衡树来代替链表，当同一hash桶中的元素数量超过特定的值便会由链表切换到平衡树，这会将get()方法的性能从O(n)提高到O(logn)。</li>
-<li>当从链表切换到平衡树时，HashMap迭代的顺序将会改变。不过这并不会造成什么问题，因为HashMap并没有对迭代的顺序提供任何保证。</li>
-<li>从Java 1中就存在的Hashtable类为了保证迭代顺序不变，即便在频繁冲突的情况下也不会使用平衡树。这一决定是为了不破坏某些较老的需要依赖于Hashtable迭代顺序的Java应用。</li>
-<li>除了Hashtable之外，WeakHashMap和IdentityHashMap也不会在频繁冲突的情况下使用平衡树。</li>
-<li>使用HashMap之所以会产生冲突是因为使用了键对象的hashCode()方法，而equals()和hashCode()方法不保证不同对象的hashCode是不同的。需要记住的是，相同对象的hashCode一定是相同的，但相同的hashCode不一定是相同的对象。</li>
-<li>在HashTable和HashMap中，冲突的产生是由于不同对象的hashCode()方法返回了一样的值。</li>
+<p>锁是一种可以防止多个事务错误的更新共享数据的机制，在维护数据库并发性和一致性方面起着关键的作用。在 Oracle 堆组织表中， 数据库锁的行为与外键列是否有索引有关。如果外键未加索引，那么子表可能会被频繁锁住，从而导致死锁，降低并发性。所以，Oracle 官方建议绝对多数情况都为外键加索引，除非父表的唯一键/主键绝对不会更新或删除。</p>
+<h2 id="未加索引的外键与锁"><a href="#未加索引的外键与锁" class="headerlink" title="未加索引的外键与锁"></a>未加索引的外键与锁</h2><p>当以下条件都满足时，数据库会获取子表的全表锁：</p>
+<ul>
+<li>子表的外键列未加索引</li>
+<li>父表的主键被修改(比如：删除一行或主键被修改)或者合并到父表。在父表插入一条记录是不会锁住子表的。</li>
 </ul>
-<p>以上就是Java中HashMap如何处理冲突。这种方法被称为链地址法，因为使用链表存储同一桶内的元素。通常情况HashMap，HashSet，LinkedHashSet，LinkedHashMap，ConcurrentHashMap，HashTable，IdentityHashMap和WeakHashMap均采用这种方法处理冲突。</p>
-<p>从JDK 8开始，HashMap，LinkedHashMap和ConcurrentHashMap为了提升性能，在频繁冲突的时候使用平衡树来替代链表。因为HashSet内部使用了HashMap，LinkedHashSet内部使用了LinkedHashMap，所以他们的性能也会得到提升。</p>
-<h3 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h3><p><a href="http://www.amazon.com/Data-Structures-Algorithms-Michael-Goodrich/dp/0470383267?tag=javamysqlanta-20" target="_blank" rel="external">Data Structure and Algorithm in Java</a><br><a href="http://www.amazon.com/Java-Performance-The-Definitive-Guide/dp/1449358454?tag=javamysqlanta-20" target="_blank" rel="external">Java Performance The Definitive Guide</a></p>
+<p>假设 hr.departments 是父表，hr.employees 是子表， hr.employees 中的 department_id 是未加索引的外键列。下图展现了修改父表 department_id = 60 这一记录的主键时，数据库加锁的情况：</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-09-04-unindexed.png" alt="unindexed_foreign_key"></p>
+<p>在上图中，数据库在更新父表 department 60 这一记录的主键时，会获得子表 employees 的全表锁。这样其他会话可以查询子表但不允许更新子表。子表的表锁会在父表更新完成后立刻释放。如果修改父表多条记录，那么修改每一条都会获得子表的表锁并释放。</p>
+<p>在 Oracle 9i 及以上版本中，全表锁都是短期的，仅在 DML 操作期间存在，而不是整个事务。但即便如此，还是要避免，因为全表锁可能会导致死锁。Tom 也曾说过，导致死锁的头号原因就是外键未加索引(第二号原因是表上的位图索引遭到并发更新)。</p>
+<blockquote>
+<p>需要注意，子表的 DML 不会获得父表的表锁  </p>
+</blockquote>
+<h2 id="加索引的外键与锁"><a href="#加索引的外键与锁" class="headerlink" title="加索引的外键与锁"></a>加索引的外键与锁</h2><p>当以下条件都满足时，数据库不会获得子表的全表锁。</p>
+<ul>
+<li>子表的外键列已加索引</li>
+<li>父表的主键正在被修改(比如：删除一行或主键被修改)或合并到父表</li>
+</ul>
+<p>下面的图展示了子表 employees 的外键列 department_id 加了索引。 当一个事务从父表 department 中删除 department 280 时， 这一操作不会引起数据库获得子表的全表锁。</p>
+<p>父表上的锁是为了防止其他事务获取表级排他锁，但不会阻止父表或子表上的 DML  操作。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-09-03-indexed-1.png" alt="indexed_foreign_key"></p>
+<p>如果子表指明了 <code>ON DELETE CASCADE</code>, 那么删除父表会导致删除子表对应的记录。比如删除父表 department 280 这一记录，那么子表 employees 中 department_id 为 280 的记录也会被删除。 在这种情况下，加锁的规则与删除完主表后再删除子表的记录是一样的。</p>
+<p>这篇是不是有点水啊。。。。是时候放出我姑家的小霸王 cookie 宝宝撑下场了。</p>
+<blockquote>
+<p>虽然我又咬人，又乱叫，还喜欢对着窗帘小便。但我知道我是个好狗狗。<br>                                         ————cookie                                                                            </p>
+</blockquote>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-09-04-cookie2.jpg?imageMogr2/thumbnail/400x500!" alt=""></p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-09-04-cookie4.jpg?imageMogr2/thumbnail/400x500!" alt=""></p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-09-04-cookie3.jpg?imageMogr2/thumbnail/400x500!" alt=""></p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-09-04-cookie1.jpg?imageMogr2/thumbnail/400x500!" alt=""></p>
 
         
         </div>
@@ -309,7 +325,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/" data-id="cj771rgg3004gbq9lx83hy5ml" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2017/09/04/oracle-foreignkey-lock/" data-id="cj771rges002jbq9ljcnlzwai" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -377,7 +393,7 @@ var _hmt = _hmt || [];
 
             
     
-        <a href="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2016/02/03/译-Java中HashMap和LinkedHashMap如何解决冲突/">评论</a>
+        <a href="http://yemengying.com/2017/09/04/oracle-foreignkey-lock/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/09/04/oracle-foreignkey-lock/">评论</a>
     
 
         </footer>
@@ -386,19 +402,10 @@ var _hmt = _hmt || [];
         
 <nav id="article-nav">
     
-        <a href="/2016/02/20/Java-8-行为参数化-behavior-parameterization/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Java 8 --行为参数化(behavior parameterization)
-                
-            </div>
-        </a>
     
-    
-        <a href="/2016/01/19/最近看的书/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/07/15/deadlock-in-oracle/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">最近看的书</div>
+            <div class="article-nav-title">小死锁</div>
         </a>
     
 </nav>
