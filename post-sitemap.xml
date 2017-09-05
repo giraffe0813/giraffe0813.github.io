@@ -55,7 +55,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2016/04/24/Redis-Persistence/</loc>
+        <loc>http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -63,7 +63,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/09/08/angularjs-bootstrap-ngDialog/</loc>
+        <loc>http://yemengying.com/2016/04/24/Redis-Persistence/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -199,6 +199,14 @@
     </url>
 
     <url>
+        <loc>http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/</loc>
+        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yemengying.com/2016/05/24/mysql-tuning/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -208,14 +216,6 @@
 
     <url>
         <loc>http://yemengying.com/2017/05/18/mysql-unique-key-null/</loc>
-        <lastmod>2017-06-10T07:56:03.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -391,7 +391,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/</loc>
+        <loc>http://yemengying.com/2015/10/26/%E8%AF%91-%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AE%E4%B8%80%E4%B8%AAArrayList-clear-vs-removeAll/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -399,7 +399,7 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/2015/10/26/%E8%AF%91-%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AE%E4%B8%80%E4%B8%AAArrayList-clear-vs-removeAll/</loc>
+        <loc>http://yemengying.com/2015/11/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Linux-Bible-9th-Edition/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
