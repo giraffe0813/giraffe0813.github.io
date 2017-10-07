@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>【译】Spring MVC 中的 DispatcherServlet | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="看白夜追凶看的，写个博客总感觉身后有人。。。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Spring MVC 中的 DispatcherServlet">
+<meta property="og:url" content="http://yemengying.com/2017/10/07/spring-dispatcherServlet/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="看白夜追凶看的，写个博客总感觉身后有人。。。。。">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-10-07-Desktop%20HD.png">
+<meta property="og:updated_time" content="2017-10-07T13:40:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Spring MVC 中的 DispatcherServlet">
+<meta name="twitter:description" content="看白夜追凶看的，写个博客总感觉身后有人。。。。。">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2017-10-07-Desktop%20HD.png">
+    
+
+    
+
+    
+        <link rel="icon" href="https://yemengying.com/qiniu/image/image/favicon.png" />
+    
+
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
+    <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.5/index.js"></script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                55
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                35
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2017/10/07/spring-dispatcherServlet/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            【译】Spring MVC 中的 DispatcherServlet
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/10/07/spring-dispatcherServlet/">
+            <time datetime="2017-10-07T12:58:19.000Z" itemprop="datePublished">2017-10-07</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/spring/">spring</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/spring/">spring</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>看白夜追凶看的，写个博客总感觉身后有人。。。。。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p><a href="http://javarevisited.blogspot.jp/2017/09/dispatcherservlet-of-spring-mvc-10-points-to-remember.html#axzz4ujB6NAWf" target="_blank" rel="external">原文</a></p>
+<p>如果经常与Spring MVC打交道，那么很有必要了解什么是 DispatcherServlet。它是 Spring MVC 的核心，准确的说就是 MVC 设计模式中的 C 或 Controller。每个由 Spring MVC 处理的请求都要经过 DispatcherServlet。一般而言，它是前端控制器模式的实现，为应用提供一个统一入口。DispatcherServlet是连接 Java 与 Spring的桥梁,处理所有传入的请求。并且与其他声明在 web.xml 中的 Servlet 一样，也是通过一个 URL pattern将每个请求映射到 DispatcherServlet。</p>
+<p>DispatcherServlet 负责将请求委派给 Spring MVC 中其他的组件处理，比如注有 @Controller 或 @RestController 的 Controller类，Handler Mappers(处理器映射)，View Resolvers(视图解析器) 等等。</p>
+<p>尽管，请求映射是由 @ResquestMapping 注解完成的，但实际上是由 DispatcherServlet 将请求委派给相应的 Controller 来处理的。</p>
+<p>在 RESTFul 的 web 服务中， DispatcherServlet 还负责选择正确的信息转换器，以便将响应结果转换成客户端期望的格式(JSON, XML 或 TEXT)。比如，如果客户端期望 JSON 格式，那么会使用 <code>MappingJacksonHttpMessageConverter</code> 或 <code>MappingJackson2HttpMessageConverter</code> (取决于 classpath 中可用的是 Jackson 1 还是 Jackson 2) 来讲响应结果转成 JSON 字符串的格式。</p>
+<h2 id="DispatcherServlet-如何处理请求"><a href="#DispatcherServlet-如何处理请求" class="headerlink" title="DispatcherServlet 如何处理请求"></a>DispatcherServlet 如何处理请求</h2><p>正如上面所说，DispatcherServlet 被用来处理所有传入的请求，并将它们路由到不同的 Controller 来进行进一步处理。它决定了由哪个 Controller处理请求。</p>
+<p>DispatcherServlet 使用处理器映射来将传入的请求路由到处理器。默认情况下，使用 <code>BeanNameUrlHandlerMapping</code> 和 由 @RequestMapping注解驱动的<code>DefaultAnnotationHandlerMapping</code>。</p>
+<p>为了找到正确的方法来处理请求，它会扫描所有声明了 @Controller 注解的类，并且通过 @RequestMapping  注解找到负责处理该请求的方法。@RequestMapping 注解可以通过路径来映射请求(e.g.: @RequestMapping(“path”)), 也可以通过 HTTP 方法(e.g.: @RequestMapping(“path”, method=RequestMethod.GET)), 也可以通过请求参数(e.g.: @RequestMapping(“path””, method=RequestMethod.POST, params=”param1”)),还可以通过 HTTP 请求头(e.g.: @RequestMapping(“path”, header=”content-type=text/*”))。我们也可以在类级别声明 @RequestMapping 注解来过滤传入的请求。</p>
+<p>在请求处理之后，Controller 会将逻辑视图的名字和 model 返回给 DispatcherServlet。之后利用视图解析器定位到真正的 View 以便渲染结果。我们可以指定使用的视图解析器，默认情况下，DispatcherServlet 使用 <a href="http://javarevisited.blogspot.jp/2017/08/what-does-internalresourceviewresolver-do-in-spring-mvc.html#axzz4unX8dLL4" target="_blank" rel="external">InternalResourceViewResolver</a>来将逻辑视图的名字转换成真正的视图，比如 JSP。</p>
+<p>选定视图之后，DispatcherServlet 会将数据模型与视图相结合，并将结果返回给客户端。并不是任何时候都需要视图，比如一个 RESTful 的 web 服务就不需要，它们的处理方法会利用 @ResponseBody 注解直接将请求结果返回给客户端。可以看<a href="http://courses.baeldung.com/p/rest-with-spring-live-class?affcode=22136_bkwjs9xa" target="_blank" rel="external">REST with Spring course</a>了解更多关于如何使用 Spring MVC 开发和测试 RESTful 服务的知识。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在这篇文章中，我分享了一些关于 DispatcherServlet 比较重要的一些知识点。这些不仅可以帮助大家更好的理解 DispatcherServlet，也可以鼓励大家进一步去学习相关的知识。</p>
+<ol>
+<li>DispatcherServlet 是 Spring MVC 应用中主要的控制器。所有的请求都会先经由 DispatcherServlet 处理，再由 Controller (声明有 @Controller 注解的类) 处理。</li>
+<li>DispatcherServlet 是前端控制器模式的实现。前端控制器就是个用来处理网站所有请求的控制器。</li>
+<li><p>就像其他的 Servlet， DispatcherServlet 也是声明和配置在 web.xml 文件中的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>SpringMVC<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>SpringMVC<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>DispatcherServlet 继承自 HttpServlet 基类。Servlet 引擎(比如 Tomcat) 创建该类的实例，并且调用它不同的方法，比如：init(), service(), destroy()。</p>
+</li>
+<li>DispatcherServlet 为 Spring MVC 应用提供统一入口，处理所有的请求。</li>
+<li>DispatcherServlet 也完全与 Spring IoC 容器集成，可以使用 Spring 框架的每一个特性，比如依赖注入。</li>
+<li>当 DispatcherServlet 被配置为 <code>load-on-startup = 1</code>,意味着该 servlet  会在启动时由容器创建，而不是在请求到达时。这样做会降低第一次请求的响应时间，因为DispatcherServlet 会在启动时做大量工作，包括扫描和查找所有的 Controller 和 RequestMapping。</li>
+<li>在 DispatcherServlet 初始化期间，Spring 框架会在 WEB-INF 文件夹中查找名为 [servlet-name]-servlet.xml 的文件，并创建相应的 bean。比如，如果 servlet 像上面 web.xml 文件中配置的一样，名为 “SpringMVC”，那么会查找 “SpringMVC-Servlet.xml”的文件。如果全局作用域中有相同名字的bean，会被覆盖。可以用 servlet 初始化参数 <code>contextConfigLocation</code>更改配置文件的位置。<br><img src="http://oduh99f02.bkt.clouddn.com/2017-10-07-Desktop%20HD.png" alt="Dispatcher Servlet flow"></li>
+<li>在 Spring MVC 框架中，每个 DispatcherServlet 都有它自己的 WebApplicationContext ，并且继承了根 WebApplicationContext 中定义的所有 bean。这些继承的 bean 在 servlet 指定的作用域中可以被重载，也可以在其指定作用域中定义新的 bean。</li>
+<li>Spring MVC 中的 DispatcherServlet也允许返回 Servlet API 定义的 last-modification-date。为了决定请求最后修改时间，DispatcherServlet会先查找合适的 handler mapping，然后检测处理器是否实现了 LastModified 接口。如果实现了，就调用接口的 getLastModified(request) 方法，并将该值返回给客户端。</li>
+</ol>
+<p>以上就是关于 DispatcherSerlvet 的内容。正如上面所讲，DispacherServlet 是 Spring MVC 的骨干，是主要的控制器，用来将不同的 HTTP 请求路由当相应的 Controller。它是前端控制器设计模式的实现，并且为应用提供单一入口。可以在 web.xml 中配置 DispatcherServlet，但建议将 load-on-startup 设置为 1。这样容器会在启动时加载该 Serlvet 而不是请求到达时。这样能减少第一个请求的响应时间。</p>
+<hr style="border-color: #333;border-width:2px; border-style: dotted; margin-top: 30px; margin-bottom: 30px;">
+
+<p>出租车司机终于可以下了，等的花儿都谢了，宋康昊千万不要太帅~</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2017-10-07-2.pic_hd.jpg?imageMogr2/thumbnail/300x300!" alt="miao a"></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2017/10/07/spring-dispatcherServlet/" data-id="cj8hdao3s0043aqcajzf2mfng" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2017/10/07/spring-dispatcherServlet/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2017/10/07/spring-dispatcherServlet/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/09/04/oracle-foreignkey-lock/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Oracle 中的外键与锁</div>
+        </a>
+    
+</nav>
+
+
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+   <script>
+   DisqusJS.getRecentComments(document.querySelector('#disqus-recent-comments'));
+   </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
