@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="看白夜追凶看的，写个博客总感觉身后有人。。。。。">
 <meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2017-10-08-Desktop%20HD.png">
-<meta property="og:updated_time" content="2017-10-08T02:44:12.000Z">
+<meta property="og:updated_time" content="2017-10-08T13:41:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】Spring MVC 中的 DispatcherServlet">
 <meta name="twitter:description" content="看白夜追凶看的，写个博客总感觉身后有人。。。。。">
@@ -281,13 +281,13 @@ var _hmt = _hmt || [];
 </blockquote>
 <a id="more"></a>
 <h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p><a href="http://javarevisited.blogspot.jp/2017/09/dispatcherservlet-of-spring-mvc-10-points-to-remember.html#axzz4ujB6NAWf" target="_blank" rel="external">原文</a></p>
-<p>如果经常与Spring MVC打交道，那么很有必要了解什么是 DispatcherServlet。它是 Spring MVC 的核心，准确的说就是 MVC 设计模式中的 C 或 Controller。每个由 Spring MVC 处理的请求都要经过 DispatcherServlet。一般而言，它是前端控制器模式的实现，为应用提供一个统一入口。DispatcherServlet是连接 Java 与 Spring的桥梁,处理所有传入的请求。并且与其他声明在 web.xml 中的 Servlet 一样，也是通过一个 URL pattern将每个请求映射到 DispatcherServlet。</p>
+<p>如果经常与 Spring MVC 打交道，那么很有必要了解什么是 DispatcherServlet。它是 Spring MVC 的核心，准确的说就是 MVC 设计模式中的 C 或 Controller。每个由 Spring MVC 处理的请求都要经过 DispatcherServlet。一般而言，它是前端控制器模式的实现，为应用提供一个统一入口。DispatcherServlet 是连接 Java 与 Spring 的桥梁,处理所有传入的请求。并且与其他声明在 web.xml 中的 Servlet 一样，也是通过一个 URL pattern 将每个请求映射到 DispatcherServlet。</p>
 <p>DispatcherServlet 负责将请求委派给 Spring MVC 中其他的组件处理，比如注有 @Controller 或 @RestController 的 Controller类，Handler Mappers(处理器映射)，View Resolvers(视图解析器) 等等。</p>
 <p>尽管，请求映射是由 @ResquestMapping 注解完成的，但实际上是由 DispatcherServlet 将请求委派给相应的 Controller 来处理的。</p>
 <p>在 RESTFul 的 web 服务中， DispatcherServlet 还负责选择正确的信息转换器，以便将响应结果转换成客户端期望的格式(JSON, XML 或 TEXT)。比如，如果客户端期望 JSON 格式，那么会使用 <code>MappingJacksonHttpMessageConverter</code> 或 <code>MappingJackson2HttpMessageConverter</code> (取决于 classpath 中可用的是 Jackson 1 还是 Jackson 2) 来将响应结果转成 JSON 字符串的格式。</p>
-<h2 id="DispatcherServlet-如何处理请求"><a href="#DispatcherServlet-如何处理请求" class="headerlink" title="DispatcherServlet 如何处理请求"></a>DispatcherServlet 如何处理请求</h2><p>正如上面所说，DispatcherServlet 被用来处理所有传入的请求，并将它们路由到不同的 Controller 来进行进一步处理。它决定了由哪个 Controller处理请求。</p>
-<p>DispatcherServlet 使用处理器映射来将传入的请求路由到处理器。默认情况下，使用 <code>BeanNameUrlHandlerMapping</code> 和 由 @RequestMapping注解驱动的<code>DefaultAnnotationHandlerMapping</code>。</p>
-<p>为了找到正确的方法来处理请求，它会扫描所有声明了 @Controller 注解的类，并且通过 @RequestMapping  注解找到负责处理该请求的方法。@RequestMapping 注解可以通过路径来映射请求(比如: @RequestMapping(“path”)), 也可以通过 HTTP 方法(比如: @RequestMapping(“path”, method=RequestMethod.GET)), 也可以通过请求参数(比如: @RequestMapping(“path””, method=RequestMethod.POST, params=”param1”)),还可以通过 HTTP 请求头(比如: @RequestMapping(“path”, header=”content-type=text/*”))。我们也可以在类级别声明 @RequestMapping 注解来过滤传入的请求。</p>
+<h2 id="DispatcherServlet-如何处理请求"><a href="#DispatcherServlet-如何处理请求" class="headerlink" title="DispatcherServlet 如何处理请求"></a>DispatcherServlet 如何处理请求</h2><p>正如上面所说，DispatcherServlet 被用来处理所有传入的请求，并将它们路由到不同的 Controller 来进行进一步处理。它决定了由哪个 Controller 处理请求。</p>
+<p>DispatcherServlet 使用处理器映射来将传入的请求路由到处理器。默认情况下，使用 <code>BeanNameUrlHandlerMapping</code> 和 由 @RequestMapping 注解驱动的<code>DefaultAnnotationHandlerMapping</code>。</p>
+<p>为了找到正确的方法来处理请求，它会扫描所有声明了 @Controller 注解的类，并且通过 @RequestMapping  注解找到负责处理该请求的方法。@RequestMapping 注解可以通过路径来映射请求(比如: <code>@RequestMapping(“path”)</code>), 也可以通过 HTTP 方法(比如: <code>@RequestMapping(&quot;path&quot;, method=RequestMethod.GET)</code>), 也可以通过请求参数(比如: <code>@RequestMapping(&quot;path&quot;”, method=RequestMethod.POST, params=&quot;param1”)</code>),还可以通过 HTTP 请求头(比如: <code>@RequestMapping(&quot;path&quot;, header=&quot;content-type=text/*”)</code>)。我们也可以在类级别声明 @RequestMapping 注解来过滤传入的请求。</p>
 <p>在请求处理之后，Controller 会将逻辑视图的名字和 model 返回给 DispatcherServlet。之后利用视图解析器定位到真正的 View 以便渲染结果。我们可以指定使用的视图解析器，默认情况下，DispatcherServlet 使用 <a href="http://javarevisited.blogspot.jp/2017/08/what-does-internalresourceviewresolver-do-in-spring-mvc.html#axzz4unX8dLL4" target="_blank" rel="external">InternalResourceViewResolver</a>来将逻辑视图的名字转换成真正的视图，比如 JSP。</p>
 <p>选定视图之后，DispatcherServlet 会将数据模型与视图相结合，并将结果返回给客户端。并不是任何时候都需要视图，比如一个 RESTful 的 web 服务就不需要，它们的处理方法会利用 @ResponseBody 注解直接将请求结果返回给客户端。可以看<a href="http://courses.baeldung.com/p/rest-with-spring-live-class?affcode=22136_bkwjs9xa" target="_blank" rel="external">REST with Spring course</a>了解更多关于如何使用 Spring MVC 开发和测试 RESTful 服务的知识。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在这篇文章中，我分享了一些关于 DispatcherServlet 比较重要的一些知识点。这些不仅可以帮助大家更好的理解 DispatcherServlet，也可以鼓励大家进一步去学习相关的知识。</p>
@@ -321,7 +321,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2017/10/07/spring-dispatcherServlet/" data-id="cj8i5am3o002ytecay594an30" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2017/10/07/spring-dispatcherServlet/" data-id="cj8isugn4003ayhca32lkcv6k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
