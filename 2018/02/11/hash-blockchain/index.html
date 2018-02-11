@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+
+    <meta name="baidu-site-verification" content="lt822VnP06" />
+    <meta name="baidu-site-verification" content="0Ajixw1Puk" />
+    <meta name="google-site-verification" content="gCQD0Y6f0YlPTZTAjp_mqms4C7TlkMWrg3Xy0mFdMwI" />
+    <title>哈希与区块链 | Giraffe&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈希与区块链">
+<meta property="og:url" content="http://yemengying.com/2018/02/11/hash-blockchain/index.html">
+<meta property="og:site_name" content="Giraffe's Home">
+<meta property="og:description" content="为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。">
+<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png">
+<meta property="og:updated_time" content="2018-02-11T14:57:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="哈希与区块链">
+<meta name="twitter:description" content="为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。">
+<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png">
+    
+
+    
+
+    
+        <link rel="icon" href="https://yemengying.com/qiniu/image/image/favicon.png" />
+    
+
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/open-sans/styles.css">
+    <link rel="stylesheet" href="/lib/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/lib/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-75861791-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?44bb8bfb1a576270255713e37746eb82";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <script src="//github.elemecdn.com/jiananshi/req/0.1.0/lib/req.js"></script>
+    <script src="//npm.elemecdn.com/jinkela@1.2.18/umd.js"></script>
+    <script src="//github.elemecdn.com/jiananshi/DisqusJS/2.0.5/index.js"></script>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Giraffe&#39;s Home</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+                    <a class="main-nav-link" href="/message">留言</a>
+                
+                    <a class="main-nav-link" href="/friends">友链</a>
+                
+                    <a class="main-nav-link" href="/reading">正在读...</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                    <td><a class="main-nav-link" href="/message">留言</a></td>
+                
+                    <td><a class="main-nav-link" href="/friends">友链</a></td>
+                
+                    <td><a class="main-nav-link" href="/reading">正在读...</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+            <h2 id="name">Giraffe</h2>
+            <h3 id="title">Java Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/giraffe0813/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                56
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                35
+                <span>标签</span>
+            </div>
+        </div>
+        <div class="profile-block recent-comments">
+            <p class="recent-comments-title">最新评论</p>
+            <ul id="disqus-recent-comments" class="recent-comments-container">
+            </ul>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/giraffe0813" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="2018/02/11/hash-blockchain/" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            哈希与区块链
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/02/11/hash-blockchain/">
+            <time datetime="2018-02-11T14:49:44.000Z" itemprop="datePublished">2018-02-11</time>
+        </a>
+    </div>
+
+
+                    
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。 </p>
+</blockquote>
+<a id="more"></a>
+<p>每次跟他说我也不知道，他就一脸不信，可能觉得和软件，计算机搭边的我都能知道。<br><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png" alt="不信三连"></p>
+<p>马上要过年回家了，为了我的压岁钱，我准备先简单了解下，以便过年被问的时候不会再一脸懵逼。要了解区块链，就要先从在区块链技术中起着重要作用的哈希。</p>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ul>
+<li><a href="https://blockgeeks.com/guides/what-is-hashing/" target="_blank" rel="external">What Is Hashing? Under The Hood Of Blockchain - Blockgeeks</a></li>
+<li><a href="https://www.cs.upc.edu/~mjserna/docencia/grauA/P17/Crypto.pdf" target="_blank" rel="external">https://www.cs.upc.edu/~mjserna/docencia/grauA/P17/Crypto.pdf</a></li>
+<li><a href="http://chimera.labs.oreilly.com/books/1234000001802/ch07.html" target="_blank" rel="external">http://chimera.labs.oreilly.com/books/1234000001802/ch07.html</a></li>
+<li><a href="https://blockgeeks.com/guides/what-is-bitcoin-cash/" target="_blank" rel="external">https://blockgeeks.com/guides/what-is-bitcoin-cash/</a></li>
+<li><a href="https://www.amazon.cn/%E5%8C%BA%E5%9D%97%E9%93%BE-%E6%8A%80%E6%9C%AF%E9%A9%B1%E5%8A%A8%E9%87%91%E8%9E%8D-%E7%BE%8E-%E9%98%BF%E5%B0%94%E6%96%87%E5%BE%B7%C2%B7%E7%BA%B3%E6%8B%89%E4%BA%9A%E5%8D%97/dp/B073QHSM7P?psc=1" target="_blank" rel="external">《区块链技术驱动金融》</a></li>
+</ul>
+<h2 id="什么是哈希？"><a href="#什么是哈希？" class="headerlink" title="什么是哈希？"></a>什么是哈希？</h2><p>简单来说，哈希就是输入任意长度的字符串都可以产生固定大小的输出。在比特币这种加密货币中，交易就是输入，然后经过哈希算法(比特币采用的是 SHA - 256)，产生固定长度的输出。</p>
+<p>下面就是使用 SHA-256 算法的例子：</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-5AF9C51E-555F-4ED0-9071-26F1F6231F5F.png" alt="SHA-256"></p>
+<p>通过上面的例子可以看出，无论输入大或者小，输出都是固定256比特的长度。这一特性在处理大量数据和交易时是至关重要的。基于哈希这一特性，我们不用记输入数据是多么大，只需要记住hash值即可。</p>
+<p>在我们进一步讨论之前，我们首先需要看看哈希函数的各种属性以及它们在区块链中的实现方式。</p>
+<h2 id="加密哈希函数"><a href="#加密哈希函数" class="headerlink" title="加密哈希函数"></a>加密哈希函数</h2><p>加密哈希函数是一类特殊的哈希函数。为了让哈希函数达到密码安全，需要有以下几个特性：</p>
+<h3 id="确定性-Deterministic"><a href="#确定性-Deterministic" class="headerlink" title="确定性(Deterministic)"></a>确定性(Deterministic)</h3><p>对于同一个输入，无论用哈希函数计算多少次，都会得到相同的结果。</p>
+<h3 id="快速计算"><a href="#快速计算" class="headerlink" title="快速计算"></a>快速计算</h3><p>对于输入的字符串，能在合理的时间内算出哈希函数的输出，否则会影响系统的性能。</p>
+<h3 id="隐秘性"><a href="#隐秘性" class="headerlink" title="隐秘性"></a>隐秘性</h3><p>如果我们已知字符串 A 的哈希值是 H(A)，那么我们没有可行的办法算出 A 是什么。注意，这里说的是 “不可行” 而不是 “不可能”。 比如下面的例子中，知道输出哈希值是可以算出输入的。</p>
+<p>假如我们掷骰子🎲，输出就是骰子上数字的哈希值。那么在知道输出的哈希值情况下，我们能否知道骰子上的数字呢？因为哈希函数是具有确定性的，相同输入的哈希值一定相同，所以我们只需计算 1-6 的哈希值是什么，然后对比就能知道骰子上的数字是什么了。</p>
+<p>当然，我们能够根据哈希值猜出骰子的数字，是因为输入值只有 6 种可能性。如果我们的输入值来自一个分散的集合，那么想要通过输出推导出输入的唯一方法可能就是“暴力破解法”了。暴力破解就是，任意选择一个输入，计算其哈希值，与现有哈希值对比是否一致，不断重复这一过程，直到找到一个输入的哈希值与现有哈希值一致。</p>
+<p>那么暴力破解法是否可行呢？假设我们现在处理的是128位的哈希值。<br><strong>最好的情况</strong>：第一次尝试就找到了答案，但这种情况可以说是几乎不可能的，比中大乐透还难。<br><strong>最坏的情况</strong>：在尝试 2^128 -1 次后得到了答案，也就是试过了所有可能的输入才找到。<br><strong>平均的情况</strong>： 在平均情况下，我们要尝试 2^128 / 2 = 2^127 次之后才能找到答案。2^127 = 1.7 X 10^38 ， 也可以说是个天文数字了。</p>
+<p>所以，在已知哈希值的情况下， 尽管可以通过暴力破解的方法找到输入的字符串是什么，但这会花费很长长长长长的时间，所以不用担心。</p>
+<h3 id="抗篡改能力"><a href="#抗篡改能力" class="headerlink" title="抗篡改能力"></a>抗篡改能力</h3><p>对于任意一个输入，哪怕是很小的改动，其哈希改变也会非常大。比如 “This is a test” 对应的哈希值是<code>C7BE1ED902FB8DD4D48897C6452F5D7E509FBCDBE2808B16BCF4EDCE4C07D14E</code>， 而 “this is a test” 对应的哈希值是 <code>2E99758548972A8E8822AD47FA1017FF72F06F3FF6A016851F45C398732BC50C</code>。 </p>
+<p>看上面的例子，即便只改变了输入字符串第一个字母的大小写，输出hash值也是完全不同的。用前段时间比较流行的区块链撸猫游戏类比一下，“This is a test” 的哈希值对应猫可能是这样的：</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-6576431B-5777-4BDD-98EF-1595E1BAD849.png" alt="喵~"></p>
+<p>而只改了个大小写，“this is a test” 的哈希值对应猫可能就变成下面这样了：<br><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-222E9BF2-7230-4C93-9B2D-CC40ADAEDF5E.png" alt="喵喵~"></p>
+<p>这一特性对于区块链来说十分重要，因为它决定了区块链是 immutable 的(不变的)。</p>
+<h3 id="抗碰撞能力"><a href="#抗碰撞能力" class="headerlink" title="抗碰撞能力"></a>抗碰撞能力</h3><p>碰撞是指，对于相同的输入，经过哈希计算后产生了不同的输出。具有抗碰撞能力就是对于大部分的输入都有独一无二的输入。 这里说的是”大部分”，因为找不到碰撞，并不意味不存在碰撞。概率学中的生日悖论可以证明这一点。</p>
+<blockquote>
+<p>生日悖论:  指如果一个房间里有23个或23个以上的人，那么至少有两个人的生日相同的概率要大于50%。这就意味着在一个典型的标准小学班级(30人)中，存在两人生日相同的可能性更高。对于60或者更多的人，这种概率要大于99%。从引起逻辑矛盾的角度来说生日悖论并不是一种悖论，从这个数学事实与一般直觉相抵触的意义上，它才称得上是一个悖论。大多数人会认为，23人中有2人生日相同的概率应该远远小于50%。  </p>
+</blockquote>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-AB4929D2-11EE-468F-84E8-1A2364D81D39.png" alt="生日悖论"></p>
+<p>没有哪个哈希函数是完全具有防碰撞特性，但对于 SHA -256 之类的哈希函数，需要花费很长的时间来找到碰撞。所以我们完全可以认为 if H(A) = H(B) 那么 A=B.</p>
+<h3 id="谜题友好"><a href="#谜题友好" class="headerlink" title="谜题友好"></a>谜题友好</h3><p>这一特性对加密货币来说至关重要(特别是在挖矿过程中)。先定义下什么是谜题友好。</p>
+<blockquote>
+<p>谜题友好： 如果对于任意 n 位输出值 y， 假定 k 选自高阶最小熵分布，如果无法找到一个可行的办法，在比 2^n 小很多的时间内找到 x ， 保证 H(k|x) = y 成立，那么我们称哈希函数 H 具有谜题友好的特性。  </p>
+</blockquote>
+<p><strong>什么是高阶最小熵?</strong><br>高阶最小熵描述了分布的分散程度。在这样的分布中，任意数值被选定的概率的小到可以忽略不计的。举个例子，如果要从 1-5 中选择一个数，就是低阶最小熵的分布。如果从 1-无穷大中选择一个数，就是高阶最小熵的分布。</p>
+<p><strong>’k|x’代表了什么？</strong><br>‘|’ 是连接符的意思，将两个字符串连接起来。举个例子’cute|giraffe’ = ‘cutegiraffe’。</p>
+<p>再来回顾下谜题友好的定义。假设有一个 n 位输出值 y, 从高阶分布中选取一个任意值 k， 那么没有一个可行的办法，比 2^n 小很多的时间内找到 x ，使得 H(k| x) = y。</p>
+<p>这里说的还是 “不可行”，而不是 “不可能”。整个的比特币采矿的过程就基于解谜。</p>
+<p>下面是几个典型的加密哈希函数：</p>
+<ul>
+<li>MD5：产生 128 位哈希。</li>
+<li>SHA-1：产生 160 位哈希。</li>
+<li>SHA-256：产生 256 位哈希。也是比特币中使用的哈希函数。</li>
+<li>Keccak-256：产生 256 位哈希，在 Ethereum 中使用。</li>
+</ul>
+<h2 id="哈希与数据结构"><a href="#哈希与数据结构" class="headerlink" title="哈希与数据结构"></a>哈希与数据结构</h2><p>如果想要理解区块链是怎样工作的，就必须要理解其中 3 种重要的数据结构 <strong>哈希指针</strong> ,  <strong>区块链</strong> 和 <strong>梅克尔树</strong>。</p>
+<h3 id="哈希指针"><a href="#哈希指针" class="headerlink" title="哈希指针"></a>哈希指针</h3><p>与不同指针不同的是，哈希指针的值是通过数据计算出来的且指向数据所在位置，所以哈希指针可以告诉我们数据存储位置及数据的哈希值。通过哈希指针，我们可以很容易判断出数据是否有被篡改。</p>
+<p>哈希指针在区块链中极为重要。区块链的结构就是由创世区块开始，之后的每个区块通过哈希指针进行连接。每一个区块中都包含了前一个区块的哈希指针，这样后面区块不仅可以查找到前面所有区块，也可以验证前面区块数据有没有被更改，从而保证了区块链不易篡改的特性。</p>
+<p>哈希指针在区块链中第二个用处就是构建Merkle Tree(梅克尔树)，下文会详细讲。</p>
+<h3 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h3><p>区块链是一个基于哈希指针构建的一个有序的，反向链接的交易块链表，也就是说在区块链中每个区块都通过哈希指针连接到前一个区块上。大致结构如下图：</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-759C7E95-21B0-47CC-B9AC-DE614BDA1169.png" alt="block chain"></p>
+<p>区块链也常被看做一个垂直的堆栈，区块在栈顶一次追加，第一个区块也就是整个堆栈的基础。所以也常常用“高度”(height) 这个词来描述某个区块到第一个区块的距离。</p>
+<p>区块链中的每一个区块都有一个对区块头部进行 SHA256  加密哈希函数计算得出的哈希值作为标识。由于每个区块需要连接到前一个区块，所以每个区块头部专门有一个字段用来存储前一个区块(也叫父区块)的哈希值。这样每个区块都连接到了他们的父区块，从而创建了区块链。</p>
+<p>尽管每一个区块只能由一个父区块，但却可能短时间内拥有多个子区块。也就是说可能存在多个区块头部中存储的父区块的哈希值是一样的。这种情况一般发生在不同的区块在同一时间被不同的矿工找到。这样就会造成区块链的分叉，如下图：<br><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-379955D7-1828-44DB-A632-07909B5AD76F.png" alt="区块链分叉"></p>
+<p>不过区块链的分叉只是暂时，会根据“最长链原则”来解决分叉。不是本文重点不再赘述。</p>
+<p>刚刚第二节提到哈希指针可以保证区块链不易被篡改，下面来分析下原因。</p>
+<p>假设有一个黑客想要篡改上图中 区块 2 的数据。由于哈希函数具有抗篡改能力，很小的改动，输出的哈希值会大不一样。所以如果改动区块2上的数据，那么 区块3 自身的哈希会发生变化。 而 区块3 的头部中存储了 区块2 的哈希值，所以 对区块2 的改动必然会影响到 区块3，以此类推，区块3后面的区块也会受到影响。所以一个区块的修改会级联影响到它之后的所有区块，而要修改之后的所有区块需要强大的算力，可以说是不可能的，这也就保证了区块链的不变性。</p>
+<p>仔细看下区块链中每个区块的结构。</p>
+<p><strong>区块的结构</strong><br>区块的内部结构分为 头部， 元数据，和一系列的交易记录。头部大小是 80个字节，而一个交易记录至少要50个字节，平均每个区块包含超过500个交易记录。所以，一个完整的区块的大小一般是它头部大小的1000倍。 下图是一个区块的大致结构。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-5F9C7552-6DBB-4825-98F3-F337CBBEB2D0.png" alt="structure"></p>
+<p><strong>区块的头部</strong><br>如上图，区块的头部的组成分为3大块。第一块是前面区块的哈希值，用于连接到父区块。第二块包含了一个随机数，一个点数(用来表示找到这个区块的难度)，和一个时间戳，这三个字段都与挖矿的过程息息相关。第三块是梅克尔树(merkle tree )的树根,merkle tree  用来将区块内的所有交易以一种非常高效的形式组织起来。</p>
+<p>merkle tree 相关内容下文会有涉及，随机数、点数和时间戳都是与挖矿相关的。</p>
+<p><strong>区块的标识：区块头部哈希值和区块高度</strong><br>一个区块最主要的标识就是区块自身头部进行二次哈希计算产生的加密哈希值。区块链中第一个区块的哈希值就是 <code>000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</code> 。</p>
+<p>区块的另一个标识是它在区块链当中的位置。需要注意的是一个区块只能有一个高度，但在区块链存在分叉的情况下，可能存在多个区块具有一样的高度。这时，区块的高度就不能作为唯一标识了。</p>
+<p><strong>第一个区块 ： 创世区块</strong><br>区块链中的第一个区块是2009年创建的，叫做“创世区块”。它是区块链中所有区块的祖先，从任何一个区块向前追溯，最终都会到达创世区块。</p>
+<p>通过 <code>blockchain.info</code> 之类的网站查看创世区块的内容 <code>https://blockchain.info/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</code><br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"hash"</span> : <span class="string">"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"</span>,</div><div class="line">    <span class="attr">"confirmations"</span> : <span class="number">308321</span>,</div><div class="line">    <span class="attr">"size"</span> : <span class="number">285</span>,</div><div class="line">    <span class="attr">"height"</span> : <span class="number">0</span>,</div><div class="line">    <span class="attr">"version"</span> : <span class="number">1</span>,</div><div class="line">    <span class="attr">"merkleroot"</span> : <span class="string">"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"</span>,</div><div class="line">    <span class="attr">"tx"</span> : [</div><div class="line">        <span class="string">"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"</span></div><div class="line">    ],</div><div class="line">    <span class="attr">"time"</span> : <span class="number">1231006505</span>,</div><div class="line">    <span class="attr">"nonce"</span> : <span class="number">2083236893</span>,</div><div class="line">    <span class="attr">"bits"</span> : <span class="string">"1d00ffff"</span>,</div><div class="line">    <span class="attr">"difficulty"</span> : <span class="number">1.00000000</span>,</div><div class="line">    <span class="attr">"nextblockhash"</span> : <span class="string">"00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>比特币的创始人中本聪还在创世区块里留下一句永不可修改的话“The Times 03/Jan/2009 Chancellor on brink of second bailout for banks” (2009年1月3日，财政大臣正处于实施第二轮银行紧急援助的边缘)， 这句话是泰晤士报当天的头版文章标题。</p>
+<p><strong>连接区块到区块链</strong><br>比特币中每一个节点都存储了从创世区块开始的区块链的本地副本，本地区块链的副本会在新的区块被发现并且添加到区块链后更新。当一个节点从网络接收到一个区块时，会验证该区块，验证通过后将其添加到已有区块链上。</p>
+<p>为了建立连接，每个节点都会检验接收到的区块的头部，找到头部中存储的父区块的哈希值。举个例子，一个节点的区块链中有 277314 个区块，最后一个区块头部的哈希值计算出是<code>00000000000000027e7ba6fe7bad39faf3b5a83daed765f05f7d1b71a1632249</code>。</p>
+<p>这时节点接收到一个新的区块，内容如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"size"</span> : <span class="number">43560</span>,</div><div class="line">    <span class="attr">"version"</span> : <span class="number">2</span>,</div><div class="line">    <span class="attr">"previousblockhash"</span> :</div><div class="line">        <span class="string">"00000000000000027e7ba6fe7bad39faf3b5a83daed765f05f7d1b71a1632249"</span>,</div><div class="line">    <span class="attr">"merkleroot"</span> :</div><div class="line">        <span class="string">"5e049f4030e0ab2debb92378f53c0a6e09548aea083f3ab25e1d94ea1155e29d"</span>,</div><div class="line">    <span class="attr">"time"</span> : <span class="number">1388185038</span>,</div><div class="line">    <span class="attr">"difficulty"</span> : <span class="number">1180923195.25802612</span>,</div><div class="line">    <span class="attr">"nonce"</span> : <span class="number">4215469401</span>,</div><div class="line">    <span class="attr">"tx"</span> : [</div><div class="line">        <span class="string">"257e7497fb8bc68421eb2c7b699dbab234831600e7352f0d9e6522c7cf3f6c77"</span>,</div><div class="line"></div><div class="line"> #[... many more transactions omitted ...]</div><div class="line"></div><div class="line">        <span class="string">"05cfd38f6ae6aa83674cc99e4d75a1458c165b7ab84725eda41d018a09176634"</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在验证完成之后，节点会先找到新区块头部中存储的 父区块 的哈希值，比较与最后一个区块的哈希值是否一致。是一致的就把新区块连接到区块链上，这时区块链的高度就变为了277315。</p>
+<h3 id="什么是梅克尔树？"><a href="#什么是梅克尔树？" class="headerlink" title="什么是梅克尔树？"></a>什么是梅克尔树？</h3><p>在区块的头部中，有存储一个梅克尔树根的 hash 值。所以先来了解下什么是梅克尔树。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-66448B2F-EF21-414F-B2E8-D80445128908.png" alt="merkle tree"></p>
+<p>上图就是梅克尔树的样子。</p>
+<p>梅克尔树在区块链中用于组织和记录存储在区块中的交易，以便高效的验证某个交易是否存在在区块中。梅克尔树是通过不断的递归计算节点的哈希值直到只有一个hash值来构建的。</p>
+<p>当梅克尔树中有N个数据时，最多只需要2*log2(N)计算就可以验证某个特定数据是否存在，所以梅克尔树是相当高效的。</p>
+<p>梅克尔树是自底向上构建的。举个例子，假设我们现在有 A, B, C,D四笔交易需要存储记录在区块中，来看下是如何构建梅克尔树的。 首先要用 A,B,C,D 来构建树的叶子节点，将他们二次哈希后的哈希值存储在是叶子节点，就是上图中的 HA,HB,HC,HD。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">H(A) = SHA256(SHA256(A))</div></pre></td></tr></table></figure></p>
+<p>接着再用相邻两个结点的hash值连接在一起经过二次哈希计算来构建它们的父节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">H(AB) = SHA256(SHA256(H(A) + H(B)))</div></pre></td></tr></table></figure></p>
+<p>这一过程一直重复到只剩下顶层的一个节点，也就是存储在区块头部的树的根节点。</p>
+<p>因为梅克尔树是一棵二叉树，它需要偶数个叶子节点。如果恰好是奇数个交易，那么最后一笔交易会被复制一遍，来创造偶数个叶子节点，以便达到平衡。下图中的交易 C 就被复制了一遍。</p>
+<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-B5D397E9-9E3C-4263-9252-28989AB324E2.png" alt=""></p>
+<p>根据上面的方式我们可以为任意个数的交易构建梅克尔树，一个区块通常要记录几百到上千的交易。</p>
+<p>为了验证一笔交易是否包含在区块中，节点只需要 计算 log2(N) 个哈希值，组成该交易到merkle树根的认证路径即可。正因为梅克尔树，区块链中的节点可以快速的产生一条包含10或12个哈希值的认证路径，来证明在区块中上千笔交易中某笔交易的存在。</p>
+<h2 id="哈希与挖矿"><a href="#哈希与挖矿" class="headerlink" title="哈希与挖矿"></a>哈希与挖矿</h2><p>我们说的“挖矿”，就是指找到可以加入区块链的新的区块。矿工们要不断的工作在确保区块链的增长的同时获到新区块的奖励。早些时候，人们往往使用笔记本电脑挖矿，但随着时间的推移，大家开始组成矿池以便集中算力更高效的挖矿。</p>
+<p>这里存在一个问题，每种加密货币都有一个上限，比如，比特币一共有2100万个。如果找到新区块的速度过快，那么很快所有的比特币就被挖完了。所以，需要控制找到新区块的速度。对于比特币，新区块创建的时间间隔被控制在10分钟左右。</p>
+<p>为了控制区块的创建速度，设置了一个目标值。一个有效区块的头部哈希值必须要小于目标值。目标值是一个以一串0开头的64位的字符串，开头的0越多难度越大，每新产生2016个区块之后目标值会调整一次。区块的头部有个随机数的字段，其实挖矿的过程也就是找到一个可以使区块头部哈希值小于目标值的随机数的过程，也叫做解迷。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>哈希在区块链技术中是最基础的。如果想要了解区块链是什么，就必须要了解什么是哈希，它有什么特性，在区块链中起着什么作用。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yemengying.com/2018/02/11/hash-blockchain/" data-id="cjdix1vdr001idi5swdrgsg6k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yemengying.com/2018/02/11/hash-blockchain/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yemengying.com/2018/02/11/hash-blockchain/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/10/07/spring-dispatcherServlet/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">【译】Spring MVC 中的 DispatcherServlet</div>
+        </a>
+    
+</nav>
+
+
+    
+    <script>
+   DisqusJS.getArticleComments();
+   </script>
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Mengying Ye<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        </div>
+    </div>
+</footer>
+        
+    
+   <script>
+   DisqusJS.getRecentComments(document.querySelector('#disqus-recent-comments'));
+   </script>
+
+
+
+    
+        <script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
