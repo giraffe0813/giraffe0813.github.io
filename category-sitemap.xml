@@ -91,14 +91,14 @@
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/list/</loc>
+        <loc>http://yemengying.com/categories/java/thread/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yemengying.com/categories/java/thread/</loc>
+        <loc>http://yemengying.com/categories/java/list/</loc>
         <lastmod>2017-06-10T07:56:03.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
