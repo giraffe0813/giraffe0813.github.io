@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yemengying.com/"/>
-  <updated>2018-02-11T15:07:45.000Z</updated>
+  <updated>2018-02-21T14:56:25.000Z</updated>
   <id>http://yemengying.com/</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="http://yemengying.com/2018/02/11/hash-blockchain/"/>
     <id>http://yemengying.com/2018/02/11/hash-blockchain/</id>
     <published>2018-02-11T14:49:44.000Z</published>
-    <updated>2018-02-11T15:07:45.000Z</updated>
+    <updated>2018-02-21T14:56:25.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。 &lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;每次跟他说我也不知道，他就一脸不信，可能觉得和软件，计算机搭边的我都能知道。&lt;br&gt;&lt;img src=&quot;http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png&quot; alt=&quot;不信三连&quot;&gt;&lt;/p&gt;
-&lt;p&gt;马上要过年回家了，为了我的压岁钱，我准备先简单了解下，以便过年被问的时候不会再一脸懵逼。要了解区块链，就要先从在区块链技术中起着重要作用的哈希。&lt;/p&gt;
+&lt;p&gt;马上要过年回家了，为了我的压岁钱，我准备先简单了解下，以便过年被问的时候不会再一脸懵逼。要了解区块链，就要先从在区块链技术中起着重要作用的哈希开始。&lt;/p&gt;
 &lt;h2 id=&quot;相关文档&quot;&gt;&lt;a href=&quot;#相关文档&quot; class=&quot;headerlink&quot; title=&quot;相关文档&quot;&gt;&lt;/a&gt;相关文档&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://blockgeeks.com/guides/what-is-hashing/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;What Is Hashing? Under The Hood Of Blockchain - Blockgeeks&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.cs.upc.edu/~mjserna/docencia/grauA/P17/Crypto.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.cs.upc.edu/~mjserna/docencia/grauA/P17/Crypto.pdf&lt;/a&gt;&lt;/li&gt;
