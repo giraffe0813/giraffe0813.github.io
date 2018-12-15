@@ -15,12 +15,12 @@
 <meta property="og:url" content="http://yemengying.com/2018/02/11/hash-blockchain/index.html">
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。">
-<meta property="og:image" content="http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png">
-<meta property="og:updated_time" content="2018-02-21T14:56:25.000Z">
+<meta property="og:image" content="https://pic.yupoo.com/jiananshi/4a978934/4e0fbec5.png">
+<meta property="og:updated_time" content="2018-12-13T03:33:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="哈希与区块链">
 <meta name="twitter:description" content="为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。">
-<meta name="twitter:image" content="http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png">
+<meta name="twitter:image" content="https://pic.yupoo.com/jiananshi/4a978934/4e0fbec5.png">
     
 
     
@@ -104,7 +104,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+                            <img class="avatar" src="https://pic.yupoo.com/jiananshi/7d7f3c4d/98f10da3.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -188,7 +188,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+            <img id="avatar" src="https://pic.yupoo.com/jiananshi/7d7f3c4d/98f10da3.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -280,7 +280,7 @@ var _hmt = _hmt || [];
 <p>为什么要了解下区块链呢？因为区块链最近实在是太火了，火到我爸都听说了，总让我给他科普一下。。。。 </p>
 </blockquote>
 <a id="more"></a>
-<p>每次跟他说我也不知道，他就一脸不信，可能觉得和软件，计算机搭边的我都能知道。<br><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-9ADAF38A-D5E4-42C3-9931-534B21D127FA.png" alt="不信三连"></p>
+<p>每次跟他说我也不知道，他就一脸不信，可能觉得和软件，计算机搭边的我都能知道。<br><img src="https://pic.yupoo.com/jiananshi/4a978934/4e0fbec5.png" alt="不信三连"></p>
 <p>马上要过年回家了，为了我的压岁钱，我准备先简单了解下，以便过年被问的时候不会再一脸懵逼。要了解区块链，就要先从在区块链技术中起着重要作用的哈希开始。</p>
 <h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ul>
 <li><a href="https://blockgeeks.com/guides/what-is-hashing/" target="_blank" rel="external">What Is Hashing? Under The Hood Of Blockchain - Blockgeeks</a></li>
@@ -291,7 +291,7 @@ var _hmt = _hmt || [];
 </ul>
 <h2 id="什么是哈希？"><a href="#什么是哈希？" class="headerlink" title="什么是哈希？"></a>什么是哈希？</h2><p>简单来说，哈希就是输入任意长度的字符串都可以产生固定大小的输出。在比特币这种加密货币中，交易就是输入，然后经过哈希算法(比特币采用的是 SHA - 256)，产生固定长度的输出。</p>
 <p>下面就是使用 SHA-256 算法的例子：</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-5AF9C51E-555F-4ED0-9071-26F1F6231F5F.png" alt="SHA-256"></p>
+<p><img src="https://pic.yupoo.com/jiananshi/3ec9133e/89977ce9.png" alt="SHA-256"></p>
 <p>通过上面的例子可以看出，无论输入大或者小，输出都是固定256比特的长度。这一特性在处理大量数据和交易时是至关重要的。基于哈希这一特性，我们不用记输入数据是多么大，只需要记住hash值即可。</p>
 <p>在我们进一步讨论之前，我们首先需要看看哈希函数的各种属性以及它们在区块链中的实现方式。</p>
 <h2 id="加密哈希函数"><a href="#加密哈希函数" class="headerlink" title="加密哈希函数"></a>加密哈希函数</h2><p>加密哈希函数是一类特殊的哈希函数。为了让哈希函数达到密码安全，需要有以下几个特性：</p>
@@ -304,14 +304,14 @@ var _hmt = _hmt || [];
 <p>所以，在已知哈希值的情况下， 尽管可以通过暴力破解的方法找到输入的字符串是什么，但这会花费很长长长长长的时间，所以不用担心。</p>
 <h3 id="抗篡改能力"><a href="#抗篡改能力" class="headerlink" title="抗篡改能力"></a>抗篡改能力</h3><p>对于任意一个输入，哪怕是很小的改动，其哈希改变也会非常大。比如 “This is a test” 对应的哈希值是<code>C7BE1ED902FB8DD4D48897C6452F5D7E509FBCDBE2808B16BCF4EDCE4C07D14E</code>， 而 “this is a test” 对应的哈希值是 <code>2E99758548972A8E8822AD47FA1017FF72F06F3FF6A016851F45C398732BC50C</code>。 </p>
 <p>看上面的例子，即便只改变了输入字符串第一个字母的大小写，输出hash值也是完全不同的。用前段时间比较流行的区块链撸猫游戏类比一下，“This is a test” 的哈希值对应猫可能是这样的：</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-6576431B-5777-4BDD-98EF-1595E1BAD849.png" alt="喵~"></p>
-<p>而只改了个大小写，“this is a test” 的哈希值对应猫可能就变成下面这样了：<br><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-222E9BF2-7230-4C93-9B2D-CC40ADAEDF5E.png" alt="喵喵~"></p>
+<p><img src="https://pic.yupoo.com/jiananshi/f094a3f5/1640dc96.png" alt="喵~"></p>
+<p>而只改了个大小写，“this is a test” 的哈希值对应猫可能就变成下面这样了：<br><img src="https://pic.yupoo.com/jiananshi/9146f91a/4cb2eb92.png" alt="喵喵~"></p>
 <p>这一特性对于区块链来说十分重要，因为它决定了区块链是 immutable 的(不变的)。</p>
 <h3 id="抗碰撞能力"><a href="#抗碰撞能力" class="headerlink" title="抗碰撞能力"></a>抗碰撞能力</h3><p>碰撞是指，对于相同的输入，经过哈希计算后产生了不同的输出。具有抗碰撞能力就是对于大部分的输入都有独一无二的输入。 这里说的是”大部分”，因为找不到碰撞，并不意味不存在碰撞。概率学中的生日悖论可以证明这一点。</p>
 <blockquote>
 <p>生日悖论:  指如果一个房间里有23个或23个以上的人，那么至少有两个人的生日相同的概率要大于50%。这就意味着在一个典型的标准小学班级(30人)中，存在两人生日相同的可能性更高。对于60或者更多的人，这种概率要大于99%。从引起逻辑矛盾的角度来说生日悖论并不是一种悖论，从这个数学事实与一般直觉相抵触的意义上，它才称得上是一个悖论。大多数人会认为，23人中有2人生日相同的概率应该远远小于50%。  </p>
 </blockquote>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-AB4929D2-11EE-468F-84E8-1A2364D81D39.png" alt="生日悖论"></p>
+<p><img src="http://pic.yupoo.com/jiananshi/a6e044f3/d67f5e94.png" alt="生日悖论"></p>
 <p>没有哪个哈希函数是完全具有防碰撞特性，但对于 SHA -256 之类的哈希函数，需要花费很长的时间来找到碰撞。所以我们完全可以认为 if H(A) = H(B) 那么 A=B.</p>
 <h3 id="谜题友好"><a href="#谜题友好" class="headerlink" title="谜题友好"></a>谜题友好</h3><p>这一特性对加密货币来说至关重要(特别是在挖矿过程中)。先定义下什么是谜题友好。</p>
 <blockquote>
@@ -333,16 +333,16 @@ var _hmt = _hmt || [];
 <p>哈希指针在区块链中极为重要。区块链的结构就是由创世区块开始，之后的每个区块通过哈希指针进行连接。每一个区块中都包含了前一个区块的哈希指针，这样后面区块不仅可以查找到前面所有区块，也可以验证前面区块数据有没有被更改，从而保证了区块链不易篡改的特性。</p>
 <p>哈希指针在区块链中第二个用处就是构建Merkle Tree(梅克尔树)，下文会详细讲。</p>
 <h3 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h3><p>区块链是一个基于哈希指针构建的一个有序的，反向链接的交易块链表，也就是说在区块链中每个区块都通过哈希指针连接到前一个区块上。大致结构如下图：</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-759C7E95-21B0-47CC-B9AC-DE614BDA1169.png" alt="block chain"></p>
+<p><img src="https://pic.yupoo.com/jiananshi/a8ee7066/48a107a4.png" alt="block chain"></p>
 <p>区块链也常被看做一个垂直的堆栈，区块在栈顶一次追加，第一个区块也就是整个堆栈的基础。所以也常常用“高度”(height) 这个词来描述某个区块到第一个区块的距离。</p>
 <p>区块链中的每一个区块都有一个对区块头部进行 SHA256  加密哈希函数计算得出的哈希值作为标识。由于每个区块需要连接到前一个区块，所以每个区块头部专门有一个字段用来存储前一个区块(也叫父区块)的哈希值。这样每个区块都连接到了他们的父区块，从而创建了区块链。</p>
-<p>尽管每一个区块只能由一个父区块，但却可能短时间内拥有多个子区块。也就是说可能存在多个区块头部中存储的父区块的哈希值是一样的。这种情况一般发生在不同的区块在同一时间被不同的矿工找到。这样就会造成区块链的分叉，如下图：<br><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-379955D7-1828-44DB-A632-07909B5AD76F.png" alt="区块链分叉"></p>
+<p>尽管每一个区块只能由一个父区块，但却可能短时间内拥有多个子区块。也就是说可能存在多个区块头部中存储的父区块的哈希值是一样的。这种情况一般发生在不同的区块在同一时间被不同的矿工找到。这样就会造成区块链的分叉，如下图：<br><img src="http://pic.yupoo.com/jiananshi/f6c0930f/fd6bf4c0.png" alt="区块链分叉"></p>
 <p>不过区块链的分叉只是暂时，会根据“最长链原则”来解决分叉。不是本文重点不再赘述。</p>
 <p>刚刚第二节提到哈希指针可以保证区块链不易被篡改，下面来分析下原因。</p>
 <p>假设有一个黑客想要篡改上图中 区块 2 的数据。由于哈希函数具有抗篡改能力，很小的改动，输出的哈希值会大不一样。所以如果改动区块2上的数据，那么 区块3 自身的哈希会发生变化。 而 区块3 的头部中存储了 区块2 的哈希值，所以 对区块2 的改动必然会影响到 区块3，以此类推，区块3后面的区块也会受到影响。所以一个区块的修改会级联影响到它之后的所有区块，而要修改之后的所有区块需要强大的算力，可以说是不可能的，这也就保证了区块链的不变性。</p>
 <p>仔细看下区块链中每个区块的结构。</p>
 <p><strong>区块的结构</strong><br>区块的内部结构分为 头部， 元数据，和一系列的交易记录。头部大小是 80个字节，而一个交易记录至少要50个字节，平均每个区块包含超过500个交易记录。所以，一个完整的区块的大小一般是它头部大小的1000倍。 下图是一个区块的大致结构。</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-5F9C7552-6DBB-4825-98F3-F337CBBEB2D0.png" alt="structure"></p>
+<p><img src="https://pic.yupoo.com/jiananshi/2ea67637/38ecf1fb.png" alt="structure"></p>
 <p><strong>区块的头部</strong><br>如上图，区块的头部的组成分为3大块。第一块是前面区块的哈希值，用于连接到父区块。第二块包含了一个随机数，一个点数(用来表示找到这个区块的难度)，和一个时间戳，这三个字段都与挖矿的过程息息相关。第三块是梅克尔树(merkle tree )的树根,merkle tree  用来将区块内的所有交易以一种非常高效的形式组织起来。</p>
 <p>merkle tree 相关内容下文会有涉及，随机数、点数和时间戳都是与挖矿相关的。</p>
 <p><strong>区块的标识：区块头部哈希值和区块高度</strong><br>一个区块最主要的标识就是区块自身头部进行二次哈希计算产生的加密哈希值。区块链中第一个区块的哈希值就是 <code>000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</code> 。</p>
@@ -355,7 +355,7 @@ var _hmt = _hmt || [];
 <p>这时节点接收到一个新的区块，内容如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"size"</span> : <span class="number">43560</span>,</div><div class="line">    <span class="attr">"version"</span> : <span class="number">2</span>,</div><div class="line">    <span class="attr">"previousblockhash"</span> :</div><div class="line">        <span class="string">"00000000000000027e7ba6fe7bad39faf3b5a83daed765f05f7d1b71a1632249"</span>,</div><div class="line">    <span class="attr">"merkleroot"</span> :</div><div class="line">        <span class="string">"5e049f4030e0ab2debb92378f53c0a6e09548aea083f3ab25e1d94ea1155e29d"</span>,</div><div class="line">    <span class="attr">"time"</span> : <span class="number">1388185038</span>,</div><div class="line">    <span class="attr">"difficulty"</span> : <span class="number">1180923195.25802612</span>,</div><div class="line">    <span class="attr">"nonce"</span> : <span class="number">4215469401</span>,</div><div class="line">    <span class="attr">"tx"</span> : [</div><div class="line">        <span class="string">"257e7497fb8bc68421eb2c7b699dbab234831600e7352f0d9e6522c7cf3f6c77"</span>,</div><div class="line"></div><div class="line"> #[... many more transactions omitted ...]</div><div class="line"></div><div class="line">        <span class="string">"05cfd38f6ae6aa83674cc99e4d75a1458c165b7ab84725eda41d018a09176634"</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在验证完成之后，节点会先找到新区块头部中存储的 父区块 的哈希值，比较与最后一个区块的哈希值是否一致。是一致的就把新区块连接到区块链上，这时区块链的高度就变为了277315。</p>
 <h3 id="什么是梅克尔树？"><a href="#什么是梅克尔树？" class="headerlink" title="什么是梅克尔树？"></a>什么是梅克尔树？</h3><p>在区块的头部中，有存储一个梅克尔树根的 hash 值。所以先来了解下什么是梅克尔树。</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-66448B2F-EF21-414F-B2E8-D80445128908.png" alt="merkle tree"></p>
+<p><img src="https://pic.yupoo.com/jiananshi/c6e23447/2bcf1f9a.png" alt="merkle tree"></p>
 <p>上图就是梅克尔树的样子。</p>
 <p>梅克尔树在区块链中用于组织和记录存储在区块中的交易，以便高效的验证某个交易是否存在在区块中。梅克尔树是通过不断的递归计算节点的哈希值直到只有一个hash值来构建的。</p>
 <p>当梅克尔树中有N个数据时，最多只需要2*log2(N)计算就可以验证某个特定数据是否存在，所以梅克尔树是相当高效的。</p>
@@ -363,7 +363,7 @@ var _hmt = _hmt || [];
 <p>接着再用相邻两个结点的hash值连接在一起经过二次哈希计算来构建它们的父节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">H(AB) = SHA256(SHA256(H(A) + H(B)))</div></pre></td></tr></table></figure></p>
 <p>这一过程一直重复到只剩下顶层的一个节点，也就是存储在区块头部的树的根节点。</p>
 <p>因为梅克尔树是一棵二叉树，它需要偶数个叶子节点。如果恰好是奇数个交易，那么最后一笔交易会被复制一遍，来创造偶数个叶子节点，以便达到平衡。下图中的交易 C 就被复制了一遍。</p>
-<p><img src="http://oduh99f02.bkt.clouddn.com/2018-02-11-B5D397E9-9E3C-4263-9252-28989AB324E2.png" alt=""></p>
+<p><img src="http://pic.yupoo.com/jiananshi/17ae7320/1caf2511.png" alt=""></p>
 <p>根据上面的方式我们可以为任意个数的交易构建梅克尔树，一个区块通常要记录几百到上千的交易。</p>
 <p>为了验证一笔交易是否包含在区块中，节点只需要 计算 log2(N) 个哈希值，组成该交易到merkle树根的认证路径即可。正因为梅克尔树，区块链中的节点可以快速的产生一条包含10或12个哈希值的认证路径，来证明在区块中上千笔交易中某笔交易的存在。</p>
 <h2 id="哈希与挖矿"><a href="#哈希与挖矿" class="headerlink" title="哈希与挖矿"></a>哈希与挖矿</h2><p>我们说的“挖矿”，就是指找到可以加入区块链的新的区块。矿工们要不断的工作在确保区块链的增长的同时获到新区块的奖励。早些时候，人们往往使用笔记本电脑挖矿，但随着时间的推移，大家开始组成矿池以便集中算力更高效的挖矿。</p>
@@ -380,7 +380,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2018/02/11/hash-blockchain/" data-id="cjdx7c80u001at75s78mghg7h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2018/02/11/hash-blockchain/" data-id="cjpp4qru2001aw35sd4kp18yn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

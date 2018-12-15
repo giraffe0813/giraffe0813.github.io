@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Giraffe's Home">
 <meta property="og:description" content="和上篇内容并不重复 🙃">
 <meta property="og:image" content="http://yemengying.com//yemengying.com/qiniu/image/2016-12-18-Screen%20Shot%202016-12-18%20at%204.22.52%20PM.png">
-<meta property="og:updated_time" content="2017-06-10T07:56:03.000Z">
+<meta property="og:updated_time" content="2018-12-13T04:14:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="log 不打印异常堆栈">
 <meta name="twitter:description" content="和上篇内容并不重复 🙃">
@@ -104,7 +104,7 @@ var _hmt = _hmt || [];
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+                            <img class="avatar" src="https://pic.yupoo.com/jiananshi/7d7f3c4d/98f10da3.jpg" />
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -188,7 +188,7 @@ var _hmt = _hmt || [];
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="https://yemengying.com/qiniu/image/2017-08-10-1.pic.jpg" />
+            <img id="avatar" src="https://pic.yupoo.com/jiananshi/7d7f3c4d/98f10da3.jpg" />
             <h2 id="name">Giraffe</h2>
             <h3 id="title">Java Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -282,14 +282,14 @@ var _hmt = _hmt || [];
 <a id="more"></a>
 <p>最近由于规则引擎有问题，导致产线上的一个 job 会抛 NullPointerException。本来这是个已知的问题，也没什么，已经联系对应的人去修复了。可由此发现了另外一个问题， fireman 的告警邮件只有异常的名称，而没有异常堆栈。<br><img src="//yemengying.com/qiniu/image/2016-12-18-Screen%20Shot%202016-12-18%20at%204.22.52%20PM.png" alt="fireman"></p>
 <p>这就很令人懵圈了，因为不知道是已知的规则引擎的问题还是其他问题。</p>
-<p><img src="//yemengying.com/qiniu/image/2016-12-18-20161124115359_ea5b38d19df10fbb8797c371754cb5d8_1_mwpm_03200403.jpeg?imageMogr2/thumbnail/150x150!" alt="？？"></p>
+<p><img src="https://pic.yupoo.com/jiananshi/e0ffe3d5/b2e1a958.jpeg" alt="？？"></p>
 <p>先看了下对应 job 的代码，确认打印异常的姿势是正确的, 本地也可以正常打印。然后去搜了下对应日期的 log 文件，确实有一堆 NPE 的报错，不过惊喜的发现在一开始的时候其实是有打出堆栈的，只是到后面就没有了。</p>
 <p>最后终于在 <a href="http://stackoverflow.com/questions/2295015/log4j-not-printing-the-stacktrace-for-exceptions" target="_blank" rel="external">stackoverflow</a> 上找到了答案。</p>
 <blockquote>
 <p>The compiler in the server VM now provides correct stack backtraces for all “cold” built-in exceptions. For performance purposes, when such an exception is thrown a few times, the method may be recompiled. After recompilation, the compiler may choose a faster tactic using preallocated exceptions that do not provide a stack trace. To disable completely the use of preallocated exceptions, use this new flag: -XX:-OmitStackTraceInFastThrow.</p>
 </blockquote>
 <p>个人理解就是，JVM 为了性能会做优化，如果频繁的抛出某个异常，会重新编译，不再打印异常堆栈。<br>解决这个问题也比较简单，如果不想每次都去查前面的 log 去看堆栈，只要在启动参数加上 <code>-XX:-OmitStackTraceInFastThrow</code>，就可以禁用该优化，强制打印异常堆栈。这样可能会导致，log 文件过大，不过产线上今天之前的 log 文件都会被压缩，所以感觉问题也不大。</p>
-<p>Ps:用 iPic 上传图片真是好用到飞起，非常适合我这种喜欢插图星人，多谢洪菊的良心推荐。<br><img src="//yemengying.com/qiniu/image/2016-12-18-maimeng.png" alt="敲好用"></p>
+<p>Ps:用 iPic 上传图片真是好用到飞起，非常适合我这种喜欢插图星人，多谢洪菊的良心推荐。<br><img src="https://pic.yupoo.com/jiananshi/f74936ec/a339d728.png" alt="敲好用"></p>
 
         
         </div>
@@ -300,7 +300,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/" data-id="cjdx7c81c0027t75s2tkgd7s8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yemengying.com/2016/12/18/log4j-not-printing-stacktrace-for-eception/" data-id="cjpp4qrum0025w35sbrw5wgxr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
